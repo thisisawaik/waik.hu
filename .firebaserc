@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "zal1000": {
+      "hosting": {
+        "waik-hu": [
+          "zal1000"
+        ]
+      }
+    }
+  }
+}
