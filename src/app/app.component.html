@@ -4,25 +4,26 @@
     alt="Waik Logo"
     src="assets/waik_big_icon.png"
   />
-  <button routerLink="/">Home</button>
-  <button routerLink="/stream">Streams</button>
+  <button routerLink="/">Kezdőlap</button>
+  <button routerLink="/stream">Streamek</button>
     <div class="spacer"></div>
-    <a aria-label="Norticus36 on twitch" routerLink="/profile/norticus" title="Norticus36 on twitch">
+    <a aria-label="Norticus36" routerLink="/profile/norticus" title="Norticus36">
       <img class="rounded-circle" [src]="tdrImage" height="30">
     </a>
-    <a aria-label="Walrusz on youtube" routerLink="/profile/walrusz" title="Walrusz on youtube">
+    <a aria-label="Walrusz" routerLink="/profile/walrusz" title="Walrusz">
       <img class="rounded-circle" [src]="walruszImage" height="30">
     </a>
-    <a aria-label="Isti115 on twitch" routerLink="/profile/isti" title="Isti115 on twitch">
+    <a aria-label="Isti115" routerLink="/profile/isti" title="Isti115">
       <img class="rounded-circle" [src]="istiImage" height="30">
     </a>
+    <a aria-label="Geiszla" title="Geiszla">
+      <img class="rounded-circle" [src]="geiszlaImage" height="30">
+    </a>
 </div>
-<div style="padding-bottom: 40px;"></div>
-
 <!--
- href="https://www.twitch.tv/isti115"
+  href="https://www.twitch.tv/isti115"
   href="https://www.youtube.com/user/WalruszMester"
-   href="https://www.twitch.tv/norticus36"
+  href="https://www.twitch.tv/norticus36"
 -->
 
 <router-outlet></router-outlet>

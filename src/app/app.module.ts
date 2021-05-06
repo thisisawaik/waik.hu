@@ -13,6 +13,7 @@ import { NorticusComponent } from './profiles/norticus/norticus.component';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { WalruszComponent } from './profiles/walrusz/walrusz.component';
 import { StreamsComponent } from './streams/streams.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { StreamsComponent } from './streams/streams.component';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

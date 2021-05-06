@@ -2,4 +2,16 @@
     display: grid;
     margin: 0 auto;
     max-width: 80%;
+
+    grid-template: 3fr 1fr / repeat(3, 1fr);
+}
+  
+  /* Then style the iframe to fit in the container div with full height and width */
+  .mainvideo {
+    width: 100%;
+    height: 50vw;
+    grid-column: 3 span;
+  }
+.fullimg{
+    width: 100%;
 }

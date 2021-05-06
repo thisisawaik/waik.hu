@@ -1,11 +1,19 @@
+<br>
+
+<div *ngIf="getError">
+  Youtube hiba
+</div>
+
 <div class="video-wall">
   <iframe
-    width="100%"
-    height=""
-    [src]="latestvideoURL"
+    class="mainvideo"
+    [src]="currentvideoURL"
     title="YouTube video player"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen
   ></iframe>
+  <div *ngFor="let v of videos">
+    <img class="fullimg" [src]="v.snippet.thumbnails.medium.url" />
+  </div>
 </div>
