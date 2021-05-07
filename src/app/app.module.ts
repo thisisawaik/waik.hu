@@ -14,6 +14,8 @@ import { ProfilesComponent } from './profiles/profiles.component';
 import { WalruszComponent } from './profiles/walrusz/walrusz.component';
 import { StreamsComponent } from './streams/streams.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFirestoreModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

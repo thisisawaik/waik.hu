@@ -1,19 +1,51 @@
-<br>
+<br />
 
-<div *ngIf="getError">
-  Youtube hiba
+
+<div>
+  <mat-card class="card">
+    
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"><img class="rounded-circle" height="55px" src="https://yt3.ggpht.com/ytc/AAUvwniseLALwR5fmrqhrt2YDGgh1VJSCviENV2MkukhUg=s68-c-k-c0x00ffffff-no-rj"></div>
+      <mat-card-title>Walrusz</mat-card-title>
+      <mat-card-subtitle>Fő csatorna</mat-card-subtitle>
+    </mat-card-header>
+    <br>
+    <div *ngIf="loading">
+      <mat-progress-spinner
+        style="margin: 0 auto"
+        mode="indeterminate"
+      ></mat-progress-spinner>
+    </div>
+    <div *ngIf="!loading">
+      <iframe
+      mat-card-image
+      class="mainvideo"
+      [src]="videoURLs[currentVideoIndex]"
+      title="YouTube video player"
+      frameborder="0"
+      height="400px"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+    <mat-card-content> </mat-card-content>
+    <mat-card-actions>
+      <div class="btn-group">
+        <div *ngFor="let v of videos">
+          <button
+            class="btn"
+            style="padding: 73px 130px 73px 130px; background-size: cover; background-image: url({{v.thumbnails.default}});"
+          ></button>
+        </div>
+      </div>
+    </mat-card-actions>
+    </div>
+    
+  </mat-card>
 </div>
 
-<div class="video-wall">
-  <iframe
-    class="mainvideo"
-    [src]="currentvideoURL"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen
-  ></iframe>
-  <div *ngFor="let v of videos">
-    <img class="fullimg" [src]="v.snippet.thumbnails.medium.url" />
-  </div>
-</div>
+<!--
+
+
+  <iframe width="2390" height="1039" src="https://www.youtube.com/embed/mbLR_tdvCFI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+-->
