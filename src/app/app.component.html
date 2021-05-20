@@ -2,83 +2,175 @@
   <img width="40" alt="Waik Logo" src="assets/waik_big_icon.png" />
   <button routerLink="/">Kezdőlap</button>
   <button routerLink="/stream">Streamek</button>
+  <button routerLink="/downloads">Letöltések</button>
   <div class="spacer"></div>
   <div *ngIf="onProfilePage">
     <div *ngIf="currentpage === 'tdr'">
-      
-      <a aria-label="Norticus36 on Twitch" href="https://www.twitch.tv/norticus36?utm_source=waik.hu" target="_blank" title="Norticus36 on Twitch">
-        <img src="assets/svgs/twitch_logo.svg" height="25"/>
+      <a
+        aria-label="Norticus36 on Twitch"
+        href="https://www.twitch.tv/norticus36?utm_source=waik.hu"
+        target="_blank"
+        title="Norticus36 on Twitch"
+      >
+        <img src="assets/svgs/twitch_logo.svg" height="25" />
       </a>
-      <a aria-label="Norticus36" href="https://www.youtube.com/user/NorticusGaming?utm_source=waik.hu" target="_blank" title="Norticus36">
-        <img src="assets/svgs/yt_logo.svg" height="25"/>
+      <a
+        aria-label="Norticus36"
+        href="https://www.youtube.com/user/NorticusGaming?utm_source=waik.hu"
+        target="_blank"
+        title="Norticus36"
+      >
+        <img src="assets/svgs/yt_logo.svg" height="25" />
       </a>
-      <a aria-label="Norticus36" href="https://twitter.com/norticus36?utm_source=waik.hu" target="_blank" title="Norticus36">
-        <img src="assets/svgs/twitter_logo.svg" height="25"/>
+      <a
+        aria-label="Norticus36"
+        href="https://twitter.com/norticus36?utm_source=waik.hu"
+        target="_blank"
+        title="Norticus36"
+      >
+        <img src="assets/svgs/twitter_logo.svg" height="25" />
       </a>
       <a aria-label="Norticus36" title="Norticus36">
         <img class="rounded-circle" [src]="tdrImage" height="30" />
       </a>
     </div>
     <div *ngIf="currentpage === 'isti'">
-      <a aria-label="Isti115 on Twitch" href="https://www.twitch.tv/Isti115?utm_source=waik.hu" target="_blank" title="Isti115 on Twitch">
-        <img src="assets/svgs/twitch_logo.svg" height="25"/>
+      <a
+        aria-label="Isti115 on Twitch"
+        href="https://www.twitch.tv/Isti115?utm_source=waik.hu"
+        target="_blank"
+        title="Isti115 on Twitch"
+      >
+        <img src="assets/svgs/twitch_logo.svg" height="25" />
       </a>
-      <a aria-label="Isti115 on Youtube" href="https://www.youtube.com/user/Isti115?utm_source=waik.hu" target="_blank" title="Isti115 on Youtube">
-        <img src="assets/svgs/yt_logo.svg" height="25"/>
+      <a
+        aria-label="Isti115 on Youtube"
+        href="https://www.youtube.com/user/Isti115?utm_source=waik.hu"
+        target="_blank"
+        title="Isti115 on Youtube"
+      >
+        <img src="assets/svgs/yt_logo.svg" height="25" />
       </a>
-      <a aria-label="Isti115 on Twitter" href="https://twitter.com/Isti115?utm_source=waik.hu" target="_blank" title="Isti115 on Twitter">
-        <img src="assets/svgs/twitter_logo.svg" height="25"/>
+      <a
+        aria-label="Isti115 on Twitter"
+        href="https://twitter.com/Isti115?utm_source=waik.hu"
+        target="_blank"
+        title="Isti115 on Twitter"
+      >
+        <img src="assets/svgs/twitter_logo.svg" height="25" />
       </a>
-      <a aria-label="Isti115 on Github" href="https://github.com/Isti115?utm_source=waik.hu" target="_blank" title="Isti115 on Github">
-        <img src="assets/svgs/github_logo.svg" height="28"/>
+      <a
+        aria-label="Isti115 on Github"
+        href="https://github.com/Isti115?utm_source=waik.hu"
+        target="_blank"
+        title="Isti115 on Github"
+      >
+        <img src="assets/svgs/github_logo.svg" height="28" />
       </a>
       <a aria-label="Isti115" title="Isti115">
         <img class="rounded-circle" [src]="istiImage" height="30" />
       </a>
     </div>
     <div *ngIf="currentpage === 'walrusz'">
-      <a aria-label="Walrusz on Youtube" href="https://www.youtube.com/user/WalruszMester?utm_source=waik.hu" target="_blank" title="Walrusz on Youtube">
-        <img src="assets/svgs/yt_logo.svg" height="25"/>
+      <a
+        aria-label="Walrusz on Youtube"
+        href="https://www.youtube.com/user/WalruszMester?utm_source=waik.hu"
+        target="_blank"
+        title="Walrusz on Youtube"
+      >
+        <img src="assets/svgs/yt_logo.svg" height="25" />
       </a>
-      <a aria-label="Walrusz on Facebook" href="facebook.com/walruszmester?utm_source=waik.hu" target="_blank" title="Walrusz on Facebook">
-        <img src="assets/svgs/facebook_logo.svg" height="30"/>
+      <a
+        aria-label="Walrusz on Facebook"
+        href="facebook.com/walruszmester?utm_source=waik.hu"
+        target="_blank"
+        title="Walrusz on Facebook"
+      >
+        <img src="assets/svgs/facebook_logo.svg" height="30" />
       </a>
-      <a aria-label="Walrusz on Instagram" href="https://www.instagram.com/walrusz/?utm_source=waik.hu" target="_blank" title="Walrusz on Instagram">
-        <img src="assets/svgs/instagram_logo.svg" height="37"/>
+      <a
+        aria-label="Walrusz on Instagram"
+        href="https://www.instagram.com/walrusz/?utm_source=waik.hu"
+        target="_blank"
+        title="Walrusz on Instagram"
+      >
+        <img src="assets/svgs/instagram_logo.svg" height="37" />
       </a>
-      <a aria-label="Walrusz on Reddit" href="https://www.reddit.com/r/walrusz/?utm_source=waik.hu" target="_blank" title="Walrusz on Reddit">
-        <img src="assets/svgs/reddit_logo.svg" height="35"/>
+      <a
+        aria-label="Walrusz on Reddit"
+        href="https://www.reddit.com/r/walrusz/?utm_source=waik.hu"
+        target="_blank"
+        title="Walrusz on Reddit"
+      >
+        <img src="assets/svgs/reddit_logo.svg" height="35" />
       </a>
-      <a aria-label="Walrusz on Vimeo" href="https://vimeo.com/walrusz?utm_source=waik.hu" target="_blank" title="Walrusz on Vimeo">
-        <img src="assets/svgs/vimeo_logo.svg" height="25"/>
+      <a
+        aria-label="Walrusz on Vimeo"
+        href="https://vimeo.com/walrusz?utm_source=waik.hu"
+        target="_blank"
+        title="Walrusz on Vimeo"
+      >
+        <img src="assets/svgs/vimeo_logo.svg" height="25" />
       </a>
-      <a aria-label="Walrusz Shop" href="https://shop.pentamedia.hu/walrusz?utm_source=waik.hu" target="_blank" title="Walrusz Shop">
-        <img src="assets/pentamedia_shop_logo.png" height="30"/>
+      <a
+        aria-label="Walrusz Shop"
+        href="https://shop.pentamedia.hu/walrusz?utm_source=waik.hu"
+        target="_blank"
+        title="Walrusz Shop"
+      >
+        <img src="assets/pentamedia_shop_logo.png" height="30" />
       </a>
-      <a aria-label="Walrusz on Twitter" href="https://twitter.com/walruszmester?utm_source=waik.hu" target="_blank" title="Walrusz on Twitter">
-        <img src="assets/svgs/twitter_logo.svg" height="25"/>
+      <a
+        aria-label="Walrusz on Twitter"
+        href="https://twitter.com/walruszmester?utm_source=waik.hu"
+        target="_blank"
+        title="Walrusz on Twitter"
+      >
+        <img src="assets/svgs/twitter_logo.svg" height="25" />
       </a>
       <a aria-label="Walrusz" title="Walrusz">
         <img class="rounded-circle" [src]="walruszImage" height="30" />
       </a>
     </div>
     <div *ngIf="currentpage === 'geiszla'">
-
-      <a aria-label="Norticus36" href="https://www.youtube.com/user/NorticusGaming?utm_source=waik.hu" target="_blank" title="Norticus36">
-        <img src="assets/svgs/yt_logo.svg" height="25"/>
+      <a
+        aria-label="Norticus36"
+        href="https://www.youtube.com/user/NorticusGaming?utm_source=waik.hu"
+        target="_blank"
+        title="Norticus36"
+      >
+        <img src="assets/svgs/yt_logo.svg" height="25" />
       </a>
-      <a aria-label="Norticus36" href="https://twitter.com/norticus36?utm_source=waik.hu" target="_blank" title="Norticus36">
-        <img src="assets/svgs/twitter_logo.svg" height="25"/>
+      <a
+        aria-label="Norticus36"
+        href="https://twitter.com/norticus36?utm_source=waik.hu"
+        target="_blank"
+        title="Norticus36"
+      >
+        <img src="assets/svgs/twitter_logo.svg" height="25" />
       </a>
-      <a aria-label="Norticus36" href="https://github.com/Norticus36?utm_source=waik.hu" target="_blank" title="Norticus36">
-        <img src="assets/svgs/github_logo.svg" height="28"/>
+      <a
+        aria-label="Norticus36"
+        href="https://github.com/Norticus36?utm_source=waik.hu"
+        target="_blank"
+        title="Norticus36"
+      >
+        <img src="assets/svgs/github_logo.svg" height="28" />
       </a>
       <a aria-label="Geiszla" title="Norticus36">
         <img class="rounded-circle" [src]="geiszlaImage" height="30" />
       </a>
     </div>
   </div>
-  <div *ngIf="currentpage === 'tdr' || currentpage === 'isti' || currentpage === 'walrusz' || currentpage === 'geiszla'" style="border-left: 3px solid white; height: 80%"></div>
+  <div
+    *ngIf="
+      currentpage === 'tdr' ||
+      currentpage === 'isti' ||
+      currentpage === 'walrusz' ||
+      currentpage === 'geiszla'
+    "
+    style="border-left: 3px solid white; height: 80%"
+  ></div>
 
   <a aria-label="Norticus36" routerLink="/profile/norticus" title="Norticus36">
     <img class="rounded-circle" [src]="tdrImage" height="30" />
@@ -92,10 +184,6 @@
   <a aria-label="Geiszla" title="Geiszla">
     <img class="rounded-circle" [src]="geiszlaImage" height="30" />
   </a>
-
-
-  
-  
 </div>
 <!--
   href="https://www.twitch.tv/isti115"

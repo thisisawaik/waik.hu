@@ -16,6 +16,12 @@ import { StreamsComponent } from './streams/streams.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { DiscordEmbedComponent } from './discord-embed/discord-embed.component'
+import { DownloadsComponent } from './downloads/downloads.component';
+import { MatButtonModule } from '@angular/material/button';
+import { CardComponent } from './downloads/card/card.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +32,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     IstiComponent,
     NorticusComponent,
     WalruszComponent,
+    DiscordEmbedComponent,
+    DownloadsComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -36,7 +45,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     BrowserAnimationsModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    
+    FlexLayoutModule,
+    MatGridListModule,
+    MatButtonModule,
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

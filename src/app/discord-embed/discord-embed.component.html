@@ -1,0 +1,18 @@
+<div class="logo-header">
+    <img src="assets/svgs/discord-logo-and-text-white.svg" (click)="join()" class="logo" alt="Discord">
+</div>
+<div class="count">
+    <span *ngIf="membercount === 'Loading...'" style="background: #FEE75C;">Loading...</span>
+    <span *ngIf="membercount === 'Error'" style="background: #ED4245; color: white;">Valami hiba történt</span>
+    <span *ngIf="membercount != 'Error' && membercount != 'Loading...'" style="background: #57F287;">{{ membercount }} Members Online</span>
+</div>
+<div class="channels" *ngIf="membercount != 'Error' && membercount != 'Loading...'">
+    <p class="voice-header">Hang csatornán:</p>
+    <div *ngFor="let channel of channels">
+        <p class="voice-channel"><img height="20" src="assets/svgs/discord-voice-icon.svg">   {{ channel.name }}</p>
+    </div>
+</div>
+<div class="spacer"></div>
+<div class="join-group">
+    <button  (click)="join()" >Csatlakozás a<br /> Discord-szerverünkhöz</button>
+</div>

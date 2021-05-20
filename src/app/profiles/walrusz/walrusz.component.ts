@@ -28,26 +28,31 @@ export class WalruszComponent implements OnInit {
     const videosquery = this.db.collection('waik').doc('videos').collection('post', ref => ref.where('channel', '==', 'Walrusz').orderBy('timestamp').limitToLast(3));
     this.loading = true;
     videosquery.get().subscribe(async coll => {
-      let counter = 0;
+      let counter = -1;
       for await (const doc of coll.docs) {
         console.log(doc.data())
         const url: string = doc.data()?.url;
         this.videoURLs.push(this.sanitizer.bypassSecurityTrustResourceUrl(
           `https://www.youtube.com/embed/${url.split('=')[1]}`
         ));
-        this.videos.push({
+        await this.videos.push({
           channel: doc.data()?.channel,
           thumbnails: {
             default: doc.data()?.thumbnails.default,
           },
           timestamp: doc.data()?.timestamp,
           url: doc.data()?.url,
-          index: counter,
+          index: counter =+ 1,
         })
-        counter =+ 1;
+        counter = counter + 1
+
+        let a: any[] = [];
+
+        a.indexOf(e => e === "")
+        
         console.log(counter);
       }
-      counter = 0
+      
 
       console.log(this.videos);
       this.videoURLs.reverse();
@@ -75,6 +80,12 @@ export class WalruszComponent implements OnInit {
         this.getError = true;
       });
       */
+  }
+
+  changeindex(url: string) {
+    console.log(url);
+    console.log(this.videos.indexOf(e => e.url === url))
+    this.currentVideoIndex = this.videos.indexOf(e => e.url == url);
   }
 
   // GET https://www.googleapis.com/youtube/v3/search?part=snippet&channelId={CHANNEL_ID}&maxResults=10&order=date&type=video&key={YOUR_API_KEY}

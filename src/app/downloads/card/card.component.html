@@ -1,0 +1,17 @@
+<mat-card class="card">
+    <mat-card-header>
+      <!--<div mat-card-avatar class="circular--square"></div>-->
+      <mat-card-title>{{ title }}</mat-card-title>
+    </mat-card-header>
+    <img *ngIf="image" mat-card-image src="{{ image }}" alt="{{ title }}">
+    <mat-card-content>
+      <p *ngIf="desc">
+       {{ desc }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <a *ngIf="dlurl" mat-flat-button color="primary" href="{{ dlurl }}">Letöltés</a>
+      <a *ngIf="github" mat-flat-button color="primary" href="{{ github }}">Forrás GitHub-on</a>
+    </mat-card-actions>
+  </mat-card>
+  

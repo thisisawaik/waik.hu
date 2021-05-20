@@ -1,0 +1,53 @@
+:host{
+    background: #332e2e;
+    min-height: calc( 100vh  - 60px);
+    display: flex;
+    flex-direction: column;
+}
+
+img.logo{
+    width: 100%;
+    padding: 4px 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+.count{
+   margin: 16px auto; 
+
+    span {
+        text-align: center;
+        padding: 2px 16px;
+        border-radius: 16px;
+    }
+}
+
+.spacer{
+    flex-grow: 1;
+}
+
+.join-group{
+    margin: 16px auto;
+    button {
+        background: #5865F2;
+        font-size: 1rem;
+        border-radius: 8px;
+        border: none;
+        padding: 8px 16px;
+    }
+}
+
+.channels{
+    margin: 8px;
+
+    .voice-header{
+        font-variant: small-caps;
+        font-weight: bold;
+    }
+}
+    
+.voice-channel {
+    box-sizing: content-box;
+    display: block;
+    float: none;
+    line-height: 16px;
+}
