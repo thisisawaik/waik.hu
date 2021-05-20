@@ -10,8 +10,8 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <a *ngIf="dlurl" mat-flat-button color="primary" href="{{ dlurl }}">Letöltés</a>
-      <a *ngIf="github" mat-flat-button color="primary" href="{{ github }}">Forrás GitHub-on</a>
+      <a *ngIf="url" mat-flat-button color="primary" (click)="downloadclick()">Letöltés</a>
+      <a *ngIf="github" mat-flat-button color="primary" (click)="githubclick()">Forrás GitHub-on</a>
     </mat-card-actions>
   </mat-card>
   

@@ -22,6 +22,7 @@ import { DiscordEmbedComponent } from './discord-embed/discord-embed.component'
 import { DownloadsComponent } from './downloads/downloads.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CardComponent } from './downloads/card/card.component';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { CardComponent } from './downloads/card/card.component';
     MatGridListModule,
     MatButtonModule,
     AngularFirestoreModule,
+    AngularFireAnalyticsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
