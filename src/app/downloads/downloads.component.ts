@@ -32,6 +32,8 @@ export class DownloadsComponent implements OnInit {
           const docdata: any = doc.data();
           this.colldata.push(docdata);
         }
+
+        this.colldata.reverse();
       });
   }
 }

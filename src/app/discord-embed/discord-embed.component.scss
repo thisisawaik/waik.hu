@@ -12,8 +12,8 @@ img.logo{
     cursor: pointer;
 }
 .count{
-   margin: 16px auto; 
-
+    margin: 16px auto; 
+    color:white;
     span {
         text-align: center;
         padding: 2px 16px;
@@ -28,11 +28,18 @@ img.logo{
 .join-group{
     margin: 16px auto;
     button {
-        background: #5865F2;
-        font-size: 1rem;
+        color: white;
+        background: #3BA55C;
+        font-size: 25px;
         border-radius: 8px;
         border: none;
         padding: 8px 16px;
+    }
+}
+
+.join-group:hover{
+    button {
+        background: #359553;
     }
 }
 
@@ -50,4 +57,12 @@ img.logo{
     display: block;
     float: none;
     line-height: 16px;
+}
+
+.status{
+    display: inline-block;
+    border-radius: 100%;
+    width: 14px;
+    height: 14px;
+    transform: translateY(4px);
 }
