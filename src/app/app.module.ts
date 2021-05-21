@@ -27,6 +27,7 @@ import { ShareComponent } from './share/share.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { FooterComponent } from './footer/footer.component';
+import { SocialBadgeComponent } from './social-badge/social-badge.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import { FooterComponent } from './footer/footer.component';
     CardComponent,
     ShareComponent,
     FooterComponent,
+    SocialBadgeComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
