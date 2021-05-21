@@ -37,8 +37,6 @@ export class FooterComponent implements OnInit {
         avatarurl: doc.data()['pp'] || null,
       });
     }
-
-    console.log(this.members)
   }
 
 }

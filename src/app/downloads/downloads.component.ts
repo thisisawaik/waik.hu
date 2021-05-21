@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAnalytics } from '@angular/fire/analytics';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Title } from '@angular/platform-browser';
+import { MessagesService } from '../messages.service';
 
 @Component({
   selector: 'app-downloads',
@@ -14,7 +15,8 @@ export class DownloadsComponent implements OnInit {
   constructor(
     private db: AngularFirestore,
     private analitycs: AngularFireAnalytics,
-    private htmltitle: Title
+    private htmltitle: Title,
+    private msg: MessagesService,
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +36,8 @@ export class DownloadsComponent implements OnInit {
         }
 
         this.colldata.reverse();
+      }).catch(e => {
+        this.msg.error(e.message)
       });
   }
 }

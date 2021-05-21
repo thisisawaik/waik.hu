@@ -28,6 +28,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { FooterComponent } from './footer/footer.component';
 import { SocialBadgeComponent } from './social-badge/social-badge.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +45,7 @@ import { SocialBadgeComponent } from './social-badge/social-badge.component';
     ShareComponent,
     FooterComponent,
     SocialBadgeComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -59,6 +62,7 @@ import { SocialBadgeComponent } from './social-badge/social-badge.component';
     AngularFirestoreModule,
     AngularFireAnalyticsModule,
     ClipboardModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

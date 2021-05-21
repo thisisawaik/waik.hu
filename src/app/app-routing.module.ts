@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DownloadsComponent } from './downloads/downloads.component';
 import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { IstiComponent } from './profiles/isti/isti.component';
 import { NorticusComponent } from './profiles/norticus/norticus.component';
 import { ProfilesComponent } from './profiles/profiles.component';
@@ -24,6 +25,8 @@ const routes: Routes = [
   { path: 'download', component: DownloadsComponent },
   { path: 'downloads', component: DownloadsComponent },
   { path: 'share/:ShareId', component: ShareComponent },
+
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

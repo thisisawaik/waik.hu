@@ -1,7 +1,8 @@
 <mat-card class="card">
     <mat-card-header>
-      <!--<div mat-card-avatar class="circular--square"></div>-->
+      <div mat-card-avatar *ngIf="authordata.avatar"><img height="45" class="rounded-circle" [src]="authordata.avatar"></div>
       <mat-card-title>{{ title }}</mat-card-title>
+      <mat-card-subtitle *ngIf="authordata.name">{{ authordata.name }}</mat-card-subtitle>
     </mat-card-header>
     <img *ngIf="image" mat-card-image src="{{ image }}" alt="{{ title }}">
     <mat-card-content>

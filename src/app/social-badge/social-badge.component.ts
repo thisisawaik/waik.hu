@@ -13,8 +13,6 @@ export class SocialBadgeComponent implements OnInit {
   @Input() socialUser: string | undefined;
 
   ngOnInit(): void {
-    console.log("Helló");
-
   }
 
 
