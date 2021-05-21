@@ -23,7 +23,9 @@ import { DownloadsComponent } from './downloads/downloads.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CardComponent } from './downloads/card/card.component';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
-
+import { ShareComponent } from './share/share.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +38,7 @@ import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
     DiscordEmbedComponent,
     DownloadsComponent,
     CardComponent,
+    ShareComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -51,6 +54,7 @@ import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
     MatButtonModule,
     AngularFirestoreModule,
     AngularFireAnalyticsModule,
+    ClipboardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

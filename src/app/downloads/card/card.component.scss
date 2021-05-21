@@ -1,12 +1,42 @@
 .circular--square {
-    border-top-left-radius: 50% 50%;
-    border-top-right-radius: 50% 50%;
-    border-bottom-right-radius: 50% 50%;
-    border-bottom-left-radius: 50% 50%;
+  border-top-left-radius: 50% 50%;
+  border-top-right-radius: 50% 50%;
+  border-bottom-right-radius: 50% 50%;
+  border-bottom-left-radius: 50% 50%;
 }
 
 .card {
   width: 350px;
 }
 
-a, p, h1, h2, h3, button { color: black; }
+a {
+  margin-right: 10px;
+}
+
+.blue {
+  background-color: #5865f2;
+  color: white;
+}
+
+.red {
+  background-color: #ed4245;
+  color: white;
+}
+.green {
+  background-color: #57f287;
+  color: black;
+}
+
+.github {
+  background-color: #171515;
+  color: white;
+}
+
+a,
+p,
+h1,
+h2,
+h3,
+button {
+  color: black;
+}

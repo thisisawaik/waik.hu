@@ -10,8 +10,9 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <a *ngIf="url" mat-flat-button color="primary" (click)="downloadclick()">Letöltés</a>
-      <a *ngIf="github" mat-flat-button color="primary" (click)="githubclick()">Forrás GitHub-on</a>
+      <a *ngIf="url" mat-flat-button class="blue" (click)="downloadclick()">Letöltés</a>
+      <a *ngIf="github" mat-flat-button class="github" (click)="githubclick()">GitHub</a>
+      <a *ngIf="shareable" mat-flat-button [class]="shareclass" (click)="share()">{{ sharetext }}</a>
     </mat-card-actions>
   </mat-card>
   

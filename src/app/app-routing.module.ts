@@ -6,6 +6,7 @@ import { IstiComponent } from './profiles/isti/isti.component';
 import { NorticusComponent } from './profiles/norticus/norticus.component';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { WalruszComponent } from './profiles/walrusz/walrusz.component';
+import { ShareComponent } from './share/share.component';
 import { StreamsComponent } from './streams/streams.component';
 
 const routes: Routes = [
@@ -17,12 +18,12 @@ const routes: Routes = [
     { path: 'norticus', component: NorticusComponent },
     { path: 'walrusz', component: WalruszComponent },
   ] */},
-
   { path: 'profile/isti', component: IstiComponent },
   { path: 'profile/norticus', component: NorticusComponent },
   { path: 'profile/walrusz', component: WalruszComponent },
   { path: 'download', component: DownloadsComponent },
   { path: 'downloads', component: DownloadsComponent },
+  { path: 'share/:ShareId', component: ShareComponent },
 ];
 
 @NgModule({

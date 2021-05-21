@@ -1,5 +1,5 @@
 import { Component, OnInit, Sanitizer } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-streams',
@@ -16,10 +16,13 @@ export class StreamsComponent implements OnInit {
   istiChat: SafeResourceUrl;
 
   constructor(
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private htmltitle: Title
+
   ) { }
 
   ngOnInit(): void {
+    this.htmltitle.setTitle('Streamel')
     console.log(this.hostname);
     this.tdrStream = this.sanitizer.bypassSecurityTrustResourceUrl(`https://player.twitch.tv/?channel=norticus36&parent=${this.hostname}`);
     this.istiStream = this.sanitizer.bypassSecurityTrustResourceUrl(`https://player.twitch.tv/?channel=isti115&parent=${this.hostname}`);
