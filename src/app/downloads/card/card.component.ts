@@ -78,8 +78,6 @@ export class CardComponent implements OnInit {
       .get()
       .toPromise()
       .then((doc) => {
-        console.log(doc.exists);
-        console.log(this.shareid);
         if (doc.exists) {
           this.shareable = true;
         }
@@ -103,7 +101,6 @@ export class CardComponent implements OnInit {
       .collection('shares')
       .doc(this.shareid);
     const link = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/share/${this.shareid}`;
-    console.log(link);
     this.clipboard.copy(link);
 
     this.analitycs.logEvent('share_click', [this.shareid]);

@@ -26,6 +26,7 @@ import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { ShareComponent } from './share/share.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
+import { FooterComponent } from './footer/footer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +40,7 @@ import { FlexLayoutServerModule } from '@angular/flex-layout/server';
     DownloadsComponent,
     CardComponent,
     ShareComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

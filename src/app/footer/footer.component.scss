@@ -1,0 +1,21 @@
+:host{
+    position: fixed;
+    bottom: 0;
+    left:0;
+    right: 0;
+    z-index: -1;
+    color: white;
+    background-color: #5865F2;
+    padding: 4px 8px;
+}
+
+span.user {
+    display: inline-block;
+    padding-right: 8px;
+    margin-right: 8px;
+}
+
+span.user:not(:last-child) {
+    border-right: 1px solid #212daf;
+
+}

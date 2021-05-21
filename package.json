@@ -8,9 +8,6 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "dev:ssr": "ng run waik-hu:serve-ssr",
-    "serve:ssr": "node dist/waik-hu/server/main.js",
-    "build:ssr": "ng build --prod && ng run waik-hu:server:production",
     "prerender": "ng run waik-hu:prerender",
     "deploy:beta": "ng build --prod && firebase hosting:channel:deploy beta"
   },

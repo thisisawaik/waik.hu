@@ -16,7 +16,6 @@ export class DiscordEmbedComponent implements OnInit {
 
   ngOnInit(): void {
     this.http.get("https://discord.com/api/guilds/541446521313296385/widget.json").toPromise().then((res: any) => {
-      console.log(res);
       this.membercount = res.presence_count;
       this.channels = res.channels;
     }).catch(e => {
@@ -31,5 +30,3 @@ export class DiscordEmbedComponent implements OnInit {
   }
 
 }
-
-// https://discord.com/api/guilds/541446521313296385/widget.json
