@@ -48,3 +48,5 @@ testem.log
 Thumbs.db
 
 .firebase
+
+*.log

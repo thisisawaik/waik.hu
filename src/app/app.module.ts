@@ -30,6 +30,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SocialBadgeComponent } from './social-badge/social-badge.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +63,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     AngularFirestoreModule,
     AngularFireAnalyticsModule,
     ClipboardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
