@@ -25,13 +25,12 @@ import { CardComponent } from './downloads/card/card.component';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { ShareComponent } from './share/share.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { FooterComponent } from './footer/footer.component';
 import { SocialBadgeComponent } from './social-badge/social-badge.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { AppServerModule } from './app.server.module';
+
 @NgModule({
   declarations: [
     AppComponent,
