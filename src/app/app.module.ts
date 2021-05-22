@@ -31,6 +31,7 @@ import { SocialBadgeComponent } from './social-badge/social-badge.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { AppServerModule } from './app.server.module';
 @NgModule({
   declarations: [
     AppComponent,
