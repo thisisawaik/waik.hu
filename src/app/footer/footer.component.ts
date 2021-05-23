@@ -15,7 +15,7 @@ export class FooterComponent implements OnInit {
   ids: Id[] = [
     {id: "423925286350880779", role: "code", name: null, avatarurl: null },
     {id: "334441700279975938", role: "code", name: null, avatarurl: null },
-    {id: "223853152510803972", role: "desing", name: null, avatarurl: null },
+    {id: "223853152510803972", role: "design", name: null, avatarurl: null },
   ];
   @Input() extraIds: Id[] | null | undefined;
 
@@ -45,7 +45,7 @@ export class FooterComponent implements OnInit {
 
 interface Id {
   id: string,
-  role: 'code' | 'desing' | 'idea' | 'other',
+  role: 'code' | 'design' | 'idea' | 'other',
   name: string | null | undefined,
   avatarurl: string | null | undefined,
 }
