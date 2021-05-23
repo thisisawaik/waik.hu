@@ -33,6 +33,9 @@ export function app(): express.Express {
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
+    res.set('twitter:card', `summary`)
+    res.set('twitter:title', `Small Island Developing States Photo Submission`)
+    res.set('twitter:image', `https://farm6.staticflickr.com/5510/14338202952_93595258ff_z.jpg`)
     res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
   });
 
