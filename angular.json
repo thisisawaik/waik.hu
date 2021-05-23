@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "waik-hu-fy": {
+    "waik-hu": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/waik-hu-fy/browser",
+            "outputPath": "dist/waik-hu/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "waik-hu-fy:build:production"
+              "browserTarget": "waik-hu:build:production"
             },
             "development": {
-              "browserTarget": "waik-hu-fy:build:development"
+              "browserTarget": "waik-hu:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "waik-hu-fy:build"
+            "browserTarget": "waik-hu:build"
           }
         },
         "test": {
@@ -99,7 +99,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/waik-hu-fy/server",
+            "outputPath": "dist/waik-hu/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
             "inlineStyleLanguage": "scss",
@@ -129,12 +129,12 @@
           "builder": "@nguniversal/builders:ssr-dev-server",
           "configurations": {
             "development": {
-              "browserTarget": "waik-hu-fy:build:development",
-              "serverTarget": "waik-hu-fy:server:development"
+              "browserTarget": "waik-hu:build:development",
+              "serverTarget": "waik-hu:server:development"
             },
             "production": {
-              "browserTarget": "waik-hu-fy:build:production",
-              "serverTarget": "waik-hu-fy:server:production"
+              "browserTarget": "waik-hu:build:production",
+              "serverTarget": "waik-hu:server:production"
             }
           },
           "defaultConfiguration": "development"
@@ -148,10 +148,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "waik-hu-fy:build:production"
+              "browserTarget": "waik-hu:build:production"
             },
             "development": {
-              "browserTarget": "waik-hu-fy:build:development"
+              "browserTarget": "waik-hu:build:development"
             }
           },
           "defaultConfiguration": "production"
@@ -159,5 +159,5 @@
       }
     }
   },
-  "defaultProject": "waik-hu-fy"
+  "defaultProject": "waik-hu"
 }
