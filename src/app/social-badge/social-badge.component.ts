@@ -9,7 +9,7 @@ export class SocialBadgeComponent implements OnInit {
 
   constructor() { }
 
-  @Input() socialType: SocialType;
+  @Input() socialType: SocialType | undefined;
   @Input() socialUser: string | undefined;
 
   ngOnInit(): void {
@@ -17,7 +17,6 @@ export class SocialBadgeComponent implements OnInit {
 
 
   public get socialUrl() : string {
-    console.log(`get url ${this.socialType} ${this.socialUser} ` );
 
     switch (this.socialType) {
       case 'youtube': return `https://www.youtube.com/user/${this.socialUser}?utm_source=waik.hu`;
@@ -28,6 +27,7 @@ export class SocialBadgeComponent implements OnInit {
       case 'instagram': return `https://instagram.com/${this.socialUser}?utm_source=waik.hu`;
       case 'reddit': return `https://www.reddit.com/${this.socialUser}/?utm_source=waik.hu`;
       case 'vimeo': return `https://vimeo.com/${ this.socialUser }?utm_source=waik.hu`;
+      default: return'null';
     }
   }
 
@@ -42,6 +42,7 @@ export class SocialBadgeComponent implements OnInit {
       case 'instagram': return `assets/svgs/instagram_logo.svg`;
       case 'reddit': return `assets/svgs/reddit_logo.svg`;
       case 'vimeo': return `assets/svgs/vimeo_logo.svg`;
+      default: return'null';
     }
   }
 }

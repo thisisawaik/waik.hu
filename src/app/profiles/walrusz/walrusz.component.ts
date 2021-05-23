@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
+import { getFirestore, query, collection, where, orderBy, limitToLast, getDocs } from 'firebase/firestore';
+import { app } from 'src/app/firebaseapp';
 @Component({
   selector: 'app-walrusz',
   templateUrl: './walrusz.component.html',
@@ -14,28 +14,27 @@ export class WalruszComponent implements OnInit {
   latestvideo: any;
   videoURLs: SafeResourceUrl[] = [];
   videos: Array<Video> | any = [];
-  getError: boolean;
+  getError: boolean | undefined;
   currentVideoIndex: number = 0;
   loading = true;
 
   constructor(
     private http: HttpClient,
     private sanitizer: DomSanitizer,
-    private db: AngularFirestore
   ) {}
 
   async ngOnInit(): Promise<void> {
-    const videosquery = this.db.collection('waik').doc('videos').collection('post', ref => ref.where('channel', '==', 'Walrusz').orderBy('timestamp').limitToLast(3));
-    this.loading = true;
-    videosquery.get().subscribe(async coll => {
+    const db = getFirestore(app)
+    const q = query(collection(db, 'waik/videos/post'), where('channel', '==', 'Walrusz'), orderBy('timestamp'), limitToLast(3));
+    getDocs(q).then(coll => {
       let counter = -1;
-      for await (const doc of coll.docs) {
+      for (const doc of coll.docs) {
         console.log(doc.data())
         const url: string = doc.data()?.url;
         this.videoURLs.push(this.sanitizer.bypassSecurityTrustResourceUrl(
           `https://www.youtube.com/embed/${url.split('=')[1]}`
         ));
-        await this.videos.push({
+         this.videos.push({
           channel: doc.data()?.channel,
           thumbnails: {
             default: doc.data()?.thumbnails.default,
@@ -48,7 +47,7 @@ export class WalruszComponent implements OnInit {
 
         let a: any[] = [];
 
-        a.indexOf(e => e === "")
+        a.indexOf((e: string) => e === "")
         
         console.log(counter);
       }
@@ -58,8 +57,7 @@ export class WalruszComponent implements OnInit {
       this.videoURLs.reverse();
       this.videos.reverse();
       this.loading = false;
-
-    });
+    })
     /*
     this.http
       .get(
@@ -84,8 +82,8 @@ export class WalruszComponent implements OnInit {
 
   changeindex(url: string) {
     console.log(url);
-    console.log(this.videos.indexOf(e => e.url === url))
-    this.currentVideoIndex = this.videos.indexOf(e => e.url == url);
+    console.log(this.videos.indexOf((e: { url: string; }) => e.url === url))
+    this.currentVideoIndex = this.videos.indexOf((e: { url: string; }) => e.url == url);
   }
 
   // GET https://www.googleapis.com/youtube/v3/search?part=snippet&channelId={CHANNEL_ID}&maxResults=10&order=date&type=video&key={YOUR_API_KEY}

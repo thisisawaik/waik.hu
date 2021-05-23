@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { app } from '../firebaseapp';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -7,7 +8,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class FooterComponent implements OnInit {
 
-  constructor(private db: AngularFirestore) { }
+  constructor() { }
 
   // 223853152510803972
   members: Id[] = [];
@@ -16,25 +17,26 @@ export class FooterComponent implements OnInit {
     {id: "334441700279975938", role: "code", name: null, avatarurl: null },
     {id: "223853152510803972", role: "desing", name: null, avatarurl: null },
   ];
-  @Input() extraIds: Id[] | null;
+  @Input() extraIds: Id[] | null | undefined;
 
   async ngOnInit(): Promise<void> {
+    const db = getFirestore(app);
     if(this.extraIds) {
-      for await (const u of this.extraIds) {
+      for (const u of this.extraIds) {
         this.ids.push(u);
       }
     }
     
 
-    for await (const user of this.ids) {
-      const ref = this.db.collection('dcusers').doc(user.id);
-      const doc = await ref.get().toPromise();
-
-      this.members.push({
-        id: user.id,
-        role: user.role,
-        name: doc.data()['tag'],
-        avatarurl: doc.data()['pp'] || null,
+    for (const user of this.ids) {
+      const d = doc(db, `dcusers/${user.id}`)
+      getDoc(d).then((res: any) => {
+        this.members.push({
+          id: user.id,
+          role: user.role,
+          name: res.data()['tag'],
+          avatarurl: res.data()['pp'] || null,
+        });
       });
     }
   }
@@ -44,6 +46,6 @@ export class FooterComponent implements OnInit {
 interface Id {
   id: string,
   role: 'code' | 'desing' | 'idea' | 'other',
-  name: string | null,
-  avatarurl: string | null,
+  name: string | null | undefined,
+  avatarurl: string | null | undefined,
 }

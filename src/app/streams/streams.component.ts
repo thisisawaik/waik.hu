@@ -10,10 +10,10 @@ export class StreamsComponent implements OnInit {
 
   hostname = window.location.hostname;
   loading = true;
-  tdrStream: SafeResourceUrl;
-  istiStream: SafeResourceUrl;
-  tdrChat: SafeResourceUrl;
-  istiChat: SafeResourceUrl;
+  tdrStream: SafeResourceUrl | undefined;
+  istiStream: SafeResourceUrl | undefined;
+  tdrChat: SafeResourceUrl | undefined;
+  istiChat: SafeResourceUrl | undefined;
 
   constructor(
     private sanitizer: DomSanitizer,

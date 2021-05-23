@@ -1,52 +1,52 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-  --blue: #5865F2;
-  --green: #57F287;
-  --yellow: #FEE75C;
-  --magenta: #EB459E;
-  --red: #ED4245;
-}
-
-a, p, h1, h2, h3, button { font-family: Roboto; color: white; }
-body {
-    background: #282830;
-    color: white;
+    --blue: #5865F2;
+    --green: #57F287;
+    --yellow: #FEE75C;
+    --magenta: #EB459E;
+    --red: #ED4245;
   }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-.snack-error {
-  background-color: var(--red);
-  color: white;
-  .mat-button-wrapper {
+  
+  a, p, h1, h2, h3, button { font-family: Roboto; color: white; }
+  body {
+      background: #282830;
+      color: white;
+    }
+  html, body { height: 100%; }
+  body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  
+  .snack-error {
+    background-color: var(--red);
     color: white;
+    .mat-button-wrapper {
+      color: white;
+    }
   }
-}
-
-.snack-info {
-  background-color: var(--blue);
-  color: white;
-  .mat-button-wrapper {
+  
+  .snack-info {
+    background-color: var(--blue);
     color: white;
+    .mat-button-wrapper {
+      color: white;
+    }
   }
-}
-
-.snack-warning {
-  background-color: var(--yellow);
-  color: black;
-  .mat-button-wrapper {
+  
+  .snack-warning {
+    background-color: var(--yellow);
     color: black;
+    .mat-button-wrapper {
+      color: black;
+    }
   }
-}
-
-.snack-success {
-  background-color: var(--green);
-  color: black;
-  .mat-button-wrapper {
+  
+  .snack-success {
+    background-color: var(--green);
     color: black;
+    .mat-button-wrapper {
+      color: black;
+    }
   }
-}
-
-.mat-progress-bar-element {
-  background-color: var(--blue);
-}
+  
+  .mat-progress-bar-element {
+    background-color: var(--blue);
+  }

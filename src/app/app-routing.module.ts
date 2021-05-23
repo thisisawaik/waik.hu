@@ -14,11 +14,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'stream', component: StreamsComponent },
   { path: 'streams', component: StreamsComponent },
-  { path: 'profile', component: ProfilesComponent, /*children: [
-    { path: 'isti', component: IstiComponent },
-    { path: 'norticus', component: NorticusComponent },
-    { path: 'walrusz', component: WalruszComponent },
-  ] */},
+  { path: 'profile', component: ProfilesComponent },
   { path: 'profile/isti', component: IstiComponent },
   { path: 'profile/norticus', component: NorticusComponent },
   { path: 'profile/walrusz', component: WalruszComponent },

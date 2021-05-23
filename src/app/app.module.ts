@@ -1,70 +1,58 @@
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { BrowserModule } from '@angular/platform-browser';
-import { environment } from 'src/environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { IstiComponent } from './profiles/isti/isti.component';
-import { NorticusComponent } from './profiles/norticus/norticus.component';
-import { ProfilesComponent } from './profiles/profiles.component';
-import { WalruszComponent } from './profiles/walrusz/walrusz.component';
-import { StreamsComponent } from './streams/streams.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule } from '@angular/material/card';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { DiscordEmbedComponent } from './discord-embed/discord-embed.component'
+import { HomeComponent } from './home/home.component';
+import { environment } from 'src/environments/environment';
+import { DiscordEmbedComponent } from './discord-embed/discord-embed.component';
 import { DownloadsComponent } from './downloads/downloads.component';
-import { MatButtonModule } from '@angular/material/button';
 import { CardComponent } from './downloads/card/card.component';
-import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ShareComponent } from './share/share.component';
-import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { FooterComponent } from './footer/footer.component';
+import { StreamsComponent } from './streams/streams.component';
 import { SocialBadgeComponent } from './social-badge/social-badge.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-
+import { ProfilesComponent } from './profiles/profiles.component';
+import { IstiComponent } from './profiles/isti/isti.component';
+import { NorticusComponent } from './profiles/norticus/norticus.component';
+import { WalruszComponent } from './profiles/walrusz/walrusz.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    StreamsComponent,
-    ProfilesComponent,
-    IstiComponent,
-    NorticusComponent,
-    WalruszComponent,
     DiscordEmbedComponent,
     DownloadsComponent,
     CardComponent,
     ShareComponent,
     FooterComponent,
+    StreamsComponent,
     SocialBadgeComponent,
     NotFoundComponent,
+    ProfilesComponent,
+    IstiComponent,
+    NorticusComponent,
+    WalruszComponent,
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule.withServerTransition({ appId: 'waik-hu' }),
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
-    HttpClientModule,
     BrowserAnimationsModule,
-    MatCardModule,
-    MatProgressSpinnerModule,
-    FlexLayoutModule,
-    MatGridListModule,
-    MatButtonModule,
-    AngularFirestoreModule,
-    AngularFireAnalyticsModule,
-    ClipboardModule,
-    MatSnackBarModule,
+    HttpClientModule,
     MatProgressBarModule,
+    MatCardModule,
+    MatSnackBarModule,
+    MatButtonModule,
+    FlexLayoutModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
