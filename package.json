@@ -1,5 +1,5 @@
 {
-  "name": "waik-hu-fy",
+  "name": "waik-hu",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,10 +7,10 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "dev:ssr": "ng run waik-hu-fy:serve-ssr",
-    "serve:ssr": "node dist/waik-hu-fy/server/main.js",
-    "build:ssr": "ng build && ng run waik-hu-fy:server",
-    "prerender": "ng run waik-hu-fy:prerender"
+    "dev:ssr": "ng run waik-hu:serve-ssr",
+    "serve:ssr": "node dist/waik-hu/server/main.js",
+    "build:ssr": "ng build && ng run waik-hu:server",
+    "prerender": "ng run waik-hu:prerender"
   },
   "private": true,
   "dependencies": {
