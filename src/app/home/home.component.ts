@@ -20,8 +20,6 @@ export class HomeComponent implements OnInit {
     this.meta.addTag({name: 'twitter:site', content: 'https://waik.hu/'})
     this.meta.addTag({name: 'twitter:creator', content: '@zal1000original'})
     this.meta.addTag({name: 'twitter:image:alt', content: 'Waik'})
-    this.meta.addTag({name: 'twitter:card', content: 'summary'})
-    this.meta.addTag({name: 'twitter:card', content: 'summary'})
   }
 
   pedroClick() {
