@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -10,10 +10,12 @@ export class HomeComponent implements OnInit {
   pedroClickCounter = 0;
   isOpen = true;
 
-  constructor(private htmltitle: Title) {}
+  constructor(private htmltitle: Title, private meta: Meta) {}
 
   ngOnInit(): void {
     this.htmltitle.setTitle('Főoldal')
+    this.meta.addTag({tag: 'og:title', content:'waik.hu'})
+    this.meta.addTag({tag: 'og:image', content:'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/waik%2Fpublic%2Fwaik_cup.jpg?alt=media&token=5c3a6c28-644a-492a-ba4d-74d9e52470e2'})
   }
 
   pedroClick() {
