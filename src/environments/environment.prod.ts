@@ -10,4 +10,5 @@ export const environment = {
     appId: "1:512279358183:web:1a091779e0474dba541042",
     measurementId: "G-W3EFDHYNN1"
   },
+  port: 4000
 };

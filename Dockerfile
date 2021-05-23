@@ -5,6 +5,6 @@ COPY package-lock.json .
 RUN npm i
 COPY . .
 RUN npm run build:ssr
-ENV PORT=8080
-EXPOSE 8080
+ENV PORT=4000
+EXPOSE 4000
 CMD [ "npm", "run", "serve:ssr" ]

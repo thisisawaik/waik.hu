@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessagesService } from '../messages.service';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { app } from '../firebaseapp';
+import { firebaseappapp } from '../firebaseapp';
 import { Meta } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { ShareService } from '../services/share.service';
 @Component({
   selector: 'app-share',
   templateUrl: './share.component.html',
@@ -15,24 +18,24 @@ export class ShareComponent implements OnInit {
     private route: ActivatedRoute,
     private msg: MessagesService,
     private meta: Meta,
-
+    private http: HttpClient,
+    private share: ShareService,
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const id = this.route.snapshot.params.ShareId;
     if (!id) {
       this.msg.error('ShareId not found!');
       this.router.navigate(['/']);
     } else {
-      const db = getFirestore(app)
+      const data = await this.share.getShareTags(id);
+      if(data) {
+        this.meta.addTags(data);
+      }
+      const db = getFirestore(firebaseappapp)
       const d = doc(db, `waik/website/shares/${id}`)
       getDoc(d).then((doc: any) => {
         if (doc.exists()) {
-          if(doc.data()['tags']) {
-            for (const tag of doc.data()['tags']) {
-              this.meta.addTag({ name: tag.name, content: tag.content });
-            }
-          }
           // if has redirect element
           if (doc.data()['redirect']) {
             // if external
