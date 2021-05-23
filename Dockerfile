@@ -1,4 +1,5 @@
 FROM node:14
+WORKDIR /web
 COPY package.json .
 COPY package-lock.json .
 RUN npm i
