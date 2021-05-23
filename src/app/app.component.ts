@@ -3,7 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { initializeApp } from 'firebase/app';
 import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
 import { environment } from 'src/environments/environment';
-import { app } from './firebaseapp';
+import { firebaseappapp } from './firebaseapp';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -36,13 +36,12 @@ export class AppComponent implements OnInit {
   async ngOnInit(): Promise<void> {
 
 
-    const db = getFirestore(app);
+    const db = getFirestore(firebaseappapp);
 
     const tdrRef = doc(db,'dcusers', '118466559738904576');
     const istiRef = doc(db,'dcusers', '174980450543075330'); // 174980450543075330
     const walruszRef = doc(db,'dcusers', '183302720030113792'); // 183302720030113792
     const geiszlaRef = doc(db,'dcusers', '175193667269558272'); // 175193667269558272
-
 
     getDoc(tdrRef).then((doc: any) => (this.tdrImage = doc.data().pp));
     getDoc(istiRef).then((doc: any) => (this.istiImage = doc.data().pp));

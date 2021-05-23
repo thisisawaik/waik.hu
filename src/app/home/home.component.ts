@@ -14,8 +14,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.htmltitle.setTitle('Főoldal')
-    this.meta.addTag({tag: 'og:title', content:'waik.hu'})
-    this.meta.addTag({tag: 'og:image', content:'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/waik%2Fpublic%2Fwaik_cup.jpg?alt=media&token=5c3a6c28-644a-492a-ba4d-74d9e52470e2'})
+    this.meta.addTag({name: 'og:title', content:'Waik weboldal'})
+    this.meta.addTag({name: 'og:image', content:'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/waik%2Fpublic%2Fwaik_cup.jpg?alt=media&token=5c3a6c28-644a-492a-ba4d-74d9e52470e2'})
+    this.meta.addTag({name: 'og:description', content:'A hivatalos waik weboldal'})
+    this.meta.addTag({name: 'twitter:site', content: 'https://waik.hu/'})
+    this.meta.addTag({name: 'twitter:creator', content: '@zal1000original'})
+    this.meta.addTag({name: 'twitter:image:alt', content: 'Waik'})
+    this.meta.addTag({name: 'twitter:card', content: 'summary'})
+    this.meta.addTag({name: 'twitter:card', content: 'summary'})
   }
 
   pedroClick() {
