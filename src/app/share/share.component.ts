@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessagesService } from '../messages.service';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { firebaseappapp } from '../firebaseapp';
 import { Meta } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -32,7 +31,7 @@ export class ShareComponent implements OnInit {
       if(data) {
         this.meta.addTags(data);
       }
-      const db = getFirestore(firebaseappapp)
+      const db = getFirestore()
       const d = doc(db, `waik/website/shares/${id}`)
       getDoc(d).then((doc: any) => {
         if (doc.exists()) {

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { firebaseappapp } from '../firebaseapp';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -20,7 +19,7 @@ export class FooterComponent implements OnInit {
   @Input() extraIds: Id[] | null | undefined;
 
   async ngOnInit(): Promise<void> {
-    const db = getFirestore(firebaseappapp);
+    const db = getFirestore();
     if(this.extraIds) {
       for (const u of this.extraIds) {
         this.ids.push(u);

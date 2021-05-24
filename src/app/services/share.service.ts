@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { Observable,  } from 'rxjs'
-import { firebaseappapp } from '../firebaseapp';
+import { Observable } from 'rxjs'
+
 
 const map = new Map<string, Array<MetaDefinition>>();
 
@@ -21,7 +21,7 @@ export class ShareService {
       return data;
     }
     
-    const db = getFirestore(firebaseappapp);
+    const db = getFirestore();
     const d = doc(db, `waik/website/shares/${id}`);
 
     try {
@@ -31,13 +31,13 @@ export class ShareService {
         if(doc.data()['tags']) {
           map.set(id, doc.data()['tags'])
         }
+        return map.get(id);
+      } else {
+        return undefined;
       }
-    }
-    catch(e)
-    {
-      
+    } catch(e) {
+      return undefined;
     }
 
-    return undefined;
   } 
 }

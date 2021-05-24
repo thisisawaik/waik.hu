@@ -4,7 +4,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { getFirestore, query, collection, where, orderBy, limitToLast, getDocs } from 'firebase/firestore';
-import { firebaseappapp } from 'src/app/firebaseapp';
 @Component({
   selector: 'app-walrusz',
   templateUrl: './walrusz.component.html',
@@ -24,7 +23,7 @@ export class WalruszComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    const db = getFirestore(firebaseappapp)
+    const db = getFirestore()
     const q = query(collection(db, 'waik/videos/post'), where('channel', '==', 'Walrusz'), orderBy('timestamp'), limitToLast(3));
     getDocs(q).then(coll => {
       let counter = -1;

@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MessagesService } from '../messages.service';
 import { getFirestore, collection, query, where, getDocs, orderBy } from "firebase/firestore";
-import { firebaseappapp } from '../firebaseapp';
 @Component({
   selector: 'app-downloads',
   templateUrl: './downloads.component.html',
@@ -19,7 +18,7 @@ export class DownloadsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const db = getFirestore(firebaseappapp);
+    const db = getFirestore();
 
     //const coll = this.db.collection('waik').doc('website').collection('downloads', (ref) => ref.orderBy('timestamp'));
     this.htmltitle.setTitle('Letöltések');

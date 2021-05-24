@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LoadGuardGuard } from './load-guard.guard';
+import { LoadGuard } from './load.guard';
 
-describe('LoadGuardGuard', () => {
-  let guard: LoadGuardGuard;
+describe('LoadGuard', () => {
+  let guard: LoadGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(LoadGuardGuard);
+    guard = TestBed.inject(LoadGuard);
   });
 
   it('should be created', () => {

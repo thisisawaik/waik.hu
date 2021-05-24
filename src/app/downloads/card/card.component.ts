@@ -4,7 +4,6 @@ import { Meta, Title } from '@angular/platform-browser';
 import { MessagesService } from 'src/app/messages.service';
 import { collection, doc, getDoc, getFirestore } from 'firebase/firestore';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { firebaseappapp } from '../../firebaseapp'
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -43,7 +42,7 @@ export class CardComponent implements OnInit {
   author: string | undefined;
 
   ngOnInit(): void {
-    const db = getFirestore(firebaseappapp);
+    const db = getFirestore();
     if(this.author) {
       const d = doc(db, 'dcusers', this.author);
 
@@ -58,7 +57,7 @@ export class CardComponent implements OnInit {
     }
 
     if (this.gsurl) {
-      const storage = getStorage(firebaseappapp);
+      const storage = getStorage();
       getDownloadURL(ref(storage, this.gsurl)).then((res) => {
         this.url = res;
       })
@@ -98,7 +97,7 @@ export class CardComponent implements OnInit {
   }
 
   share() {
-    const db = getFirestore(firebaseappapp);
+    const db = getFirestore();
     const d = doc(db, `waik/website/shares/${this.shareid}`);
     const link = `${window.location.protocol}//${window.location.hostname}${window.location.port? `:${window.location.port}` : ''}/share/${this.shareid}`;
     this.clipboard.copy(link);
