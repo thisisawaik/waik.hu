@@ -24,6 +24,8 @@ import { ProfilesComponent } from './profiles/profiles.component';
 import { IstiComponent } from './profiles/isti/isti.component';
 import { NorticusComponent } from './profiles/norticus/norticus.component';
 import { WalruszComponent } from './profiles/walrusz/walrusz.component';
+import { DiscordNewsComponent } from './discord-news/discord-news.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +42,7 @@ import { WalruszComponent } from './profiles/walrusz/walrusz.component';
     IstiComponent,
     NorticusComponent,
     WalruszComponent,
+    DiscordNewsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'waik-hu' }),
