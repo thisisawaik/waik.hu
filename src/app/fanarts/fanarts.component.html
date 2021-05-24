@@ -1,1 +1,5 @@
-<p>fanarts works!</p>
+<div fxLayout="row wrap" class="div" >
+    <div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 16px;" *ngFor="let art of arts">
+        <app-images [id]="art.id" [imageurl]="art.downloadurl" [gsurl]="art.gsurl" [getFromGS]="art.getFromGS" [author]="art.author" ></app-images>
+    </div>
+  </div>

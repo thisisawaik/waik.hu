@@ -11,6 +11,8 @@ import { ShareComponent } from './share/share.component';
 import { StreamsComponent } from './streams/streams.component';
 import { LoadGuard } from './load.guard';
 import { UploaderComponent } from './upload/uploader/uploader.component';
+import { FanartsComponent } from './fanarts/fanarts.component';
+import { AccountComponent } from './account/account.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,7 +26,8 @@ const routes: Routes = [
   { path: 'downloads', component: DownloadsComponent },
   { path: 'share/:ShareId', component: ShareComponent, canActivate: [LoadGuard] },
   { path: 'upload', component: UploaderComponent },
-
+  { path: 'fanart', component: FanartsComponent},
+  { path: 'fanarts', component: FanartsComponent},
   { path: '**', component: NotFoundComponent },
 ];
 

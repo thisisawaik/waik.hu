@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Meta, Title } from '@angular/platform-browser';
-import { MessagesService } from 'src/app/messages.service';
+import { MessagesService } from 'src/app/services/messages.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 

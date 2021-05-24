@@ -1,8 +1,9 @@
 <div class="toolbar" role="banner">
   <img width="40" routerLink="/" alt="Waik Logo" src="assets/waik_big_icon.png" />
-  <button routerLink="/">Kezdőlap</button>
-  <button routerLink="/stream">Streamek</button>
-  <button routerLink="/downloads">Letöltések</button>
+  <button routerLink="/" [class.active]="onHomePage" mat-button>Kezdőlap</button>
+  <button routerLink="/stream" routerLinkActive="active" mat-button>Streamek</button>
+  <button routerLink="/downloads" routerLinkActive="active" mat-button>Letöltések</button>
+  <button routerLink="/fanarts" routerLinkActive="active" mat-button>Fanartok</button>
   <div class="spacer"></div>
   <div *ngIf="onProfilePage">
     <div *ngIf="currentpage === 'tdr'">
@@ -93,6 +94,10 @@
   </a>
   <a aria-label="Geiszla" title="Geiszla">
     <img class="rounded-circle" [src]="geiszlaImage" height="30" />
+  </a>
+  <div style="border-left: 3px solid white; height: 80%"></div>
+  <a (click)="openProfile()" style="cursor: pointer;">
+    <img class="rounded-circle" [src]="userpp" height="30" />
   </a>
 </div>
 <!--

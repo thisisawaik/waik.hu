@@ -27,9 +27,18 @@ import { WalruszComponent } from './profiles/walrusz/walrusz.component';
 import { DiscordNewsComponent } from './discord-news/discord-news.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
+import { AngularFirePerformanceModule } from '@angular/fire/performance';
 import { UploaderComponent } from './upload/uploader/uploader.component';
 import { UploaderTaskComponent } from './upload/uploader-task/uploader-task.component';
 import { DropzoneDirective } from './dropzone.directive';
+import { FanartsComponent } from './fanarts/fanarts.component';
+import { ImagesComponent } from './fanarts/images/images.component';
+import { ImageDialogComponent } from './fanarts/image-dialog/image-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { AccountComponent } from './account/account.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,12 +59,19 @@ import { DropzoneDirective } from './dropzone.directive';
     UploaderComponent,
     UploaderTaskComponent,
     DropzoneDirective,
+    FanartsComponent,
+    ImagesComponent,
+    ImageDialogComponent,
+    AccountComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'waik-hu' }),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
+    AngularFireAuthModule,
+    AngularFireAnalyticsModule,
+    AngularFirePerformanceModule,
     BrowserAnimationsModule,
     HttpClientModule,
     MatProgressBarModule,
@@ -64,6 +80,8 @@ import { DropzoneDirective } from './dropzone.directive';
     MatButtonModule,
     FlexLayoutModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

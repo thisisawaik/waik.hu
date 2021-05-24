@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { Title } from '@angular/platform-browser';
-import { MessagesService } from '../messages.service';
+import { MessagesService } from '../services/messages.service';
 @Component({
   selector: 'app-downloads',
   templateUrl: './downloads.component.html',

@@ -8,7 +8,7 @@ export class MessagesService {
   constructor(private snack: MatSnackBar) { }
 
   error(message?: string) {
-    this.snack.open(`Hiba! ${ message || ''}`, 'Dismiss', {
+    this.snack.open(`${message? '' : 'Hiba!'} ${ message || ''}`, 'Dismiss', {
       panelClass: ['snack-error'],
     });
   }

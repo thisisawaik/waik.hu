@@ -1,0 +1,13 @@
+<h2 mat-dialog-title *ngIf="user">{{ user ? 'Profile' :  'Login' }}</h2>
+<mat-dialog-content *ngIf="!user" class="mat-typography">
+    <button mat-button disabled style="background-color: #5865F2;">Discord login</button><br>
+    <button mat-button style="background-color: #E94235; color: white;" (click)="googlelogin()">Google login</button><br>
+</mat-dialog-content>
+<mat-dialog-content *ngIf="user" class="mat-typography">
+    <p>Logged in as {{ user.email }}</p>
+    <button mat-button (click)="getToken()">Get token</button>
+    <button mat-button style="background-color: var(--red);" (click)="logOut()">Kijelentkezés</button>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close] cdkFocusInitial>Close</button>
+</mat-dialog-actions>
