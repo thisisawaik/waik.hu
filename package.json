@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "npm run serve:ssr",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -20,7 +20,7 @@
     "@angular/compiler": "~12.0.1",
     "@angular/core": "~12.0.1",
     "@angular/fire": "^6.1.5",
-    "@angular/flex-layout": "*",
+    "@angular/flex-layout": "^12.0.0-beta.34",
     "@angular/forms": "~12.0.1",
     "@angular/material": "^12.0.1",
     "@angular/platform-browser": "~12.0.1",
