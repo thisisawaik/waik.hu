@@ -1,0 +1,26 @@
+<p>uploader-task works!</p>
+
+<div *ngIf="precentage | async as pct">
+    <mat-progress-bar [value]="pct"></mat-progress-bar>
+
+    {{ pct | number }}%
+</div>
+
+
+<div *ngIf="snapshot | async as snap">
+    {{ snap.bytesTransferred }} of {{ snap.totalBytes }}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

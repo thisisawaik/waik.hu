@@ -10,6 +10,7 @@ import { WalruszComponent } from './profiles/walrusz/walrusz.component';
 import { ShareComponent } from './share/share.component';
 import { StreamsComponent } from './streams/streams.component';
 import { LoadGuard } from './load.guard';
+import { UploaderComponent } from './upload/uploader/uploader.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'download', component: DownloadsComponent },
   { path: 'downloads', component: DownloadsComponent },
   { path: 'share/:ShareId', component: ShareComponent, canActivate: [LoadGuard] },
+  { path: 'upload', component: UploaderComponent },
 
   { path: '**', component: NotFoundComponent },
 ];

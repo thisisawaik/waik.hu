@@ -27,6 +27,9 @@ import { WalruszComponent } from './profiles/walrusz/walrusz.component';
 import { DiscordNewsComponent } from './discord-news/discord-news.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { UploaderComponent } from './upload/uploader/uploader.component';
+import { UploaderTaskComponent } from './upload/uploader-task/uploader-task.component';
+import { DropzoneDirective } from './dropzone.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +47,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     NorticusComponent,
     WalruszComponent,
     DiscordNewsComponent,
+    UploaderComponent,
+    UploaderTaskComponent,
+    DropzoneDirective,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'waik-hu' }),
