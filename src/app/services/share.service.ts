@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { MetaDefinition } from '@angular/platform-browser';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { Observable } from 'rxjs'
 
 
@@ -11,7 +11,7 @@ const map = new Map<string, Array<MetaDefinition>>();
 })
 export class ShareService {
 
-  constructor() {
+  constructor(private db: AngularFirestore) {
   }
 
   async getShareTags(id: any): Promise<Array<MetaDefinition> | undefined> {
@@ -21,11 +21,10 @@ export class ShareService {
       return data;
     }
     
-    const db = getFirestore();
-    const d = doc(db, `waik/website/shares/${id}`);
+    const docref = this.db.doc(`waik/website/shares/${id}`);
 
     try {
-      let doc = await getDoc(d);
+      let doc: any = await docref.get().toPromise();
       
       if (doc.exists()) {
         if(doc.data()['tags']) {

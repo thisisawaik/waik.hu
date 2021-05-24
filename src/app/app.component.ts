@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { initializeApp } from 'firebase/app';
-import { collection, doc, getDoc, getFirestore } from "firebase/firestore";
+import { AngularFirestore } from '@angular/fire/firestore'
 import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-root',
@@ -16,7 +15,7 @@ export class AppComponent implements OnInit {
   currentpage: 'tdr' | 'isti' | 'walrusz' | 'geiszla' | null = null;
   onProfilePage: boolean = true;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private db: AngularFirestore) {
     this.router.events.subscribe((event: any) => {
       if(event.url === "/profile/isti") {
         this.currentpage = "isti";
@@ -33,18 +32,15 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const firebaseappapp = initializeApp(environment.firebaseConfig);
 
-    const db = getFirestore();
+    const tdrRef = this.db.doc('dcusers/118466559738904576');
+    const istiRef = this.db.doc('dcusers/174980450543075330'); // 174980450543075330
+    const walruszRef = this.db.doc('dcusers/183302720030113792'); // 183302720030113792
+    const geiszlaRef = this.db.doc('dcusers/175193667269558272'); // 175193667269558272
 
-    const tdrRef = doc(db,'dcusers', '118466559738904576');
-    const istiRef = doc(db,'dcusers', '174980450543075330'); // 174980450543075330
-    const walruszRef = doc(db,'dcusers', '183302720030113792'); // 183302720030113792
-    const geiszlaRef = doc(db,'dcusers', '175193667269558272'); // 175193667269558272
-
-    getDoc(tdrRef).then((doc: any) => (this.tdrImage = doc.data().pp));
-    getDoc(istiRef).then((doc: any) => (this.istiImage = doc.data().pp));
-    getDoc(walruszRef).then((doc: any) => (this.walruszImage = doc.data().pp));
-    getDoc(geiszlaRef).then((doc: any) => (this.geiszlaImage = doc.data().pp));
+    tdrRef.get().toPromise().then((doc: any) => (this.tdrImage = doc.data().pp));
+    istiRef.get().toPromise().then((doc: any) => (this.istiImage = doc.data().pp));
+    walruszRef.get().toPromise().then((doc: any) => (this.walruszImage = doc.data().pp));
+    geiszlaRef.get().toPromise().then((doc: any) => (this.geiszlaImage = doc.data().pp));
   }
 }

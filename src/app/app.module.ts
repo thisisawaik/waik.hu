@@ -25,7 +25,8 @@ import { IstiComponent } from './profiles/isti/isti.component';
 import { NorticusComponent } from './profiles/norticus/norticus.component';
 import { WalruszComponent } from './profiles/walrusz/walrusz.component';
 import { DiscordNewsComponent } from './discord-news/discord-news.component';
-
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,6 +48,8 @@ import { DiscordNewsComponent } from './discord-news/discord-news.component';
   imports: [
     BrowserModule.withServerTransition({ appId: 'waik-hu' }),
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireStorageModule,
     BrowserAnimationsModule,
     HttpClientModule,
     MatProgressBarModule,

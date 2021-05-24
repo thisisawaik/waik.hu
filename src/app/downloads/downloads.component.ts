@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 import { Title } from '@angular/platform-browser';
 import { MessagesService } from '../messages.service';
-import { getFirestore, collection, query, where, getDocs, orderBy } from "firebase/firestore";
 @Component({
   selector: 'app-downloads',
   templateUrl: './downloads.component.html',
@@ -12,20 +12,18 @@ export class DownloadsComponent implements OnInit {
   colldata: Docdata[] = [];
 
   constructor(
-
+    private db: AngularFirestore,
     private htmltitle: Title,
     private msg: MessagesService,
   ) {}
 
   ngOnInit(): void {
-    const db = getFirestore();
 
     //const coll = this.db.collection('waik').doc('website').collection('downloads', (ref) => ref.orderBy('timestamp'));
     this.htmltitle.setTitle('Letöltések');
-    const coll = collection(db, 'waik/website/downloads')
-    const q = query(coll, orderBy('timestamp'))
+    const q = this.db.collection('waik/website/downloads', ref => ref.orderBy('timestamp'));
     
-    getDocs(q).then(docs => {
+    q.get().toPromise().then(docs => {
       for (const doc of docs.docs) {
         const docdata: any = doc.data();
         this.colldata.push(docdata);

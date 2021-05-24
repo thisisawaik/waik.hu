@@ -2,8 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Meta, Title } from '@angular/platform-browser';
 import { MessagesService } from 'src/app/messages.service';
-import { collection, doc, getDoc, getFirestore } from 'firebase/firestore';
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
+
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -22,6 +23,8 @@ export class CardComponent implements OnInit {
   constructor(
     private clipboard: Clipboard,
     private msg: MessagesService,
+    private db: AngularFirestore,
+    private storage: AngularFireStorage,
   ) {}
 
   @Input()
@@ -42,11 +45,10 @@ export class CardComponent implements OnInit {
   author: string | undefined;
 
   ngOnInit(): void {
-    const db = getFirestore();
     if(this.author) {
-      const d = doc(db, 'dcusers', this.author);
+      const d = this.db.doc(`dcusers/${this.author}`);
 
-      getDoc(d).then((doc: any) => {
+      d.get().toPromise().then((doc: any) => {
         this.authordata = {
           name: doc.data()['tag'],
           avatar: doc.data()['pp'],
@@ -57,8 +59,7 @@ export class CardComponent implements OnInit {
     }
 
     if (this.gsurl) {
-      const storage = getStorage();
-      getDownloadURL(ref(storage, this.gsurl)).then((res) => {
+      this.storage.refFromURL(this.gsurl).getDownloadURL().toPromise().then((res) => {
         this.url = res;
       })
       .catch((e) => {
@@ -78,9 +79,9 @@ export class CardComponent implements OnInit {
       this.url = null;
     }
 
-    const d = doc(db, `waik/website/shares/${this.shareid}`);
-    getDoc(d).then((doc) => {
-      if (doc.exists()) {
+    const d = this.db.doc(`waik/website/shares/${this.shareid}`);
+    d.get().toPromise().then((doc) => {
+      if (doc.exists) {
         this.shareable = true;
       }
     });
@@ -97,8 +98,7 @@ export class CardComponent implements OnInit {
   }
 
   share() {
-    const db = getFirestore();
-    const d = doc(db, `waik/website/shares/${this.shareid}`);
+    const d = this.db.doc(`waik/website/shares/${this.shareid}`);
     const link = `${window.location.protocol}//${window.location.hostname}${window.location.port? `:${window.location.port}` : ''}/share/${this.shareid}`;
     this.clipboard.copy(link);
     this.msg.success(`Link másolva a vágólapra! (${link})`)
