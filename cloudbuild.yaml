@@ -3,6 +3,8 @@ steps:
   args: ["app", "deploy"]
 - name: node
   entrypoint: npm
+  args: ['install', '-g', '@angular/cli@12.0.1']
+- name: node
+  entrypoint: npm
   args: ['run', 'build:ssr']
-
 timeout: "1600s"
