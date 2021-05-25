@@ -1,4 +1,8 @@
 steps:
 - name: "gcr.io/cloud-builders/gcloud"
   args: ["app", "deploy"]
+- name: node
+  entrypoint: npm
+  args: ['run', 'build:ssr']
+
 timeout: "1600s"
