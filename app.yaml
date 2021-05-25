@@ -1,2 +1,5 @@
 runtime: nodejs14 # or another supported version
 service: waik-main
+
+automatic_scaling:
+  min_instances: 1
