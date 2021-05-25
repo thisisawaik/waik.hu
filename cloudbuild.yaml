@@ -7,4 +7,7 @@ steps:
 - name: node
   entrypoint: npm
   args: ['run', 'build:ssr']
+- name: node
+  entrypoint: npm
+  args: ['install']
 timeout: "1600s"
