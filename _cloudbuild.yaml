@@ -1,8 +1,8 @@
 steps:
-- name: node
+- name: node:14
   entrypoint: npm
   args: ['install']
-- name: node
+- name: node:14
   entrypoint: npm
   args: ['install', '-g', '@angular/cli@12.0.1']
 - name: node

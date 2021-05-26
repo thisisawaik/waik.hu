@@ -81,7 +81,7 @@ import { AccountComponent } from './account/account.component';
     FlexLayoutModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatIconModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

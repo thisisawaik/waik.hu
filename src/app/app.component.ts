@@ -66,20 +66,16 @@ export class AppComponent implements OnInit {
 
     tdrRef
       .get()
-      .toPromise()
-      .then((doc: any) => (this.tdrImage = doc.data().pp));
+      .subscribe((doc: any) => (this.tdrImage = doc.data().pp));
     istiRef
       .get()
-      .toPromise()
-      .then((doc: any) => (this.istiImage = doc.data().pp));
+      .subscribe((doc: any) => (this.istiImage = doc.data().pp));
     walruszRef
       .get()
-      .toPromise()
-      .then((doc: any) => (this.walruszImage = doc.data().pp));
+      .subscribe((doc: any) => (this.walruszImage = doc.data().pp));
     geiszlaRef
       .get()
-      .toPromise()
-      .then((doc: any) => (this.geiszlaImage = doc.data().pp));
+      .subscribe((doc: any) => (this.geiszlaImage = doc.data().pp));
   }
 
   openProfile() {

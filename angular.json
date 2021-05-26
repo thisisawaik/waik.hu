@@ -103,7 +103,12 @@
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
             "inlineStyleLanguage": "scss",
-            "externalDependencies": [ "@firebase/app", "@firebase/firestore" ]
+            "externalDependencies": [ 
+              "@firebase/app",
+              "firebase/app",
+              "@firebase/firestore",
+              "lodash"
+            ]
           },
           "configurations": {
             "production": {

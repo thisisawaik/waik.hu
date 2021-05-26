@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'profile/walrusz', component: WalruszComponent },
   { path: 'download', component: DownloadsComponent },
   { path: 'downloads', component: DownloadsComponent },
-  { path: 'share/:ShareId', component: ShareComponent, canActivate: [LoadGuard] },
+  { path: 'share/:ShareId', component: ShareComponent },
   { path: 'upload', component: UploaderComponent },
   { path: 'fanart', component: FanartsComponent},
   { path: 'fanarts', component: FanartsComponent},
