@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 @Component({
   selector: 'app-fanarts',
   templateUrl: './fanarts.component.html',
@@ -10,12 +10,14 @@ export class FanartsComponent implements OnInit {
   
   arts: any[] = [];
 
-  constructor(private db: AngularFirestore) { }
+  db = firebase.firestore();
+
+  constructor() { }
 
   ngOnInit(): void {
-    const query = this.db.collection('waik/website/fanarts', ref => ref.where('public', '==', true));
+    const query = this.db.collection('waik/website/fanarts').where('public', '==', true);
 
-    query.get().toPromise().then(snap => {
+    query.get().then(snap => {
       console.log(snap)
       for (let doc of snap.docs) {
         this.arts.push(doc.data())        

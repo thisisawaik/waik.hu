@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
 
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private db: AngularFirestore, private auth: AngularFireAuth) { }
+  db = firebase.firestore();
+  auth = firebase.auth();
+
+  constructor() { }
 
   async getAuthToken(): Promise<number | null> {
     const user = await this.auth.currentUser;
     const ref = this.db.collection('tokens').doc(user?.uid);
-    const doc = await ref.get().toPromise();
+    const doc = await ref.get();
     const data: any = doc.data();
     return data.token ? data.token : null;
   }

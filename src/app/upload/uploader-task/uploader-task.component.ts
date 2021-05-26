@@ -1,8 +1,12 @@
 import { Component, Input, OnInit, Pipe } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
+//import { AngularFirestore } from '@angular/fire/firestore';
+//import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
-import {  finalize, tap  } from 'rxjs/operators'
+//import {  finalize, tap  } from 'rxjs/operators'
+
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/storage';
 
 @Component({
   selector: 'app-uploader-task',
@@ -10,13 +14,14 @@ import {  finalize, tap  } from 'rxjs/operators'
   styleUrls: ['./uploader-task.component.scss']
 })
 export class UploaderTaskComponent implements OnInit {
-
-  constructor(private db: AngularFirestore, private storage: AngularFireStorage) { }
+  db = firebase.firestore();
+  storage = firebase.storage();
+  constructor() { }
 
   @Input()
   file!: File;
 
-  task: AngularFireUploadTask | undefined;
+  task: firebase.storage.UploadTask | undefined;
 
   precentage!: Observable<number | undefined>;
   snapshot!: Observable<any>;
@@ -25,6 +30,7 @@ export class UploaderTaskComponent implements OnInit {
   }
 
   startUpload() {
+    /*
     this.db.collection('waik').doc('website').collection('fanart').add({
       author: 'USER',
       status: 'PREPAREING',
@@ -36,11 +42,11 @@ export class UploaderTaskComponent implements OnInit {
       const path = `waik/fan/art/USER/${res.id}.${this.file.type}`;
       const ref = this.storage.ref(path);
 
-      this.task = this.storage.upload(path, this.file);
+      this.task = ref.put(this.file);
 
-      this.precentage = this.task.percentageChanges();
+      this.precentage = (this.task.snapshot.totalBytes / this.task.snapshot.bytesTransferred);
 
-      this.snapshot = this.task.snapshotChanges().pipe(
+      this.snapshot = this.task?.snapshotChanges().pipe(
         tap(console.log),
 
         finalize( async() => {
@@ -55,6 +61,7 @@ export class UploaderTaskComponent implements OnInit {
         })
       );
     })
+    */
   }
 
   isActive(snapshot: any) {

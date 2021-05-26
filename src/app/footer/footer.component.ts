@@ -1,13 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-
-  constructor(private db: AngularFirestore) { }
+  db = firebase.firestore();
+  constructor() { }
 
   // 223853152510803972
   members: Id[] = [];
@@ -28,7 +30,7 @@ export class FooterComponent implements OnInit {
 
     for (const user of this.ids) {
       const d = this.db.doc(`dcusers/${user.id}`)
-      d.get().toPromise().then((res: any) => {
+      d.get().then((res: any) => {
         this.members.push({
           id: user.id,
           role: user.role,

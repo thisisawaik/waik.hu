@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { AccountComponent } from './account/account.component';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { MessagesService } from './services/messages.service';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,9 +25,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private db: AngularFirestore,
     public dialog: MatDialog,
-    private auth: AngularFireAuth,
+    //private auth: AngularFireAuth,
     private msg: MessagesService,
   ) {
     this.router.events.subscribe((event: any) => {
@@ -47,7 +48,7 @@ export class AppComponent implements OnInit {
       }
     });
 
-    this.auth.onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(user => {
       const defavatar = 'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/demo%2Fpp%2Fdemo.png?alt=media&token=93fec366-cc41-45e0-9ad1-f6a399cc750c';
       if(user) {
         this.userpp = user.photoURL ? user.photoURL : defavatar;
@@ -59,23 +60,26 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const tdrRef = this.db.doc('dcusers/118466559738904576');
-    const istiRef = this.db.doc('dcusers/174980450543075330'); // 174980450543075330
-    const walruszRef = this.db.doc('dcusers/183302720030113792'); // 183302720030113792
-    const geiszlaRef = this.db.doc('dcusers/175193667269558272'); // 175193667269558272
+
+    const db = firebase.firestore()
+
+    const tdrRef = db.doc('dcusers/118466559738904576');
+    const istiRef = db.doc('dcusers/174980450543075330'); // 174980450543075330
+    const walruszRef = db.doc('dcusers/183302720030113792'); // 183302720030113792
+    const geiszlaRef = db.doc('dcusers/175193667269558272'); // 175193667269558272
 
     tdrRef
       .get()
-      .subscribe((doc: any) => (this.tdrImage = doc.data().pp));
+      .then((doc: any) => (this.tdrImage = doc.data().pp));
     istiRef
       .get()
-      .subscribe((doc: any) => (this.istiImage = doc.data().pp));
+      .then((doc: any) => (this.istiImage = doc.data().pp));
     walruszRef
       .get()
-      .subscribe((doc: any) => (this.walruszImage = doc.data().pp));
+      .then((doc: any) => (this.walruszImage = doc.data().pp));
     geiszlaRef
       .get()
-      .subscribe((doc: any) => (this.geiszlaImage = doc.data().pp));
+      .then((doc: any) => (this.geiszlaImage = doc.data().pp));
   }
 
   openProfile() {

@@ -2,8 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Meta, Title } from '@angular/platform-browser';
 import { MessagesService } from 'src/app/services/messages.service';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage } from '@angular/fire/storage';
+
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/storage';
 
 @Component({
   selector: 'app-card',
@@ -20,11 +22,12 @@ export class CardComponent implements OnInit {
     name: '',
   };
 
+  db = firebase.firestore();
+  storage = firebase.storage();
+
   constructor(
     private clipboard: Clipboard,
     private msg: MessagesService,
-    private db: AngularFirestore,
-    private storage: AngularFireStorage,
   ) {}
 
   @Input()
@@ -48,7 +51,7 @@ export class CardComponent implements OnInit {
     if(this.author) {
       const d = this.db.doc(`dcusers/${this.author}`);
 
-      d.get().toPromise().then((doc: any) => {
+      d.get().then((doc: any) => {
         this.authordata = {
           name: doc.data()['tag'],
           avatar: doc.data()['pp'],
@@ -59,7 +62,7 @@ export class CardComponent implements OnInit {
     }
 
     if (this.gsurl) {
-      this.storage.refFromURL(this.gsurl).getDownloadURL().toPromise().then((res) => {
+      this.storage.refFromURL(this.gsurl).getDownloadURL().then((res) => {
         this.url = res;
       })
       .catch((e) => {
@@ -80,7 +83,7 @@ export class CardComponent implements OnInit {
     }
 
     const d = this.db.doc(`waik/website/shares/${this.shareid}`);
-    d.get().toPromise().then((doc) => {
+    d.get().then((doc) => {
       if (doc.exists) {
         this.shareable = true;
       }

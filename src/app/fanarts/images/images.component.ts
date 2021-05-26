@@ -3,12 +3,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { MessagesService } from 'src/app/services/messages.service';
 import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
 import { Clipboard } from '@angular/cdk/clipboard';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { AccountComponent } from 'src/app/account/account.component';
+
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+
 @Component({
   selector: 'app-images',
   templateUrl: './images.component.html',
@@ -22,14 +25,16 @@ export class ImagesComponent implements OnInit {
   authorAvatar: string | undefined;
   authorName: string | undefined;
   likes: string[] = [];
+
+  db = firebase.firestore();
+  auth = firebase.auth();
+
   constructor(
     public dialog: MatDialog,
     private msg: MessagesService,
     private clipboard: Clipboard,
-    private db: AngularFirestore,
     private http: HttpClient,
     private authServ: AuthService,
-    private auth: AngularFireAuth,
   ) {}
 
   @Input() id: string | undefined;
@@ -44,13 +49,11 @@ export class ImagesComponent implements OnInit {
       const userref = this.db.doc(`users/${this.author}`);
       userref
         .get()
-        .toPromise()
         .then((doc: any) => {
           if (doc.data()['dcid']) {
             this.db
               .doc(`dcusers/${doc.data()['dcid']}`)
               .get()
-              .toPromise()
               .then((doc: any) => {
                 this.authorAvatar = doc.data()['pp'];
                 this.authorName = doc.data()['tag'];
@@ -62,7 +65,7 @@ export class ImagesComponent implements OnInit {
     }
     
     const coll = this.db.collection('waik/website/fanarts').doc(this.id);
-    coll.valueChanges().subscribe(async (snap: any) => {
+    coll.onSnapshot(async (snap: any) => {
       this.likes = snap.likes;
       const user = await this.auth.currentUser;
       if(user && this.likes?.length != 0) {
@@ -71,8 +74,6 @@ export class ImagesComponent implements OnInit {
         }
       }
     })
-    
-
   }
 
   open() {
