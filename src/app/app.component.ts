@@ -12,10 +12,10 @@ import { MessagesService } from './services/messages.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  tdrImage: string | undefined;
-  istiImage: string | undefined;
-  walruszImage: string | undefined;
-  geiszlaImage: string | undefined;
+  tdrImage: string = "https://cdn.discordapp.com/avatars/118466559738904576/6b4610199259efab8493cafb3e049938.webp";
+  istiImage: string = "https://cdn.discordapp.com/avatars/174980450543075330/68bd161e38aaaff31a57ed05bf4ea971.webp";
+  walruszImage: string = "https://cdn.discordapp.com/avatars/183302720030113792/4fecad104687bc2c889bda7043276a6c.webp";
+  geiszlaImage: string = "https://cdn.discordapp.com/avatars/175193667269558272/70f1d3545c7d38f4735148324c93f7ee.webp";
   currentpage: 'tdr' | 'isti' | 'walrusz' | 'geiszla' | null = null;
   onProfilePage: boolean = true;
   onHomePage: boolean = true;
