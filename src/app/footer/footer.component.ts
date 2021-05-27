@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
 
 @Component({
   selector: 'app-footer',
@@ -8,7 +7,7 @@ import 'firebase/firestore';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-  db = firebase.firestore();
+  db = getFirestore();
   constructor() { }
 
   // 223853152510803972
@@ -29,8 +28,8 @@ export class FooterComponent implements OnInit {
     
 
     for (const user of this.ids) {
-      const d = this.db.doc(`dcusers/${user.id}`)
-      d.get().then((res: any) => {
+      const d = doc(this.db, `dcusers/${user.id}`)
+      getDoc(d).then((res: any) => {
         this.members.push({
           id: user.id,
           role: user.role,

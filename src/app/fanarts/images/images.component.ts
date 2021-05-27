@@ -8,9 +8,9 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
 import { AccountComponent } from 'src/app/account/account.component';
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
 import 'firebase/auth';
+import { collection, doc, getDoc, getFirestore, onSnapshot } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 @Component({
   selector: 'app-images',
@@ -26,8 +26,8 @@ export class ImagesComponent implements OnInit {
   authorName: string | undefined;
   likes: string[] = [];
 
-  db = firebase.firestore();
-  auth = firebase.auth();
+  db = getFirestore();
+  auth = getAuth();
 
   constructor(
     public dialog: MatDialog,
@@ -46,27 +46,26 @@ export class ImagesComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     if (this.author) {
-      const userref = this.db.doc(`users/${this.author}`);
-      userref
-        .get()
-        .then((doc: any) => {
-          if (doc.data()['dcid']) {
-            this.db
-              .doc(`dcusers/${doc.data()['dcid']}`)
-              .get()
+      const userref = doc(this.db, `users/${this.author}`);
+      getDoc(userref)
+        .then((docdata: any) => {
+          if (docdata.data()['dcid']) {
+              getDoc(doc(this.db, `dcusers/${docdata.data()['dcid']}`))
               .then((doc: any) => {
                 this.authorAvatar = doc.data()['pp'];
                 this.authorName = doc.data()['tag'];
               })
-              .catch((e) => this.msg.error(e.message));
+              .catch((e: any) => this.msg.error(e.message));
           }
         })
         .catch((e) => this.msg.error(e.message));
     }
     
-    const coll = this.db.collection('waik/website/fanarts').doc(this.id);
-    coll.onSnapshot(async (snap: any) => {
-      this.likes = snap.likes;
+    const d = doc(this.db, `waik/website/fanarts/${this.id}`);
+    onSnapshot(d, async (snap: any) => {
+      if(snap.likes) {
+        this.likes = snap.likes;
+      }
       const user = await this.auth.currentUser;
       if(user && this.likes?.length != 0) {
         if(this.likes?.find(e => e === user.uid)) {

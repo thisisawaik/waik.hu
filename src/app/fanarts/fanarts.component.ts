@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import { getDocs, getFirestore, where } from '@firebase/firestore';
+import { collection, query } from 'firebase/firestore';
+
 @Component({
   selector: 'app-fanarts',
   templateUrl: './fanarts.component.html',
@@ -10,15 +11,15 @@ export class FanartsComponent implements OnInit {
   
   arts: any[] = [];
 
-  db = firebase.firestore();
+  db = getFirestore();
 
   constructor() { }
 
   ngOnInit(): void {
-    const query = this.db.collection('waik/website/fanarts').where('public', '==', true);
+    const q = query(collection(this.db, 'waik/website/fanarts'), where('public', '==', true));
 
-    query.get().then(snap => {
-      console.log(snap)
+    getDocs(q).then(snap => {
+      //console.log(snap)
       for (let doc of snap.docs) {
         this.arts.push(doc.data())        
       }

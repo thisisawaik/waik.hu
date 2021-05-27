@@ -5,15 +5,16 @@ import { Meta } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ShareService } from '../services/share.service';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import { getDoc, getDocFromCache, getFirestore } from '@firebase/firestore';
+import { doc } from 'firebase/firestore';
+
 @Component({
   selector: 'app-share',
   templateUrl: './share.component.html',
   styleUrls: ['./share.component.scss'],
 })
 export class ShareComponent implements OnInit {
-  db = firebase.firestore();
+  db = getFirestore();
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -30,13 +31,13 @@ export class ShareComponent implements OnInit {
       this.msg.error('ShareId not found!');
       this.router.navigate(['/']);
     } else {
-      const data = await (await this.db.doc(`waik/website/shares/${id}`).get({source: 'cache'})).data();
+      const data = (await getDocFromCache(doc(this.db, `waik/website/shares/${id}`))).data();
       if(data) {
         let d: any = data;
         this.meta.addTags(d);
       }
-      const doc = this.db.doc(`waik/website/shares/${id}`)
-      doc.get().then((doc: any) => {
+      const d = doc(this.db, `waik/website/shares/${id}`)
+      getDoc(d).then((doc: any) => {
         if (doc.exists) {
           // if has redirect element
           if (doc.data()['redirect']) {

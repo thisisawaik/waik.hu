@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MessagesService } from '../services/messages.service';
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
+import { collection, getDocs, getFirestore, orderBy, query } from 'firebase/firestore';
 
 @Component({
   selector: 'app-downloads',
@@ -13,7 +12,7 @@ import 'firebase/firestore';
 export class DownloadsComponent implements OnInit {
   colldata: Docdata[] = [];
 
-  db = firebase.firestore();
+  db = getFirestore();
 
   constructor(
     private htmltitle: Title,
@@ -24,9 +23,9 @@ export class DownloadsComponent implements OnInit {
 
     //const coll = this.db.collection('waik').doc('website').collection('downloads', (ref) => ref.orderBy('timestamp'));
     this.htmltitle.setTitle('Letöltések');
-    const q = this.db.collection('waik/website/downloads').orderBy('timestamp');
+    const q = query(collection(this.db, 'waik/website/downloads'), orderBy('timestamp'));
     
-    q.get().then(coll => {
+    getDocs(q).then(coll => {
       for (const doc of coll.docs) {
         const docdata: any = doc.data();
         this.colldata.push(docdata);

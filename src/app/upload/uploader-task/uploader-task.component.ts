@@ -1,27 +1,24 @@
 import { Component, Input, OnInit, Pipe } from '@angular/core';
+import { getFirestore } from '@firebase/firestore';
 //import { AngularFirestore } from '@angular/fire/firestore';
 //import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { Observable } from 'rxjs';
 //import {  finalize, tap  } from 'rxjs/operators'
-
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/storage';
-
+import { getStorage, UploadTask } from 'firebase/storage';
 @Component({
   selector: 'app-uploader-task',
   templateUrl: './uploader-task.component.html',
   styleUrls: ['./uploader-task.component.scss']
 })
 export class UploaderTaskComponent implements OnInit {
-  db = firebase.firestore();
-  storage = firebase.storage();
+  db = getFirestore();
+  storage = getStorage();
   constructor() { }
 
   @Input()
   file!: File;
 
-  task: firebase.storage.UploadTask | undefined;
+  task: UploadTask | undefined;
 
   precentage!: Observable<number | undefined>;
   snapshot!: Observable<any>;

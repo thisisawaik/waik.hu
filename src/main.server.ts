@@ -7,13 +7,13 @@
  */
 import '@angular/platform-server/init';
 
-import firebase from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 
 import { enableProdMode } from '@angular/core';
 
 import { environment } from './environments/environment';
 
-firebase.initializeApp(environment.firebaseConfig);
+initializeApp(environment.firebaseConfig);
 
 if (environment.production) {
   enableProdMode();

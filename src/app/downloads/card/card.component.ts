@@ -3,9 +3,10 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { Meta, Title } from '@angular/platform-browser';
 import { MessagesService } from 'src/app/services/messages.service';
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/storage';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
+import { getDownloadURL, getStorage, ref } from '@firebase/storage';
+
+
 
 @Component({
   selector: 'app-card',
@@ -22,8 +23,8 @@ export class CardComponent implements OnInit {
     name: '',
   };
 
-  db = firebase.firestore();
-  storage = firebase.storage();
+  db = getFirestore();
+  storage = getStorage();
 
   constructor(
     private clipboard: Clipboard,
@@ -49,9 +50,9 @@ export class CardComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.author) {
-      const d = this.db.doc(`dcusers/${this.author}`);
+      const d = doc(this.db, `dcusers/${this.author}`);
 
-      d.get().then((doc: any) => {
+      getDoc(d).then((doc: any) => {
         this.authordata = {
           name: doc.data()['tag'],
           avatar: doc.data()['pp'],
@@ -62,7 +63,7 @@ export class CardComponent implements OnInit {
     }
 
     if (this.gsurl) {
-      this.storage.refFromURL(this.gsurl).getDownloadURL().then((res) => {
+      getDownloadURL(ref(this.storage, this.gsurl)).then((res) => {
         this.url = res;
       })
       .catch((e) => {
@@ -82,9 +83,9 @@ export class CardComponent implements OnInit {
       this.url = null;
     }
 
-    const d = this.db.doc(`waik/website/shares/${this.shareid}`);
-    d.get().then((doc) => {
-      if (doc.exists) {
+    const d = doc(this.db, `waik/website/shares/${this.shareid}`);
+    getDoc(d).then((doc) => {
+      if (doc.exists()) {
         this.shareable = true;
       }
     });
@@ -101,7 +102,7 @@ export class CardComponent implements OnInit {
   }
 
   share() {
-    const d = this.db.doc(`waik/website/shares/${this.shareid}`);
+    //const d = this.db.doc(`waik/website/shares/${this.shareid}`);
     const link = `${window.location.protocol}//${window.location.hostname}${window.location.port? `:${window.location.port}` : ''}/share/${this.shareid}`;
     this.clipboard.copy(link);
     this.msg.success(`Link másolva a vágólapra! (${link})`)
@@ -116,3 +117,7 @@ export class CardComponent implements OnInit {
     }, 5000);
   }
 }
+function refFromURL(gsurl: string) {
+  throw new Error('Function not implemented.');
+}
+

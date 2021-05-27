@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import firebase from 'firebase';
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, User } from 'firebase/auth';
 import { MessagesService } from '../services/messages.service';
 import { AuthService } from '../services/auth.service';
-
-import 'firebase/auth';
 
 @Component({
   selector: 'app-account',
@@ -12,12 +10,12 @@ import 'firebase/auth';
 })
 export class AccountComponent implements OnInit {
 
-  user: firebase.User | null = null;
+  user: User | null = null;
 
-  auth = firebase.auth();
+  auth = getAuth();
 
   constructor(private msg: MessagesService, private authserv: AuthService,) {
-    this.auth.onAuthStateChanged(user => {
+    onAuthStateChanged(this.auth, user => {
       if(user) {
         this.user = user;
       } else {
@@ -30,8 +28,8 @@ export class AccountComponent implements OnInit {
   }
 
   googlelogin() {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    this.auth.signInWithPopup(provider).catch(e => this.msg.error(`Sikertelen bejelentkezés! (${e.message})`));
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(this.auth, provider).catch(e => this.msg.error(`Sikertelen bejelentkezés! (${e.message})`));
   }
 
   discordLogin() {
@@ -39,11 +37,10 @@ export class AccountComponent implements OnInit {
   }
 
   logOut() {
-    this.auth.signOut().then(() => {
+    signOut(this.auth).then(() => {
       this.msg.success('Sikeres kijelentkezés!')
     }).catch(e => {
       this.msg.error(`Sikertelen kijelentkezés! (${e.message})`)
-
     })
   }
 

@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
-import { environment } from 'src/environments/environment';
 import { DiscordEmbedComponent } from './discord-embed/discord-embed.component';
 import { DownloadsComponent } from './downloads/downloads.component';
 import { CardComponent } from './downloads/card/card.component';
@@ -25,11 +24,6 @@ import { IstiComponent } from './profiles/isti/isti.component';
 import { NorticusComponent } from './profiles/norticus/norticus.component';
 import { WalruszComponent } from './profiles/walrusz/walrusz.component';
 import { DiscordNewsComponent } from './discord-news/discord-news.component';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
-import { AngularFirePerformanceModule } from '@angular/fire/performance';
 import { UploaderComponent } from './upload/uploader/uploader.component';
 import { UploaderTaskComponent } from './upload/uploader-task/uploader-task.component';
 import { DropzoneDirective } from './dropzone.directive';
@@ -39,6 +33,7 @@ import { ImageDialogComponent } from './fanarts/image-dialog/image-dialog.compon
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { AccountComponent } from './account/account.component';
+
 @NgModule({
   declarations: [
     AppComponent,
