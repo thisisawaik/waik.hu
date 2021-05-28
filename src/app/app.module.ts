@@ -33,6 +33,7 @@ import { ImageDialogComponent } from './fanarts/image-dialog/image-dialog.compon
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { AccountComponent } from './account/account.component';
+import { ProfileIconComponent } from './profile-icon/profile-icon.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { AccountComponent } from './account/account.component';
     ImagesComponent,
     ImageDialogComponent,
     AccountComponent,
+    ProfileIconComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'waik-hu' }),

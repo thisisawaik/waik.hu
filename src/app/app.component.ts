@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { AccountComponent } from './account/account.component';
 import { MessagesService } from './services/messages.service';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -19,7 +18,6 @@ export class AppComponent implements OnInit {
   currentpage: 'tdr' | 'isti' | 'walrusz' | 'geiszla' | null = null;
   onProfilePage: boolean = true;
   onHomePage: boolean = true;
-  userpp!: string;
 
   constructor(
     private router: Router,
@@ -45,18 +43,6 @@ export class AppComponent implements OnInit {
         this.currentpage = null;
       }
     });
-
-    const auth = getAuth();
-
-    onAuthStateChanged(auth, user => {
-      const defavatar = 'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/demo%2Fpp%2Fdemo.png?alt=media&token=93fec366-cc41-45e0-9ad1-f6a399cc750c';
-      if(user) {
-        this.userpp = user.photoURL ? user.photoURL : defavatar;
-        this.msg.success(`Bejelentkezve mint: ${user.displayName}(${user.email})`)
-      } else {
-        this.userpp = defavatar;
-      }
-    });
   }
 
   async ngOnInit(): Promise<void> {
@@ -73,11 +59,5 @@ export class AppComponent implements OnInit {
     getDoc(walruszRef).then((doc: any) => (this.walruszImage = doc.data().pp));
     getDoc(geiszlaRef).then((doc: any) => (this.geiszlaImage = doc.data().pp));
       
-  }
-
-  openProfile() {
-    this.dialog.open(AccountComponent, {
-      minWidth: 600,
-    });
   }
 }
