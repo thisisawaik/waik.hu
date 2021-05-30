@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { getDocs, getFirestore, where } from '@firebase/firestore';
 import { collection, query } from 'firebase/firestore';
 
@@ -13,15 +14,17 @@ export class FanartsComponent implements OnInit {
 
   db = getFirestore();
 
-  constructor() { }
+  constructor(private htmltitle: Title, private meta: Meta) { }
 
   ngOnInit(): void {
+    this.htmltitle.setTitle('Fanartok');
+
     const q = query(collection(this.db, 'waik/website/fanarts'), where('public', '==', true));
 
     getDocs(q).then(snap => {
       //console.log(snap)
       for (let doc of snap.docs) {
-        this.arts.push(doc.data())        
+        this.arts.push(doc.data());  
       }
     });
   }

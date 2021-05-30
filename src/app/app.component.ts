@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { AccountComponent } from './account/account.component';
 import { MessagesService } from './services/messages.service';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
+
+//declare var zal_platform: any;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
+
 export class AppComponent implements OnInit {
   tdrImage: string = "https://cdn.discordapp.com/avatars/118466559738904576/6b4610199259efab8493cafb3e049938.webp";
   istiImage: string = "https://cdn.discordapp.com/avatars/174980450543075330/68bd161e38aaaff31a57ed05bf4ea971.webp";
@@ -19,12 +23,15 @@ export class AppComponent implements OnInit {
   onProfilePage: boolean = true;
   onHomePage: boolean = true;
 
+
   constructor(
     private router: Router,
     public dialog: MatDialog,
     //private auth: AngularFireAuth,
     private msg: MessagesService,
   ) {
+
+    //console.log(zal_platform)
     this.router.events.subscribe((event: any) => {
       if (event.url === '/profile/isti') {
         this.currentpage = 'isti';

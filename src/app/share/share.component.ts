@@ -7,7 +7,8 @@ import { environment } from 'src/environments/environment';
 import { ShareService } from '../services/share.service';
 import { getDoc, getDocFromCache, getFirestore } from '@firebase/firestore';
 import { doc } from 'firebase/firestore';
-
+import { ImageDialogComponent } from '../fanarts/image-dialog/image-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-share',
   templateUrl: './share.component.html',
@@ -22,6 +23,7 @@ export class ShareComponent implements OnInit {
     private meta: Meta,
     private http: HttpClient,
     private share: ShareService,
+    public dialog: MatDialog,
     //private db: AngularFirestore,
   ) {}
 
@@ -31,13 +33,15 @@ export class ShareComponent implements OnInit {
       this.msg.error('ShareId not found!');
       this.router.navigate(['/']);
     } else {
-      const data = (await getDocFromCache(doc(this.db, `waik/website/shares/${id}`))).data();
-      if(data) {
-        let d: any = data;
+      const data = (await getDoc(doc(this.db, `waik/website/shares/${id}`))).data();
+      if(data?.tags) {
+        let d: any = data.tags;
         this.meta.addTags(d);
       }
       const d = doc(this.db, `waik/website/shares/${id}`)
       getDoc(d).then((doc: any) => {
+        console.log(doc.exists())
+        console.log(doc.data())
         if (doc.exists) {
           // if has redirect element
           if (doc.data()['redirect']) {
@@ -54,7 +58,7 @@ export class ShareComponent implements OnInit {
               }, 3000);
               // if non external
             } else {
-              this.router.navigate([doc.data()['redirect']]);
+              this.router.navigate([`${doc.data()['redirect']}`], { queryParams: {shareid: id, utm_source: 'share'}});
               this.msg.info('Átirányítás...', 1500);
             }
           }
@@ -64,6 +68,15 @@ export class ShareComponent implements OnInit {
             //  'share_open',
             //  doc.data()['analitycs_trackers']
             //);
+          }
+          if(doc.data()['fanart']) {
+            this.dialog.open(ImageDialogComponent, {
+              data: {
+                id: doc.data()['id'],
+              },
+              minWidth: 600,
+            });
+            this.router.navigate(['/fanarts'])
           }
         } else {
           this.msg.error('Share not found!');

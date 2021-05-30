@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut, User } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signInWithRedirect, signOut, User } from 'firebase/auth';
 import { MessagesService } from '../services/messages.service';
 import { AuthService } from '../services/auth.service';
 
@@ -12,15 +12,21 @@ export class AccountComponent implements OnInit {
 
   user: User | null = null;
 
+  isGoogleLinkable: boolean = false;
+  isDiscordLinkable: boolean = false;
+
   auth = getAuth();
 
   constructor(private msg: MessagesService, private authserv: AuthService,) {
     onAuthStateChanged(this.auth, user => {
       if(user) {
         this.user = user;
+
+        this.isGoogleLinkable = user.providerData.find(e => e.providerId === "google.com") ? false : true;
       } else {
         this.user = null;
       }
+      console.log(user)
     })
   }
 
@@ -29,7 +35,7 @@ export class AccountComponent implements OnInit {
 
   googlelogin() {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(this.auth, provider).catch(e => this.msg.error(`Sikertelen bejelentkezés! (${e.message})`));
+    signInWithRedirect(this.auth, provider).catch(e => this.msg.error(`Sikertelen bejelentkezés! (${e.message})`));
   }
 
   discordLogin() {
@@ -48,6 +54,10 @@ export class AccountComponent implements OnInit {
     this.authserv.getAuthToken().then(res => {
       console.log(res);
     });
+  }
+
+  uploadnewpicture() {
+    
   }
 
 }

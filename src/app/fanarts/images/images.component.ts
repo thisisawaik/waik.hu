@@ -19,12 +19,15 @@ import { getAuth } from 'firebase/auth';
 })
 export class ImagesComponent implements OnInit {
   liked: boolean = false;
-  shareable: boolean = true;
+  shareable: boolean = false;
   shareclass: string = 'red';
   sharetext: string = 'Megosztás';
+  //shareid: string | undefined;
   authorAvatar: string | undefined;
   authorName: string | undefined;
   likes: string[] = [];
+
+  greenbackground: boolean = false;
 
   db = getFirestore();
   auth = getAuth();
@@ -45,6 +48,9 @@ export class ImagesComponent implements OnInit {
   @Input() shareid: boolean | undefined;
 
   async ngOnInit(): Promise<void> {
+    if (this.shareid) {
+      this.shareable = true;
+    }
     if (this.author) {
       const userref = doc(this.db, `users/${this.author}`);
       getDoc(userref)
@@ -76,7 +82,11 @@ export class ImagesComponent implements OnInit {
   }
 
   open() {
-    const dialogref = this.dialog.open(ImageDialogComponent);
+    const dialogref = this.dialog.open(ImageDialogComponent, {
+      data: {
+        id: this.id,
+      }
+    });
 
     dialogref.afterClosed().subscribe((res) => {
       console.log(res);
@@ -140,7 +150,7 @@ export class ImagesComponent implements OnInit {
   share() {
     const link = `${window.location.protocol}//${window.location.hostname}${
       window.location.port ? `:${window.location.port}` : ''
-    }/share/${'this.shareid'}`;
+    }/share/${this.shareid}`;
     this.clipboard.copy(link);
     this.msg.success(`Link másolva a vágólapra! (${link})`);
     this.shareclass = 'green';

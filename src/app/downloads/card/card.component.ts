@@ -5,6 +5,8 @@ import { MessagesService } from 'src/app/services/messages.service';
 
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref } from '@firebase/storage';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { getAnalytics, logEvent } from "firebase/analytics";
 
 
 
@@ -22,6 +24,8 @@ export class CardComponent implements OnInit {
     avatar: '',
     name: '',
   };
+  greenbackground: boolean = false;
+  analitycs = getAnalytics();
 
   db = getFirestore();
   storage = getStorage();
@@ -29,6 +33,8 @@ export class CardComponent implements OnInit {
   constructor(
     private clipboard: Clipboard,
     private msg: MessagesService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   @Input()
@@ -49,6 +55,9 @@ export class CardComponent implements OnInit {
   author: string | undefined;
 
   ngOnInit(): void {
+    if(this.route.snapshot.queryParams.shareid && this.route.snapshot.queryParams.shareid === this.shareid) {
+      this.greenbackground = true;
+    }
     if(this.author) {
       const d = doc(this.db, `dcusers/${this.author}`);
 
@@ -94,11 +103,14 @@ export class CardComponent implements OnInit {
   downloadclick() {
     //this.analitycs.logEvent('download_click', [this.url]);
     open(this.url!);
+    logEvent(this.analitycs, 'downloadclick');
   }
 
   githubclick() {
     //this.analitycs.logEvent('github_click', [this.github]);
     open(this.github!);
+    logEvent(this.analitycs, 'githubclick');
+
   }
 
   share() {
@@ -108,6 +120,7 @@ export class CardComponent implements OnInit {
     this.msg.success(`Link másolva a vágólapra! (${link})`)
 
     //this.analitycs.logEvent('share_click', [this.shareid]);
+    logEvent(this.analitycs, 'shareclick', { shareid: this.shareid });
 
     this.shareclass = 'green';
     this.sharetext = 'Link a vágólapon';
@@ -116,8 +129,5 @@ export class CardComponent implements OnInit {
       this.sharetext = 'Megosztás';
     }, 5000);
   }
-}
-function refFromURL(gsurl: string) {
-  throw new Error('Function not implemented.');
 }
 

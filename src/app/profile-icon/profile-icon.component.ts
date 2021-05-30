@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { getAnalytics, setUserId } from '@firebase/analytics';
 
 import firebase from 'firebase/compat/app';
 
@@ -22,6 +23,7 @@ export class ProfileIconComponent implements OnInit {
     auth.onAuthStateChanged(user => {
       const defavatar = 'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/demo%2Fpp%2Fdemo.png?alt=media&token=93fec366-cc41-45e0-9ad1-f6a399cc750c';
       if(user) {
+        setUserId(getAnalytics(), user.uid);
         this.userpp = user.photoURL ? user.photoURL : defavatar;
         this.msg.success(`Bejelentkezve mint: ${user.displayName}(${user.email})`)
       } else {
