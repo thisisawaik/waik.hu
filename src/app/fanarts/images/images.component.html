@@ -16,7 +16,7 @@
         <button mat-button (click)="open()">Megnyitás</button>
         <button style="background-color: var(--red); color: white;" (click)="like()" *ngIf="!liked" mat-button><mat-icon>favorite_border</mat-icon> ({{ likes.length }}) Like</button>
         <button style="background-color: var(--green);" mat-button (click)="dislike()" *ngIf="liked"><mat-icon>favorite</mat-icon> ({{ likes.length }}) Liked</button>
-        <button *ngIf="shareable" mat-flat-button [class]="shareclass" (click)="share()">{{ sharetext }}</button>
+        <button *ngIf="shareable" mat-flat-button [class]="shareclass" (click)="share()"><mat-icon *ngIf="shareclass === 'red'">content_copy</mat-icon>{{ sharetext }}</button>
     </mat-card-actions>
   </mat-card>
   

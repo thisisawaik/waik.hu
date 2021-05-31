@@ -2,4 +2,5 @@
     <div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 16px;" *ngFor="let art of arts">
         <app-images [id]="art.id" [shareid]="art.shareid" [imageurl]="art.downloadurl" [gsurl]="art.gsurl" [getFromGS]="art.getFromGS" [author]="art.author" ></app-images>
     </div>
-  </div>
+</div>
+<app-footer [extraIds]="[]"></app-footer>
