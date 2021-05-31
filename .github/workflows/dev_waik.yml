@@ -27,31 +27,54 @@ jobs:
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
       with:
-        name: node-app
+        name: build-browser
         path: .
-
-  test: 
+  
+  build-server:
     runs-on: ubuntu-latest
-    needs: build
-    
-    steps:
 
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-        name: node-app
-   
+    steps:
+    - uses: actions/checkout@v2
+
     - name: Set up Node.js version
       uses: actions/setup-node@v1
       with:
         node-version: '14.x'
 
-    - name: test
+    - name: npm install, build
       run: |
         npm ci
-        npm run test --if-present
+        npm run build:ssr --if-present
+        rm -r node_modules
 
-  deploy:
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-server
+        path: .
+
+#  test: 
+#    runs-on: ubuntu-latest
+#    needs: build
+#    
+#    steps:
+#
+#    - name: Download artifact from build job
+#      uses: actions/download-artifact@v2
+#      with:
+#        name: build-browser
+#   
+#    - name: Set up Node.js version
+#      uses: actions/setup-node@v1
+#      with:
+#        node-version: '14.x'
+#
+#    - name: test
+#      run: |
+#        npm ci
+#        npm run test --if-present
+
+  deploy-to-hosting:
     runs-on: ubuntu-latest
     needs: build
 
@@ -59,7 +82,7 @@ jobs:
     - name: Download artifact from build job
       uses: actions/download-artifact@v2
       with:
-        name: node-app
+        name: build-browser
 
     - name: 'Deploy to Firebase hosting'
       id: deploy-to-firebase-hosting
@@ -71,3 +94,45 @@ jobs:
           channelID: dev
       env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
+
+  deploy-to-run:
+    runs-on: ubuntu-latest
+    needs: build-server
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: build-server
+
+      - name: Setup GCP Service Account
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: 'latest'
+          service_account_email: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000.client_email }}
+          service_account_key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000 }}
+          export_default_credentials: true
+
+      - name: Configure Docker
+        run: |
+          gcloud auth configure-docker
+      
+      - name: Build
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/waik/website/ssr:latest .
+
+      - name: Push
+        run: |
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/waik/website/ssr:latest
+
+      - name: Deploy
+        run: |
+          gcloud run deploy waik-main-beta \
+          --region europe-west1 \
+          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/waik/website/ssr \
+          --platform managed \
+          --allow-unauthenticated \
+          --project ${{ secrets.GCP_PROJECT_ID }}
