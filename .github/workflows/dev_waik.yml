@@ -68,5 +68,6 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000 }}'
           projectId: zal1000
+          channelID: dev
       env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
