@@ -23,6 +23,7 @@ jobs:
       run: |
         npm ci
         npm run build:ssr --if-present
+        rm -r node_modules
   
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
@@ -37,6 +38,11 @@ jobs:
     steps: 
     - uses: actions/checkout@v2
 
+    - name: Set up Node.js version
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+      
     - name: Setup GCP Service Account
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
@@ -53,6 +59,10 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build
+
+    - name: Reinstall packages
+      run: |
+        npm ci
       
     - name: Build
       run: |
