@@ -39,7 +39,7 @@ jobs:
       
     - name: Build
       run: |
-        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/waik/website/ssr:latest .
+        docker build --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/waik/website/ssr:latest .
 
     - name: Push
       run: |
