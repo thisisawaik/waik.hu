@@ -23,7 +23,6 @@ jobs:
       run: |
         npm ci
         npm run build:ssr --if-present
-        rm -r node_modules
 
     - name: Setup GCP Service Account
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
