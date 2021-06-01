@@ -39,20 +39,20 @@ jobs:
       
     - name: Build
       run: |
-        docker build --tag gcr.io/${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000.project_id }}/waik/website/ssr:latest .
+        docker build --tag gcr.io/zal1000/waik/website/ssr:latest .
 
     - name: Push
       run: |
-        docker push gcr.io/${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000.project_id }}/waik/website/ssr:latest
+        docker push gcr.io/zal1000/waik/website/ssr:latest
 
     - name: Deploy
       run: |
         gcloud run deploy waik-main-beta \
         --region europe-west1 \
-        --image gcr.io/${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000.project_id }}/waik/website/ssr \
+        --image gcr.io/zal1000/waik/website/ssr \
         --platform managed \
         --allow-unauthenticated \
-        --project ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000.project_id }}
+        --project zal1000
 
 #  test: 
 #    runs-on: ubuntu-latest
