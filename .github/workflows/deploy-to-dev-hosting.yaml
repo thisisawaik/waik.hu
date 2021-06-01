@@ -51,7 +51,7 @@ jobs:
     - name: test
       run: |
         npm ci
-        npm run test --if-present
+        npm run test --browsers=ChromeHeadless --watch=false --if-present
 
   deploy-to-hosting:
     runs-on: ubuntu-latest
