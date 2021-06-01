@@ -21,9 +21,10 @@ jobs:
     - name: Install packages and build app
       run: |
         npm ci
-        npm run ngcc --if-present
         npm run build --if-present
-        rm -r node_modules --if-present
+        rm -r node_modules
+
+#        npm run ngcc --if-present
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
@@ -105,7 +106,7 @@ jobs:
     - name: Reinstall packages
       run: |
         npm ci
-        npm run ngcc
+        npm run ngcc --if-present
       
     - name: Build
       run: |
