@@ -1,6 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { getApps, initializeApp } from 'firebase/app';
+import { environment } from 'src/environments/environment';
 import { ShareComponent } from './share.component';
+
+
+if(getApps().length === 0) {
+  initializeApp(environment.firebaseConfig);
+}
 
 describe('ShareComponent', () => {
   let component: ShareComponent;
@@ -8,7 +15,8 @@ describe('ShareComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ShareComponent ]
+      declarations: [ ShareComponent ],
+      imports: [ RouterTestingModule ],
     })
     .compileComponents();
   });

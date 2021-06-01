@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { getApps, initializeApp } from 'firebase/app';
+import { environment } from 'src/environments/environment';
 
 import { FooterComponent } from './footer.component';
+
+if(getApps().length === 0) {
+  initializeApp(environment.firebaseConfig);
+}
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -11,6 +17,7 @@ describe('FooterComponent', () => {
       declarations: [ FooterComponent ]
     })
     .compileComponents();
+
   });
 
   beforeEach(() => {

@@ -6,7 +6,7 @@ import { MessagesService } from './services/messages.service';
 })
 export class DropzoneDirective {
 
-  constructor(private msg: MessagesService) { }
+  constructor() { }
 
   @Output() dropped =  new EventEmitter<FileList>();
   @Output() hovered =  new EventEmitter<boolean>();
@@ -17,7 +17,7 @@ export class DropzoneDirective {
     if($event.dataTransfer) {
       this.dropped.emit($event.dataTransfer.files);
     } else {
-      this.msg.warn('Nincs adat.')
+      //this.msg.warn('Nincs adat.')
     }
     this.hovered.emit(false);
   }

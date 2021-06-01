@@ -11,7 +11,8 @@
     "serve:ssr": "node dist/waik-hu/server/main.js",
     "build:ssr": "ng build && ng run waik-hu:server",
     "deploy:beta": "ng build && firebase hosting:channel:deploy beta",
-    "prerender": "ng run waik-hu:prerender"
+    "prerender": "ng run waik-hu:prerender",
+    "ngcc": "ngcc"
   },
   "private": true,
   "dependencies": {

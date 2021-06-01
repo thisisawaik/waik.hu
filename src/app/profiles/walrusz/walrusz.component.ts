@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
@@ -20,7 +19,6 @@ export class WalruszComponent implements OnInit {
   db = getFirestore();
 
   constructor(
-    private http: HttpClient,
     private sanitizer: DomSanitizer,
   ) {}
 

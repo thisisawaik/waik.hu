@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 import { ImageDialogComponent } from './image-dialog.component';
 
@@ -8,7 +9,8 @@ describe('ImageDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ImageDialogComponent ]
+      declarations: [ ImageDialogComponent ],
+      imports: [ MatDialogModule ],
     })
     .compileComponents();
   });

@@ -1,3 +1,4 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DiscordEmbedComponent } from './discord-embed.component';
@@ -8,7 +9,8 @@ describe('DiscordEmbedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DiscordEmbedComponent ]
+      declarations: [ DiscordEmbedComponent ],
+      imports: [ HttpClientModule ]
     })
     .compileComponents();
   });

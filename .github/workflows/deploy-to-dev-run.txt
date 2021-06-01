@@ -44,7 +44,7 @@ jobs:
         node-version: '14.x'
       
     - name: Setup GCP Service Account
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@master
       with:
         version: 'latest'
         service_account_email: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000.client_email }}
@@ -63,6 +63,7 @@ jobs:
     - name: Reinstall packages
       run: |
         npm ci
+        npm run ngcc
       
     - name: Build
       run: |
