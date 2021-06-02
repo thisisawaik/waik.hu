@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { getDocs, getFirestore, where } from '@firebase/firestore';
 import { collection, query } from 'firebase/firestore';
@@ -13,6 +14,8 @@ export class FanartsComponent implements OnInit {
   arts: any[] = [];
 
   db = getFirestore();
+
+  tabsBackgroundColor: ThemePalette = "primary";
 
   constructor(private htmltitle: Title, private meta: Meta) { }
 

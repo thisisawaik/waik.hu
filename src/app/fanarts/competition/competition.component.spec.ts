@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UploaderTaskComponent } from './uploader-task.component';
+import { CompetitionComponent } from './competition.component';
 
-describe('UploaderTaskComponent', () => {
-  let component: UploaderTaskComponent;
-  let fixture: ComponentFixture<UploaderTaskComponent>;
+describe('CompetitionComponent', () => {
+  let component: CompetitionComponent;
+  let fixture: ComponentFixture<CompetitionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UploaderTaskComponent ]
+      declarations: [ CompetitionComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UploaderTaskComponent);
+    fixture = TestBed.createComponent(CompetitionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

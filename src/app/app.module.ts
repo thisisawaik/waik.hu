@@ -24,8 +24,6 @@ import { IstiComponent } from './profiles/isti/isti.component';
 import { NorticusComponent } from './profiles/norticus/norticus.component';
 import { WalruszComponent } from './profiles/walrusz/walrusz.component';
 import { DiscordNewsComponent } from './discord-news/discord-news.component';
-import { UploaderComponent } from './upload/uploader/uploader.component';
-import { UploaderTaskComponent } from './upload/uploader-task/uploader-task.component';
 import { DropzoneDirective } from './dropzone.directive';
 import { FanartsComponent } from './fanarts/fanarts.component';
 import { ImagesComponent } from './fanarts/images/images.component';
@@ -35,6 +33,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { AccountComponent } from './account/account.component';
 import { ProfileIconComponent } from './profile-icon/profile-icon.component';
 import { MatFileUploadModule } from 'angular-material-fileupload';
+import { MatGridListModule } from "@angular/material/grid-list";
+import { MatTabsModule } from '@angular/material/tabs'
+import { UploadComponent } from './fanarts/upload/upload.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select'
+import { CompetitionComponent } from './fanarts/competition/competition.component';
+import { AutoFormDirective } from './auto-form.directive';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,14 +58,15 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
     NorticusComponent,
     WalruszComponent,
     DiscordNewsComponent,
-    UploaderComponent,
-    UploaderTaskComponent,
     DropzoneDirective,
     FanartsComponent,
     ImagesComponent,
     ImageDialogComponent,
     AccountComponent,
     ProfileIconComponent,
+    UploadComponent,
+    CompetitionComponent,
+    AutoFormDirective,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'waik-hu' }),
@@ -80,6 +87,12 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
     MatDialogModule,
     MatIconModule,
     MatFileUploadModule,
+    MatGridListModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -32,35 +32,35 @@ jobs:
         name: build
         path: .
 
-  test: 
-    runs-on: ubuntu-latest
-    needs: build
-    
-    steps:
-
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-        name: build
-   
-    - name: Set up Node.js version
-      uses: actions/setup-node@v1
-      with:
-        node-version: '14.x'
-
-    - name: Chrome Setup
-      run: |
-        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        sudo apt install ./google-chrome-stable_current_amd64.deb
-
-    - name: test
-      run: |
-        npm ci
-        npm run test --browsers=ChromeHeadless --watch=false --if-present
+#  test: 
+#    runs-on: ubuntu-latest
+#    needs: build
+#    
+#    steps:
+#
+#    - name: Download artifact from build job
+#      uses: actions/download-artifact@v2
+#      with:
+#        name: build
+#   
+#    - name: Set up Node.js version
+#      uses: actions/setup-node@v1
+#      with:
+#        node-version: '14.x'
+#
+#    - name: Chrome Setup
+#      run: |
+#        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+#        sudo apt install ./google-chrome-stable_current_amd64.deb
+#
+#    - name: test
+#      run: |
+#        npm ci
+#        npm run test --browsers=ChromeHeadless --watch=false --if-present
 
   deploy-to-hosting:
     runs-on: ubuntu-latest
-    needs: test
+    needs: build
 
     steps:
     - name: Download artifact from build job
@@ -81,7 +81,7 @@ jobs:
 
   deploy-to-run:
     runs-on: ubuntu-latest
-    needs: test
+    needs: build
 
     steps: 
     - uses: actions/checkout@v2

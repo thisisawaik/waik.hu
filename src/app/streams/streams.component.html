@@ -2,7 +2,9 @@
   <p>Loading...</p>
 </div>
 <div *ngIf="!loading">
-  <iframe
+  <mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile>
+      <iframe
     class="stream"
     [src]="tdrStream"
     frameborder="0"
@@ -10,7 +12,9 @@
     scrolling="no"
     height="500"
   ></iframe>
-  <iframe
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <iframe
     class="stream"
     [src]="istiStream"
     frameborder="0"
@@ -18,20 +22,29 @@
     scrolling="no"
     height="500"
   ></iframe>
-  <iframe
-    class="chat"
-    id="chat_embed"
-    [src]="tdrChat"
-    height="390"
-    style="float: left"
-  >
-  </iframe>
-  <iframe
-    class="chat"
-    id="chat_embed"
-    [src]="istiChat"
-    height="390"
-    style="float: right"
-  >
-  </iframe>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <iframe
+      class="chat"
+      id="chat_embed"
+      [src]="tdrChat"
+      height="390"
+      style="float: left"
+    >
+    </iframe>
+  </mat-grid-tile>
+    <mat-grid-tile><iframe
+      class="chat"
+      id="chat_embed"
+      [src]="istiChat"
+      height="390"
+      style="float: right"
+    >
+    </iframe></mat-grid-tile>
+  </mat-grid-list>
+  
+  
+  
+  
+  
 </div>
