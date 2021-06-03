@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "dist/waik-hu/browser",
+    "site": "waik-main",
     "ignore": [
       "firebase.json",
       "**/.*",
