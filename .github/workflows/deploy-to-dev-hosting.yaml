@@ -75,7 +75,7 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000 }}'
           projectId: zal1000
-          site: waik-main
+          target: waik-main
           channelID: dev
       env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
