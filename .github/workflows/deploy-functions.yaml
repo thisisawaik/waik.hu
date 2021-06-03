@@ -20,7 +20,9 @@ jobs:
         node-version: 14.x
 
     - name: install libraries
-      run: npm install
+      run: |
+        cd functions
+        npm ci
 
     - name: install firebase
       run: npm i firebase-tools -g
