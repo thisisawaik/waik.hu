@@ -28,4 +28,4 @@ jobs:
       run: npm i firebase-tools -g
 
     - name: deploy
-      run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }} --only functions
+      run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }} --non-interactive --only functions 
