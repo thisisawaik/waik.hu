@@ -3,16 +3,16 @@
   padding: 20px;
   background-color: white;
   border-radius: 5px;
+  display: grid;
+  grid-template-columns: auto 450px;
 }
 
 .card {
-    min-height: 300px;
-    min-width: 200px;
-    max-height: 800px;
-    max-width: 400px;
-    display: flex;
-    justify-content: space-between;
-  }
+  min-height: 300px;
+  min-width: 200px;
+  max-height: 800px;
+  max-width: 400px;
+}
 
 a,
 p,

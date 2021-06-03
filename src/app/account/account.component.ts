@@ -26,7 +26,6 @@ export class AccountComponent implements OnInit {
       } else {
         this.user = null;
       }
-      console.log(user)
     })
   }
 

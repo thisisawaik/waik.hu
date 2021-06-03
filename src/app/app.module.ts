@@ -42,6 +42,8 @@ import { CompetitionComponent } from './fanarts/competition/competition.componen
 import { AutoFormDirective } from './auto-form.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input'
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -94,7 +96,9 @@ import { MatInputModule } from '@angular/material/input'
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

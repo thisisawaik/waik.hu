@@ -22,7 +22,7 @@ export class FanartsComponent implements OnInit {
   ngOnInit(): void {
     this.htmltitle.setTitle('Fanartok');
 
-    const q = query(collection(this.db, 'waik/website/fanarts'), where('public', '==', true));
+    const q = query(collection(this.db, 'waik/website/fanarts'), where('status', '==', "PUBLIC"));
 
     getDocs(q).then(snap => {
       //console.log(snap)
