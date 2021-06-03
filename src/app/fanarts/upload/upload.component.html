@@ -41,7 +41,7 @@
                     <mat-icon>favorite</mat-icon> ({{ likes.length }}) {{ isForCompatition ? '' : 'Liked'}}</button>
                 <button *ngIf="shareable" mat-flat-button [class]="shareclass" (click)="share()">
                     <mat-icon *ngIf="shareclass === 'red'">content_copy</mat-icon>
-                    <mat-icon *ngIf="shareclass != 'red'">done</mat-icon>
+                    <mat-icon *ngIf="shareclass != 'red' && isForCompatition">done</mat-icon>
                     {{ isForCompatition? '' : sharetext }}
                 </button>
                 <button mat-button class="red" *ngIf="isForCompatition && !voted" (click)="voteAdd()">

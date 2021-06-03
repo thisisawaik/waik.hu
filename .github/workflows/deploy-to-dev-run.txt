@@ -31,7 +31,7 @@ jobs:
         name: build
         path: .
 
-  deploy:
+  deploy-to-run:
     runs-on: ubuntu-latest
     needs: build
 
@@ -63,7 +63,7 @@ jobs:
     - name: Reinstall packages
       run: |
         npm ci
-        npm run ngcc
+        npm run ngcc --if-present
       
     - name: Build
       run: |
