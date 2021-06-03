@@ -24,7 +24,7 @@ import { Subscription } from 'rxjs';
 })
 export class AutoFormDirective {
   @Input()
-  path: string = 'PATH_HERE';
+  path: string = 'test';
   @Input()
   formGroup!: FormGroup;
 

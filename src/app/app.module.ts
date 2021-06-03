@@ -41,6 +41,7 @@ import { MatSelectModule } from '@angular/material/select'
 import { CompetitionComponent } from './fanarts/competition/competition.component';
 import { AutoFormDirective } from './auto-form.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input'
 @NgModule({
   declarations: [
     AppComponent,
@@ -93,6 +94,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
