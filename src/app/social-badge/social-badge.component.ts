@@ -10,23 +10,22 @@ export class SocialBadgeComponent implements OnInit {
   constructor() { }
 
   @Input() socialType!: SocialType;
-  @Input() socialUser: string | undefined;
+  @Input() socialUser!: string;
 
   ngOnInit(): void {
   }
 
 
   public get socialUrl() : string {
-    const user = this.socialUser;
     const platforms = {
-      'youtube'  : (user: any) => `https://www.youtube.com/user/${user}`,
-      'twitch'   : (user: any) => `https://www.twitch.tv/${user}`,
-      'twitter'  : (user: any) => `https://twitter.com/${user}`,
-      'github'   : (user: any) => `https://github.com/${user}`,
-      'facebook' : (user: any) => `https://facebook.com/${user}`,
-      'instagram': (user: any) => `https://instagram.com/${user}`,
-      'reddit'   : (user: any) => `https://www.reddit.com/${user}`,
-      'vimeo'    : (user: any) => `https://vimeo.com/${user}`,
+      'youtube'  : (user: string) => `https://www.youtube.com/user/${user}`,
+      'twitch'   : (user: string) => `https://www.twitch.tv/${user}`,
+      'twitter'  : (user: string) => `https://twitter.com/${user}`,
+      'github'   : (user: string) => `https://github.com/${user}`,
+      'facebook' : (user: string) => `https://facebook.com/${user}`,
+      'instagram': (user: string) => `https://instagram.com/${user}`,
+      'reddit'   : (user: string) => `https://www.reddit.com/${user}`,
+      'vimeo'    : (user: string) => `https://vimeo.com/${user}`,
     }
 
     return `${platforms[this.socialType](this.socialUser)}?utm_source=waik.hu`
