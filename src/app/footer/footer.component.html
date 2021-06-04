@@ -4,20 +4,21 @@
 </div>
 -->
 
-  <!-- Site footer -->
+<!-- Site footer -->
 
-  <!-- Footer -->
+<!-- Footer -->
 <footer class="page-footer font-small blue fixed-bottom">
+  <!-- Copyright -->
+  <div class="footer">
+    <span *ngFor="let user of members" class="user"
+      >{{ user.role.charAt(0).toUpperCase() }}{{ user.role.slice(1) }} by:
+      {{ user.name }} <img height="20" class="avatar" [src]="user.avatarurl"
+    /></span>
+  </div>
+  <!-- Copyright -->
+</footer>
 
-    <!-- Copyright -->
-    <div class="footer">
-        <span *ngFor="let user of members" class="user">{{ user.role.charAt(0).toUpperCase() }}{{ user.role.slice(1) }} by: {{ user.name }} <img height="20" class="avatar" [src]="user.avatarurl"></span>
-    </div>
-    <!-- Copyright -->
-  
-  </footer>
-  
-  <!--
+<!--
       
   <footer class="site-footer">
     <div class="container">

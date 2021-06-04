@@ -23,9 +23,9 @@ export class ShareComponent implements OnInit {
     private meta: Meta,
     private http: HttpClient,
     private share: ShareService,
-    public dialog: MatDialog,
-    //private db: AngularFirestore,
-  ) {}
+    public dialog: MatDialog
+  ) //private db: AngularFirestore,
+  {}
 
   async ngOnInit(): Promise<void> {
     const id = this.route.snapshot.params.ShareId;
@@ -33,58 +33,66 @@ export class ShareComponent implements OnInit {
       this.msg.error('ShareId not found!');
       this.router.navigate(['/']);
     } else {
-      const data = (await getDoc(doc(this.db, `waik/website/shares/${id}`))).data();
-      if(data?.tags) {
+      const data = (
+        await getDoc(doc(this.db, `waik/website/shares/${id}`))
+      ).data();
+      if (data?.tags) {
         let d: any = data.tags;
         this.meta.addTags(d);
       }
-      const d = doc(this.db, `waik/website/shares/${id}`)
-      getDoc(d).then((doc: any) => {
-        console.log(doc.exists())
-        console.log(doc.data())
-        if (doc.exists) {
-          // if has redirect element
-          if (doc.data()['redirect']) {
-            // if external
-            console.log(doc.data());
-            if (doc.data()['external']) {
-              this.msg.info(
-                `Átirányítás ide: ${doc.data()['redirect'].split('?')[0] || doc.data()['redirect']}`,
-                3000
-              );
-              setTimeout(() => {
-                open(doc.data()['redirect']);
-                this.router.navigate(['/']);
-              }, 3000);
-              // if non external
-            } else {
-              this.router.navigate([`${doc.data()['redirect']}`], { queryParams: {shareid: id, utm_source: 'share'}});
-              this.msg.info('Átirányítás...', 1500);
+      const d = doc(this.db, `waik/website/shares/${id}`);
+      getDoc(d)
+        .then((doc: any) => {
+          console.log(doc.exists());
+          console.log(doc.data());
+          if (doc.exists) {
+            // if has redirect element
+            if (doc.data()['redirect']) {
+              // if external
+              console.log(doc.data());
+              if (doc.data()['external']) {
+                this.msg.info(
+                  `Átirányítás ide: ${
+                    doc.data()['redirect'].split('?')[0] ||
+                    doc.data()['redirect']
+                  }`,
+                  3000
+                );
+                setTimeout(() => {
+                  open(doc.data()['redirect']);
+                  this.router.navigate(['/']);
+                }, 3000);
+                // if non external
+              } else {
+                this.router.navigate([`${doc.data()['redirect']}`], {
+                  queryParams: { shareid: id, utm_source: 'share' },
+                });
+                this.msg.info('Átirányítás...', 1500);
+              }
             }
-          }
 
-          if (doc.data()['analitycs_trackers']) {
-            //this.analitycs.logEvent(
-            //  'share_open',
-            //  doc.data()['analitycs_trackers']
-            //);
+            if (doc.data()['analitycs_trackers']) {
+              //this.analitycs.logEvent(
+              //  'share_open',
+              //  doc.data()['analitycs_trackers']
+              //);
+            }
+            if (doc.data()['fanart']) {
+              this.dialog.open(ImageDialogComponent, {
+                data: {
+                  id: doc.data()['id'],
+                },
+                minWidth: 600,
+              });
+              this.router.navigate(['/fanarts']);
+            }
+          } else {
+            this.msg.error('Share not found!');
           }
-          if(doc.data()['fanart']) {
-            this.dialog.open(ImageDialogComponent, {
-              data: {
-                id: doc.data()['id'],
-              },
-              minWidth: 600,
-            });
-            this.router.navigate(['/fanarts'])
-          }
-        } else {
-          this.msg.error('Share not found!');
-        }
-      })
-      .catch((e) => {
-        this.msg.error(e.message);
-      });
+        })
+        .catch((e) => {
+          this.msg.error(e.message);
+        });
     }
   }
 }

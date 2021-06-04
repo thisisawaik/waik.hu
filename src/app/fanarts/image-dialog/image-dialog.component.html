@@ -1,12 +1,11 @@
 <h2 mat-dialog-title>{{ title }}</h2>
 <mat-dialog-content class="mat-typography">
-  <img *ngIf="imageurl" class="image" align="end" [src]="imageurl">
+  <img *ngIf="imageurl" class="image" align="end" [src]="imageurl" />
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
   <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Bezárás</button>
 </mat-dialog-actions>
-
 
 <!--
 <mat-card class="card">

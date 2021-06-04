@@ -1,20 +1,19 @@
-import { Directive, HostListener, Output, EventEmitter  } from '@angular/core';
+import { Directive, HostListener, Output, EventEmitter } from '@angular/core';
 import { MessagesService } from './services/messages.service';
 
 @Directive({
-  selector: '[appDropzone]'
+  selector: '[appDropzone]',
 })
 export class DropzoneDirective {
+  constructor() {}
 
-  constructor() { }
-
-  @Output() dropped =  new EventEmitter<FileList>();
-  @Output() hovered =  new EventEmitter<boolean>();
+  @Output() dropped = new EventEmitter<FileList>();
+  @Output() hovered = new EventEmitter<boolean>();
 
   @HostListener('drop', ['$event'])
   onDrop($event: DragEvent) {
     $event.preventDefault();
-    if($event.dataTransfer) {
+    if ($event.dataTransfer) {
       this.dropped.emit($event.dataTransfer.files);
     } else {
       //this.msg.warn('Nincs adat.')
@@ -33,5 +32,4 @@ export class DropzoneDirective {
     $event.preventDefault();
     this.hovered.emit(false);
   }
-
 }

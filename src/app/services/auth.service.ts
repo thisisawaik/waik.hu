@@ -3,14 +3,13 @@ import { getAuth } from '@firebase/auth';
 
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   db = getFirestore();
   auth = getAuth();
 
-  constructor() { }
+  constructor() {}
 
   async getAuthToken(): Promise<number | null> {
     const user = this.auth.currentUser;

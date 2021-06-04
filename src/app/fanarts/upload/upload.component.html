@@ -1,57 +1,131 @@
-<mat-progress-bar *ngIf="savestate === 'loading'" mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar
+  *ngIf="savestate === 'loading'"
+  mode="indeterminate"
+></mat-progress-bar>
 
 <div class="main">
-    <div class="form">
-        <h1>Itt tudod feltölteni az alkotásodat</h1>
-        <form [formGroup]="myForm">
-            <mat-form-field hintLabel="Max 40 karakter" appearance="fill">
-                <mat-label>Cím</mat-label>
-                <input [(ngModel)]="title" #titlee type="text" maxlength="40" formControlName="title" matInput>
-                <mat-hint align="end">{{titlee.value?.length || 0}}/40</mat-hint>
-            </mat-form-field><br><br>
-            <mat-form-field hintLabel="Max 500 karakter" appearance="fill">
-                <mat-label>Leírás</mat-label>
-                <input [(ngModel)]="desc" #desce formControlName="desc" maxlength="500" type="text" matInput>
-                <mat-hint align="end">{{desce.value?.length || 0}}/500</mat-hint>
-            </mat-form-field><br><br>
-            <input #file formControlName="image" (change)="onFileSelected($event)" type="file"><br><br>
-            <p>{{ file.value }}</p>
-            <section class="example-section">
-                <mat-checkbox formControlName="isForCompatition" class="example-margin" [(ngModel)]="isForCompatition" >Alkotás benevezése versenyre</mat-checkbox>
-              </section>
-        </form>
-    </div>
-    <div>
-        <mat-card class="card">
-            <mat-card-header>
-              <div mat-card-avatar *ngIf="authorAvatar" class="example-header-image"><img height="45" class="rounded-circle" [src]="authorAvatar"></div>
-              <mat-card-title>{{ title ? title : 'Cím' }}</mat-card-title>
-              <mat-card-subtitle *ngIf="authorName">{{authorName}}</mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image [src]="imageurl || 'https://www.thoughtco.com/thmb/Zya6PS3m6XjRAmVo1HONvY9DW_A=/3865x2174/smart/filters:no_upscale()/abstract-paper-flower-pattern-656688606-5acfba2eae9ab80038461ca0.jpg'" alt="Photo of a Shiba Inu">
-            <mat-card-content>
-            </mat-card-content>
-            <p>{{ desc ? desc : 'Leírás (opcionális)' }}</p>
-            <mat-card-actions>
-                <button mat-button disabled><mat-icon *ngIf="isForCompatition">open_in_new</mat-icon> {{ isForCompatition ? '' : 'Megnyitás'}}</button>
-                <button style="background-color: var(--red); color: white;" (click)="like()" *ngIf="!liked" mat-button>
-                    <mat-icon>favorite_border</mat-icon> ({{ likes.length }}) {{ isForCompatition ? '' : 'Like'}}
-                </button>
-                <button style="background-color: var(--green);" mat-button (click)="dislike()" *ngIf="liked">
-                    <mat-icon>favorite</mat-icon> ({{ likes.length }}) {{ isForCompatition ? '' : 'Liked'}}</button>
-                <button *ngIf="shareable" mat-flat-button [class]="shareclass" (click)="share()">
-                    <mat-icon *ngIf="shareclass === 'red'">content_copy</mat-icon>
-                    <mat-icon *ngIf="shareclass != 'red' && isForCompatition">done</mat-icon>
-                    {{ isForCompatition? '' : sharetext }}
-                </button>
-                <button mat-button class="red" *ngIf="isForCompatition && !voted" (click)="voteAdd()">
-                    <mat-icon>star</mat-icon> Szavazás
-                </button>
-                <button mat-button class="green" *ngIf="isForCompatition && voted" (click)="voteRemove()">
-                    <mat-icon>star</mat-icon> Szavazott
-                </button>
-            </mat-card-actions>
-          </mat-card>
-          <p>*a gombok csak minták</p>
-    </div>
+  <div class="form">
+    <h1>Itt tudod feltölteni az alkotásodat</h1>
+    <form [formGroup]="myForm">
+      <mat-form-field hintLabel="Max 40 karakter" appearance="fill">
+        <mat-label>Cím</mat-label>
+        <input
+          [(ngModel)]="title"
+          #titlee
+          type="text"
+          maxlength="40"
+          formControlName="title"
+          matInput
+        />
+        <mat-hint align="end"
+          >{{ titlee.value?.length || 0 }}/40</mat-hint
+        > </mat-form-field
+      ><br /><br />
+      <mat-form-field hintLabel="Max 500 karakter" appearance="fill">
+        <mat-label>Leírás</mat-label>
+        <input
+          [(ngModel)]="desc"
+          #desce
+          formControlName="desc"
+          maxlength="500"
+          type="text"
+          matInput
+        />
+        <mat-hint align="end"
+          >{{ desce.value?.length || 0 }}/500</mat-hint
+        > </mat-form-field
+      ><br /><br />
+      <input
+        #file
+        formControlName="image"
+        (change)="onFileSelected($event)"
+        type="file"
+      /><br /><br />
+      <p>{{ file.value }}</p>
+      <section class="example-section">
+        <mat-checkbox
+          formControlName="isForCompatition"
+          class="example-margin"
+          [(ngModel)]="isForCompatition"
+          >Alkotás benevezése versenyre</mat-checkbox
+        >
+      </section>
+    </form>
+  </div>
+  <div>
+    <mat-card class="card">
+      <mat-card-header>
+        <div mat-card-avatar *ngIf="authorAvatar" class="example-header-image">
+          <img height="45" class="rounded-circle" [src]="authorAvatar" />
+        </div>
+        <mat-card-title>{{ title ? title : "Cím" }}</mat-card-title>
+        <mat-card-subtitle *ngIf="authorName">{{
+          authorName
+        }}</mat-card-subtitle>
+      </mat-card-header>
+      <img
+        mat-card-image
+        [src]="
+          imageurl ||
+          'https://www.thoughtco.com/thmb/Zya6PS3m6XjRAmVo1HONvY9DW_A=/3865x2174/smart/filters:no_upscale()/abstract-paper-flower-pattern-656688606-5acfba2eae9ab80038461ca0.jpg'
+        "
+        alt="Photo of a Shiba Inu"
+      />
+      <mat-card-content> </mat-card-content>
+      <p>{{ desc ? desc : "Leírás (opcionális)" }}</p>
+      <mat-card-actions>
+        <button mat-button disabled>
+          <mat-icon *ngIf="isForCompatition">open_in_new</mat-icon>
+          {{ isForCompatition ? "" : "Megnyitás" }}
+        </button>
+        <button
+          style="background-color: var(--red); color: white"
+          (click)="like()"
+          *ngIf="!liked"
+          mat-button
+        >
+          <mat-icon>favorite_border</mat-icon> ({{ likes.length }})
+          {{ isForCompatition ? "" : "Like" }}
+        </button>
+        <button
+          style="background-color: var(--green)"
+          mat-button
+          (click)="dislike()"
+          *ngIf="liked"
+        >
+          <mat-icon>favorite</mat-icon> ({{ likes.length }})
+          {{ isForCompatition ? "" : "Liked" }}
+        </button>
+        <button
+          *ngIf="shareable"
+          mat-flat-button
+          [class]="shareclass"
+          (click)="share()"
+        >
+          <mat-icon *ngIf="shareclass === 'red'">content_copy</mat-icon>
+          <mat-icon *ngIf="shareclass != 'red' && isForCompatition"
+            >done</mat-icon
+          >
+          {{ isForCompatition ? "" : sharetext }}
+        </button>
+        <button
+          mat-button
+          class="red"
+          *ngIf="isForCompatition && !voted"
+          (click)="voteAdd()"
+        >
+          <mat-icon>star</mat-icon> Szavazás
+        </button>
+        <button
+          mat-button
+          class="green"
+          *ngIf="isForCompatition && voted"
+          (click)="voteRemove()"
+        >
+          <mat-icon>star</mat-icon> Szavazott
+        </button>
+      </mat-card-actions>
+    </mat-card>
+    <p>*a gombok csak minták</p>
+  </div>
 </div>

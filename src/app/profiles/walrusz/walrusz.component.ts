@@ -2,7 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { collection, getDocs, getFirestore, limitToLast, orderBy, query, where } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  limitToLast,
+  orderBy,
+  query,
+  where,
+} from 'firebase/firestore';
 @Component({
   selector: 'app-walrusz',
   templateUrl: './walrusz.component.html',
@@ -18,44 +26,48 @@ export class WalruszComponent implements OnInit {
 
   db = getFirestore();
 
-  constructor(
-    private sanitizer: DomSanitizer,
-  ) {}
+  constructor(private sanitizer: DomSanitizer) {}
 
   async ngOnInit(): Promise<void> {
-    const q = query(collection(this.db, 'waik/videos/post'), where('channel', '==', 'Walrusz'), orderBy('timestamp'), limitToLast(3));
+    const q = query(
+      collection(this.db, 'waik/videos/post'),
+      where('channel', '==', 'Walrusz'),
+      orderBy('timestamp'),
+      limitToLast(3)
+    );
     getDocs(q).then((coll: any) => {
       let counter = -1;
       for (const doc of coll.docs) {
-        console.log(doc.data())
+        console.log(doc.data());
         const url: string = doc.data()?.url;
-        this.videoURLs.push(this.sanitizer.bypassSecurityTrustResourceUrl(
-          `https://www.youtube.com/embed/${url.split('=')[1]}`
-        ));
-         this.videos.push({
+        this.videoURLs.push(
+          this.sanitizer.bypassSecurityTrustResourceUrl(
+            `https://www.youtube.com/embed/${url.split('=')[1]}`
+          )
+        );
+        this.videos.push({
           channel: doc.data()?.channel,
           thumbnails: {
             default: doc.data()?.thumbnails.default,
           },
           timestamp: doc.data()?.timestamp,
           url: doc.data()?.url,
-          index: counter =+ 1,
-        })
-        counter = counter + 1
+          index: (counter = +1),
+        });
+        counter = counter + 1;
 
         let a: any[] = [];
 
-        a.indexOf((e: string) => e === "")
-        
+        a.indexOf((e: string) => e === '');
+
         console.log(counter);
       }
-      
 
       console.log(this.videos);
       this.videoURLs.reverse();
       this.videos.reverse();
       this.loading = false;
-    })
+    });
     /*
     this.http
       .get(
@@ -80,8 +92,10 @@ export class WalruszComponent implements OnInit {
 
   changeindex(url: string) {
     console.log(url);
-    console.log(this.videos.indexOf((e: { url: string; }) => e.url === url))
-    this.currentVideoIndex = this.videos.indexOf((e: { url: string; }) => e.url == url);
+    console.log(this.videos.indexOf((e: { url: string }) => e.url === url));
+    this.currentVideoIndex = this.videos.indexOf(
+      (e: { url: string }) => e.url == url
+    );
   }
 
   // GET https://www.googleapis.com/youtube/v3/search?part=snippet&channelId={CHANNEL_ID}&maxResults=10&order=date&type=video&key={YOUR_API_KEY}
@@ -91,5 +105,5 @@ interface Video {
   url: string;
   thumbnails: {
     default: string;
-  }
+  };
 }

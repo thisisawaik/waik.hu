@@ -9,7 +9,13 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AccountComponent } from 'src/app/account/account.component';
 
 import 'firebase/auth';
-import { collection, doc, getDoc, getFirestore, onSnapshot } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDoc,
+  getFirestore,
+  onSnapshot,
+} from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 @Component({
@@ -37,7 +43,7 @@ export class ImagesComponent implements OnInit {
     private msg: MessagesService,
     private clipboard: Clipboard,
     private http: HttpClient,
-    private authServ: AuthService,
+    private authServ: AuthService
   ) {}
 
   @Input() id: string | undefined;
@@ -56,7 +62,7 @@ export class ImagesComponent implements OnInit {
       getDoc(userref)
         .then((docdata: any) => {
           if (docdata.data()['dcid']) {
-              getDoc(doc(this.db, `dcusers/${docdata.data()['dcid']}`))
+            getDoc(doc(this.db, `dcusers/${docdata.data()['dcid']}`))
               .then((doc: any) => {
                 this.authorAvatar = doc.data()['pp'];
                 this.authorName = doc.data()['tag'];
@@ -66,26 +72,26 @@ export class ImagesComponent implements OnInit {
         })
         .catch((e) => this.msg.error(e.message));
     }
-    
+
     const d = doc(this.db, `waik/website/fanarts/${this.id}`);
     onSnapshot(d, async (snap: any) => {
-      if(snap.likes) {
+      if (snap.likes) {
         this.likes = snap.likes;
       }
       const user = await this.auth.currentUser;
-      if(user && this.likes?.length != 0) {
-        if(this.likes?.find(e => e === user.uid)) {
+      if (user && this.likes?.length != 0) {
+        if (this.likes?.find((e) => e === user.uid)) {
           this.liked = true;
         }
       }
-    })
+    });
   }
 
   open() {
     const dialogref = this.dialog.open(ImageDialogComponent, {
       data: {
         id: this.id,
-      }
+      },
     });
 
     dialogref.afterClosed().subscribe((res) => {
@@ -95,7 +101,7 @@ export class ImagesComponent implements OnInit {
 
   async like() {
     const user = await this.auth.currentUser;
-    if(!user) {
+    if (!user) {
       this.dialog.open(AccountComponent, {
         minWidth: 600,
       });
@@ -121,7 +127,7 @@ export class ImagesComponent implements OnInit {
 
   async dislike() {
     const user = await this.auth.currentUser;
-    if(!user) {
+    if (!user) {
       this.dialog.open(AccountComponent, {
         minWidth: 600,
       });
@@ -144,7 +150,6 @@ export class ImagesComponent implements OnInit {
           }
         );
     }
-
   }
 
   share() {
