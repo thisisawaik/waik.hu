@@ -7,41 +7,49 @@
   <div class="form">
     <h1>Itt tudod feltölteni az alkotásodat</h1>
     <form [formGroup]="myForm">
-      <mat-form-field hintLabel="Max 40 karakter" appearance="fill">
+      <mat-form-field hintLabel="Max {{ maxTitle }} karakter" appearance="fill">
         <mat-label>Cím</mat-label>
         <input
           [(ngModel)]="title"
           #titlee
           type="text"
-          maxlength="40"
+          [maxlength]="maxTitle"
           formControlName="title"
           matInput
+          class="title"
         />
         <mat-hint align="end"
-          >{{ titlee.value?.length || 0 }}/40</mat-hint
+          >{{ titlee.value?.length || 0 }}/{{ maxTitle }}</mat-hint
         > </mat-form-field
       ><br /><br />
-      <mat-form-field hintLabel="Max 500 karakter" appearance="fill">
+      <mat-form-field hintLabel="Max {{ maxDesc }} karakter" appearance="fill">
         <mat-label>Leírás</mat-label>
         <input
           [(ngModel)]="desc"
           #desce
           formControlName="desc"
-          maxlength="500"
+          [maxlength]="maxDesc"
           type="text"
           matInput
         />
         <mat-hint align="end"
-          >{{ desce.value?.length || 0 }}/500</mat-hint
+          >{{ desce.value?.length || 0 }}/{{ maxDesc }}</mat-hint
         > </mat-form-field
       ><br /><br />
-      <input
+
+      <mat-form-field appearance="fill">
+        <mat-label>Kép</mat-label>
+        <ngx-mat-file-input formControlName="image" (change)="onFileSelected($event)" placeholder="Basic fill placeholder" ></ngx-mat-file-input>
+      </mat-form-field>
+      <!--
+<input
         #file
         formControlName="image"
         (change)="onFileSelected($event)"
         type="file"
-      /><br /><br />
-      <p>{{ file.value }}</p>
+      />
+      -->
+      <br /><br />
       <section class="example-section">
         <mat-checkbox
           formControlName="isForCompatition"
@@ -50,6 +58,10 @@
           >Alkotás benevezése versenyre</mat-checkbox
         >
       </section>
+
+      <br>
+      <button [class]="saveBtnClass" (click)="saveAsDraft()" mat-button>{{ saveBtnContent ? saveBtnContent : 'Mentés' }}</button>
+      <button class="red" mat-button>Beküldés</button>
     </form>
   </div>
   <div>

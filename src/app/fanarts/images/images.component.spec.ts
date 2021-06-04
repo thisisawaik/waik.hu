@@ -1,5 +1,7 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { ImagesComponent } from './images.component';
 
@@ -10,7 +12,7 @@ describe('ImagesComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ImagesComponent ],
-      imports: [ MatDialogModule ],
+      imports: [ MatDialogModule, MatSnackBarModule, HttpClientModule, MatDialogRef ],
     })
     .compileComponents();
   });

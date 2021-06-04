@@ -54,6 +54,12 @@ export class UploadComponent implements OnInit {
   savestate: 'loading' | 'synced' | 'modified' | 'error' = 'loading';
   docid: string | null = null;
 
+  maxTitle: number = 30;
+  maxDesc: number = 500;
+
+  saveBtnClass: 'green' | 'yellow' | 'red' = 'green';
+  saveBtnContent: string = "Mentés";
+
   constructor(private fb: FormBuilder, private msg: MessagesService) {}
 
   async ngOnInit(): Promise<void> {
@@ -64,19 +70,35 @@ export class UploadComponent implements OnInit {
       isForCompatition: false,
     });
 
+    const d = doc(this.db, 'waik/website');
+
+    getDoc(d)
+      .then((asd) => {
+        const config = asd.data()?.fanart_config;
+        this.maxDesc = config.maxDesc;
+        this.maxTitle = config.maxTitle;
+      })
+      .catch((e) => {
+        console.error(e.code);
+        this.msg.error(`Hiba! ${e.message}`);
+      });
+
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
-        console.log(user);
         this.authorAvatar = user?.photoURL || null;
-        const d = await getDoc(doc(this.db, `users/${user.uid}`));
-
-        if (d.data()?.dcid) {
-          const dcd = await getDoc(doc(this.db, `dcusers/${d.data()?.dcid}`));
-          if (dcd.data()?.pp) {
-            this.authorAvatar = dcd.data()?.pp || user?.photoURL || null;
-            this.authorName =
-              dcd.data()?.tag || 'Ez le lesz cserélve a discord nevedre';
+        try {
+          const d = await getDoc(doc(this.db, `users/${user.uid}`));
+          if (d.data()?.dcid) {
+            const dcd = await getDoc(doc(this.db, `dcusers/${d.data()?.dcid}`));
+            if (dcd.data()?.pp) {
+              this.authorAvatar = dcd.data()?.pp || user?.photoURL || null;
+              this.authorName =
+                dcd.data()?.tag || 'Ez le lesz cserélve a discord nevedre';
+            }
           }
+        } catch (e) {
+          this.msg.error('Hiba!');
+          console.error(e);
         }
 
         const c = collection(this.db, '/waik/website/fanarts');
@@ -85,31 +107,40 @@ export class UploadComponent implements OnInit {
           where('author', '==', user.uid),
           where('status', '==', 'DRAFT')
         );
-        getDocs(q).then(async (docs) => {
-          if (docs.empty) {
-            setDoc(doc(this.db, `/waik/website/fanart/${user.uid}`), {
-              title: null,
-              desc: null,
-              gsURL: null,
-              author: user.uid,
-              status: 'DRAFT',
-            }).then((val) => {
-              this.docid = user.uid;
+
+        getDocs(q)
+          .then(async (docs) => {
+            if (docs.empty) {
+              setDoc(doc(this.db, `/waik/website/fanarts/${user.uid}`), {
+                title: null,
+                desc: null,
+                gsURL: null,
+                author: user.uid,
+                status: 'DRAFT',
+                forComp: this.isForCompatition,
+              }).then((val) => {
+                this.docid = user.uid;
+
+                this.savestate = 'synced';
+              }).catch(e => {
+                this.msg.error(`Hiba! ${e.message}`)
+              });
+            } else {
+              const artdoc = docs.docs[0];
+              this.title = artdoc.data()?.title;
+              this.desc = artdoc.data()?.desc;
+              this.isForCompatition = artdoc.data()?.forComp || false;
+              this.imageurl = artdoc.data()?.gsURL
+                ? await getDownloadURL(ref(this.storage, artdoc.data()?.gsURL))
+                : null;
 
               this.savestate = 'synced';
-            });
-          } else {
-            const artdoc = docs.docs[0];
-            this.title = artdoc.data()?.title;
-            this.desc = artdoc.data()?.desc;
-            this.isForCompatition = artdoc.data()?.forComp || false;
-            this.imageurl = artdoc.data()?.gsURL
-              ? await getDownloadURL(ref(this.storage, artdoc.data()?.gsURL))
-              : null;
-
-            this.savestate = 'synced';
-          }
-        });
+            }
+          })
+          .catch((e) => {
+            this.msg.error(`Hiba! ${e.message}`);
+            console.error(e);
+          });
       }
     });
   }
@@ -198,6 +229,28 @@ export class UploadComponent implements OnInit {
       } else {
         this.msg.error('Csak képet lehet feltölteni!');
       }
+    }
+  }
+
+  saveAsDraft() {
+    const user = this.auth.currentUser;
+    if(user) {
+      this.saveBtnClass = 'yellow';
+      this.saveBtnContent = 'Mentés...'
+      setDoc(doc(this.db, `/waik/website/fanarts/${user.uid}`), {
+        title: this.title || null,
+        desc: this.title || null,
+        status: 'DRAFT',
+        forComp: this.isForCompatition || false,
+      }, {merge: true}).then(res => {
+        this.saveBtnClass = 'green';
+        this.saveBtnContent = 'Sikeres mentés!'
+        setTimeout(() => {
+          this.saveBtnContent = 'Mentés'
+        }, 3000);
+      })
+    } else {
+
     }
   }
 }

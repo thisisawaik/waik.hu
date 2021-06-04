@@ -10,7 +10,7 @@
 .card {
   min-height: 300px;
   min-width: 200px;
-  max-height: 800px;
+  max-height: 1000px;
   max-width: 400px;
 }
 
@@ -36,4 +36,15 @@ button {
 .green {
   background-color: var(--green);
   color: black;
+}
+
+.yellow {
+  background-color: var(--yellow);
+  color: black;
+}
+
+form {
+  button {
+    margin-right: 16px;
+  }
 }

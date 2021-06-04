@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AccountComponent } from './account.component';
-import { from } from 'rxjs';
 import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
 

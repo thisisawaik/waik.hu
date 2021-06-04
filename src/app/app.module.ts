@@ -44,6 +44,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,6 +72,7 @@ import { CommonModule } from '@angular/common';
     UploadComponent,
     CompetitionComponent,
     AutoFormDirective,
+    FanartsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'waik-hu' }),
@@ -99,6 +102,7 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatCheckboxModule,
     FormsModule,
+    MaterialFileInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
