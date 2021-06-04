@@ -1,7 +1,7 @@
 <div class="toolbar" role="banner">
   <img width="40" routerLink="/" alt="Waik Logo" src="assets/waik_big_icon.png" style="cursor: pointer;"/>
   <button routerLink="/" [class.active]="onHomePage" mat-button><mat-icon>home</mat-icon> Kezdőlap</button>
-  <button routerLink="/stream" routerLinkActive="active" mat-button><mat-icon>videocam</mat-icon> Streamek</button>
+  <button routerLink="/stream" routerLinkActive="active" mat-button matBadge="1" matBadgeColor="accent" matBadgeSize="small"><mat-icon>videocam</mat-icon> Streamek</button>
   <button routerLink="/downloads" routerLinkActive="active" mat-button><mat-icon>download</mat-icon> Letöltések</button>
   <button routerLink="/fanarts" routerLinkActive="active" mat-button><mat-icon>palette</mat-icon> Fanartok</button>
   <div class="spacer"></div>

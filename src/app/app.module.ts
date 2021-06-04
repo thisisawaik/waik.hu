@@ -45,7 +45,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
-
+import { MatBadgeModule } from '@angular/material/badge'
 @NgModule({
   declarations: [
     AppComponent,
@@ -103,6 +103,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     MatCheckboxModule,
     FormsModule,
     MaterialFileInputModule,
+    MatBadgeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
