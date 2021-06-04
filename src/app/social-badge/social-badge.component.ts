@@ -9,7 +9,7 @@ export class SocialBadgeComponent implements OnInit {
 
   constructor() { }
 
-  @Input() socialType: SocialType | undefined;
+  @Input() socialType!: SocialType;
   @Input() socialUser: string | undefined;
 
   ngOnInit(): void {
@@ -17,18 +17,19 @@ export class SocialBadgeComponent implements OnInit {
 
 
   public get socialUrl() : string {
-
-    switch (this.socialType) {
-      case 'youtube': return `https://www.youtube.com/user/${this.socialUser}?utm_source=waik.hu`;
-      case 'twitch': return `https://www.twitch.tv/${this.socialUser}?utm_source=waik.hu`;
-      case 'twitter': return `https://twitter.com/${this.socialUser}?utm_source=waik.hu`;
-      case 'github': return `https://github.com/${this.socialUser}?utm_source=waik.hu`;
-      case 'facebook': return `https://facebook.com/${this.socialUser}?utm_source=waik.hu`;
-      case 'instagram': return `https://instagram.com/${this.socialUser}?utm_source=waik.hu`;
-      case 'reddit': return `https://www.reddit.com/${this.socialUser}/?utm_source=waik.hu`;
-      case 'vimeo': return `https://vimeo.com/${ this.socialUser }?utm_source=waik.hu`;
-      default: return'null';
+    const user = this.socialUser;
+    const platforms = {
+      'youtube'  : (user: any) => `https://www.youtube.com/user/${user}`,
+      'twitch'   : (user: any) => `https://www.twitch.tv/${user}`,
+      'twitter'  : (user: any) => `https://twitter.com/${user}`,
+      'github'   : (user: any) => `https://github.com/${user}`,
+      'facebook' : (user: any) => `https://facebook.com/${user}`,
+      'instagram': (user: any) => `https://instagram.com/${user}`,
+      'reddit'   : (user: any) => `https://www.reddit.com/${user}`,
+      'vimeo'    : (user: any) => `https://vimeo.com/${user}`,
     }
+
+    return `${platforms[this.socialType](this.socialUser)}?utm_source=waik.hu`
   }
 
 
