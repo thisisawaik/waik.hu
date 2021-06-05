@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
   onProfilePage: boolean = true;
   onHomePage: boolean = true;
 
+  db = getFirestore();
 
   constructor(
     private router: Router,
@@ -35,12 +36,16 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((event: any) => {
       if (event.url === '/profile/isti') {
         this.currentpage = 'isti';
+        this.onHomePage = false;
       } else if (event.url === '/profile/norticus') {
         this.currentpage = 'tdr';
+        this.onHomePage = false;
       } else if (event.url === '/profile/walrusz') {
         this.currentpage = 'walrusz';
+        this.onHomePage = false;
       } else if (event.url === '/profile/geiszla') {
         this.currentpage = 'geiszla';
+        this.onHomePage = false;
       } else if (event.url) {
         if (event.url === '/') {
           this.onHomePage = true;
@@ -54,17 +59,14 @@ export class AppComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
 
-    const db = getFirestore();
-
-    const tdrRef = doc(db, 'dcusers/118466559738904576');
-    const istiRef = doc(db, 'dcusers/174980450543075330'); // 174980450543075330
-    const walruszRef = doc(db, 'dcusers/183302720030113792'); // 183302720030113792
-    const geiszlaRef = doc(db, 'dcusers/175193667269558272'); // 175193667269558272
+    const tdrRef = doc(this.db, 'dcusers/118466559738904576'); // 118466559738904576
+    const istiRef = doc(this.db, 'dcusers/174980450543075330'); // 174980450543075330
+    const walruszRef = doc(this.db, 'dcusers/183302720030113792'); // 183302720030113792
+    const geiszlaRef = doc(this.db, 'dcusers/175193667269558272'); // 175193667269558272
 
     getDoc(tdrRef).then((doc: any) => (this.tdrImage = doc.data().pp));
     getDoc(istiRef).then((doc: any) => (this.istiImage = doc.data().pp));
     getDoc(walruszRef).then((doc: any) => (this.walruszImage = doc.data().pp));
     getDoc(geiszlaRef).then((doc: any) => (this.geiszlaImage = doc.data().pp));
-      
   }
 }

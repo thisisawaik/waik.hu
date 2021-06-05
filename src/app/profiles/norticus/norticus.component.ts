@@ -9,6 +9,8 @@ import { doc, getDoc, getFirestore } from 'firebase/firestore';
 export class NorticusComponent implements OnInit {
   db = getFirestore();
   pp: string = "https://cdn.discordapp.com/avatars/118466559738904576/6b4610199259efab8493cafb3e049938.webp";
+  name: string = "Norticus36#7832";
+  
   constructor() { }
 
   ngOnInit(): void {

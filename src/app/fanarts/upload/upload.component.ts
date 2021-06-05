@@ -19,7 +19,7 @@ import {
   updateDoc,
   where,
 } from '@firebase/firestore';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 import { MessagesService } from 'src/app/services/messages.service';
 @Component({
   selector: 'app-upload',
@@ -60,6 +60,11 @@ export class UploadComponent implements OnInit {
   saveBtnClass: 'green' | 'yellow' | 'red' = 'green';
   saveBtnContent: string = "Mentés";
 
+  uploadInProgress: boolean = true;
+  uploadPrecentage: number = 0;
+
+  comp_categorys: FanartCategory[] = [];
+
   constructor(private fb: FormBuilder, private msg: MessagesService) {}
 
   async ngOnInit(): Promise<void> {
@@ -77,6 +82,7 @@ export class UploadComponent implements OnInit {
         const config = asd.data()?.fanart_config;
         this.maxDesc = config.maxDesc;
         this.maxTitle = config.maxTitle;
+        this.comp_categorys = config.comp.categorys
       })
       .catch((e) => {
         console.error(e.code);
@@ -197,21 +203,50 @@ export class UploadComponent implements OnInit {
           this.storage,
           `/waik/fanarts/temp/${user?.uid}/${file.name}`
         );
-        uploadBytes(r, file)
-          .then(async (val) => {
+        uploadBytesResumable(r, file)
+          .on('state_changed', async (snap) => {
+            this.uploadPrecentage = (snap.bytesTransferred / snap.totalBytes) * 100;
+            this.uploadInProgress = true;
+
+            if(snap.bytesTransferred / snap.totalBytes === 100) {
+              this.imageurl = await getDownloadURL(
+                ref(this.storage, snap.ref.fullPath)
+              ); 
+              this.msg.info('Kép sikeresen feltöltve!');
+              updateDoc(doc(this.db, `/waik/website/fanarts/${this.docid}`), {
+                gsURL: `/waik/fanarts/temp/${user?.uid}/${file.name}`,
+              });
+            }
+          },
+          (e) => {
+            if (e.code === 'storage/unauthorized') {
+              this.msg.error(`Sikertelen feltöltés! Hiányzó jogosultságok!`);
+            }
+          },
+          async () => {
             this.imageurl = await getDownloadURL(
-              ref(this.storage, val.ref.fullPath)
+              ref(this.storage, `/waik/fanarts/temp/${user?.uid}/${file.name}`)
             );
             this.msg.info('Kép sikeresen feltöltve!');
-            updateDoc(doc(this.db, `/waik/website/fanarts/${this.docid}`), {
+            updateDoc(doc(this.db, `/waik/website/fanarts/${user?.uid}`), {
               gsURL: `/waik/fanarts/temp/${user?.uid}/${file.name}`,
+            }).catch(e => {
+              this.msg.error(e.message);
             });
+            this.uploadPrecentage = 100;
+
+          })
+          /*
+          .then(async (val) => {
+
           })
           .catch((e) => {
             if (e.code === 'storage/unauthorized') {
               this.msg.error(`Sikertelen feltöltés! Hiányzó jogosultságok!`);
             }
           });
+          */
+        
       } else if (file.type === 'image/svg' || file.type === 'image/svg+xml') {
         this.msg.warn('Javasolt JPG vagy PNG formátumot használni!');
         const r = ref(this.storage, `test/${file.name}`);
@@ -253,4 +288,9 @@ export class UploadComponent implements OnInit {
 
     }
   }
+}
+
+interface FanartCategory {
+  name: string,
+  value: string,
 }

@@ -103,7 +103,7 @@
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
             "inlineStyleLanguage": "scss",
-            "externalDependencies": [ 
+            "externalDependencies": [
               "@firebase/app",
               "firebase/app",
               "@firebase/firestore",
@@ -158,6 +158,37 @@
             }
           },
           "defaultConfiguration": "production"
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "waik-hu:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "waik-hu:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "waik-hu:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "waik-hu:serve:production"
+            }
+          }
         }
       }
     }

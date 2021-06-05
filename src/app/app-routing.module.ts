@@ -12,6 +12,8 @@ import { StreamsComponent } from './streams/streams.component';
 import { LoadGuard } from './load.guard';
 import { FanartsComponent } from './fanarts/fanarts.component';
 import { AccountComponent } from './account/account.component';
+import { AuthComponent } from './auth/auth.component';
+import { DiscordComponent } from './auth/discord/discord.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,6 +28,9 @@ const routes: Routes = [
   { path: 'share/:ShareId', component: ShareComponent },
   { path: 'fanart', component: FanartsComponent},
   { path: 'fanarts', component: FanartsComponent},
+  { path: 'callback', component: AuthComponent },
+  { path: 'callback/discord', component: DiscordComponent },
+  
   { path: '**', component: NotFoundComponent },
 ];
 

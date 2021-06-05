@@ -46,6 +46,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatBadgeModule } from '@angular/material/badge'
+import { AuthComponent } from './auth/auth.component';
+import { DiscordComponent } from './auth/discord/discord.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,6 +75,8 @@ import { MatBadgeModule } from '@angular/material/badge'
     CompetitionComponent,
     AutoFormDirective,
     FanartsComponent,
+    AuthComponent,
+    DiscordComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'waik-hu' }),
