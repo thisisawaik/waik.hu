@@ -274,7 +274,7 @@ export class UploadComponent implements OnInit {
       this.saveBtnContent = 'Mentés...'
       setDoc(doc(this.db, `/waik/website/fanarts/${user.uid}`), {
         title: this.title || null,
-        desc: this.title || null,
+        desc: this.desc || null,
         status: 'DRAFT',
         forComp: this.isForCompatition || false,
       }, {merge: true}).then(res => {
