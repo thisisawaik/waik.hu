@@ -1,10 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Meta, Title } from '@angular/platform-browser';
-import { MessagesService } from 'src/app/messages.service';
-import { collection, doc, getDoc, getFirestore } from 'firebase/firestore';
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { firebaseappapp } from '../../firebaseapp'
+import { MessagesService } from 'src/app/services/messages.service';
+
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
+import { getDownloadURL, getStorage, ref } from '@firebase/storage';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { getAnalytics, logEvent } from "firebase/analytics";
+
+
+
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -19,10 +24,17 @@ export class CardComponent implements OnInit {
     avatar: '',
     name: '',
   };
+  greenbackground: boolean = false;
+  analitycs = getAnalytics();
+
+  db = getFirestore();
+  storage = getStorage();
 
   constructor(
     private clipboard: Clipboard,
     private msg: MessagesService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   @Input()
@@ -43,9 +55,11 @@ export class CardComponent implements OnInit {
   author: string | undefined;
 
   ngOnInit(): void {
-    const db = getFirestore(firebaseappapp);
+    if(this.route.snapshot.queryParams.shareid && this.route.snapshot.queryParams.shareid === this.shareid) {
+      this.greenbackground = true;
+    }
     if(this.author) {
-      const d = doc(db, 'dcusers', this.author);
+      const d = doc(this.db, `dcusers/${this.author}`);
 
       getDoc(d).then((doc: any) => {
         this.authordata = {
@@ -58,8 +72,7 @@ export class CardComponent implements OnInit {
     }
 
     if (this.gsurl) {
-      const storage = getStorage(firebaseappapp);
-      getDownloadURL(ref(storage, this.gsurl)).then((res) => {
+      getDownloadURL(ref(this.storage, this.gsurl)).then((res) => {
         this.url = res;
       })
       .catch((e) => {
@@ -79,7 +92,7 @@ export class CardComponent implements OnInit {
       this.url = null;
     }
 
-    const d = doc(db, `waik/website/shares/${this.shareid}`);
+    const d = doc(this.db, `waik/website/shares/${this.shareid}`);
     getDoc(d).then((doc) => {
       if (doc.exists()) {
         this.shareable = true;
@@ -90,21 +103,24 @@ export class CardComponent implements OnInit {
   downloadclick() {
     //this.analitycs.logEvent('download_click', [this.url]);
     open(this.url!);
+    logEvent(this.analitycs, 'downloadclick');
   }
 
   githubclick() {
     //this.analitycs.logEvent('github_click', [this.github]);
     open(this.github!);
+    logEvent(this.analitycs, 'githubclick');
+
   }
 
   share() {
-    const db = getFirestore(firebaseappapp);
-    const d = doc(db, `waik/website/shares/${this.shareid}`);
+    //const d = this.db.doc(`waik/website/shares/${this.shareid}`);
     const link = `${window.location.protocol}//${window.location.hostname}${window.location.port? `:${window.location.port}` : ''}/share/${this.shareid}`;
     this.clipboard.copy(link);
     this.msg.success(`Link másolva a vágólapra! (${link})`)
 
     //this.analitycs.logEvent('share_click', [this.shareid]);
+    logEvent(this.analitycs, 'shareclick', { shareid: this.shareid });
 
     this.shareclass = 'green';
     this.sharetext = 'Link a vágólapon';
@@ -114,3 +130,4 @@ export class CardComponent implements OnInit {
     }, 5000);
   }
 }
+

@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { getApps, initializeApp } from 'firebase/app';
+import { environment } from 'src/environments/environment';
 
 import { WalruszComponent } from './walrusz.component';
+
+if(getApps().length === 0) {
+  initializeApp(environment.firebaseConfig);
+}
 
 describe('WalruszComponent', () => {
   let component: WalruszComponent;
@@ -11,6 +17,8 @@ describe('WalruszComponent', () => {
       declarations: [ WalruszComponent ]
     })
     .compileComponents();
+
+
   });
 
   beforeEach(() => {

@@ -3,6 +3,7 @@
   border-top-right-radius: 50% 50%;
   border-bottom-right-radius: 50% 50%;
   border-bottom-left-radius: 50% 50%;
+
 }
 
 .card {
@@ -14,16 +15,16 @@ a {
 }
 
 .blue {
-  background-color: #5865f2;
+  background-color: var(--blue);
   color: white;
 }
 
 .red {
-  background-color: #ed4245;
+  background-color: var(--red);
   color: white;
 }
 .green {
-  background-color: #57f287;
+  background-color: var(--green);
   color: black;
 }
 

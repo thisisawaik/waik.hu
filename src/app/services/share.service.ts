@@ -1,43 +1,38 @@
 import { Injectable } from '@angular/core';
 import { MetaDefinition } from '@angular/platform-browser';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { Observable,  } from 'rxjs'
-import { firebaseappapp } from '../firebaseapp';
+import { getDoc, getFirestore } from '@firebase/firestore';
+import { doc } from 'firebase/firestore';
 
 const map = new Map<string, Array<MetaDefinition>>();
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ShareService {
-
-  constructor() {
-  }
+  db = getFirestore();
+  constructor() {}
 
   async getShareTags(id: any): Promise<Array<MetaDefinition> | undefined> {
-    
-    if(map.has(id)) {
+    if (map.has(id)) {
       const data = map.get(id);
       return data;
     }
-    
-    const db = getFirestore(firebaseappapp);
-    const d = doc(db, `waik/website/shares/${id}`);
+
+    const docref = doc(this.db, `waik/website/shares/${id}`);
 
     try {
-      let doc = await getDoc(d);
-      
-      if (doc.exists()) {
-        if(doc.data()['tags']) {
-          map.set(id, doc.data()['tags'])
-        }
-      }
-    }
-    catch(e)
-    {
-      
-    }
+      let doc: any = await getDoc(docref);
 
-    return undefined;
-  } 
+      if (doc.exists()) {
+        if (doc.data()['tags']) {
+          map.set(id, doc.data()['tags']);
+        }
+        return map.get(id);
+      } else {
+        return undefined;
+      }
+    } catch (e) {
+      return undefined;
+    }
+  }
 }

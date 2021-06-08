@@ -1,0 +1,50 @@
+.main {
+  margin: 60px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: auto 450px;
+}
+
+.card {
+  min-height: 300px;
+  min-width: 200px;
+  max-height: 1000px;
+  max-width: 400px;
+}
+
+a,
+p,
+h1,
+h2,
+h3,
+button {
+  font-family: Roboto;
+  color: black;
+}
+
+.blue {
+  background-color: var(--blue);
+  color: white;
+}
+
+.red {
+  background-color: var(--red);
+  color: white;
+}
+.green {
+  background-color: var(--green);
+  color: black;
+}
+
+.yellow {
+  background-color: var(--yellow);
+  color: black;
+}
+
+form {
+  button {
+    margin-right: 16px;
+  }
+}

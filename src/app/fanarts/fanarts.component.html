@@ -1,0 +1,29 @@
+<mat-tab-group
+  class="tabs"
+  [backgroundColor]="tabsBackgroundColor"
+  animationDuration="0ms"
+>
+  <mat-tab class="tab-content" label="Alkotások">
+    <div fxLayout="row wrap" class="arts">
+      <div
+        fxLayout="row wrap"
+        fxLayoutGap="16px"
+        style="margin: 16px"
+        *ngFor="let art of arts"
+      >
+        <app-images
+          [id]="art.id"
+          [shareid]="art.shareid"
+          [imageurl]="art.downloadurl"
+          [gsurl]="art.gsurl"
+          [getFromGS]="art.getFromGS"
+          [author]="art.author"
+        ></app-images>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Feltöltés"><app-upload></app-upload></mat-tab>
+  <mat-tab label="Verseny"><app-competition></app-competition></mat-tab>
+</mat-tab-group>
+
+<!--<app-footer [extraIds]="[]"></app-footer>-->

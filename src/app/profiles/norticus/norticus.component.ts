@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
 
 @Component({
   selector: 'app-norticus',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./norticus.component.scss']
 })
 export class NorticusComponent implements OnInit {
-
+  db = getFirestore();
+  pp: string = "https://cdn.discordapp.com/avatars/118466559738904576/6b4610199259efab8493cafb3e049938.webp";
+  name: string = "Norticus36#7832";
+  
   constructor() { }
 
   ngOnInit(): void {
+
+    const tdrRef = doc(this.db, 'dcusers/118466559738904576');
+
+    getDoc(tdrRef).then(res => {
+      this.pp = res.data()?.pp
+    })
   }
 
 }

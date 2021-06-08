@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MessagesService {
-
-  constructor(private snack: MatSnackBar) { }
+  constructor(private snack: MatSnackBar) {}
 
   error(message?: string) {
-    this.snack.open(`Hiba! ${ message || ''}`, 'Dismiss', {
+    this.snack.open(`${message ? '' : 'Hiba!'} ${message || ''}`, 'Dismiss', {
       panelClass: ['snack-error'],
     });
   }
 
   warn(message?: string) {
-    this.snack.open(`Figyelem! ${ message || ''}`, 'Dismiss', {
+    this.snack.open(`Figyelem! ${message || ''}`, 'Dismiss', {
       panelClass: ['snack-warning'],
       duration: 10000,
     });

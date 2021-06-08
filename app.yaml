@@ -1,0 +1,6 @@
+runtime: nodejs14 # or another supported version
+service: waik-main
+# instance_class: F4
+
+automatic_scaling:
+ min_instances: 1

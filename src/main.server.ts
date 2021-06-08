@@ -7,10 +7,20 @@
  */
 import '@angular/platform-server/init';
 
+import { initializeApp } from 'firebase/app';
+import firebase from 'firebase/compat/app';
+
 import { enableProdMode } from '@angular/core';
 
 import { environment } from './environments/environment';
 
+const zal_platform = "server";
+console.log(zal_platform)
+
+//initializeApp(environment.firebaseConfig);
+if(firebase.apps.length === 0) {
+  firebase.initializeApp(environment.firebaseConfig);
+}
 if (environment.production) {
   enableProdMode();
 }
