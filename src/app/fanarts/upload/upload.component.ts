@@ -6,6 +6,7 @@ import {
   FormBuilder,
   FormGroup,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import {
   addDoc,
@@ -65,7 +66,7 @@ export class UploadComponent implements OnInit {
 
   comp_categorys: FanartCategory[] = [];
 
-  constructor(private fb: FormBuilder, private msg: MessagesService) {}
+  constructor(private fb: FormBuilder, private msg: MessagesService, public dialog: MatDialog,) {}
 
   async ngOnInit(): Promise<void> {
     this.myForm = this.fb.group({
@@ -288,7 +289,34 @@ export class UploadComponent implements OnInit {
 
     }
   }
+
+  submit() {
+    const dialogRef = this.dialog.open(UploadSubmitPromptDialog);
+    const user = this.auth.currentUser;
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if(result === true) {
+        updateDoc(doc(this.db, `/waik/website/fanarts/${user!.uid}`), {
+          status: 'QUEUE',
+        }).then(res => {
+          this.msg.success('Sikeres beküldés! Publikálás az ellenőrzés után fog megtörténni amiről eMail-ben fogunk értesíteni!', 20000);
+        }).catch(e => {
+          this.msg.error(`Hiba beküldés közben! ${e.message}`);
+          console.error(e);
+        })
+      } else {
+        this.msg.warn('Beküldés megszakítva!');
+      }
+    });
+  }
 }
+
+@Component({
+  selector: 'upload-submit-prompt-dialog',
+  templateUrl: './submit-dialog.html',
+  styleUrls: ['./upload.component.scss'],
+})
+export class UploadSubmitPromptDialog {}
 
 interface FanartCategory {
   name: string,

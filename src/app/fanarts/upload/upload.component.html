@@ -43,8 +43,8 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Kép</mat-label>
-        <ngx-mat-file-input formControlName="image" (change)="onFileSelected($event)" placeholder="Basic fill placeholder" ></ngx-mat-file-input>
-        <mat-icon matSuffix>folder</mat-icon>
+        <ngx-mat-file-input formControlName="image" (change)="onFileSelected($event)" placeholder="Kép helye" ></ngx-mat-file-input>
+        <mat-icon matSuffix>image</mat-icon>
 
       </mat-form-field>
       <mat-progress-bar *ngIf="uploadInProgress" mode="determinate" color="accent" [value]="uploadPrecentage" style="width: 400px;"></mat-progress-bar>
@@ -80,7 +80,7 @@
       </div>
       <br>
       <button [class]="saveBtnClass" (click)="saveAsDraft()" mat-button>{{ saveBtnContent ? saveBtnContent : 'Mentés' }}</button>
-      <button class="red" mat-button>Beküldés</button>
+      <button class="red" (click)="submit()" mat-button>Beküldés</button>
     </form>
   </div>
   <div>

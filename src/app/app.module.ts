@@ -35,7 +35,7 @@ import { ProfileIconComponent } from './profile-icon/profile-icon.component';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatTabsModule } from '@angular/material/tabs'
-import { UploadComponent } from './fanarts/upload/upload.component';
+import { UploadComponent, UploadSubmitPromptDialog } from './fanarts/upload/upload.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select'
 import { CompetitionComponent } from './fanarts/competition/competition.component';
@@ -77,6 +77,7 @@ import { DiscordComponent } from './auth/discord/discord.component';
     FanartsComponent,
     AuthComponent,
     DiscordComponent,
+    UploadSubmitPromptDialog,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'waik-hu' }),
