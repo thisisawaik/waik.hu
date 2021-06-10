@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/waik-hu/browser",
+    "public": "web/dist/waik-hu/browser",
     "site": "waik-main",
     "ignore": [
       "firebase.json",
@@ -38,7 +38,8 @@
       "port": 8085
     },
     "storage": {
-      "port": 9199
+      "port": 9199,
+      "rules": "storage.rules"
     },
     "ui": {
       "enabled": true
@@ -49,6 +50,7 @@
       "npm --prefix \"$RESOURCE_DIR\" ci",
       "npm --prefix \"$RESOURCE_DIR\" run lint",
       "npm --prefix \"$RESOURCE_DIR\" run build"
-    ]
+    ],
+    "source": "functions"
   }
 }

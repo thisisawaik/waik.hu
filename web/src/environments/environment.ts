@@ -12,4 +12,5 @@ export const environment = {
   },
   port: 4200,
   apiUrl: 'http://localhost:8080',
+  appcheckDebugToken: null,
 };

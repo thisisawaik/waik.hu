@@ -17,6 +17,7 @@ import {
   onSnapshot,
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import { getFunctions, httpsCallable } from '@firebase/functions';
 
 @Component({
   selector: 'app-images',
@@ -37,6 +38,7 @@ export class ImagesComponent implements OnInit {
 
   db = getFirestore();
   auth = getAuth();
+  funcions = getFunctions();
 
   constructor(
     public dialog: MatDialog,
@@ -100,12 +102,23 @@ export class ImagesComponent implements OnInit {
   }
 
   async like() {
-    const user = await this.auth.currentUser;
+    const user = this.auth.currentUser;
     if (!user) {
       this.dialog.open(AccountComponent, {
         minWidth: 600,
       });
     } else {
+      this.liked = true;
+      httpsCallable(this.funcions, 'waikFanartAddLike')({postId: this.id}).then(res => {
+        this.msg.success('Like hozzáadva!');
+        const data: any = res.data;
+        this.likes = data?.likes
+      }).catch(e => {
+        this.msg.error(`Hiba like-olás közben! (${e.message})`);
+        console.error(e)
+        this.liked = false;
+      });
+      /*
       const token = await this.authServ.getAuthToken();
       this.liked = true;
       this.http
@@ -122,6 +135,7 @@ export class ImagesComponent implements OnInit {
             this.liked = false;
           }
         );
+      */
     }
   }
 
@@ -132,23 +146,14 @@ export class ImagesComponent implements OnInit {
         minWidth: 600,
       });
     } else {
-      this.liked = true;
-      const token = await this.authServ.getAuthToken();
       this.liked = false;
-      this.http
-        .delete(
-          `${environment.apiUrl}/like/${this.id}?uid=${user?.uid}&token=${token}`,
-          {}
-        )
-        .subscribe(
-          (res) => {
-            this.msg.success('Like visszavonva!');
-          },
-          (err) => {
-            this.msg.error(`Hiba like visszavonása közben! (${err.message})`);
-            this.liked = true;
-          }
-        );
+      httpsCallable(this.funcions, 'waikFanartAddRemove')({postId: this.id})
+      .then(res => {
+        this.msg.success('Like visszavonva!');
+      }).catch(err => {
+        this.msg.error(`Hiba like visszavonása közben! (${err.message})`);
+        this.liked = true;
+      });
     }
   }
 
@@ -165,5 +170,12 @@ export class ImagesComponent implements OnInit {
       this.shareclass = 'red';
       this.sharetext = 'Megosztás';
     }, 5000);
+  }
+
+  removeElement(array: Array<string>, elem: string) {
+    var index = array.indexOf(elem);
+    if (index > -1) {
+      array.splice(index, 1);
+    }
   }
 }

@@ -5,7 +5,7 @@ import firebase from 'firebase/compat/app'
 import 'firebase/compat/analytics';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-
+import { getFunctions, useFunctionsEmulator } from 'firebase/functions'
 //initializeApp(environment.firebaseConfig);
 
 if(firebase.apps.length === 0) {
@@ -18,6 +18,8 @@ console.log(zal_platform)
 
 if (environment.production) {
   enableProdMode();
+} else {
+  useFunctionsEmulator(getFunctions() , 'localhost', 5001);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
