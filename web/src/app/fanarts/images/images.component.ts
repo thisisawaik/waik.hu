@@ -80,7 +80,7 @@ export class ImagesComponent implements OnInit {
       if (snap.likes) {
         this.likes = snap.likes;
       }
-      const user = await this.auth.currentUser;
+      const user = this.auth.currentUser;
       if (user && this.likes?.length != 0) {
         if (this.likes?.find((e) => e === user.uid)) {
           this.liked = true;

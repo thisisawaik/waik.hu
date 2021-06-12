@@ -22,6 +22,7 @@ import {
 } from '@firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 import { MessagesService } from 'src/app/services/messages.service';
+import { getFunctions, httpsCallable } from 'firebase/functions'
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -37,6 +38,7 @@ export class UploadComponent implements OnInit {
   auth = getAuth();
   db = getFirestore();
   storage = getStorage();
+  functions = getFunctions();
 
   title: string | null = null;
   authorAvatar: string | null = null;
@@ -296,6 +298,13 @@ export class UploadComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if(result === true) {
+
+        httpsCallable(this.functions, 'waikFanartSubmit')({postId: user?.uid}).then(res => {
+          console.log(res)
+        }).catch(e => {
+          console.error(e);
+        })
+        /*
         updateDoc(doc(this.db, `/waik/website/fanarts/${user!.uid}`), {
           status: 'QUEUE',
         }).then(res => {
@@ -304,6 +313,7 @@ export class UploadComponent implements OnInit {
           this.msg.error(`Hiba beküldés közben! ${e.message}`);
           console.error(e);
         })
+        */
       } else {
         this.msg.warn('Beküldés megszakítva!');
       }

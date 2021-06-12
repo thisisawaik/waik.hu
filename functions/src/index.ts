@@ -76,11 +76,53 @@ export const waikFanartAddLike = functions.https.onCall((data, context) => {
         throw new functions.https.HttpsError("internal", "internal-error");
       });
   });
+});
 
-  return {
-    status: "OK",
-    likes: [uid],
-  };
+export const waikFanartSubmit = functions.https.onCall((data, context) => {
+  const vision = require("@google-cloud/vision");
+
+  const client = new vision.ImageAnnotatorClient();
+
+  console.log(data)
+
+  const uid = context.auth?.uid;
+  if (!uid) {
+    throw new functions.https.HttpsError(
+      "unauthenticated",
+      "user-not-provided"
+    );
+  }
+  const id = data.postId;
+  if (!id) {
+    throw new functions.https.HttpsError("invalid-argument", "id-not-provided");
+  }
+
+  const ref = db.doc(`waik/website/fanarts/${id}`);
+
+  ref.get().then(async (doc) => {
+    if (!doc.exists)
+      throw new functions.https.HttpsError(
+        "not-found",
+        `fanart-not-found-${id}`
+      );
+
+    if (!doc.data()?.gsURL)
+      throw new functions.https.HttpsError("not-found", `gs-url-not-found`);
+
+    const [result] = await client.safeSearchDetection(`gs://zal1000.net${doc.data()?.gsURL}`);
+    const detections = result.safeSearchAnnotation;
+
+    console.log("Safe search:");
+    console.log(`Adult: ${detections.adult}`);
+    console.log(`Medical: ${detections.medical}`);
+    console.log(`Spoof: ${detections.spoof}`);
+    console.log(`Violence: ${detections.violence}`);
+    console.log(`Racy: ${detections.racy}`);
+
+    return {
+      detections: detections,
+    }
+  });
 });
 
 export const waikFanartAddRemove = functions.https.onCall((data, context) => {
@@ -109,7 +151,7 @@ export const waikFanartAddRemove = functions.https.onCall((data, context) => {
   const postref = db.doc(`waik/website/fanarts/${id}`);
 
   postref.get().then((doc) => {
-    if (!doc.exists) {  
+    if (!doc.exists) {
       throw new functions.https.HttpsError("not-found", `post-not-found-${id}`);
     }
     const likes: string[] = doc.data()?.likes;
