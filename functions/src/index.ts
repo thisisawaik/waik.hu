@@ -1,4 +1,5 @@
 /* eslint-disable require-jsdoc */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
@@ -83,7 +84,7 @@ export const waikFanartAddLike = functions.https.onCall((data, context) => {
 });
 
 export const waikFanartSubmit = functions.https.onCall((data, context) => {
-  console.log(data);
+  // console.log(data);
 
   const uid = context.auth?.uid;
   if (!uid) {
@@ -111,7 +112,16 @@ export const waikFanartSubmit = functions.https.onCall((data, context) => {
       throw new functions.https.HttpsError("not-found", "gs-url-not-found");
     }
 
-    const [result] = await client.safeSearchDetection(`gs://zal1000.net${doc.data()?.gsURL}`);
+    if (!doc.data()?.gsURL) {
+      throw new functions.https.HttpsError(
+          "invalid-argument",
+          "title-not-found"
+      );
+    }
+
+    const [result] = await client.safeSearchDetection(
+        `gs://zal1000.net${doc.data()?.gsURL}`
+    );
     const detections = result.safeSearchAnnotation;
 
     console.log("Safe search:");
