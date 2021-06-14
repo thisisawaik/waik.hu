@@ -299,8 +299,14 @@ export class UploadComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
       if(result === true) {
 
-        httpsCallable(this.functions, 'waikFanartSubmit')({postId: user?.uid}).then(res => {
+        httpsCallable(this.functions, 'waikFanartSubmit')({postId: user?.uid}).then(async res => {
           console.log(res)
+          const d = await getDoc(doc(this.db, `users/${user?.uid}`));
+          if (d.data()?.dcid) {
+            this.msg.success(`Sikeres beküldés! További információról discordon fogunk értesíteni!`)
+          } else {
+            this.msg.success(`Sikeres beküldés! További információról emailben fogunk értesíteni!`)
+          }
         }).catch(e => {
           console.error(e);
         })
