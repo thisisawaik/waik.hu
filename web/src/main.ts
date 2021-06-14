@@ -10,7 +10,6 @@ import { getFunctions, useFunctionsEmulator } from 'firebase/functions'
 
 if(firebase.apps.length === 0) {
   firebase.initializeApp(environment.firebaseConfig);
-  firebase.analytics();
 }
 
 const zal_platform = "browser";
@@ -18,6 +17,7 @@ console.log(zal_platform)
 
 if (environment.production) {
   enableProdMode();
+  firebase.analytics();
 } else {
   useFunctionsEmulator(getFunctions() , 'localhost', 5001);
 }
