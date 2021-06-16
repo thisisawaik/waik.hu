@@ -27,7 +27,7 @@
       *ngIf="!liked"
       mat-button
     >
-      <mat-icon>favorite_border</mat-icon> ({{ likes.length }}) Like
+      <mat-icon>favorite_border</mat-icon> ({{ likes }}) Like
     </button>
     <button
       style="background-color: var(--green)"
@@ -35,7 +35,7 @@
       (click)="dislike()"
       *ngIf="liked"
     >
-      <mat-icon>favorite</mat-icon> ({{ likes.length }}) Liked
+      <mat-icon>favorite</mat-icon> ({{ likes }}) Liked
     </button>
     <button
       *ngIf="shareable"

@@ -20,9 +20,15 @@ import {
   updateDoc,
   where,
 } from '@firebase/firestore';
-import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from 'firebase/storage';
 import { MessagesService } from 'src/app/services/messages.service';
-import { getFunctions, httpsCallable } from 'firebase/functions'
+import { getFunctions, httpsCallable } from 'firebase/functions';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -61,14 +67,24 @@ export class UploadComponent implements OnInit {
   maxDesc: number = 500;
 
   saveBtnClass: 'green' | 'yellow' | 'red' = 'green';
-  saveBtnContent: string = "Mentés";
+  saveBtnContent: string = 'Mentés';
+  saveBtnIsDisabled: boolean = false;
+
+  submitBtnClass: 'green' | 'yellow' | 'red' = 'red';
+  submitBtnContent: string = 'Beküldés';
+  submitBtnIsDisabled: boolean = false;
+
 
   uploadInProgress: boolean = true;
   uploadPrecentage: number = 0;
 
   comp_categorys: FanartCategory[] = [];
 
-  constructor(private fb: FormBuilder, private msg: MessagesService, public dialog: MatDialog,) {}
+  constructor(
+    private fb: FormBuilder,
+    private msg: MessagesService,
+    public dialog: MatDialog
+  ) {}
 
   async ngOnInit(): Promise<void> {
     this.myForm = this.fb.group({
@@ -85,7 +101,7 @@ export class UploadComponent implements OnInit {
         const config = asd.data()?.fanart_config;
         this.maxDesc = config.maxDesc;
         this.maxTitle = config.maxTitle;
-        this.comp_categorys = config.comp.categorys
+        this.comp_categorys = config.comp.categorys;
       })
       .catch((e) => {
         console.error(e.code);
@@ -127,13 +143,15 @@ export class UploadComponent implements OnInit {
                 author: user.uid,
                 status: 'DRAFT',
                 forComp: this.isForCompatition,
-              }).then((val) => {
-                this.docid = user.uid;
+              })
+                .then((val) => {
+                  this.docid = user.uid;
 
-                this.savestate = 'synced';
-              }).catch(e => {
-                this.msg.error(`Hiba! ${e.message}`)
-              });
+                  this.savestate = 'synced';
+                })
+                .catch((e) => {
+                  this.msg.error(`Hiba! ${e.message}`);
+                });
             } else {
               const artdoc = docs.docs[0];
               this.title = artdoc.data()?.title;
@@ -206,15 +224,17 @@ export class UploadComponent implements OnInit {
           this.storage,
           `/waik/fanarts/temp/${user?.uid}/${file.name}`
         );
-        uploadBytesResumable(r, file)
-          .on('state_changed', async (snap) => {
-            this.uploadPrecentage = (snap.bytesTransferred / snap.totalBytes) * 100;
+        uploadBytesResumable(r, file).on(
+          'state_changed',
+          async (snap) => {
+            this.uploadPrecentage =
+              (snap.bytesTransferred / snap.totalBytes) * 100;
             this.uploadInProgress = true;
 
-            if(snap.bytesTransferred / snap.totalBytes === 100) {
+            if (snap.bytesTransferred / snap.totalBytes === 100) {
               this.imageurl = await getDownloadURL(
                 ref(this.storage, snap.ref.fullPath)
-              ); 
+              );
               this.msg.info('Kép sikeresen feltöltve!');
               updateDoc(doc(this.db, `/waik/website/fanarts/${this.docid}`), {
                 gsURL: `/waik/fanarts/temp/${user?.uid}/${file.name}`,
@@ -233,13 +253,13 @@ export class UploadComponent implements OnInit {
             this.msg.info('Kép sikeresen feltöltve!');
             updateDoc(doc(this.db, `/waik/website/fanarts/${user?.uid}`), {
               gsURL: `/waik/fanarts/temp/${user?.uid}/${file.name}`,
-            }).catch(e => {
+            }).catch((e) => {
               this.msg.error(e.message);
             });
             this.uploadPrecentage = 100;
-
-          })
-          /*
+          }
+        );
+        /*
           .then(async (val) => {
 
           })
@@ -249,7 +269,6 @@ export class UploadComponent implements OnInit {
             }
           });
           */
-        
       } else if (file.type === 'image/svg' || file.type === 'image/svg+xml') {
         this.msg.warn('Javasolt JPG vagy PNG formátumot használni!');
         const r = ref(this.storage, `test/${file.name}`);
@@ -270,46 +289,92 @@ export class UploadComponent implements OnInit {
     }
   }
 
-  saveAsDraft() {
+  async saveAsDraft(): Promise<boolean> {
     const user = this.auth.currentUser;
-    if(user) {
+    if (user) {
       this.saveBtnClass = 'yellow';
-      this.saveBtnContent = 'Mentés...'
-      setDoc(doc(this.db, `/waik/website/fanarts/${user.uid}`), {
-        title: this.title || null,
-        desc: this.desc || null,
-        status: 'DRAFT',
-        forComp: this.isForCompatition || false,
-      }, {merge: true}).then(res => {
-        this.saveBtnClass = 'green';
-        this.saveBtnContent = 'Sikeres mentés!'
-        setTimeout(() => {
-          this.saveBtnContent = 'Mentés'
-        }, 3000);
-      })
-    } else {
+      this.saveBtnContent = 'Mentés...';
+      this.saveBtnIsDisabled = true;
+      await setDoc(
+        doc(this.db, `/waik/website/fanarts/${user.uid}`),
+        {
+          title: this.title || null,
+          desc: this.desc || null,
+          status: 'DRAFT',
+          forComp: this.isForCompatition || false,
+        },
+        { merge: true }
+      )
+        .then((res) => {
+          this.saveBtnClass = 'green';
+          this.saveBtnContent = 'Sikeres mentés!';
+          this.saveBtnIsDisabled = false;
 
+          setTimeout(() => {
+            this.saveBtnContent = 'Mentés';
+          }, 3000);
+          return true;
+        })
+        .catch((e) => {
+          console.error(e);
+          this.saveBtnClass = 'red';
+          this.saveBtnContent = `Sikertelen mentés! ${e.message}`;
+          this.saveBtnIsDisabled = false;
+
+          setTimeout(() => {
+            this.saveBtnClass = 'green';
+            this.saveBtnContent = 'Mentés';
+          }, 3000);
+          throw e;
+        });
+    } else {
+      return false;
     }
+
+    return false;
   }
 
   submit() {
     const dialogRef = this.dialog.open(UploadSubmitPromptDialog);
     const user = this.auth.currentUser;
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      if(result === true) {
-
-        httpsCallable(this.functions, 'waikFanartSubmit')({postId: user?.uid}).then(async res => {
-          console.log(res)
-          const d = await getDoc(doc(this.db, `users/${user?.uid}`));
-          if (d.data()?.dcid) {
-            this.msg.success(`Sikeres beküldés! További információról discordon fogunk értesíteni!`)
-          } else {
-            this.msg.success(`Sikeres beküldés! További információról emailben fogunk értesíteni!`)
-          }
-        }).catch(e => {
-          console.error(e);
-        })
+    dialogRef.afterClosed().subscribe(async (result) => {
+      //console.log(`Dialog result: ${result}`);
+      if (result === true) {
+        await this.saveAsDraft();
+        this.submitBtnClass = "yellow";
+        this.submitBtnContent = "Beküldés..."
+        httpsCallable(
+          this.functions,
+          'waikFanartSubmit'
+        )({ postId: user?.uid })
+          .then(async (res) => {
+            const d = await getDoc(doc(this.db, `users/${user?.uid}`));
+            this.submitBtnClass = "green";
+            this.submitBtnContent = "Sikeres beküldés!"
+            setTimeout(() => {
+              this.submitBtnClass = "red";
+              this.submitBtnContent = "Beküldés"
+            }, 5000);
+            if (d.data()?.dcid) {
+              this.msg.success(
+                `Sikeres beküldés! További információról discordon fogunk értesíteni!`
+              );
+            } else {
+              this.msg.success(
+                `Sikeres beküldés! További információról emailben fogunk értesíteni!`
+              );
+            }
+          })
+          .catch((e) => {
+            this.msg.error(`Hiba btörtént beküldés közben! ${e.message}`);
+            console.error(e);
+            this.submitBtnClass = "red";
+            this.submitBtnContent = "Hiba beküldés közben!"
+            setTimeout(() => {
+              this.submitBtnClass = "red";
+              this.submitBtnContent = "Beküldés"
+            }, 5000);
+          });
         /*
         updateDoc(doc(this.db, `/waik/website/fanarts/${user!.uid}`), {
           status: 'QUEUE',
@@ -335,6 +400,6 @@ export class UploadComponent implements OnInit {
 export class UploadSubmitPromptDialog {}
 
 interface FanartCategory {
-  name: string,
-  value: string,
+  name: string;
+  value: string;
 }

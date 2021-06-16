@@ -79,8 +79,8 @@
         </mat-form-field>
       </div>
       <br>
-      <button [class]="saveBtnClass" (click)="saveAsDraft()" mat-button>{{ saveBtnContent ? saveBtnContent : 'Mentés' }}</button>
-      <button class="red" (click)="submit()" mat-button>Beküldés</button>
+      <button [class]="saveBtnClass" [disabled]="saveBtnIsDisabled" (click)="saveAsDraft()" mat-button>{{ saveBtnContent ? saveBtnContent : 'Mentés' }}</button>
+      <button [class]="submitBtnClass" [disabled]="submitBtnIsDisabled" (click)="submit()" mat-button>{{ submitBtnContent ? submitBtnContent : 'Beküldés' }}</button>
     </form>
   </div>
   <div>

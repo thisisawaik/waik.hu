@@ -32,7 +32,8 @@ export class ImagesComponent implements OnInit {
   //shareid: string | undefined;
   authorAvatar: string | undefined;
   authorName: string | undefined;
-  likes: string[] = [];
+  likes: number = 0;
+  submitclass: string = 'red';
 
   greenbackground: boolean = false;
 
@@ -62,31 +63,36 @@ export class ImagesComponent implements OnInit {
     if (this.author) {
       const userref = doc(this.db, `users/${this.author}`);
       getDoc(userref)
-        .then((docdata: any) => {
-          if (docdata.data()['dcid']) {
-            getDoc(doc(this.db, `dcusers/${docdata.data()['dcid']}`))
-              .then((doc: any) => {
-                this.authorAvatar = doc.data()['pp'];
-                this.authorName = doc.data()['tag'];
+        .then((docdata) => {
+          if (docdata.data()?.dcid) {
+            getDoc(doc(this.db, `dcusers/${docdata.data()?.dcid}`))
+              .then((doc) => {
+                this.authorAvatar = doc.data()?.pp;
+                this.authorName = doc.data()?.tag;
               })
-              .catch((e: any) => this.msg.error(e.message));
+              .catch((e) => this.msg.error(e.message));
           }
         })
         .catch((e) => this.msg.error(e.message));
     }
 
     const d = doc(this.db, `waik/website/fanarts/${this.id}`);
-    onSnapshot(d, async (snap: any) => {
-      if (snap.likes) {
-        this.likes = snap.likes;
-      }
-      const user = this.auth.currentUser;
-      if (user && this.likes?.length != 0) {
-        if (this.likes?.find((e) => e === user.uid)) {
-          this.liked = true;
-        }
+    onSnapshot(d, async (snap) => {
+      console.log(snap.data()?.likes);
+      if (snap.data()?.likes) {
+        this.likes = snap.data()?.likes;
       }
     });
+    const user = this.auth.currentUser;
+    const likeRef = doc(
+      this.db,
+      `waik/website/fanarts/${this.id}/likes/${user?.uid}`
+    );
+    const likeDoc = await getDoc(likeRef);
+    console.log(likeDoc.exists());
+    if (user && likeDoc.exists()) {
+      this.liked = true;
+    }
   }
 
   open() {
@@ -109,15 +115,19 @@ export class ImagesComponent implements OnInit {
       });
     } else {
       this.liked = true;
-      httpsCallable(this.funcions, 'waikFanartAddLike')({postId: this.id}).then(res => {
-        this.msg.success('Like hozzáadva!');
-        const data: any = res.data;
-        this.likes = data?.likes
-      }).catch(e => {
-        this.msg.error(`Hiba like-olás közben! (${e.message})`);
-        console.error(e)
-        this.liked = false;
-      });
+      httpsCallable(
+        this.funcions,
+        'waikFanartAddLike'
+      )({ postId: this.id })
+        .then((res) => {
+          console.log(res);
+          this.msg.success('Like hozzáadva!');
+        })
+        .catch((e) => {
+          this.msg.error(`Hiba like-olás közben! (${e.message})`);
+          console.error(e);
+          this.liked = false;
+        });
       /*
       const token = await this.authServ.getAuthToken();
       this.liked = true;
@@ -140,20 +150,24 @@ export class ImagesComponent implements OnInit {
   }
 
   async dislike() {
-    const user = await this.auth.currentUser;
+    const user = this.auth.currentUser;
     if (!user) {
       this.dialog.open(AccountComponent, {
         minWidth: 600,
       });
     } else {
       this.liked = false;
-      httpsCallable(this.funcions, 'waikFanartAddRemove')({postId: this.id})
-      .then(res => {
-        this.msg.success('Like visszavonva!');
-      }).catch(err => {
-        this.msg.error(`Hiba like visszavonása közben! (${err.message})`);
-        this.liked = true;
-      });
+      httpsCallable(
+        this.funcions,
+        'waikFanartLikeRemove'
+      )({ postId: this.id })
+        .then((res) => {
+          this.msg.success('Like visszavonva!');
+        })
+        .catch((err) => {
+          this.msg.error(`Hiba like visszavonása közben! (${err.message})`);
+          this.liked = true;
+        });
     }
   }
 
