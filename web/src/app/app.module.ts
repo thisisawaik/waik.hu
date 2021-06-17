@@ -48,6 +48,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { MatBadgeModule } from '@angular/material/badge'
 import { AuthComponent } from './auth/auth.component';
 import { DiscordComponent } from './auth/discord/discord.component';
+import { MatChipsModule } from '@angular/material/chips';
 @NgModule({
   declarations: [
     AppComponent,
@@ -109,6 +110,7 @@ import { DiscordComponent } from './auth/discord/discord.component';
     FormsModule,
     MaterialFileInputModule,
     MatBadgeModule,
+    MatChipsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

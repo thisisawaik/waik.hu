@@ -3,7 +3,7 @@ export const environment = {
   firebaseConfig: {
     apiKey: "AIzaSyDpsXG8ZUofeaVVimEhdRhhbc8kJCjFsM0",
     authDomain: "zal1000.firebaseapp.com",
-    databaseURL: "https://zal1000.firebaseio.com",
+    databaseURL: "https://waik.europe-west1.firebasedatabase.app",
     projectId: "zal1000",
     storageBucket: "zal1000.net",
     messagingSenderId: "512279358183",

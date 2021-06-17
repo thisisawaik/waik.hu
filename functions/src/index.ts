@@ -19,9 +19,12 @@ const imageai = new vision.ImageAnnotatorClient();
 
 // const pubSubClient = new PubSub();
 
-admin.initializeApp();
+admin.initializeApp({
+  databaseURL: "https://waik.europe-west1.firebasedatabase.app/",
+});
 
 const db = admin.firestore();
+const rdb = admin.database();
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
@@ -89,9 +92,11 @@ export const waikFanartSubmit = functions.https.onCall(
 
         const bot = new Discord.Client();
 
-        const [result] = await imageai.safeSearchDetection(
-            `gs://zal1000.net${doc.data()?.gsURL}`
-        );
+        // const [result] = await imageai.safeSearchDetection(
+        //    `gs://zal1000.net${doc.data()?.gsURL}`
+        // );
+
+        const [result] = await imageai.safeSearchDetection(`gs://zal1000.net${doc.data()?.gsURL}`);
         // const detections = result.safeSearchAnnotation;
 
         // ////////////////////////////////////////////////////////////////
@@ -133,7 +138,7 @@ export const waikFanartSubmit = functions.https.onCall(
                 .file(gsURL.substring(1))
                 .getSignedUrl({
                   action: "read",
-                  expires: new Date(Date.now() + 315569520000),
+                  expires: new Date(Date.now() + 2592000000),
                 });
 
             if (imageURL) {
@@ -200,10 +205,11 @@ export const waikFanartAddLike = functions.https.onCall((data, context) => {
           "already-liked"
       );
     }
+    const likesRef = rdb.ref(`fanarts/${id}`);
 
     try {
-      await postref.update({
-        likes: admin.firestore.FieldValue.increment(1),
+      await likesRef.update({
+        likes: admin.database.ServerValue.increment(1),
       });
       await likeRef
           .set({
@@ -261,9 +267,12 @@ export const waikFanartLikeRemove = functions.https.onCall((data, context) => {
           "not-yet-liked"
       );
     }
+
+    const likesRef = rdb.ref(`fanarts/${id}`);
+
     try {
-      await postref.update({
-        likes: admin.firestore.FieldValue.increment(-1),
+      await likesRef.update({
+        likes: admin.database.ServerValue.increment(-1),
       });
       await likeRef.delete().then((res) => {
         return {

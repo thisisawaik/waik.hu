@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {
   FormControl,
   Validators,
@@ -29,6 +30,8 @@ import {
 } from 'firebase/storage';
 import { MessagesService } from 'src/app/services/messages.service';
 import { getFunctions, httpsCallable } from 'firebase/functions';
+import { MatChipInputEvent } from '@angular/material/chips';
+
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -80,11 +83,44 @@ export class UploadComponent implements OnInit {
 
   comp_categorys: FanartCategory[] = [];
 
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  tags: Tag[] = [
+    {name: 'Isti'},
+    {name: 'Walrusz'},
+    {name: 'Norticus'},
+    {name: 'Geiszla'},
+  ];
+
   constructor(
     private fb: FormBuilder,
     private msg: MessagesService,
     public dialog: MatDialog
   ) {}
+
+  
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our fruit
+    if (value) {
+      this.tags.push({name: value});
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+
+  remove(fruit: Tag): void {
+    const index = this.tags.indexOf(fruit);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
+  }
 
   async ngOnInit(): Promise<void> {
     this.myForm = this.fb.group({
@@ -142,6 +178,7 @@ export class UploadComponent implements OnInit {
                 gsURL: null,
                 author: user.uid,
                 status: 'DRAFT',
+                tags: this.tags,
                 forComp: this.isForCompatition,
               })
                 .then((val) => {
@@ -160,6 +197,7 @@ export class UploadComponent implements OnInit {
               this.imageurl = artdoc.data()?.gsURL
                 ? await getDownloadURL(ref(this.storage, artdoc.data()?.gsURL))
                 : null;
+              this.tags = artdoc.data()?.tags ? artdoc.data().tags : [];
 
               this.savestate = 'synced';
             }
@@ -302,6 +340,7 @@ export class UploadComponent implements OnInit {
           desc: this.desc || null,
           status: 'DRAFT',
           forComp: this.isForCompatition || false,
+          tags: this.tags || [],
         },
         { merge: true }
       )
@@ -402,4 +441,8 @@ export class UploadSubmitPromptDialog {}
 interface FanartCategory {
   name: string;
   value: string;
+}
+
+interface Tag {
+  name: string;
 }

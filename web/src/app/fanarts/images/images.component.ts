@@ -18,6 +18,7 @@ import {
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getFunctions, httpsCallable } from '@firebase/functions';
+import { getDatabase, onValue, ref } from 'firebase/database';
 
 @Component({
   selector: 'app-images',
@@ -40,6 +41,7 @@ export class ImagesComponent implements OnInit {
   db = getFirestore();
   auth = getAuth();
   funcions = getFunctions();
+  rdb = getDatabase();
 
   constructor(
     public dialog: MatDialog,
@@ -75,14 +77,11 @@ export class ImagesComponent implements OnInit {
         })
         .catch((e) => this.msg.error(e.message));
     }
-
-    const d = doc(this.db, `waik/website/fanarts/${this.id}`);
-    onSnapshot(d, async (snap) => {
-      console.log(snap.data()?.likes);
-      if (snap.data()?.likes) {
-        this.likes = snap.data()?.likes;
-      }
-    });
+    console.log(`fanarts/${this.id}`);
+    const likesref = ref(this.rdb, `fanarts/${this.id}`);
+    onValue(likesref, snap => {
+      console.log(snap.val())
+    })
     const user = this.auth.currentUser;
     const likeRef = doc(
       this.db,

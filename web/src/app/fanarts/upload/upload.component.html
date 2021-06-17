@@ -78,6 +78,23 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <mat-form-field class="example-chip-list">
+        <mat-label>Tagek</mat-label>
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                   [removable]="removable" (removed)="remove(tag)" [class]="tag.name"  >
+            {{tag.name}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Új tag..."
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+                 (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+      </mat-form-field>
+      
+      
       <br>
       <button [class]="saveBtnClass" [disabled]="saveBtnIsDisabled" (click)="saveAsDraft()" mat-button>{{ saveBtnContent ? saveBtnContent : 'Mentés' }}</button>
       <button [class]="submitBtnClass" [disabled]="submitBtnIsDisabled" (click)="submit()" mat-button>{{ submitBtnContent ? submitBtnContent : 'Beküldés' }}</button>

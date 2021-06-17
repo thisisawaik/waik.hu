@@ -23,7 +23,7 @@ export class FanartsComponent implements OnInit {
 
     const q = query(
       collection(this.db, 'waik/website/fanarts'),
-      where('status', '==', 'PUBLIC')
+      where('status', '==', 'PUBLIC'),
     );
 
     getDocs(q).then((snap) => {
