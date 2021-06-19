@@ -1,4 +1,4 @@
-name: Build and deploy to Cloud Run
+name: Build and deploy api to Cloud Run
 
 on:
   push:
@@ -36,17 +36,17 @@ jobs:
     - name: Build
       run: |
         cd api
-        docker build --tag gcr.io/zal1000/waik/website/api:${{ env.GITHUB_SHA }} .
+        docker build --tag gcr.io/zal1000/waik/website/api:$GITHUB_SHA .
 
     - name: Push
       run: |
-        docker push gcr.io/zal1000/waik/website/api:${{ env.GITHUB_SHA }}
+        docker push gcr.io/zal1000/waik/website/api:$GITHUB_SHA
 
     - name: Deploy
       run: |
         gcloud run deploy waik-main-api \
         --region europe-west1 \
-        --image gcr.io/zal1000/waik/website/api:${{ env.GITHUB_SHA }} \
+        --image gcr.io/zal1000/waik/website/api:$GITHUB_SHA \
         --platform managed \
         --allow-unauthenticated \
         --project zal1000
