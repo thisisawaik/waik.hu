@@ -1,9 +1,15 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
     "outDir": "dist",
-    "types": []
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017"
   },
-  "files": ["src/**/*.ts"],
-  "include": ["src/**/*.d.ts"]
+  "compileOnSave": true,
+  "include": [
+    "src"
+  ]
 }
