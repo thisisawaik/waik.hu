@@ -49,6 +49,7 @@ import { MatBadgeModule } from '@angular/material/badge'
 import { AuthComponent } from './auth/auth.component';
 import { DiscordComponent } from './auth/discord/discord.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { AdminComponent } from './admin/admin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,6 +80,7 @@ import { MatChipsModule } from '@angular/material/chips';
     AuthComponent,
     DiscordComponent,
     UploadSubmitPromptDialog,
+    AdminComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'waik-hu' }),

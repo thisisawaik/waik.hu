@@ -14,6 +14,7 @@ import { FanartsComponent } from './fanarts/fanarts.component';
 import { AccountComponent } from './account/account.component';
 import { AuthComponent } from './auth/auth.component';
 import { DiscordComponent } from './auth/discord/discord.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -30,7 +31,7 @@ const routes: Routes = [
   { path: 'fanarts', component: FanartsComponent},
   { path: 'callback', component: AuthComponent },
   { path: 'callback/discord', component: DiscordComponent },
-  
+  { path: 'admin', component: AdminComponent },
   { path: '**', component: NotFoundComponent },
 ];
 
