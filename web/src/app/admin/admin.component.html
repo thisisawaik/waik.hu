@@ -2,6 +2,7 @@
   <div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 16px">
     <mat-card>
       <mat-card-header>
+        <div mat-card-avatar *ngIf="rolesync.isRunning"><mat-spinner style="height: 30px; width: 30px; margin: 5px 10px 0px 0px;"></mat-spinner></div>
         <mat-card-title>Member role sync</mat-card-title>
         <mat-card-subtitle>{{ rolesync.isRunning ? 'Running' : 'Not running' }}</mat-card-subtitle>
       </mat-card-header>
