@@ -1,6 +1,6 @@
 import * as express from "express";
 import * as admin from "firebase-admin";
-
+import { spawn } from 'child_process';
 admin.initializeApp();
 
 const db = admin.firestore();
@@ -53,6 +53,12 @@ app.get("/share", async (req, res) => {
     </body>
 </html>
 `);
+});
+
+app.post('/maunalstart', async (req, res) => {
+    spawn("gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project zal1000").on('exit', (code) => {
+        spawn("kubectl create job --from cronjob/waik-auto-roles waik-role-sync-maual");
+    });
 });
 
 app.listen(port, () => {
