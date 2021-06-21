@@ -1,4 +1,4 @@
-name: Build and deploy to Firebase hosting
+name: Build and deploy to Firebase hosting (main)
 
 on:
   push:
