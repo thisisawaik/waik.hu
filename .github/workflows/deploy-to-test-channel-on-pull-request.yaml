@@ -86,3 +86,11 @@ jobs:
           channelID: ${PR}
       env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
+    
+    - uses: mshick/add-pr-comment@v1
+      with:
+        message: |
+          Deployed to ${{ steps.deploy-to-firebase-hosting.outputs.details_url }} (expires at: ${{ steps.deploy-to-firebase-hosting.outputs.expire_time }})
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
+        allow-repeats: false # This is the default
