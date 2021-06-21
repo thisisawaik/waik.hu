@@ -1,0 +1,109 @@
+<div class="toolbar" role="banner">
+  <img width="40" routerLink="/" alt="Waik Logo" src="assets/waik_big_icon.png" style="cursor: pointer;"/>
+  <button routerLink="/" [class.active]="onHomePage" mat-button><mat-icon>home</mat-icon> Kezdőlap</button>
+  <button routerLink="/stream" routerLinkActive="active" mat-button matBadge="1" matBadgeColor="accent" matBadgeSize="small"><mat-icon>videocam</mat-icon> Streamek</button>
+  <button routerLink="/downloads" routerLinkActive="active" mat-button><mat-icon>download</mat-icon> Letöltések</button>
+  <button routerLink="/fanarts" routerLinkActive="active" mat-button><mat-icon>palette</mat-icon> Fanartok</button>
+  <button routerLink="/admin" routerLinkActive="active" mat-button><mat-icon>admin_panel_settings</mat-icon> Admin</button>
+  <div class="spacer"></div>
+  <div *ngIf="onProfilePage">
+    <div *ngIf="currentpage === 'tdr'">
+      <app-social-badge socialType="twitch" socialUser="norticus36" ></app-social-badge>
+      <app-social-badge socialType="youtube" socialUser="NorticusGaming" ></app-social-badge>
+      <app-social-badge socialType="twitter" socialUser="norticus36" ></app-social-badge>
+      <a aria-label="Norticus36" title="Norticus36">
+        <img class="rounded-circle" [src]="tdrImage" height="30" />
+      </a>
+    </div>
+    <div *ngIf="currentpage === 'isti'">
+      <app-social-badge socialType="twitch" socialUser="Isti115" ></app-social-badge>
+      <app-social-badge socialType="youtube" socialUser="Isti115" ></app-social-badge>
+      <app-social-badge socialType="twitter" socialUser="Isti115" ></app-social-badge>
+      <app-social-badge socialType="github" socialUser="Isti115" ></app-social-badge>
+      <a aria-label="Isti115" title="Isti115">
+        <img class="rounded-circle" [src]="istiImage" height="30" />
+      </a>
+    </div>
+    <div *ngIf="currentpage === 'walrusz'">
+      <app-social-badge socialType="youtube" socialUser="WalruszMester" ></app-social-badge>
+      <app-social-badge socialType="facebook" socialUser="walruszmester" ></app-social-badge>
+      <app-social-badge socialType="instagram" socialUser="walrusz" ></app-social-badge>
+      <app-social-badge socialType="reddit" socialUser="r/walrusz" ></app-social-badge>
+      <app-social-badge socialType="vimeo" socialUser="walrusz" ></app-social-badge>
+      <a
+        aria-label="Walrusz Shop"
+        href="https://shop.pentamedia.hu/walrusz?utm_source=waik.hu"
+        target="_blank"
+        title="Walrusz Shop"
+      >
+        <img src="assets/pentamedia_shop_logo.png" height="30" />
+      </a>
+      <app-social-badge socialType="twitter" socialUser="walruszmester"></app-social-badge>
+
+      <a aria-label="Walrusz" title="Walrusz">
+        <img class="rounded-circle" [src]="walruszImage" height="30" />
+      </a>
+    </div>
+    <div *ngIf="currentpage === 'geiszla'">
+      <a
+        aria-label="Norticus36"
+        href="https://www.youtube.com/user/NorticusGaming?utm_source=waik.hu"
+        target="_blank"
+        title="Norticus36"
+      >
+        <img src="assets/svgs/yt_logo.svg" height="25" />
+      </a>
+      <a
+        aria-label="Norticus36"
+        href="https://twitter.com/norticus36?utm_source=waik.hu"
+        target="_blank"
+        title="Norticus36"
+      >
+        <img src="assets/svgs/twitter_logo.svg" height="25" />
+      </a>
+      <a
+        aria-label="Norticus36"
+        href="https://github.com/Norticus36?utm_source=waik.hu"
+        target="_blank"
+        title="Norticus36"
+      >
+        <img src="assets/svgs/github_logo.svg" height="28" />
+      </a>
+      <a aria-label="Geiszla" title="Norticus36">
+        <img class="rounded-circle" [src]="geiszlaImage" height="30" />
+      </a>
+    </div>
+  </div>
+  <div
+    *ngIf="
+      currentpage === 'tdr' ||
+      currentpage === 'isti' ||
+      currentpage === 'walrusz' ||
+      currentpage === 'geiszla'
+    "
+    style="border-left: 3px solid white; height: 80%"
+  ></div>
+
+  <a aria-label="Norticus36" routerLink="/profile/norticus" title="Norticus36">
+    <img class="rounded-circle" [src]="tdrImage" height="30" />
+  </a>
+  <a aria-label="Walrusz" routerLink="/profile/walrusz" title="Walrusz">
+    <img class="rounded-circle" [src]="walruszImage" height="30" />
+  </a>
+  <a aria-label="Isti115" routerLink="/profile/isti" title="Isti115">
+    <img class="rounded-circle" [src]="istiImage" height="30" />
+  </a>
+  <a aria-label="Geiszla" title="Geiszla">
+    <img class="rounded-circle" [src]="geiszlaImage" height="30" />
+  </a>
+  <div style="border-left: 3px solid white; height: 80%"></div>
+  <app-profile-icon style="margin: 0 16px;"></app-profile-icon>
+</div>
+<!--
+  href="https://www.twitch.tv/isti115"
+  href="https://www.youtube.com/user/WalruszMester"
+  href="https://www.twitch.tv/norticus36"
+-->
+
+<router-outlet></router-outlet>
+

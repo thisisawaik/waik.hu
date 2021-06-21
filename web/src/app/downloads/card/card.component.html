@@ -1,0 +1,19 @@
+<mat-card class="card" [class.green]="greenbackground">
+    <mat-card-header>
+      <div mat-card-avatar *ngIf="authordata.avatar"><img height="45" class="rounded-circle" [src]="authordata.avatar"></div>
+      <mat-card-title>{{ title }}</mat-card-title>
+      <mat-card-subtitle *ngIf="authordata.name">{{ authordata.name }}</mat-card-subtitle>
+    </mat-card-header>
+    <img *ngIf="image" mat-card-image [src]="image" [alt]="title">
+    <mat-card-content>
+      <p *ngIf="desc">
+       {{ desc }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <a *ngIf="url" mat-flat-button class="blue" (click)="downloadclick()"><mat-icon>download</mat-icon> Letöltés</a>
+      <a *ngIf="github" mat-flat-button class="github" (click)="githubclick()"><mat-icon>code</mat-icon> GitHub</a>
+      <a *ngIf="shareable" mat-flat-button [class]="shareclass" (click)="share()"><mat-icon *ngIf="shareclass === 'red'">content_copy</mat-icon> {{ sharetext }}</a>
+    </mat-card-actions>
+  </mat-card>
+  

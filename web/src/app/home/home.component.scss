@@ -1,0 +1,10 @@
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.box {
+  display: grid;
+  grid-template-columns: 300px auto 300px;
+}

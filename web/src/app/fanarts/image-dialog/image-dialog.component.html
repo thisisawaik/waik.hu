@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content class="mat-typography">
+  <img *ngIf="imageurl" class="image" align="end" [src]="imageurl" />
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Bezárás</button>
+</mat-dialog-actions>
+
+<!--
+<mat-card class="card">
+  <mat-card-header>
+    <div mat-card-avatar *ngIf="authorAvatar" class="example-header-image"><img height="45" class="rounded-circle" [src]="authorAvatar"></div>
+    <mat-card-title>Title</mat-card-title>
+    <mat-card-subtitle *ngIf="authorName">{{authorName}}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image *ngIf="imageurl" [src]="imageurl" alt="Photo of a Shiba Inu">
+  <mat-card-content>
+  </mat-card-content>
+  <p>
+      A long description here: The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+      bred for hunting.
+    </p>
+  <mat-card-actions>
+      <button mat-button (click)="open()">Megnyitás</button>
+      <button style="background-color: var(--red); color: white;" (click)="like()" *ngIf="!liked" mat-button><mat-icon>favorite_border</mat-icon> ({{ likes.length }}) Like</button>
+      <button style="background-color: var(--green);" mat-button (click)="dislike()" *ngIf="liked"><mat-icon>favorite</mat-icon> ({{ likes.length }}) Liked</button>
+      <button *ngIf="shareable" mat-flat-button [class]="shareclass" (click)="share()">{{ sharetext }}</button>
+  </mat-card-actions>
+</mat-card>
+-->

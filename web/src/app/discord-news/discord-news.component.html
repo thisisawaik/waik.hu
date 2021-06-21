@@ -1,0 +1,9 @@
+<p>Hírek</p>
+<div class="messages">
+    <div *ngFor="let message of messages" class="message">
+        <p><img [src]="message.author" class="rounded-circle" height="50px"><h3>Norticus36</h3></p>
+        <p> {{ message.content }}</p>
+        <br>
+        <br>
+    </div>
+</div>

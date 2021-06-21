@@ -1,0 +1,47 @@
+<div *ngIf="loading">
+  <p>Loading...</p>
+</div>
+<div *ngIf="!loading">
+  <mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile>
+      <iframe
+        class="stream"
+        [src]="tdrStream"
+        frameborder="0"
+        allowfullscreen="true"
+        scrolling="no"
+        height="500"
+      ></iframe>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <iframe
+        class="stream"
+        [src]="istiStream"
+        frameborder="0"
+        allowfullscreen="true"
+        scrolling="no"
+        height="500"
+      ></iframe>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <iframe
+        class="chat"
+        id="chat_embed"
+        [src]="tdrChat"
+        height="390"
+        style="float: left"
+      >
+      </iframe>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <iframe
+        class="chat"
+        id="chat_embed"
+        [src]="istiChat"
+        height="390"
+        style="float: right"
+      >
+      </iframe>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

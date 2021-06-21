@@ -1,0 +1,47 @@
+.circular--square {
+  border-top-left-radius: 50% 50%;
+  border-top-right-radius: 50% 50%;
+  border-bottom-right-radius: 50% 50%;
+  border-bottom-left-radius: 50% 50%;
+
+}
+
+.card {
+  width: 350px;
+}
+
+a {
+  margin-right: 10px;
+}
+
+.blue {
+  background-color: var(--blue);
+  color: white;
+}
+
+.red {
+  background-color: var(--red);
+  color: white;
+}
+.green {
+  background-color: var(--green);
+  color: black;
+}
+
+.github {
+  background-color: #171515;
+  color: white;
+}
+
+a,
+p,
+h1,
+h2,
+h3,
+button {
+  color: black;
+}
+
+.rounded-circle {
+  border-radius: 50%;
+}

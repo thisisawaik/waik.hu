@@ -1,0 +1,19 @@
+{
+  "name": "ml",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tensorflow/tfjs": "^3.7.0",
+    "@tensorflow/tfjs-automl": "^1.2.0",
+    "@tensorflow/tfjs-node": "^3.7.0",
+    "express": "^4.17.1",
+    "firebase-admin": "^9.9.0"
+  }
+}

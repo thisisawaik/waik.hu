@@ -1,0 +1,23 @@
+.container {
+  position: relative;
+
+  .child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -25px 0 0 -25px;
+  }
+}
+
+button {
+    margin: 16px;
+}
+
+a,
+p,
+h1,
+h2,
+h3 {
+  font-family: Roboto;
+  color: black;
+}
