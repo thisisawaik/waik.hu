@@ -66,28 +66,21 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: build
-    
-    - uses: jwalton/gh-find-current-pr@v1
-      id: findPr
-    # This will echo "Your PR is 7", or be skipped if there is no current PR.
-    - run: echo "Your PR is ${PR}"
-      if: success() && steps.findPr.outputs.number
-      env:
-        PR: ${{ steps.findPr.outputs.pr }}
 
     - name: 'Deploy to Firebase hosting'
       id: deploy-to-firebase-hosting
-      if: steps.findPr.outputs.number
+      if: github.event.number
       uses: FirebaseExtended/action-hosting-deploy@v0
       with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000 }}'
           projectId: zal1000
-          channelID: ${PR}
+          channelID: ${{ github.event.number }}
       env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
     
     - uses: mshick/add-pr-comment@v1
+      if: steps.deploy-to-firebase-hosting.outputs.details_url
       with:
         message: |
           Deployed to ${{ steps.deploy-to-firebase-hosting.outputs.details_url }} (expires at: ${{ steps.deploy-to-firebase-hosting.outputs.expire_time }})
