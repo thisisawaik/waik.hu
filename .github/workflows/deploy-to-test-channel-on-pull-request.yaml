@@ -1,4 +1,4 @@
-name: Build and deploy to Firebase hosting (dev)
+name: Build and deploy to Firebase hosting (pr)
 
 on:
   pull_request:
