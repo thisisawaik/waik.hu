@@ -57,7 +57,13 @@ app.get("/share", async (req, res) => {
 
 app.post('/maunalstart', async (req, res) => {
     spawn("gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project zal1000").on('exit', (code) => {
-        spawn("kubectl create job --from cronjob/waik-auto-roles waik-role-sync-maual");
+        spawn("kubectl create job --from cronjob/waik-auto-roles waik-role-sync-maual").on('exit', (code) => {
+            res.status(200).send('OK');
+        }).on('error', (e) => {
+            res.status(500).send(e);
+        });
+    }).on('error', (e) => {
+        res.status(500).send(e);
     });
 });
 
