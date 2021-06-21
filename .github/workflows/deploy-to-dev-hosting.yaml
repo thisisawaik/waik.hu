@@ -1,4 +1,4 @@
-name: Build and deploy to Firebase hosting
+name: Build and deploy to Firebase hosting (dev)
 
 on:
   push:
@@ -80,4 +80,3 @@ jobs:
           channelID: dev
       env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
-
