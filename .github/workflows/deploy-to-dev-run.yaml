@@ -26,17 +26,6 @@ jobs:
         npm run build:ssr --if-present
         rm -r node_modules
   
-    - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v2
-      with:
-        name: build
-        path: .
-
-  deploy-to-run:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps: 
     - name: Download artifact from build job
       uses: actions/download-artifact@v2
       with:
@@ -58,30 +47,23 @@ jobs:
     - name: Configure Docker
       run: |
         gcloud auth configure-docker
-
-    - name: Reinstall packages
-      run: |
-        cd web
-        npm ci
-        npm run ngcc --if-present
       
     - name: Build
       run: |
-        docker build --tag gcr.io/zal1000/waik/website/ssr:latest .
+        docker build --tag gcr.io/zal1000/waik/website/ssr:$GITHUB_SHA .
 
     - name: Push
       run: |
-        docker push gcr.io/zal1000/waik/website/ssr:latest
+        docker push gcr.io/zal1000/waik/website/ssr:$GITHUB_SHA
 
     - name: Deploy
       run: |
         gcloud run deploy waik-main-beta \
         --region europe-west1 \
-        --image gcr.io/zal1000/waik/website/ssr:latest \
+        --image gcr.io/zal1000/waik/website/ssr:$GITHUB_SHA \
         --platform managed \
         --allow-unauthenticated \
         --project zal1000
-
 
           
 
