@@ -2,7 +2,7 @@
   <div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 16px">
     <mat-card>
       <mat-card-header>
-        <div mat-card-avatar *ngIf="rolesync.isRunning"><mat-spinner style="height: 30px; width: 30px; margin: 5px 10px 0px 0px;"></mat-spinner></div>
+        <!--<div mat-card-avatar *ngIf="massrole.isRunning"><mat-spinner style="height: 30px; width: 30px; margin: 5px 10px 0px 0px;"></mat-spinner></div>-->
         <mat-card-title>Member role sync</mat-card-title>
         <mat-card-subtitle>{{ rolesync.isRunning ? 'Running' : 'Not running' }}</mat-card-subtitle>
       </mat-card-header>
@@ -16,6 +16,34 @@
         <p style="color: black">{{ rolesync.done }} out of {{ rolesync.all }} done</p>
         <p style="color: black">Started at: {{ rolesync.startedAt }}</p>
         <p style="color: black">Finished at: {{ rolesync.isRunning ? "Running..." : rolesync.finishedAt }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <!--
+        <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button>
+        -->
+        
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 16px">
+    <mat-card>
+      <mat-card-header>
+        <!--<div mat-card-avatar *ngIf="massrole.isRunning"><mat-spinner style="height: 30px; width: 30px; margin: 5px 10px 0px 0px;"></mat-spinner></div>-->
+        <mat-card-title>Mass member role</mat-card-title>
+        <mat-card-subtitle>{{ massrole.isRunning ? 'Running' : 'Not running' }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-progress-bar
+        color="accent"
+        mode="determinate"
+        [value]="(massrole.done / massrole.all) * 100"
+      ></mat-progress-bar>
+      <mat-card-content>
+        <br />
+        <p style="color: black">{{ massrole.done }} out of {{ massrole.all }} done</p>
+        <p style="color: black">Started at: {{ massrole.startedAt }}</p>
+        <p style="color: black">Finished at: {{ massrole.isRunning ? "Running..." : massrole.finishedAt }}</p>
       </mat-card-content>
       <mat-card-actions>
         <!--
