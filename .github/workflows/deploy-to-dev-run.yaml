@@ -52,7 +52,6 @@ jobs:
         --region europe-west1 \
         --image gcr.io/zal1000/waik/website/ssr:$GITHUB_SHA \
         --platform managed \
-        --allow-unauthenticated \
         --project zal1000
 
           
