@@ -1,4 +1,4 @@
-name: Build and deploy to Cloud Run
+name: Build and deploy to Cloud Run (dev)
 
 on:
   push:
@@ -25,16 +25,6 @@ jobs:
         npm ci
         npm run build:ssr --if-present
         rm -r node_modules
-  
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v2
-      with:
-        name: build
-
-    - name: Set up Node.js version
-      uses: actions/setup-node@v1
-      with:
-        node-version: '14.x'
       
     - name: Setup GCP Service Account
       uses: google-github-actions/setup-gcloud@master
