@@ -9,6 +9,7 @@ import { getDoc, getDocFromCache, getFirestore } from '@firebase/firestore';
 import { doc } from 'firebase/firestore';
 import { ImageDialogComponent } from '../fanarts/image-dialog/image-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { getDownloadURL } from 'firebase/storage';
 @Component({
   selector: 'app-share',
   templateUrl: './share.component.html',
@@ -41,46 +42,54 @@ export class ShareComponent implements OnInit {
         this.meta.addTags(d);
       }
       const d = doc(this.db, `waik/website/shares/${id}`);
-      getDoc(d)
-        .then((doc: any) => {
-          console.log(doc.exists());
-          console.log(doc.data());
-          if (doc.exists) {
+      await getDoc(d)
+        .then(async (resShare: any) => {
+          console.log(resShare.exists());
+          console.log(resShare.data());
+          if (resShare.exists) {
             // if has redirect element
-            if (doc.data()['redirect']) {
+            if (resShare.data()['redirect']) {
               // if external
-              console.log(doc.data());
-              if (doc.data()['external']) {
+              console.log(resShare.data());
+              if (resShare.data()['external']) {
                 this.msg.info(
                   `Átirányítás ide: ${
-                    doc.data()['redirect'].split('?')[0] ||
-                    doc.data()['redirect']
+                    resShare.data()['redirect'].split('?')[0] ||
+                    resShare.data()['redirect']
                   }`,
                   3000
                 );
                 setTimeout(() => {
-                  open(doc.data()['redirect']);
+                  open(resShare.data()['redirect']);
                   this.router.navigate(['/']);
                 }, 3000);
                 // if non external
               } else {
-                this.router.navigate([`${doc.data()['redirect']}`], {
+                this.router.navigate([`${resShare.data()['redirect']}`], {
                   queryParams: { shareid: id, utm_source: 'share' },
                 });
                 this.msg.info('Átirányítás...', 1500);
               }
             }
 
-            if (doc.data()['analitycs_trackers']) {
+            if (resShare.data()['analitycs_trackers']) {
               //this.analitycs.logEvent(
               //  'share_open',
               //  doc.data()['analitycs_trackers']
               //);
             }
-            if (doc.data()['fanart']) {
+            if (resShare.data()['fanart']) {
+              await getDoc(doc(this.db, `waik/website/fanarts/${resShare.data?.id}`)).then(async (resArt: any) => {
+                if(resArt.data()?.getFromGs) {
+                  const gsurl = await getDownloadURL(resArt.data()?.gsurl);
+                  this.meta.addTag({name: 'og:image', content: gsurl})
+                } else {
+                  this.meta.addTag({name: 'og:image', content: resArt.data()?.downloadurl})
+                }
+              });
               this.dialog.open(ImageDialogComponent, {
                 data: {
-                  id: doc.data()['id'],
+                  id: resShare.data()['id'],
                 },
                 minWidth: 600,
               });
