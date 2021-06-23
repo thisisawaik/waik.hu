@@ -18,11 +18,9 @@
         <p style="color: black">Finished at: {{ rolesync.isRunning ? "Running..." : rolesync.finishedAt }}</p>
       </mat-card-content>
       <mat-card-actions>
-        <!--
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
-        -->
-        
+        <button mat-button *ngIf="rolesync.isRunning" style="background-color: var(--yellow);">Stop/Pause <mat-icon>pause</mat-icon></button>
+        <button mat-button *ngIf="rolesync.isRunning" style="background-color: var(--red);">Cancel <mat-icon>cancel</mat-icon></button>
+        <button mat-button *ngIf="!rolesync.isRunning" style="background-color: var(--green);">Start <mat-icon>open_in_new</mat-icon></button>
       </mat-card-actions>
     </mat-card>
   </div>
@@ -46,11 +44,9 @@
         <p style="color: black">Finished at: {{ massrole.isRunning ? "Running..." : massrole.finishedAt }}</p>
       </mat-card-content>
       <mat-card-actions>
-        <!--
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
-        -->
-        
+        <button mat-button *ngIf="massrole.isRunning" style="background-color: var(--yellow);">Stop/Pause <mat-icon>pause</mat-icon></button>
+        <button mat-button *ngIf="massrole.isRunning" style="background-color: var(--red);">Cancel <mat-icon>cancel</mat-icon></button>
+        <button mat-button *ngIf="!massrole.isRunning" style="background-color: var(--green);">Start <mat-icon>open_in_new</mat-icon></button>
       </mat-card-actions>
     </mat-card>
   </div>
