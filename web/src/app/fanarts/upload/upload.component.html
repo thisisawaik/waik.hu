@@ -3,7 +3,7 @@
   mode="indeterminate"
 ></mat-progress-bar>
 
-<div class="main">
+<div *ngIf="!detectMob()" class="main">
   <div class="form">
     <h1>Itt tudod feltölteni az alkotásodat</h1>
     <form [formGroup]="myForm">
@@ -51,7 +51,7 @@
       
 
       <!--
-<input
+    <input
         #file
         formControlName="image"
         (change)="onFileSelected($event)"
@@ -175,5 +175,112 @@
       </mat-card-actions>
     </mat-card>
     <p>*a gombok csak minták</p>
+  </div>
+</div>
+
+<div *ngIf="detectMob()" class="main-phone">
+  <div class="form">
+    <h1>Itt tudod feltölteni az alkotásodat</h1>
+    <form [formGroup]="myForm">
+      <mat-form-field hintLabel="Max {{ maxTitle }} karakter" appearance="fill">
+        <mat-label>Cím</mat-label>
+        <input
+          [(ngModel)]="title"
+          #titlee
+          type="text"
+          [maxlength]="maxTitle"
+          formControlName="title"
+          matInput
+          class="title"
+        />
+        <mat-icon matSuffix>title</mat-icon>
+        
+        <mat-hint align="end"
+          >{{ titlee.value?.length || 0 }}/{{ maxTitle }}</mat-hint
+        > </mat-form-field
+      ><br /><br />
+      <mat-form-field hintLabel="Max {{ maxDesc }} karakter" appearance="fill">
+        <mat-label>Leírás</mat-label>
+        <input
+          [(ngModel)]="desc"
+          #desce
+          formControlName="desc"
+          [maxlength]="maxDesc"
+          type="text"
+          matInput
+        />
+        <mat-icon matSuffix>description</mat-icon>
+
+        <mat-hint align="end"
+          >{{ desce.value?.length || 0 }}/{{ maxDesc }}</mat-hint
+        > </mat-form-field
+      ><br /><br />
+
+      <mat-form-field appearance="fill">
+        <mat-label>Kép</mat-label>
+        <ngx-mat-file-input formControlName="image" (change)="onFileSelected($event)" placeholder="Kép helye" ></ngx-mat-file-input>
+        <mat-icon matSuffix>image</mat-icon>
+
+      </mat-form-field>
+      <mat-progress-bar *ngIf="uploadInProgress" mode="determinate" color="accent" [value]="uploadPrecentage" style="width: 70vw;"></mat-progress-bar>
+      <img
+        class="photo-phone"
+        mat-card-image
+        [src]="
+          imageurl ||
+          'https://www.thoughtco.com/thmb/Zya6PS3m6XjRAmVo1HONvY9DW_A=/3865x2174/smart/filters:no_upscale()/abstract-paper-flower-pattern-656688606-5acfba2eae9ab80038461ca0.jpg'
+        "
+        alt="Preview of photo"
+      />
+
+      <!--
+    <input
+        #file
+        formControlName="image"
+        (change)="onFileSelected($event)"
+        type="file"
+      />
+      -->
+      <br /><br />
+      <section class="example-section">
+        <mat-checkbox
+          formControlName="isForCompatition"
+          class="example-margin"
+          [(ngModel)]="isForCompatition"
+          >Alkotás benevezése versenyre</mat-checkbox
+        >
+      </section><br /><br />
+      
+      <div *ngIf="isForCompatition">
+        <mat-form-field appearance="fill">
+          <mat-label>Kategórtia</mat-label>
+          <mat-select>
+            <div *ngFor="let option of comp_categorys">
+              <mat-option [value]="option.value">{{ option.name }}</mat-option>
+            </div>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-form-field class="example-chip-list">
+        <mat-label>Tagek</mat-label>
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                   [removable]="removable" (removed)="remove(tag)" [class]="tag.name"  >
+            {{tag.name}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Új tag..."
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+                 (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+      </mat-form-field>
+      
+      
+      <br>
+      <button [class]="saveBtnClass" [disabled]="saveBtnIsDisabled" (click)="saveAsDraft()" mat-button>{{ saveBtnContent ? saveBtnContent : 'Mentés' }}</button>
+      <button [class]="submitBtnClass" [disabled]="submitBtnIsDisabled" (click)="submit()" mat-button>{{ submitBtnContent ? submitBtnContent : 'Beküldés' }}</button>
+    </form>
   </div>
 </div>

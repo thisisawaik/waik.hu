@@ -123,7 +123,7 @@
       <button routerLink="/fanarts" routerLinkActive="active" (click)="drawer.toggle()" mat-button><mat-icon>palette</mat-icon> Fanartok</button><br>
       <button routerLink="/admin" routerLinkActive="active" (click)="drawer.toggle()" mat-button><mat-icon>admin_panel_settings</mat-icon> Admin</button><br>
       <br><br>
-      <a aria-label="Norticus36" style="margin-left: 10px;" routerLink="/profile/norticus" title="Norticus36">
+      <a aria-label="Norticus36" style="margin-left: 10px;" (click)="drawer.toggle()" routerLink="/profile/norticus" title="Norticus36">
         <img class="rounded-circle" [src]="tdrImage" height="30" />
       </a><br><br>
       <a aria-label="Walrusz" style="margin-left: 10px;" (click)="drawer.toggle()" routerLink="/profile/walrusz" title="Walrusz">
@@ -137,7 +137,7 @@
       </a><br><br>
     </mat-drawer>
 
-    <div class="drawer" style="background-color: #282830;">
+    <div class="drawer">
       <router-outlet></router-outlet>
     </div>
     
