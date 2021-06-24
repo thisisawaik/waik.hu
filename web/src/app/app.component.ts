@@ -23,6 +23,10 @@ export class AppComponent implements OnInit {
   onProfilePage: boolean = true;
   onHomePage: boolean = true;
 
+  isFromPhone: boolean = false;
+  isMenuOpen: boolean = false;
+  showFiller: boolean = false;
+
   db = getFirestore();
 
   constructor(
@@ -59,6 +63,8 @@ export class AppComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
 
+    this.isFromPhone = this.detectMob();
+
     const tdrRef = doc(this.db, 'dcusers/118466559738904576'); // 118466559738904576
     const istiRef = doc(this.db, 'dcusers/174980450543075330'); // 174980450543075330
     const walruszRef = doc(this.db, 'dcusers/183302720030113792'); // 183302720030113792
@@ -68,5 +74,26 @@ export class AppComponent implements OnInit {
     getDoc(istiRef).then((doc: any) => (this.istiImage = doc.data().pp));
     getDoc(walruszRef).then((doc: any) => (this.walruszImage = doc.data().pp));
     getDoc(geiszlaRef).then((doc: any) => (this.geiszlaImage = doc.data().pp));
+  }
+
+  toggleMenu() {
+    console.log('asd')
+    this.isMenuOpen = true;
+  }
+
+  detectMob() {
+    const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+    ];
+
+    return toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem);
+    });
   }
 }
