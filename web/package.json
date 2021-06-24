@@ -38,7 +38,7 @@
     "angular-material-fileupload": "^3.0.2",
     "bootstrap": "^5.0.1",
     "express": "^4.15.2",
-    "firebase": "^9.0.0-beta.2",
+    "firebase": "^9.0.0-beta.5",
     "instantsearch.js": "^3.7.0",
     "ngx-material-file-input": "^2.1.1",
     "reflect-metadata": "^0.1.13",
