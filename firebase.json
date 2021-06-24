@@ -14,7 +14,10 @@
       },
       {
         "source": "**",
-        "destination": "/index.html"
+        "run": {
+          "serviceId": "waik-main-beta",
+          "region": "europe-west1"
+        }
       }
     ]
   },
