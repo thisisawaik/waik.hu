@@ -25,12 +25,14 @@ jobs:
 
 
     - name: Build app
-      run: npm run build
+      run: | 
+        cd web
+        npm run build
 
     - name: Remove node modules
       run: |
+        cd web
         rm -r node_modules
-        cd ..
 
 #        npm run ngcc --if-present
 
