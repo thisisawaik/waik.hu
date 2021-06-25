@@ -63,8 +63,6 @@ export class AppComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
 
-    this.isFromPhone = this.detectMob();
-
     const tdrRef = doc(this.db, 'dcusers/118466559738904576'); // 118466559738904576
     const istiRef = doc(this.db, 'dcusers/174980450543075330'); // 174980450543075330
     const walruszRef = doc(this.db, 'dcusers/183302720030113792'); // 183302720030113792

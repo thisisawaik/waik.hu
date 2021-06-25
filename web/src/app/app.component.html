@@ -1,4 +1,4 @@
-<div *ngIf="!isFromPhone">
+<div *ngIf="!detectMob()">
   <div class="toolbar" role="banner">
     <img width="40" routerLink="/" alt="Waik Logo" src="assets/waik_big_icon.png" style="cursor: pointer;"/>
     <button routerLink="/" [class.active]="onHomePage" mat-button><mat-icon>home</mat-icon> Kezdőlap</button>
@@ -105,11 +105,12 @@
     href="https://www.youtube.com/user/WalruszMester"
     href="https://www.twitch.tv/norticus36"
   -->
-  
+
+  <router-outlet></router-outlet>
   
 </div>
 
-<div *ngIf="isFromPhone">
+<div *ngIf="detectMob()">
   <div class="toolbar" role="banner">
     <button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
     <div class="spacer"></div>
