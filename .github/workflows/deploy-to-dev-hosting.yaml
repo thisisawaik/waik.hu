@@ -49,9 +49,9 @@ jobs:
       uses: foo-software/lighthouse-check-status-action@master
       with:
         lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
-        minAccessibilityScore: "90"
-        minBestPracticesScore: "50"
-        minPerformanceScore: "50"
+        minAccessibilityScore: "60"
+        minBestPracticesScore: "40"
+        minPerformanceScore: "40"
   
 #  test: 
 #    runs-on: ubuntu-latest
