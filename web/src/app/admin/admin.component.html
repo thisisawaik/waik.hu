@@ -12,7 +12,7 @@
   <div *ngIf="isAdmin">
     <div fxLayout="row wrap" style="margin: 2.5vw;">
       <div fxLayout="row wrap">
-        <mat-card [class.card-mobile]="detectMob()">
+        <mat-card [class.card-mobile]="detectMob()" [class.card]="!detectMob()">
           <mat-card-header>
             <!--<div mat-card-avatar *ngIf="massrole.isRunning"><mat-spinner style="height: 30px; width: 30px; margin: 5px 10px 0px 0px;"></mat-spinner></div>-->
             <mat-card-title>Member role sync</mat-card-title>
@@ -38,7 +38,7 @@
       </div>
     
       <div fxLayout="row wrap">
-        <mat-card [class.card-mobile]="detectMob()">
+        <mat-card [class.card-mobile]="detectMob()" [class.card]="!detectMob()">
           <mat-card-header>
             <!--<div mat-card-avatar *ngIf="massrole.isRunning"><mat-spinner style="height: 30px; width: 30px; margin: 5px 10px 0px 0px;"></mat-spinner></div>-->
             <mat-card-title>Mass member role</mat-card-title>
