@@ -38,6 +38,20 @@ jobs:
           channelID: dev
       env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
+    
+    - name: Run Lighthouse
+      uses: foo-software/lighthouse-check-action@master
+      id: lighthouseCheck
+      with:
+        urls:  '${{ steps.deploy-to-firebase-hosting.outputs.details_url }}'
+        # ... all your other inputs
+    - name: Handle Lighthouse Check results
+      uses: foo-software/lighthouse-check-status-action@master
+      with:
+        lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
+        minAccessibilityScore: "90"
+        minBestPracticesScore: "50"
+        minPerformanceScore: "50"
   
 #  test: 
 #    runs-on: ubuntu-latest
