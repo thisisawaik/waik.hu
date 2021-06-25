@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 20px);
+
+  .inner {
+    color: white;
+    padding: 12px;
+  }
+}
+
+base {
+    margin: 16px;
+
+}
+
+base-mobile {
+    margin: 2.5vw;
+}
+
+.card-mobile {
+    width: 95vw;
+    margin-bottom: 10px;
+}
