@@ -1,4 +1,4 @@
-<mat-card class="card" [class.green]="greenbackground">
+<mat-card [class.card]="!detectMob()" [class.card-mobile]="detectMob()" [class.green]="greenbackground">
     <mat-card-header>
       <div mat-card-avatar *ngIf="authordata.avatar"><img height="45" class="rounded-circle" [src]="authordata.avatar"></div>
       <mat-card-title>{{ title }}</mat-card-title>

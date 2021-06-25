@@ -17,7 +17,7 @@
 </div>
 
 <div *ngIf="isFromPhone">
-  <div fxLayout="row wrap" style="margin: 5px;" *ngIf="colldata.length != 0">
+  <div fxLayout="row wrap" style="margin: 2.5vw;" *ngIf="colldata.length != 0">
     <div fxLayout="row wrap" fxLayoutGap="16px" style="margin-bottom: 10px;" *ngFor="let doc of colldata">
       <app-card
         [title]="doc.name"
