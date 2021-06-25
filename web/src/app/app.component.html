@@ -122,7 +122,7 @@
       <button routerLink="/" [class.active]="onHomePage" (click)="drawer.toggle()" mat-button><mat-icon>home</mat-icon> Kezdőlap</button><br>
       <button routerLink="/downloads" routerLinkActive="active" (click)="drawer.toggle()" mat-button><mat-icon>download</mat-icon> Letöltések</button><br>
       <button routerLink="/fanarts" routerLinkActive="active" (click)="drawer.toggle()" mat-button><mat-icon>palette</mat-icon> Fanartok</button><br>
-      <button routerLink="/admin" routerLinkActive="active" (click)="drawer.toggle()" mat-button><mat-icon>admin_panel_settings</mat-icon> Admin</button><br>
+      <button routerLink="/admin" routerLinkActive="active" *ngIf="isAdmin" (click)="drawer.toggle()" mat-button><mat-icon>admin_panel_settings</mat-icon> Admin</button><br>
       <br><br>
       <a aria-label="Norticus36" style="margin-left: 10px;" (click)="drawer.toggle()" routerLink="/profile/norticus" title="Norticus36">
         <img class="rounded-circle" [src]="tdrImage" height="30" />

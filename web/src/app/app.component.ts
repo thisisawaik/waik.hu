@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AccountComponent } from './account/account.component';
 import { MessagesService } from './services/messages.service';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 //declare var zal_platform: any;
 
@@ -27,7 +28,10 @@ export class AppComponent implements OnInit {
   isMenuOpen: boolean = false;
   showFiller: boolean = false;
 
+  isAdmin = false;
+
   db = getFirestore();
+  auth = getAuth();
 
   constructor(
     private router: Router,
@@ -62,7 +66,18 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-
+    onAuthStateChanged(this.auth, async (user) => {
+      if(user) {
+        await user.getIdTokenResult(true).then(res => {
+          if(res.claims.waikAdmin) {
+            this.isAdmin = true;
+          } else {
+            this.isAdmin = false;
+          }
+        })
+      }
+    })
+    
     const tdrRef = doc(this.db, 'dcusers/118466559738904576'); // 118466559738904576
     const istiRef = doc(this.db, 'dcusers/174980450543075330'); // 174980450543075330
     const walruszRef = doc(this.db, 'dcusers/183302720030113792'); // 183302720030113792
