@@ -12,6 +12,8 @@ import { collection, getDocs, getFirestore, orderBy, query, where } from 'fireba
 export class DownloadsComponent implements OnInit {
   colldata: Docdata[] = [];
 
+  isFromPhone: boolean = false;
+
   db = getFirestore();
 
   constructor(
@@ -20,7 +22,7 @@ export class DownloadsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
+    this.isFromPhone = this.detectMob();
     //const coll = this.db.collection('waik').doc('website').collection('downloads', (ref) => ref.orderBy('timestamp'));
     this.htmltitle.setTitle('Letöltések');
     const q = query(collection(this.db, 'waik/website/downloads'), where('visible', '==', true), orderBy('timestamp'));
@@ -34,6 +36,22 @@ export class DownloadsComponent implements OnInit {
       this.colldata.reverse();
     }).catch(e => {
       this.msg.error(e.message)
+    });
+  }
+
+  detectMob() {
+    const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+    ];
+
+    return toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem);
     });
   }
 }

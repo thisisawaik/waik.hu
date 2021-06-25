@@ -50,6 +50,7 @@ import { AuthComponent } from './auth/auth.component';
 import { DiscordComponent } from './auth/discord/discord.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { AdminComponent } from './admin/admin.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
 @NgModule({
   declarations: [
     AppComponent,
@@ -113,6 +114,7 @@ import { AdminComponent } from './admin/admin.component';
     MaterialFileInputModule,
     MatBadgeModule,
     MatChipsModule,
+    MatSidenavModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

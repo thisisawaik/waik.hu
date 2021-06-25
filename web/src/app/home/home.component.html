@@ -1,4 +1,4 @@
-<div class="box">
+<div *ngIf="!isFromPhone" class="box">
   <app-discord-news></app-discord-news>
   <div>
     <p>Home page here idk</p>
@@ -23,4 +23,26 @@
   </div>
   <app-discord-embed></app-discord-embed>
 </div>
-<app-footer [extraIds]="[]"></app-footer>
+
+<div *ngIf="isFromPhone">
+  <p style="color: black;">Home page here idk</p>
+  <!--
+
+      <iframe
+      src="https://discord.com/widget?id=541446521313296385&theme=dark"
+      width="350"
+      height="500"
+      allowtransparency="true"
+      frameborder="0"
+      sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+    ></iframe>
+    <img
+      src="assets/pedro.webp"
+      (click)="pedroClick()"
+      height="90%"
+      class="center"
+    />
+    -->
+  <!--<app-footer [extraIds]="null"></app-footer>-->
+</div>
+<app-footer *ngIf="!isFromPhone" [extraIds]="[]"></app-footer>

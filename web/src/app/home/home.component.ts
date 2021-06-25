@@ -9,10 +9,12 @@ import { Meta, Title } from '@angular/platform-browser';
 export class HomeComponent implements OnInit {
   pedroClickCounter = 0;
   isOpen = true;
+  isFromPhone = false;
 
   constructor(private htmltitle: Title, private meta: Meta) {}
 
   ngOnInit(): void {
+    this.isFromPhone = this.detectMob();
     this.htmltitle.setTitle('Főoldal');
     this.meta.addTag({ property: 'og:title', content: 'Waik weboldal' });
     this.meta.addTag({
@@ -46,5 +48,21 @@ export class HomeComponent implements OnInit {
       console.log('10');
     }
     this.isOpen = !this.isOpen;
+  }
+
+  detectMob() {
+    const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+    ];
+
+    return toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem);
+    });
   }
 }
