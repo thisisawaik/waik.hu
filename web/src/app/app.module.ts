@@ -51,6 +51,7 @@ import { DiscordComponent } from './auth/discord/discord.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { AdminComponent } from './admin/admin.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { GeiszlaComponent } from './profiles/geiszla/geiszla.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,6 +83,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     DiscordComponent,
     UploadSubmitPromptDialog,
     AdminComponent,
+    GeiszlaComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'waik-hu' }),
