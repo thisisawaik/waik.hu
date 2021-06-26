@@ -18,13 +18,21 @@ jobs:
       with:
         node-version: '14.x'
 
-    - name: Install packages and build app
+    - name: Install packages
       run: |
         cd web
         npm ci
-        npm run build --if-present
+
+
+    - name: Build app
+      run: | 
+        cd web
+        npm run build
+
+    - name: Remove node modules
+      run: |
+        cd web
         rm -r node_modules
-        cd ..
 
 #        npm run ngcc --if-present
 
@@ -38,6 +46,20 @@ jobs:
           channelID: dev
       env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
+    
+    - name: Run Lighthouse
+      uses: foo-software/lighthouse-check-action@master
+      id: lighthouseCheck
+      with:
+        urls:  '${{ steps.deploy-to-firebase-hosting.outputs.details_url }}'
+        # ... all your other inputs
+#    - name: Handle Lighthouse Check results
+#      uses: foo-software/lighthouse-check-status-action@master
+#      with:
+#        lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
+#        minAccessibilityScore: "60"
+#        minBestPracticesScore: "40"
+#        minPerformanceScore: "40"
   
 #  test: 
 #    runs-on: ubuntu-latest

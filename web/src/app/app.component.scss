@@ -59,5 +59,12 @@ button {
   color: black;
 }
 .drawer {
-  height: calc(100vh - 60px)
+  height: calc(100vh - 60px);
+}
+
+.profile-icons-phone {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

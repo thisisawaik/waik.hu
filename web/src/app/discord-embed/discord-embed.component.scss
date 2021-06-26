@@ -28,18 +28,9 @@ img.logo{
 .join-group{
     margin: 16px auto;
     button {
-        color: white;
-        background: #3BA55C;
+        color: black;
+        background: var(--green);
         font-size: 25px;
-        border-radius: 8px;
-        border: none;
-        padding: 8px 16px;
-    }
-}
-
-.join-group:hover{
-    button {
-        background: #359553;
     }
 }
 
@@ -47,8 +38,7 @@ img.logo{
     margin: 8px;
 
     .voice-header{
-        font-variant: small-caps;
-        font-weight: bold;
+        font-variant: roboto;
     }
 }
     

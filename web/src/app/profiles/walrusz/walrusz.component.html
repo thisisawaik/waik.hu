@@ -1,7 +1,32 @@
-<br />
-
-<div style="margin: 30px">
-  <mat-card class="card" fxLayout="row wrap" fxLayoutGap="16px">
+<div *ngIf="!detectMob()" fxLayout="row wrap">
+  <div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 16px">
+    <mat-card class="card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image">
+          <img
+            class="rounded-circle"
+            height="55px"
+            src="https://yt3.ggpht.com/ytc/AAUvwniseLALwR5fmrqhrt2YDGgh1VJSCviENV2MkukhUg=s68-c-k-c0x00ffffff-no-rj"
+          />
+        </div>
+        <mat-card-title style="margin-left: 5px">Walrusz</mat-card-title>
+        <mat-card-subtitle style="margin-left: 5px"
+          >Bemutatkozás</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <p class="text">
+          {{ desc }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <mat-card
+    class="card"
+    fxLayout="row wrap"
+    fxLayoutGap="16px"
+    style="margin: 16px"
+  >
     <mat-card-header>
       <div mat-card-avatar class="example-header-image">
         <img
@@ -51,6 +76,31 @@
       </mat-card-actions>
     </div>
   </mat-card>
+</div>
+
+<div *ngIf="detectMob()" fxLayout="row wrap" class="div">
+  <div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 16px">
+    <mat-card class="card-phone">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image">
+          <img
+            class="rounded-circle"
+            height="55px"
+            src="https://yt3.ggpht.com/ytc/AAUvwniseLALwR5fmrqhrt2YDGgh1VJSCviENV2MkukhUg=s68-c-k-c0x00ffffff-no-rj"
+          />
+        </div>
+        <mat-card-title style="margin-left: 5px">Walrusz</mat-card-title>
+        <mat-card-subtitle style="margin-left: 5px"
+          >Bemutatkozás</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <p class="text">
+          {{ desc }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
 
 <!--

@@ -24,6 +24,17 @@ export class WalruszComponent implements OnInit {
   currentVideoIndex: number = 0;
   loading = true;
 
+  desc: string = `
+          Üdvözöllek! Walrusz vagyok és úgy hiszem, bármiről lehet érdekes,
+          kreatív és szórakoztató videót készíteni, hogyha az ember elegendő
+          munkát fektet bele. Mesterségem elsősorban a szórakoztató
+          ismeretterjesztő tartalmak gyártása, de emellett sok más mindent is
+          találhatsz a csatornámon. Szeretek nagy hangsúlyt fektetni a videók
+          vágására, az utómunkára és hiszek abban, hogy a minőségi szórakoztatás
+          kulcsa a kreativitásban rejlik. Bátran nézz szét a csatornámon, hátha
+          találsz valamit, ami tetszik :)
+          `
+
   db = getFirestore();
 
   constructor(private sanitizer: DomSanitizer) {}
@@ -96,6 +107,22 @@ export class WalruszComponent implements OnInit {
     this.currentVideoIndex = this.videos.indexOf(
       (e: { url: string }) => e.url == url
     );
+  }
+
+  detectMob(): boolean {
+    const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+    ];
+
+    return toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem);
+    });
   }
 
   // GET https://www.googleapis.com/youtube/v3/search?part=snippet&channelId={CHANNEL_ID}&maxResults=10&order=date&type=video&key={YOUR_API_KEY}

@@ -12,7 +12,7 @@
   <div class="footer">
     <span *ngFor="let user of members" class="user"
       >{{ user.role.charAt(0).toUpperCase() }}{{ user.role.slice(1) }} by:
-      {{ user.name }} <img height="20" class="avatar" [src]="user.avatarurl"
+      {{ user.name }} <img height="20" alt="{{ user.name }} avatar" class="avatar" [src]="user.avatarurl"
     /></span>
   </div>
   <!-- Copyright -->

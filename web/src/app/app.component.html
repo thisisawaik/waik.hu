@@ -13,7 +13,7 @@
         <app-social-badge socialType="youtube" socialUser="NorticusGaming" ></app-social-badge>
         <app-social-badge socialType="twitter" socialUser="norticus36" ></app-social-badge>
         <a aria-label="Norticus36" title="Norticus36">
-          <img class="rounded-circle" [src]="tdrImage" height="30" />
+          <img class="rounded-circle" [src]="tdrImage" alt="Norticus36" height="30" />
         </a>
       </div>
       <div *ngIf="currentpage === 'isti'">
@@ -22,7 +22,7 @@
         <app-social-badge socialType="twitter" socialUser="Isti115" ></app-social-badge>
         <app-social-badge socialType="github" socialUser="Isti115" ></app-social-badge>
         <a aria-label="Isti115" title="Isti115">
-          <img class="rounded-circle" [src]="istiImage" height="30" />
+          <img class="rounded-circle" [src]="istiImage" alt="Isti115" height="30" />
         </a>
       </div>
       <div *ngIf="currentpage === 'walrusz'">
@@ -37,40 +37,40 @@
           target="_blank"
           title="Walrusz Shop"
         >
-          <img src="assets/pentamedia_shop_logo.png" height="30" />
+          <img src="assets/pentamedia_shop_logo.png" height="30" alt="Shop" />
         </a>
         <app-social-badge socialType="twitter" socialUser="walruszmester"></app-social-badge>
   
         <a aria-label="Walrusz" title="Walrusz">
-          <img class="rounded-circle" [src]="walruszImage" height="30" />
+          <img class="rounded-circle" [src]="walruszImage" alt="Walrusz" height="30" />
         </a>
       </div>
       <div *ngIf="currentpage === 'geiszla'">
         <a
-          aria-label="Norticus36"
-          href="https://www.youtube.com/user/NorticusGaming?utm_source=waik.hu"
+          aria-label="geiszla"
+          href="https://www.youtube.com/channel/UCIjlDsgdIT7kRWIkfnwIjtA?utm_source=waik.hu"
           target="_blank"
-          title="Norticus36"
+          title="Geiszla"
         >
           <img src="assets/svgs/yt_logo.svg" height="25" />
         </a>
         <a
-          aria-label="Norticus36"
-          href="https://twitter.com/norticus36?utm_source=waik.hu"
+          aria-label="geiszla"
+          href="https://twitter.com/geiszla?utm_source=waik.hu"
           target="_blank"
-          title="Norticus36"
+          title="Geiszla"
         >
           <img src="assets/svgs/twitter_logo.svg" height="25" />
         </a>
         <a
-          aria-label="Norticus36"
-          href="https://github.com/Norticus36?utm_source=waik.hu"
+          aria-label="Geiszla"
+          href="https://github.com/geiszla?utm_source=waik.hu"
           target="_blank"
-          title="Norticus36"
+          title="Geiszla"
         >
           <img src="assets/svgs/github_logo.svg" height="28" />
         </a>
-        <a aria-label="Geiszla" title="Norticus36">
+        <a aria-label="Geiszla"  title="Geiszla">
           <img class="rounded-circle" [src]="geiszlaImage" height="30" />
         </a>
       </div>
@@ -94,7 +94,7 @@
     <a aria-label="Isti115" routerLink="/profile/isti" title="Isti115">
       <img class="rounded-circle" [src]="istiImage" height="30" />
     </a>
-    <a aria-label="Geiszla" title="Geiszla">
+    <a aria-label="Geiszla" routerLink="/profile/geiszla" title="Geiszla">
       <img class="rounded-circle" [src]="geiszlaImage" height="30" />
     </a>
     <div style="border-left: 3px solid white; height: 80%"></div>
@@ -112,28 +112,28 @@
 
 <div *ngIf="detectMob()">
   <div class="toolbar" role="banner">
-    <button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
+    <button (click)="drawer.toggle()" style="margin-left: 10px;"><mat-icon>menu</mat-icon></button>
     <div class="spacer"></div>
     <app-profile-icon style="margin: 0 16px;"></app-profile-icon>
   </div>
 
   <mat-drawer-container class="drawer" autosize>
-    <mat-drawer #drawer style="background-color: var(--blue);" mode="side">
+    <mat-drawer #drawer style="background-color: var(--blue);" mode="over">
       <button routerLink="/" [class.active]="onHomePage" (click)="drawer.toggle()" mat-button><mat-icon>home</mat-icon> Kezdőlap</button><br>
       <button routerLink="/downloads" routerLinkActive="active" (click)="drawer.toggle()" mat-button><mat-icon>download</mat-icon> Letöltések</button><br>
       <button routerLink="/fanarts" routerLinkActive="active" (click)="drawer.toggle()" mat-button><mat-icon>palette</mat-icon> Fanartok</button><br>
-      <button routerLink="/admin" routerLinkActive="active" (click)="drawer.toggle()" mat-button><mat-icon>admin_panel_settings</mat-icon> Admin</button><br>
+      <button routerLink="/admin" routerLinkActive="active" *ngIf="isAdmin" (click)="drawer.toggle()" mat-button><mat-icon>admin_panel_settings</mat-icon> Admin</button><br>
       <br><br>
-      <a aria-label="Norticus36" style="margin-left: 10px;" (click)="drawer.toggle()" routerLink="/profile/norticus" title="Norticus36">
+      <a aria-label="Norticus36" class="profile-icons-phone" (click)="drawer.toggle()" routerLink="/profile/norticus" title="Norticus36">
         <img class="rounded-circle" [src]="tdrImage" height="30" />
       </a><br><br>
-      <a aria-label="Walrusz" style="margin-left: 10px;" (click)="drawer.toggle()" routerLink="/profile/walrusz" title="Walrusz">
+      <a aria-label="Walrusz" class="profile-icons-phone" (click)="drawer.toggle()" routerLink="/profile/walrusz" title="Walrusz">
         <img class="rounded-circle" [src]="walruszImage" height="30" />
       </a><br><br>
-      <a aria-label="Isti115" style="margin-left: 10px;" (click)="drawer.toggle()" routerLink="/profile/isti" title="Isti115">
+      <a aria-label="Isti115"class="profile-icons-phone" (click)="drawer.toggle()" routerLink="/profile/isti" title="Isti115">
         <img class="rounded-circle" [src]="istiImage" height="30" />
       </a><br><br>
-      <a aria-label="Geiszla" style="margin-left: 10px;" (click)="drawer.toggle()" title="Geiszla">
+      <a aria-label="Geiszla" class="profile-icons-phone" (click)="drawer.toggle()" routerLink="/profile/geiszla" title="Geiszla">
         <img class="rounded-circle" [src]="geiszlaImage" height="30" />
       </a><br><br>
     </mat-drawer>

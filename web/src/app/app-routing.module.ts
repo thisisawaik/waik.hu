@@ -15,6 +15,7 @@ import { AccountComponent } from './account/account.component';
 import { AuthComponent } from './auth/auth.component';
 import { DiscordComponent } from './auth/discord/discord.component';
 import { AdminComponent } from './admin/admin.component';
+import { GeiszlaComponent } from './profiles/geiszla/geiszla.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'profile/isti', component: IstiComponent },
   { path: 'profile/norticus', component: NorticusComponent },
   { path: 'profile/walrusz', component: WalruszComponent },
+  { path: 'profile/geiszla', component: GeiszlaComponent },
   { path: 'download', component: DownloadsComponent },
   { path: 'downloads', component: DownloadsComponent },
   { path: 'share/:ShareId', component: ShareComponent },
