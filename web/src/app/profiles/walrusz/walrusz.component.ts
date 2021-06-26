@@ -24,6 +24,17 @@ export class WalruszComponent implements OnInit {
   currentVideoIndex: number = 0;
   loading = true;
 
+  desc: string = `
+          Üdvözöllek! Walrusz vagyok és úgy hiszem, bármiről lehet érdekes,
+          kreatív és szórakoztató videót készíteni, hogyha az ember elegendő
+          munkát fektet bele. Mesterségem elsősorban a szórakoztató
+          ismeretterjesztő tartalmak gyártása, de emellett sok más mindent is
+          találhatsz a csatornámon. Szeretek nagy hangsúlyt fektetni a videók
+          vágására, az utómunkára és hiszek abban, hogy a minőségi szórakoztatás
+          kulcsa a kreativitásban rejlik. Bátran nézz szét a csatornámon, hátha
+          találsz valamit, ami tetszik :)
+          `
+
   db = getFirestore();
 
   constructor(private sanitizer: DomSanitizer) {}

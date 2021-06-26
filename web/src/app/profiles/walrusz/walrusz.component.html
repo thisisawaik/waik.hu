@@ -1,7 +1,32 @@
-<br />
-
-<div *ngIf="!detectMob()" style="margin: 30px">
-  <mat-card class="card" fxLayout="row wrap" fxLayoutGap="16px">
+<div *ngIf="!detectMob()" fxLayout="row wrap">
+  <div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 16px">
+    <mat-card class="card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image">
+          <img
+            class="rounded-circle"
+            height="55px"
+            src="https://yt3.ggpht.com/ytc/AAUvwniseLALwR5fmrqhrt2YDGgh1VJSCviENV2MkukhUg=s68-c-k-c0x00ffffff-no-rj"
+          />
+        </div>
+        <mat-card-title style="margin-left: 5px">Walrusz</mat-card-title>
+        <mat-card-subtitle style="margin-left: 5px"
+          >Bemutatkozás</mat-card-subtitle
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <p class="text">
+          {{ desc }}
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <mat-card
+    class="card"
+    fxLayout="row wrap"
+    fxLayoutGap="16px"
+    style="margin: 16px"
+  >
     <mat-card-header>
       <div mat-card-avatar class="example-header-image">
         <img
@@ -55,7 +80,7 @@
 
 <div *ngIf="detectMob()" fxLayout="row wrap" class="div">
   <div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 16px">
-    <mat-card class="card">
+    <mat-card class="card-phone">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image">
           <img
@@ -71,14 +96,7 @@
       </mat-card-header>
       <mat-card-content>
         <p class="text">
-          Üdvözöllek! Walrusz vagyok és úgy hiszem, bármiről lehet érdekes,
-          kreatív és szórakoztató videót készíteni, hogyha az ember elegendő
-          munkát fektet bele. Mesterségem elsősorban a szórakoztató
-          ismeretterjesztő tartalmak gyártása, de emellett sok más mindent is
-          találhatsz a csatornámon. Szeretek nagy hangsúlyt fektetni a videók
-          vágására, az utómunkára és hiszek abban, hogy a minőségi szórakoztatás
-          kulcsa a kreativitásban rejlik. Bátran nézz szét a csatornámon, hátha
-          találsz valamit, ami tetszik :)
+          {{ desc }}
         </p>
       </mat-card-content>
     </mat-card>

@@ -124,16 +124,16 @@
       <button routerLink="/fanarts" routerLinkActive="active" (click)="drawer.toggle()" mat-button><mat-icon>palette</mat-icon> Fanartok</button><br>
       <button routerLink="/admin" routerLinkActive="active" *ngIf="isAdmin" (click)="drawer.toggle()" mat-button><mat-icon>admin_panel_settings</mat-icon> Admin</button><br>
       <br><br>
-      <a aria-label="Norticus36" style="margin-left: 10px;" (click)="drawer.toggle()" routerLink="/profile/norticus" title="Norticus36">
+      <a aria-label="Norticus36" class="profile-icons-phone" (click)="drawer.toggle()" routerLink="/profile/norticus" title="Norticus36">
         <img class="rounded-circle" [src]="tdrImage" height="30" />
       </a><br><br>
-      <a aria-label="Walrusz" style="margin-left: 10px;" (click)="drawer.toggle()" routerLink="/profile/walrusz" title="Walrusz">
+      <a aria-label="Walrusz" class="profile-icons-phone" (click)="drawer.toggle()" routerLink="/profile/walrusz" title="Walrusz">
         <img class="rounded-circle" [src]="walruszImage" height="30" />
       </a><br><br>
-      <a aria-label="Isti115" style="margin-left: 10px;" (click)="drawer.toggle()" routerLink="/profile/isti" title="Isti115">
+      <a aria-label="Isti115"class="profile-icons-phone" (click)="drawer.toggle()" routerLink="/profile/isti" title="Isti115">
         <img class="rounded-circle" [src]="istiImage" height="30" />
       </a><br><br>
-      <a aria-label="Geiszla" style="margin-left: 10px;" (click)="drawer.toggle()" title="Geiszla">
+      <a aria-label="Geiszla" class="profile-icons-phone" (click)="drawer.toggle()" title="Geiszla">
         <img class="rounded-circle" [src]="geiszlaImage" height="30" />
       </a><br><br>
     </mat-drawer>
