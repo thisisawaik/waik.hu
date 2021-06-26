@@ -48,29 +48,29 @@
       <div *ngIf="currentpage === 'geiszla'">
         <a
           aria-label="geiszla"
-          href="https://www.youtube.com/user/NorticusGaming?utm_source=waik.hu"
+          href="https://www.youtube.com/channel/UCIjlDsgdIT7kRWIkfnwIjtA?utm_source=waik.hu"
           target="_blank"
           title="Geiszla"
         >
           <img src="assets/svgs/yt_logo.svg" height="25" />
         </a>
         <a
-          aria-label="Norticus36"
-          href="https://twitter.com/norticus36?utm_source=waik.hu"
+          aria-label="geiszla"
+          href="https://twitter.com/geiszla?utm_source=waik.hu"
           target="_blank"
-          title="Norticus36"
+          title="Geiszla"
         >
           <img src="assets/svgs/twitter_logo.svg" height="25" />
         </a>
         <a
-          aria-label="Norticus36"
-          href="https://github.com/Norticus36?utm_source=waik.hu"
+          aria-label="Geiszla"
+          href="https://github.com/geiszla?utm_source=waik.hu"
           target="_blank"
-          title="Norticus36"
+          title="Geiszla"
         >
           <img src="assets/svgs/github_logo.svg" height="28" />
         </a>
-        <a aria-label="Geiszla" title="Norticus36">
+        <a aria-label="Geiszla"  title="Geiszla">
           <img class="rounded-circle" [src]="geiszlaImage" height="30" />
         </a>
       </div>
@@ -94,7 +94,7 @@
     <a aria-label="Isti115" routerLink="/profile/isti" title="Isti115">
       <img class="rounded-circle" [src]="istiImage" height="30" />
     </a>
-    <a aria-label="Geiszla" title="Geiszla">
+    <a aria-label="Geiszla" routerLink="/profile/geiszla" title="Geiszla">
       <img class="rounded-circle" [src]="geiszlaImage" height="30" />
     </a>
     <div style="border-left: 3px solid white; height: 80%"></div>
@@ -133,7 +133,7 @@
       <a aria-label="Isti115"class="profile-icons-phone" (click)="drawer.toggle()" routerLink="/profile/isti" title="Isti115">
         <img class="rounded-circle" [src]="istiImage" height="30" />
       </a><br><br>
-      <a aria-label="Geiszla" class="profile-icons-phone" (click)="drawer.toggle()" title="Geiszla">
+      <a aria-label="Geiszla" class="profile-icons-phone" (click)="drawer.toggle()" routerLink="/profile/geiszla" title="Geiszla">
         <img class="rounded-circle" [src]="geiszlaImage" height="30" />
       </a><br><br>
     </mat-drawer>
