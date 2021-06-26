@@ -118,7 +118,7 @@
   </div>
 
   <mat-drawer-container class="drawer" autosize>
-    <mat-drawer #drawer style="background-color: var(--blue);" mode="side">
+    <mat-drawer #drawer style="background-color: var(--blue);" mode="over">
       <button routerLink="/" [class.active]="onHomePage" (click)="drawer.toggle()" mat-button><mat-icon>home</mat-icon> Kezdőlap</button><br>
       <button routerLink="/downloads" routerLinkActive="active" (click)="drawer.toggle()" mat-button><mat-icon>download</mat-icon> Letöltések</button><br>
       <button routerLink="/fanarts" routerLinkActive="active" (click)="drawer.toggle()" mat-button><mat-icon>palette</mat-icon> Fanartok</button><br>
