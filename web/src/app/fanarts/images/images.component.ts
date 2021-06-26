@@ -80,7 +80,8 @@ export class ImagesComponent implements OnInit {
     console.log(`fanarts/${this.id}`);
     const likesref = ref(this.rdb, `fanarts/${this.id}`);
     onValue(likesref, snap => {
-      console.log(snap.val())
+      //console.log(snap.val())
+      this.likes = snap.val().likes;
     })
     const user = this.auth.currentUser;
     const likeRef = doc(
@@ -114,18 +115,21 @@ export class ImagesComponent implements OnInit {
       });
     } else {
       this.liked = true;
+      this.likes = this.likes + 1;
       httpsCallable(
         this.funcions,
         'waikFanartAddLike'
       )({ postId: this.id })
         .then((res) => {
           console.log(res);
-          this.msg.success('Like hozzáadva!');
+          //this.msg.success('Like hozzáadva!');
         })
         .catch((e) => {
           this.msg.error(`Hiba like-olás közben! (${e.message})`);
           console.error(e);
           this.liked = false;
+          this.likes = this.likes - 1;
+
         });
       /*
       const token = await this.authServ.getAuthToken();
@@ -161,7 +165,6 @@ export class ImagesComponent implements OnInit {
         'waikFanartLikeRemove'
       )({ postId: this.id })
         .then((res) => {
-          this.msg.success('Like visszavonva!');
         })
         .catch((err) => {
           this.msg.error(`Hiba like visszavonása közben! (${err.message})`);
