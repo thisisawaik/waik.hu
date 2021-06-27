@@ -1,4 +1,5 @@
 
+<!--
 <div class="logo-header">
     <img src="assets/svgs/discord-logo-and-text-white.svg" (click)="join()" class="logo" alt="Discord">
 </div>
@@ -17,3 +18,14 @@
 <div *ngIf="invite" class="join-group">
     <button mat-button (click)="join()">Csatlakozás!</button>
 </div>
+-->
+
+<mat-card [class.card]="!detectMob()">
+    <mat-card-header>
+      <div mat-card-avatar (click)="join()"><img src="assets/svgs/discord-logo-notext.svg"></div>
+      <mat-card-title>Discord</mat-card-title>
+    </mat-card-header>
+    <mat-card-actions>
+        <button mat-button (click)="join()">Csatlakozás!</button>
+    </mat-card-actions>
+  </mat-card>

@@ -27,11 +27,11 @@ export class ImageDialogComponent implements OnInit {
     console.log(this.data.id);
     const d = doc(this.db, `waik/website/fanarts/${this.data.id}`);
     getDoc(d).then((adoc) => {
-      console.log(adoc.data());
+      //console.log(adoc.data());
       if (adoc.data()?.title) this.title = adoc.data()?.title;
-      if (adoc.data()?.downloadurl || adoc.data()?.gsurl) {
+      if (adoc.data()?.downloadurl || adoc.data()?.gsURL) {
         if (adoc.data()?.getFromGS) {
-          getDownloadURL(ref(this.storage, adoc.data()?.gsurl))
+          getDownloadURL(ref(this.storage, adoc.data()?.gsURL))
             .then((imgurl) => {
               this.imageurl = imgurl;
               console.log(imgurl);

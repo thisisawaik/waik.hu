@@ -26,14 +26,14 @@
       ><br /><br />
       <mat-form-field hintLabel="Max {{ maxDesc }} karakter" appearance="fill">
         <mat-label>Leírás</mat-label>
-        <input
+        <textarea
           [(ngModel)]="desc"
           #desce
           formControlName="desc"
           [maxlength]="maxDesc"
-          type="text"
           matInput
-        />
+          placeholder="Leírás (opcionális)"
+        ></textarea>
         <mat-icon matSuffix>description</mat-icon>
 
         <mat-hint align="end"
@@ -69,14 +69,7 @@
       </section><br /><br />
       
       <div *ngIf="isForCompatition">
-        <mat-form-field appearance="fill">
-          <mat-label>Kategórtia</mat-label>
-          <mat-select>
-            <div *ngFor="let option of comp_categorys">
-              <mat-option [value]="option.value">{{ option.name }}</mat-option>
-            </div>
-          </mat-select>
-        </mat-form-field>
+
       </div>
       <mat-form-field class="example-chip-list">
         <mat-label>Tagek</mat-label>

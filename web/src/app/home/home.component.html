@@ -1,9 +1,19 @@
-<div *ngIf="!isFromPhone" class="box">
+<div *ngIf="!isFromPhone">
+  <div fxLayout="row wrap" style="margin: 2.5vw;">
+    <div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 10px;">
+      <app-discord-embed></app-discord-embed>
+    </div>
+    <div fxLayout="row wrap" fxLayoutGap="16px" style="margin: 10px;">
+      <app-discord-news></app-discord-news>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!isFromPhone && isFromPhone" class="box">
   <app-discord-news></app-discord-news>
   <div>
     <p>Home page here idk</p>
     <!--
-
         <iframe
         src="https://discord.com/widget?id=541446521313296385&theme=dark"
         width="350"
@@ -18,7 +28,7 @@
         height="90%"
         class="center"
       />
-      -->
+    -->
     <!--<app-footer [extraIds]="null"></app-footer>-->
   </div>
   <app-discord-embed></app-discord-embed>

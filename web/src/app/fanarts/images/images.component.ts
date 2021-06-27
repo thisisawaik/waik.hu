@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MessagesService } from 'src/app/services/messages.service';
 import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
@@ -25,7 +25,7 @@ import { getDatabase, onValue, ref } from 'firebase/database';
   templateUrl: './images.component.html',
   styleUrls: ['./images.component.scss'],
 })
-export class ImagesComponent implements OnInit {
+export class ImagesComponent implements OnInit, OnDestroy {
   liked: boolean = false;
   shareable: boolean = false;
   shareclass: string = 'red';
@@ -43,6 +43,8 @@ export class ImagesComponent implements OnInit {
   funcions = getFunctions();
   rdb = getDatabase();
 
+  likeListener: any;
+
   constructor(
     public dialog: MatDialog,
     private msg: MessagesService,
@@ -55,8 +57,8 @@ export class ImagesComponent implements OnInit {
   @Input() imageurl: string | undefined;
   @Input() gsurl: string | undefined;
   @Input() getFromGS: boolean | undefined;
-  @Input() author: boolean | undefined;
-  @Input() shareid: boolean | undefined;
+  @Input() author: string | undefined;
+  @Input() shareid: string | undefined;
 
   async ngOnInit(): Promise<void> {
     if (this.shareid) {
@@ -77,9 +79,8 @@ export class ImagesComponent implements OnInit {
         })
         .catch((e) => this.msg.error(e.message));
     }
-    console.log(`fanarts/${this.id}`);
     const likesref = ref(this.rdb, `fanarts/${this.id}`);
-    onValue(likesref, snap => {
+    this.likeListener = onValue(likesref, snap => {
       //console.log(snap.val())
       this.likes = snap.val().likes;
     })
@@ -89,10 +90,13 @@ export class ImagesComponent implements OnInit {
       `waik/website/fanarts/${this.id}/likes/${user?.uid}`
     );
     const likeDoc = await getDoc(likeRef);
-    console.log(likeDoc.exists());
     if (user && likeDoc.exists()) {
       this.liked = true;
     }
+  }
+
+  ngOnDestroy() {
+    this.likeListener();
   }
 
   open() {
@@ -105,6 +109,7 @@ export class ImagesComponent implements OnInit {
     dialogref.afterClosed().subscribe((res) => {
       console.log(res);
     });
+
   }
 
   async like() {
@@ -121,7 +126,7 @@ export class ImagesComponent implements OnInit {
         'waikFanartAddLike'
       )({ postId: this.id })
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           //this.msg.success('Like hozzáadva!');
         })
         .catch((e) => {
