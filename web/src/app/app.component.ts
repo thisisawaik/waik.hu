@@ -6,6 +6,7 @@ import { AccountComponent } from './account/account.component';
 import { MessagesService } from './services/messages.service';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getApp } from 'firebase/app';
 
 //declare var zal_platform: any;
 
@@ -31,7 +32,7 @@ export class AppComponent implements OnInit {
   isAdmin = false;
 
   db = getFirestore();
-  auth = getAuth();
+  auth = getAuth(getApp());
 
   constructor(
     private router: Router,
