@@ -90,13 +90,37 @@ export const waikFanartSubmit = functions.https.onCall(
           );
         }
 
+        const artref = db
+            .collection("waik")
+            .doc("website")
+            .collection("fanarts")
+            .doc(id);
+
+        const artdoc = await artref.get();
+
+        const artq = db
+            .collection("waik")
+            .doc("website")
+            .collection("fanarts")
+            .where("author", "==", context.auth?.uid)
+            .where("forComp", "==", true);
+
+        if ((await artq.get()).docs.length > 3) {
+          throw new functions.https.HttpsError(
+              "failed-precondition",
+              "3-art-alerady-submitted"
+          );
+        }
+
         const bot = new Discord.Client();
 
         // const [result] = await imageai.safeSearchDetection(
         //    `gs://zal1000.net${doc.data()?.gsURL}`
         // );
 
-        const [result] = await imageai.safeSearchDetection(`gs://zal1000.net${doc.data()?.gsURL}`);
+        const [result] = await imageai.safeSearchDetection(
+            `gs://zal1000.net${doc.data()?.gsURL}`
+        );
         // const detections = result.safeSearchAnnotation;
 
         // ////////////////////////////////////////////////////////////////
@@ -109,11 +133,23 @@ export const waikFanartSubmit = functions.https.onCall(
       -d "@${INPUT_DATA_FILE}"
       */
 
-        console.log(result);
+        // console.log(result);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const artdocdata: any = artdoc.data();
+
+        await db.collection("waik/website/fanarts").add({
+          ...artdocdata,
+          safeSearchDetection: result.safeSearchAnnotation,
+          status: "PENDING",
+          getFromGS: true,
+        }).then((res) => {
+          console.log(res.id);
+        });
 
         const userDoc = await db.doc(`users/${uid}`).get();
 
-        console.log(userDoc.data()?.dcid);
+        // console.log(userDoc.data()?.dcid);
 
         if (userDoc.data()?.dcid) {
           try {
@@ -149,9 +185,15 @@ export const waikFanartSubmit = functions.https.onCall(
               embed.addField("\u200B", doc.data()?.desc);
             }
 
-            await user.send("Sikeres beküldés!", embed).then((msg) => {
-              console.log(`Message sent to ${user.tag} (${msg.id})`);
-            });
+            // eslint-disable-next-line max-len
+            await user
+                .send(
+                    "Sikeres beküldés! \nA moderátorok nemsokára ellenőrizni fogják, ha minden szabálynak megfelel akkor publikálásra kerül. \nHa szeretnél valamit módosítani akkor a https://waik.hu/fanarts oldalon megteheted!",
+                    embed
+                )
+                .then((msg) => {
+                  console.log(`Message sent to ${user.tag} (${msg.id})`);
+                });
             bot.destroy();
           } catch (error) {
             console.error(error);

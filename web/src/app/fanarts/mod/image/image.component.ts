@@ -1,31 +1,26 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MessagesService } from 'src/app/services/messages.service';
-import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
-import { Clipboard } from '@angular/cdk/clipboard';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { AuthService } from 'src/app/services/auth.service';
-import { AccountComponent } from 'src/app/account/account.component';
-
-import 'firebase/auth';
-import {
-  collection,
-  doc,
-  getDoc,
-  getFirestore,
-  onSnapshot,
-} from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { getFunctions, httpsCallable } from '@firebase/functions';
 import { getDatabase, onValue, ref } from 'firebase/database';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getFunctions, httpsCallable } from 'firebase/functions';
+import { AccountComponent } from 'src/app/account/account.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { MessagesService } from 'src/app/services/messages.service';
+import { ImageDialogComponent } from '../../image-dialog/image-dialog.component';
+import { Clipboard } from '@angular/cdk/clipboard';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/storage';
+import { getApp } from '@firebase/app';
 
 @Component({
-  selector: 'app-images',
-  templateUrl: './images.component.html',
-  styleUrls: ['./images.component.scss'],
+  selector: 'app-mod-image',
+  templateUrl: './image.component.html',
+  styleUrls: ['./image.component.scss']
 })
-export class ImagesComponent implements OnInit, OnDestroy {
+export class ModImageComponent implements OnInit, OnDestroy {
+
   liked: boolean = false;
   shareable: boolean = false;
   shareclass: string = 'red';
@@ -35,6 +30,8 @@ export class ImagesComponent implements OnInit, OnDestroy {
   authorName: string | undefined;
   likes: number = 0;
   submitclass: string = 'red';
+  title: string = "Loading..."
+  desc: string = "Loading..."
 
   greenbackground: boolean = false;
 
@@ -61,8 +58,17 @@ export class ImagesComponent implements OnInit, OnDestroy {
   @Input() shareid: string | undefined;
 
   async ngOnInit(): Promise<void> {
+    getDoc(doc(this.db, `waik/website/fanarts/${this.id}`)).then(res => {
+      this.title = res.data()?.title ? res.data()?.title : "Cím";
+      this.desc = res.data()?.desc ? res.data()?.desc : "Leírás";
+    });
     if (this.shareid) {
       this.shareable = true;
+    }
+    console.log(this.getFromGS)
+    if (this.getFromGS && this.gsurl) {
+      this.imageurl = await firebase.storage().ref(this.gsurl).getDownloadURL();
+      console.log(await firebase.storage().ref(this.gsurl).getDownloadURL());
     }
     if (this.author) {
       const userref = doc(this.db, `users/${this.author}`);
@@ -215,4 +221,5 @@ export class ImagesComponent implements OnInit, OnDestroy {
         return navigator.userAgent.match(toMatchItem);
     });
   }
+
 }

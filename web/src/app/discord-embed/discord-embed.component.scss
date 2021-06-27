@@ -1,6 +1,6 @@
 :host{
     background: #332e2e;
-    min-height: calc( 100vh  - 60px);
+    //min-height: calc( 100vh  - 60px);
     display: flex;
     flex-direction: column;
 }
@@ -12,8 +12,8 @@ img.logo{
     cursor: pointer;
 }
 .count{
-    margin: 16px auto; 
-    color:white;
+    //margin: 16px auto; 
+    color: black;
     span {
         text-align: center;
         padding: 2px 16px;
@@ -56,3 +56,15 @@ img.logo{
     height: 14px;
     transform: translateY(4px);
 }
+
+.card {
+    color: black;
+    max-width: 400px;
+  
+    p,
+    h1,
+    h2,
+    h3 {
+      color: black;
+    }
+  }

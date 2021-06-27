@@ -20,6 +20,7 @@
           [author]="art.author"
         ></app-images>
       </div>
+      
     </div>
 
     <div *ngIf="detectMob()" fxLayout="row wrap" class="arts-phone">
@@ -43,6 +44,7 @@
   </mat-tab>
   <mat-tab label="Feltöltés"><app-upload></app-upload></mat-tab>
   <mat-tab label="Verseny"><app-competition></app-competition></mat-tab>
+  <mat-tab label="Admin" *ngIf="isAdmin"><app-fanart-mod></app-fanart-mod></mat-tab>
 </mat-tab-group>
 
 <!--<app-footer [extraIds]="[]"></app-footer>-->

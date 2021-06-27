@@ -40,8 +40,10 @@
     "express": "^4.15.2",
     "firebase": "^9.0.0-beta.5",
     "instantsearch.js": "^3.7.0",
+    "mock-browser": "^0.92.14",
     "ngx-material-file-input": "^2.1.1",
     "reflect-metadata": "^0.1.13",
+    "request": "^2.79.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"

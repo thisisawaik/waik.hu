@@ -52,6 +52,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { AdminComponent } from './admin/admin.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { GeiszlaComponent } from './profiles/geiszla/geiszla.component';
+import { FanartModComponent } from './fanarts/mod/mod.component'
+import { ModImageComponent } from './fanarts/mod/image/image.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,6 +86,8 @@ import { GeiszlaComponent } from './profiles/geiszla/geiszla.component';
     UploadSubmitPromptDialog,
     AdminComponent,
     GeiszlaComponent,
+    FanartModComponent,
+    ModImageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'waik-hu' }),
