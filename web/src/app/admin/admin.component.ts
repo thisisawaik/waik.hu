@@ -37,7 +37,7 @@ export class AdminComponent implements OnInit {
       if(user) {
         this.loading = false;
         await user.getIdTokenResult(true).then(res => {
-          if(res.claims.waikAdmin) {
+          if(res.claims.waikAdmin || res.claims.admin) {
             this.isAdmin = true;
           } else {
             this.isAdmin = false;
