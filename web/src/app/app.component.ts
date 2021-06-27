@@ -101,6 +101,7 @@ export class AppComponent implements OnInit {
         /iPhone/i,
         /iPad/i,
         /iPod/i,
+        /iPaid/i,
         /BlackBerry/i,
         /Windows Phone/i
     ];
