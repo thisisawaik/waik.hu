@@ -41,6 +41,7 @@ export class ShareComponent implements OnInit {
         let d: any = data.tags;
         this.meta.addTags(d);
       }
+      console.log(`waik/website/shares/${id}`);
       const d = doc(this.db, `waik/website/shares/${id}`);
       await getDoc(d)
         .then(async (resShare: any) => {
@@ -79,13 +80,16 @@ export class ShareComponent implements OnInit {
               //);
             }
             if (resShare.data()['fanart']) {
-              await getDoc(doc(this.db, `waik/website/fanarts/${resShare.data?.id}`)).then(async (resArt: any) => {
+              await getDoc(doc(this.db, `waik/website/fanarts/${resShare.data()?.id}`)).then(async (resArt: any) => {
                 if(resArt.data()?.getFromGs) {
                   const gsurl = await getDownloadURL(resArt.data()?.gsurl);
                   this.meta.addTag({name: 'og:image', content: gsurl})
                 } else {
                   this.meta.addTag({name: 'og:image', content: resArt.data()?.downloadurl})
                 }
+              }).catch(e => {
+                console.error(e);
+                this.msg.error(`${e.message}`);
               });
               this.dialog.open(ImageDialogComponent, {
                 data: {
@@ -100,7 +104,8 @@ export class ShareComponent implements OnInit {
           }
         })
         .catch((e) => {
-          this.msg.error(e.message);
+          this.msg.error(`${e.message}`);
+          console.error(e);
         });
     }
   }
