@@ -1,0 +1,20 @@
+<div fxLayout="row wrap" class="arts">
+  <div
+    class="art"
+    *ngFor="let art of arts"
+    fxLayout="row wrap"
+    fxLayoutGap="16px"
+    style="margin: 16px"
+  >
+    <app-mod-image
+    [id]="art.id"
+    [shareid]="art.shareid"
+    [imageurl]="art.downloadurl"
+    [gsurl]="art.gsurl"
+    [getFromGS]="art.getFromGS"
+    [author]="art.author"
+    >
+
+    </app-mod-image>
+  </div>
+</div>
