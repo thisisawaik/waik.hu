@@ -36,7 +36,7 @@
     "algoliasearch": "^3.35.1",
     "angular-instantsearch": "^3.0.0-beta.5",
     "angular-material-fileupload": "^3.0.2",
-    "bootstrap": "^5.0.1",
+    "bootstrap": "^5.0.2",
     "express": "^4.15.2",
     "firebase": "^9.0.0-beta.5",
     "instantsearch.js": "^3.7.0",
