@@ -10,7 +10,7 @@
     [id]="art.id"
     [shareid]="art.shareid"
     [imageurl]="art.downloadurl"
-    [gsurl]="art.gsurl"
+    [gsurl]="art.gsURL"
     [getFromGS]="art.getFromGS"
     [author]="art.author"
     >
@@ -18,3 +18,6 @@
     </app-mod-image>
   </div>
 </div>
+<button mat-fab color="grey" class="reload" (click)="update()">
+  <mat-icon>refresh</mat-icon>
+</button>
