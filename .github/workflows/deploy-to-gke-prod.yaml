@@ -14,7 +14,7 @@ name: Build and Deploy to GKE
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 env:
   PROJECT_ID: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000.project }}
