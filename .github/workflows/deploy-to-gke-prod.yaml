@@ -17,7 +17,7 @@ on:
     branches: [master]
 
 env:
-  PROJECT_ID: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000.project }}
+  PROJECT_ID: ${{ secrets.PROJECT }}
   GKE_CLUSTER: cluster-1 # TODO: update to cluster name
   GKE_ZONE: us-central1-c # TODO: update to cluster zone
   DEPLOYMENT_NAME: waik-main-site # TODO: update to deployment name
