@@ -15,8 +15,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.isFromPhone = this.detectMob();
-    this.htmltitle.setTitle('Főoldal');
-    this.meta.addTag({ property: 'og:title', content: 'Waik weboldal' });
+    this.htmltitle.setTitle('Waik | Főoldal');
+    this.meta.addTag({ property: 'og:title', content: 'Waik | Főoldal' });
     this.meta.addTag({
       property: 'og:image',
       content:
