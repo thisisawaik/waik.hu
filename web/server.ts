@@ -30,7 +30,9 @@ export function app(): express.Express {
   server.set('views', distFolder);
 
   // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { });
+  server.get('/api/shares/ShareId', (req, res) => {
+    res.status(200).send({status: 'OK'});
+  });
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
     maxAge: '1w'
