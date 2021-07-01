@@ -27,16 +27,7 @@ export class WalruszComponent implements OnInit {
   loading = true;
   pp: string = "https://yt3.ggpht.com/ytc/AAUvwniseLALwR5fmrqhrt2YDGgh1VJSCviENV2MkukhUg=s68-c-k-c0x00ffffff-no-rj";
 
-  desc: string = `
-          Üdvözöllek! Walrusz vagyok és úgy hiszem, bármiről lehet érdekes,
-          kreatív és szórakoztató videót készíteni, hogyha az ember elegendő
-          munkát fektet bele. Mesterségem elsősorban a szórakoztató
-          ismeretterjesztő tartalmak gyártása, de emellett sok más mindent is
-          találhatsz a csatornámon. Szeretek nagy hangsúlyt fektetni a videók
-          vágására, az utómunkára és hiszek abban, hogy a minőségi szórakoztatás
-          kulcsa a kreativitásban rejlik. Bátran nézz szét a csatornámon, hátha
-          találsz valamit, ami tetszik :)
-          `
+  desc: string = `Üdvözöllek! Walrusz vagyok és úgy hiszem, bármiről lehet érdekes, kreatív és szórakoztató videót készíteni, hogyha az ember elegendő munkát fektet bele. Mesterségem elsősorban a szórakoztató ismeretterjesztő tartalmak gyártása, de emellett sok más mindent is találhatsz a csatornámon. Szeretek nagy hangsúlyt fektetni a videók vágására, az utómunkára és hiszek abban, hogy a minőségi szórakoztatás kulcsa a kreativitásban rejlik. Bátran nézz szét a csatornámon, háthatalálsz valamit, ami tetszik :)`
 
   db = getFirestore();
 
