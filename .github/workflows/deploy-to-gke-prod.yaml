@@ -14,7 +14,7 @@ name: Build and Deploy to GKE
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 env:
   PROJECT_ID: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000.project }}
@@ -57,6 +57,7 @@ jobs:
       # Build the Docker image
       - name: Build
         run: |-
+          cd web
           docker build \
             --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" \
             --build-arg GITHUB_SHA="$GITHUB_SHA" \
