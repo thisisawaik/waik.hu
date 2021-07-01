@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -115,6 +116,7 @@ export const waikFanartSubmit = functions.https.onCall(
             "user-not-provided"
         );
       }
+
       const id = data.postId;
       if (!id) {
         throw new functions.https.HttpsError(
@@ -152,14 +154,16 @@ export const waikFanartSubmit = functions.https.onCall(
 
         const artdoc = await artref.get();
 
-        const artq = db
+        const artrq = db
             .collection("waik")
             .doc("website")
             .collection("fanarts")
             .where("author", "==", context.auth?.uid)
             .where("forComp", "==", true);
 
-        if ((await artq.get()).docs.length > 3) {
+        const artq = await artrq.get();
+
+        if (artq.docs.length > 3) {
           throw new functions.https.HttpsError(
               "failed-precondition",
               "Már küldtél be 3 alkotást a versenyre!"
@@ -231,10 +235,11 @@ export const waikFanartSubmit = functions.https.onCall(
               await modchannel.send(`${user.tag} submitted an art`, embed);
             }
 
-            // eslint-disable-next-line max-len
             await user
                 .send(
-                    "Sikeres beküldés! \nA moderátorok nemsokára ellenőrizni fogják, ha minden szabálynak megfelel akkor publikálásra kerül. \nHa szeretnél valamit módosítani akkor a https://waik.hu/fanarts oldalon megteheted!",
+                    `Sikeres beküldés!
+                    \nA moderátorok nemsokára ellenőrizni fogják, ha minden szabálynak megfelel akkor publikálásra kerül.
+                    \nHa szeretnél valamit módosítani akkor a https://waik.hu/fanarts oldalon megteheted!`,
                     embed
                 )
                 .then((msg) => {
