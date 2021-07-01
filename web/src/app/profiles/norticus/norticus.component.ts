@@ -27,6 +27,7 @@ export class NorticusComponent implements OnInit {
       property: 'og:description',
       content: this.desc,
     });
+    this.meta.addTag({ property: 'theme-color', content: '#278003'})
     this.meta.addTag({ property: 'og:color', content: '#278003'})
     this.meta.addTag({ property: 'twitter:site', content: 'https://waik.hu/' });
     this.meta.addTag({
