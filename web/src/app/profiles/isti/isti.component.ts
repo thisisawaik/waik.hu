@@ -12,12 +12,7 @@ export class IstiComponent implements OnInit {
   pp: string =
     'https://cdn.discordapp.com/avatars/174980450543075330/68bd161e38aaaff31a57ed05bf4ea971.webp';
 
-  desc: string = `
-          Sziasztok! :) Isti115 vagyok, a WAIK csapat tagja, jelenleg PhD
-          hallgató az ELTE Informatikai Karán. Nagyon szeretek megérteni és
-          elmagyarázni dolgokat, úgyhogy nyugodtan kérdezzetek, igyekszem minél
-          jobban válaszolni! ;)
-          `;
+  desc: string = `Sziasztok! :) Isti115 vagyok, a WAIK csapat tagja, jelenleg PhD hallgató az ELTE Informatikai Karán. Nagyon szeretek megérteni és elmagyarázni dolgokat, úgyhogy nyugodtan kérdezzetek, igyekszem minél jobban válaszolni! ;)`;
   db = getFirestore();
 
   constructor(private htmltitle: Title, private meta: Meta) {}
