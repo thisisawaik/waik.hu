@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: waik
+  name: waik-main-site
+spec:
+  selector:
+    matchLabels:
+      app: waik-main-site
+  template:
+    metadata:
+      labels:
+        app: waik-main-site
+    spec:
+      containers:
+      - name: site
+        image: gcr.io/zal1000/waik/website/ssr@sha256:ca67217e0e1547e293bca1978f021049953f92577b59dad0357ae4d4d31ea5fd
+        ports:
+        - containerPort: 4000
+        imagePullPolicy: IfNotPresent
+      - name: pinger
+        image: gcr.io/zal1000/waik/website/ssr-pinger
+        imagePullPolicy: IfNotPresent

@@ -24,18 +24,20 @@ export class FanartModComponent implements OnInit {
 
     try {
       const docs = await getDocs(q);
+      const a: any[] = [];
       for (const doc of docs.docs) {
         console.log(doc.data())
-        this.arts.push({
+        a.push({
           author: doc.data()?.author,
           id: doc.id,
           getFromGS: doc.data()?.getFromGS,
-          gsurl: doc.data()?.gsURL,
+          gsURL: doc.data()?.gsURL,
           shareid: doc.data()?.shareid,
-          downloadurl: doc.data()?.downloadurl
-        })
+          downloadurl: doc.data()?.downloadurl,
+          desc: doc.data()?.desc,
+        });
       }
-      
+      this.arts = a;
     } catch (e) {
       this.msg.error(e.message)
     }

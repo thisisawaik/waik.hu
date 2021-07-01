@@ -2,8 +2,9 @@
   class="tabs"
   [backgroundColor]="tabsBackgroundColor"
   animationDuration="0ms"
+  [selectedIndex]="selectedIndex">
 >
-  <mat-tab class="tab-content" label="Alkotások">
+  <mat-tab class="tab-content" (click)="setPage('arts')" label="Alkotások">
     <div *ngIf="!detectMob()" fxLayout="row wrap" class="arts">
       <div
         fxLayout="row wrap"
@@ -15,9 +16,10 @@
           [id]="art.id"
           [shareid]="art.shareid"
           [imageurl]="art.downloadurl"
-          [gsurl]="art.gsurl"
+          [gsurl]="art.gsURL"
           [getFromGS]="art.getFromGS"
           [author]="art.author"
+          [desc]="art.desc"
         ></app-images>
       </div>
       
@@ -34,17 +36,19 @@
           [id]="art.id"
           [shareid]="art.shareid"
           [imageurl]="art.downloadurl"
-          [gsurl]="art.gsurl"
+          [gsurl]="art.gsURL"
           [getFromGS]="art.getFromGS"
           [author]="art.author"
         ></app-images>
       </div>
     </div>
-
+    <button mat-fab color="grey" class="reload" (click)="update()">
+      <mat-icon>refresh</mat-icon>
+    </button>
   </mat-tab>
-  <mat-tab label="Feltöltés"><app-upload></app-upload></mat-tab>
-  <mat-tab label="Verseny"><app-competition></app-competition></mat-tab>
-  <mat-tab label="Admin" *ngIf="isAdmin"><app-fanart-mod></app-fanart-mod></mat-tab>
+  <mat-tab (click)="setPage('upload')" label="Feltöltés"><app-upload></app-upload></mat-tab>
+  <mat-tab (click)="setPage('comp')" label="Verseny"><app-competition></app-competition></mat-tab>
+  <mat-tab (click)="setPage('admin')" label="Admin" *ngIf="isAdmin"><app-fanart-mod></app-fanart-mod></mat-tab>
 </mat-tab-group>
 
 <!--<app-footer [extraIds]="[]"></app-footer>-->

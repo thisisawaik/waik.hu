@@ -256,7 +256,7 @@ export class UploadComponent implements OnInit {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       console.log(file);
-      if (file.type === 'image/jpeg' || file.type === 'image/png') {
+      if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/webp') {
         const user = this.auth.currentUser;
         const r = ref(
           this.storage,

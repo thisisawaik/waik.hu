@@ -19,6 +19,7 @@ import {
 import { getAuth } from 'firebase/auth';
 import { getFunctions, httpsCallable } from '@firebase/functions';
 import { getDatabase, onValue, ref } from 'firebase/database';
+import * as storage from 'firebase/storage';
 
 @Component({
   selector: 'app-images',
@@ -59,10 +60,18 @@ export class ImagesComponent implements OnInit, OnDestroy {
   @Input() getFromGS: boolean | undefined;
   @Input() author: string | undefined;
   @Input() shareid: string | undefined;
+  @Input() desc?: string = "Loading...";
 
   async ngOnInit(): Promise<void> {
     if (this.shareid) {
       this.shareable = true;
+    }
+    console.log(this.gsurl)
+    if(this.getFromGS && this.gsurl) {
+      const ref = storage.ref(storage.getStorage(), this.gsurl);
+      const url = await storage.getDownloadURL(ref);
+      console.log(url);
+      this.imageurl = url ? url : this.imageurl;
     }
     if (this.author) {
       const userref = doc(this.db, `users/${this.author}`);

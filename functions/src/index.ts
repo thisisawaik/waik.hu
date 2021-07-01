@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -7,7 +8,7 @@ import vision from "@google-cloud/vision";
 import * as Discord from "discord.js";
 // import * as ai from "@google-cloud/aiplatform";
 // import {PubSub} from "@google-cloud/pubsub";
-
+// import {waikFanartApprove} from "./functions/waikFanartApprove";
 /*
 const aiendp = new ai.EndpointServiceClient({
   projectId: "zal1000",
@@ -34,12 +35,66 @@ const rdb = admin.database();
 //   response.send("Hello from Firebase!");
 // });
 
+// export {waikFanartApprove};
+
 export const fstest = functions.firestore
     .document("test/YWjeaGh8R7RpKhHOXyov")
     .onWrite((change) => {
       console.log(change.after);
       console.log(change.before);
       return;
+    });
+
+export const waikFanartApprove = functions.https.onCall(
+    async (data, context) => {
+      // if (context.app == undefined) {
+      //  throw new functions.https.HttpsError(
+      //      'failed-precondition',
+      //      'The function must be called from an App Check verified app.'
+      //      );
+      // }
+
+      const uid = context.auth?.uid;
+      if (!uid) {
+        throw new functions.https.HttpsError(
+            "unauthenticated",
+            "user-not-provided"
+        );
+      }
+
+      const id = data.postId;
+      if (!id) {
+        throw new functions.https.HttpsError(
+            "invalid-argument",
+            "post-id-not-provided"
+        );
+      }
+      const isAdmin = context.auth?.token.waikAdmin;
+      if (!isAdmin) {
+        throw new functions.https.HttpsError("unauthenticated", "not-admin");
+      }
+
+      const artref = db
+          .collection("waik")
+          .doc("website")
+          .collection("fanarts")
+          .doc(id);
+
+      const artdoc = await artref.get();
+
+      if (!artdoc.exists) {
+        throw new functions.https.HttpsError("not-found", "post-not-found");
+      }
+
+      await rdb.ref("fanarts").child(id).update({
+        likes: 0,
+      });
+
+      await artref.update({
+        status: "PUBLIC",
+      });
+
+      return {};
     });
 
 // eslint-disable-next-line max-len
@@ -61,6 +116,7 @@ export const waikFanartSubmit = functions.https.onCall(
             "user-not-provided"
         );
       }
+
       const id = data.postId;
       if (!id) {
         throw new functions.https.HttpsError(
@@ -98,42 +154,27 @@ export const waikFanartSubmit = functions.https.onCall(
 
         const artdoc = await artref.get();
 
-        const artq = db
+        const artrq = db
             .collection("waik")
             .doc("website")
             .collection("fanarts")
             .where("author", "==", context.auth?.uid)
             .where("forComp", "==", true);
 
-        if ((await artq.get()).docs.length > 3) {
+        const artq = await artrq.get();
+
+        if (artq.docs.length > 3) {
           throw new functions.https.HttpsError(
               "failed-precondition",
-              "3-art-alerady-submitted"
+              "Már küldtél be 3 alkotást a versenyre!"
           );
         }
 
         const bot = new Discord.Client();
 
-        // const [result] = await imageai.safeSearchDetection(
-        //    `gs://zal1000.net${doc.data()?.gsURL}`
-        // );
-
         const [result] = await imageai.safeSearchDetection(
             `gs://zal1000.net${doc.data()?.gsURL}`
         );
-        // const detections = result.safeSearchAnnotation;
-
-        // ////////////////////////////////////////////////////////////////
-        /*
-      curl \
-      -X POST \
-      -H "Authorization: Bearer $(gcloud auth print-access-token)" \
-      -H "Content-Type: application/json" \
-      https://us-central1-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/locations/us-central1/endpoints/${ENDPOINT_ID}:predict \
-      -d "@${INPUT_DATA_FILE}"
-      */
-
-        // console.log(result);
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const artdocdata: any = artdoc.data();
@@ -164,7 +205,7 @@ export const waikFanartSubmit = functions.https.onCall(
                     `${user.tag}`,
                     user.avatarURL({dynamic: true}) || undefined
                 )
-                .setColor("#57F287");
+                .setColor("#fee75c");
             const gsURL: string = doc.data()?.gsURL;
 
             // eslint-disable-next-line max-len
@@ -185,10 +226,20 @@ export const waikFanartSubmit = functions.https.onCall(
               embed.addField("\u200B", doc.data()?.desc);
             }
 
+            const modchannel = await bot.channels.fetch("541997126025084929");
+
             // eslint-disable-next-line max-len
+            // const authordata = await db.collection('dcusers').doc(user.id).get();
+
+            if (modchannel.isText()) {
+              await modchannel.send(`${user.tag} submitted an art`, embed);
+            }
+
             await user
                 .send(
-                    "Sikeres beküldés! \nA moderátorok nemsokára ellenőrizni fogják, ha minden szabálynak megfelel akkor publikálásra kerül. \nHa szeretnél valamit módosítani akkor a https://waik.hu/fanarts oldalon megteheted!",
+                    `Sikeres beküldés!
+                    \nA moderátorok nemsokára ellenőrizni fogják, ha minden szabálynak megfelel akkor publikálásra kerül.
+                    \nHa szeretnél valamit módosítani akkor a https://waik.hu/fanarts oldalon megteheted!`,
                     embed
                 )
                 .then((msg) => {
