@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
       - name: site
-        image: gcr.io/zal1000/waik/website/ssr@sha256:ca67217e0e1547e293bca1978f021049953f92577b59dad0357ae4d4d31ea5fd
+        image: REPLACE_IMAGE 
         ports:
         - containerPort: 4000
         imagePullPolicy: IfNotPresent
       - name: pinger
-        image: gcr.io/zal1000/waik/website/ssr-pinger
+        image: gcr.io/zal1000/waik/website/ssr-pinger@sha256:1f201eb77f0d60fa0547267c7c893602d5bb8f1b2f4480d92b408ad06fdb4a14
         imagePullPolicy: IfNotPresent
