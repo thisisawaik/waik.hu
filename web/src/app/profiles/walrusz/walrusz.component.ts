@@ -11,6 +11,8 @@ import {
   query,
   where,
 } from 'firebase/firestore';
+import { Meta, Title } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-walrusz',
   templateUrl: './walrusz.component.html',
@@ -23,6 +25,7 @@ export class WalruszComponent implements OnInit {
   getError: boolean | undefined;
   currentVideoIndex: number = 0;
   loading = true;
+  pp: string = "https://yt3.ggpht.com/ytc/AAUvwniseLALwR5fmrqhrt2YDGgh1VJSCviENV2MkukhUg=s68-c-k-c0x00ffffff-no-rj";
 
   desc: string = `
           Üdvözöllek! Walrusz vagyok és úgy hiszem, bármiről lehet érdekes,
@@ -37,9 +40,31 @@ export class WalruszComponent implements OnInit {
 
   db = getFirestore();
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer, private htmltitle: Title, private meta: Meta) {}
 
   async ngOnInit(): Promise<void> {
+
+    this.htmltitle.setTitle('Waik | Walrusz')
+    this.meta.addTag({ property: 'og:title', content: 'Waik | Walrusz' });
+    this.meta.addTag({
+      property: 'og:image',
+      content: this.pp,
+    });
+    this.meta.addTag({
+      property: 'og:description',
+      content: this.desc,
+    });
+    this.meta.addTag({ property: 'theme-color', content: '#7f5b26'})
+    this.meta.addTag({ property: 'og:color', content: '#7f5b26'})
+    this.meta.addTag({ property: 'twitter:site', content: 'https://waik.hu/' });
+    this.meta.addTag({
+      property: 'twitter:creator',
+      content: '@zal1000original',
+    });
+    this.meta.addTag({ property: 'twitter:image:alt', content: 'Waik' });
+    this.meta.addTag({ property: 'fb:app_id', content: '581458672492860' });
+    this.meta.addTag({ property: 'og:url', content: 'https://waik.hu/' });
+
     const q = query(
       collection(this.db, 'waik/videos/post'),
       where('channel', '==', 'Walrusz'),

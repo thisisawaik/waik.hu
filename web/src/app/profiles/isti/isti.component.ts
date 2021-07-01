@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-isti',
@@ -19,9 +20,31 @@ export class IstiComponent implements OnInit {
           `;
   db = getFirestore();
 
-  constructor() {}
+  constructor(private htmltitle: Title, private meta: Meta) {}
 
   ngOnInit(): void {
+
+    this.htmltitle.setTitle('Waik | Isti115')
+    this.meta.addTag({ property: 'og:title', content: 'Waik | Isti115' });
+    this.meta.addTag({
+      property: 'og:image',
+      content: this.pp,
+    });
+    this.meta.addTag({
+      property: 'og:description',
+      content: this.desc,
+    });
+    this.meta.addTag({ property: 'theme-color', content: '#a1f0f5'})
+    this.meta.addTag({ property: 'og:color', content: '#a1f0f5'})
+    this.meta.addTag({ property: 'twitter:site', content: 'https://waik.hu/' });
+    this.meta.addTag({
+      property: 'twitter:creator',
+      content: '@zal1000original',
+    });
+    this.meta.addTag({ property: 'twitter:image:alt', content: 'Waik' });
+    this.meta.addTag({ property: 'fb:app_id', content: '581458672492860' });
+    this.meta.addTag({ property: 'og:url', content: 'https://waik.hu/' });
+
     const tdrRef = doc(this.db, 'dcusers/174980450543075330');
 
     getDoc(tdrRef).then((res) => {
