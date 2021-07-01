@@ -55,7 +55,19 @@ jobs:
           credentials: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000 }}
 
       # Build the Docker image
-      - name: Build
+      - name: Package install
+        run: |-
+          cd web
+          npm ci
+
+      # Build the Docker image
+      - name: Build app
+        run: |-
+          cd web
+          npm run build:ssr
+
+      # Build the Docker image
+      - name: Build container
         run: |-
           cd web
           docker build \
