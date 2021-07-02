@@ -34,7 +34,7 @@
     "@cypress/schematic": "^1.4.2",
     "@nguniversal/express-engine": "^12.1.0",
     "algoliasearch": "^4.10.2",
-    "angular-instantsearch": "^3.0.0-beta.5",
+    "angular-instantsearch": "^4.0.0-beta-no-lodash.0",
     "angular-material-fileupload": "^3.0.2",
     "bootstrap": "^5.0.2",
     "express": "^4.15.2",
