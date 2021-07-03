@@ -12,5 +12,5 @@ export const environment = {
   },
   port: 4000,
   apiUrl: 'https://waik-main-api-zd72hz742a-ew.a.run.app/',
-  appcheckDebugToken: '23E7007C-F2C4-4703-9276-404B02786ACC',
+  appcheckToken: '23E7007C-F2C4-4703-9276-404B02786ACC',
 };

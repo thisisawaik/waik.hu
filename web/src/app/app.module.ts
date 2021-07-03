@@ -54,6 +54,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { GeiszlaComponent } from './profiles/geiszla/geiszla.component';
 import { FanartModComponent } from './fanarts/mod/mod.component'
 import { ModImageComponent } from './fanarts/mod/image/image.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
@@ -121,6 +123,12 @@ import { ModImageComponent } from './fanarts/mod/image/image.component';
     MatBadgeModule,
     MatChipsModule,
     MatSidenavModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
