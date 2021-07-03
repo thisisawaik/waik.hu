@@ -9,6 +9,9 @@ import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 import { existsSync } from 'fs';
 
+import { initializeApp } from 'firebase/app';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
+
 const MockBrowser = require('mock-browser').mocks.MockBrowser;
 const mock = new MockBrowser();
 
@@ -26,12 +29,33 @@ export function app(): express.Express {
     bootstrap: AppServerModule,
   }));
 
+  const fapp = initializeApp({
+    apiKey: "AIzaSyBmRS5Yy-1ktWXNsYjk9mQ8Rs9RhmQy600",
+    authDomain: "zal1000.firebaseapp.com",
+    databaseURL: "https://waik.europe-west1.firebasedatabase.app",
+    projectId: "zal1000",
+    storageBucket: "zal1000.net",
+    messagingSenderId: "512279358183",
+    appId: "1:512279358183:web:1a091779e0474dba541042",
+    measurementId: "G-W3EFDHYNN1"
+  }, 'server');
+
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
   // Example Express Rest API endpoints
-  server.get('/api/shares/ShareId', (req, res) => {
-    res.status(200).send({status: 'OK'});
+  server.get('api/shares/ShareId', async (req, res) => {
+    const db = getFirestore(fapp);
+    const params: any = req.params;
+    const id = params.ShareId ? params.ShareId : null;
+    if(!id) return res.status(400).send({message: 'id-not-sent'});
+
+    const ref = doc(db, `waik/website/shares/${id}`);
+    const d = await getDoc(ref);
+
+    if(!d.exists()) return res.status(404).send({message: 'id-not-found'});
+
+    return res.status(200).send(d.data());
   });
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
