@@ -8,7 +8,7 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { getAuth, onAuthStateChanged } from '@firebase/auth';
+import { getAuth, onAuthStateChanged, User } from '@firebase/auth';
 import {
   addDoc,
   collection,
@@ -43,6 +43,8 @@ export class UploadComponent implements OnInit {
   name: string = '';
 
   myForm!: FormGroup;
+
+  user: User | null = null;
 
   auth = getAuth();
   db = getFirestore();
@@ -146,6 +148,7 @@ export class UploadComponent implements OnInit {
 
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
+        this.user = user;
         this.authorAvatar = user?.photoURL || null;
         try {
           const d = await getDoc(doc(this.db, `users/${user.uid}`));
@@ -206,6 +209,8 @@ export class UploadComponent implements OnInit {
             this.msg.error(`Hiba! ${e.message}`);
             console.error(e);
           });
+      } else {
+        this.user = null;
       }
     });
   }
