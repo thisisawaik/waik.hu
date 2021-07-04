@@ -46,7 +46,7 @@
       <mat-icon>refresh</mat-icon>
     </button>
   </mat-tab>
-  <mat-tab (click)="setPage('upload')" label="Feltöltés"><app-upload></app-upload></mat-tab>
+  <mat-tab (click)="setPage('upload')" *ngIf="user" label="Feltöltés"><app-upload ></app-upload></mat-tab>
   <mat-tab (click)="setPage('comp')" label="Verseny"><app-competition></app-competition></mat-tab>
   <mat-tab (click)="setPage('admin')" label="Admin" *ngIf="isAdmin"><app-fanart-mod></app-fanart-mod></mat-tab>
 </mat-tab-group>
