@@ -3,7 +3,7 @@ import { ThemePalette } from '@angular/material/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { getDocs, getFirestore, where } from '@firebase/firestore';
 import { collection, query } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -18,6 +18,7 @@ export class FanartsComponent implements OnInit {
   pages: string[] = ["arts", "upload", "comp", "admin"];
 
   isAdmin: boolean = false;
+  user: User | null = null;
 
   db = getFirestore();
   auth = getAuth();
@@ -47,6 +48,7 @@ export class FanartsComponent implements OnInit {
     }
     
     onAuthStateChanged(this.auth, async (user) => {
+      this.user = user;
       if (user) {
         await user.getIdTokenResult(true).then((res) => {
           if (res.claims.waikAdmin) {
