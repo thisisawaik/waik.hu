@@ -5,7 +5,7 @@
 <script>
 export default {
     async asyncData({ app, params }) {
-        const db = app.firestore
+        const db = app.$fire.firestore
         const id = params.id
         const ref = db.collection('waik/website/shares').doc(id)
         const doc = await ref.get()
