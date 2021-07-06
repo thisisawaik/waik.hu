@@ -41,7 +41,7 @@ jobs:
 
     - name: Deploy
       run: |
-        gcloud run deploy waik-main \
+        gcloud run deploy waik-main-dev \
         --region europe-north1 \
         --image gcr.io/zal1000/waik/website:$GITHUB_SHA \
         --platform managed \
