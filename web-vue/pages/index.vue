@@ -77,13 +77,9 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-import 'firebase/firestore'
-
-const db = firebase.firestore();
-
 export default {
-  async asyncData() {
+  async asyncData({app}) {
+    const db = app.$fire.firestore
     const ref = db.collection('test').doc('test');
     const doc = await ref.get();
     return {
