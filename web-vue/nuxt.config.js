@@ -8,12 +8,19 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'format-detection', content: 'telephone=no' },
-      { name: 'theme-color', content: '#ffffff' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+
+  meta: {
+    ogType: false,
+    ogTitle: false,
+    ogDescription: false,
+    ogSiteName: false,
+    description: false,
+   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
