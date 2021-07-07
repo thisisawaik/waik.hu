@@ -1,12 +1,12 @@
 <template>
   <v-app dark>
-    <v-app-bar :clipped-left="clipped" fixed app color="black">
+    <v-app-bar :clipped-left="clipped" fixed app color="primary">
       <NuxtLink class="nav-bar-button" to="/"><img width="40" alt="Waik Logo" src="~/assets/waik_big_icon.png" style="cursor: pointer;"/></NuxtLink>
-      <NuxtLink class="nav-bar-button" to="/"><v-btn color="primary">Főoldal</v-btn></NuxtLink>
-      <NuxtLink class="nav-bar-button" to="/streams"><v-btn color="primary">Streamek</v-btn></NuxtLink>
-      <NuxtLink class="nav-bar-button" to="/downloads"><v-btn color="primary">Letöltések</v-btn></NuxtLink>
-      <NuxtLink class="nav-bar-button" to="/fanarts"><v-btn color="primary">Fanartok</v-btn></NuxtLink>
-      <NuxtLink class="nav-bar-button" to="/admin"><v-btn color="primary">Admin</v-btn></NuxtLink>
+      <NuxtLink class="nav-bar-button" to="/"><v-btn color="primary" depressed>Főoldal</v-btn></NuxtLink>
+      <NuxtLink class="nav-bar-button" to="/streams"><v-btn color="primary" depressed>Streamek</v-btn></NuxtLink>
+      <NuxtLink class="nav-bar-button" to="/downloads"><v-btn color="primary" depressed>Letöltések</v-btn></NuxtLink>
+      <NuxtLink class="nav-bar-button" to="/fanarts"><v-btn color="primary" depressed>Fanartok</v-btn></NuxtLink>
+      <NuxtLink class="nav-bar-button" to="/admin"><v-btn color="primary" depressed>Admin</v-btn></NuxtLink>
       <v-spacer />
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
