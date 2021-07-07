@@ -8,6 +8,9 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'format-detection', content: 'telephone=no' },
+      { name: 'twitter:creator', content: '@zal1000original' },
+      { name: 'twitter:site', content: 'https://waik.hu/' },
+      { name: 'fb:app_id', content: '581458672492860' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -65,6 +68,9 @@ export default {
     },
     services: {
       firestore: true,
+      storage: true,
+      database: true,
+      auth: true,
     }
   },
 
