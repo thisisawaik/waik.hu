@@ -34,6 +34,10 @@ export default {
           content:
             'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/waik%2Fpublic%2Fwaik_cup.jpg?alt=media&token=5c3a6c28-644a-492a-ba4d-74d9e52470e2',
         },
+        {
+            name: 'theme-color',
+            content: '#ffffff'
+        }
       ],
     }
   },
