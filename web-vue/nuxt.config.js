@@ -53,6 +53,7 @@ export default {
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/firebase',
+    'nuxt-clipboard2',
   ],
 
   firebase: {
