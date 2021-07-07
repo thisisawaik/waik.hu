@@ -1,32 +1,20 @@
 <template>
   <v-app dark>
-    <v-app-bar :clipped-left="clipped" fixed app >
+    <v-app-bar :clipped-left="clipped" fixed app color="black">
       <NuxtLink class="nav-bar-button" to="/"><img width="40" alt="Waik Logo" src="~/assets/waik_big_icon.png" style="cursor: pointer;"/></NuxtLink>
-      <NuxtLink class="nav-bar-button" to="/"><v-btn color="primary" elevation="2">Főoldal</v-btn></NuxtLink>
-      <NuxtLink class="nav-bar-button" to="/streams"><v-btn color="primary" elevation="2">Streamek</v-btn></NuxtLink>
-      <NuxtLink class="nav-bar-button" to="/downloads"><v-btn color="primary" elevation="2">Letöltések</v-btn></NuxtLink>
-      <NuxtLink class="nav-bar-button" to="/fanarts"><v-btn color="primary" elevation="2">Fanartok</v-btn></NuxtLink>
-      <NuxtLink class="nav-bar-button" to="/admin"><v-btn color="primary" elevation="2">Admin</v-btn></NuxtLink>
+      <NuxtLink class="nav-bar-button" to="/"><v-btn color="primary">Főoldal</v-btn></NuxtLink>
+      <NuxtLink class="nav-bar-button" to="/streams"><v-btn color="primary">Streamek</v-btn></NuxtLink>
+      <NuxtLink class="nav-bar-button" to="/downloads"><v-btn color="primary">Letöltések</v-btn></NuxtLink>
+      <NuxtLink class="nav-bar-button" to="/fanarts"><v-btn color="primary">Fanartok</v-btn></NuxtLink>
+      <NuxtLink class="nav-bar-button" to="/admin"><v-btn color="primary">Admin</v-btn></NuxtLink>
       <v-spacer />
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container>
-        <Nuxt />
-      </v-container>
+      <Nuxt />
     </v-main>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light> mdi-repeat </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
@@ -65,5 +53,9 @@ export default {
 <style>
   .nav-bar-button {
     margin-right: 15px;
+  }
+
+  :host {
+    font-family: roboto;
   }
 </style>
