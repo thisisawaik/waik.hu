@@ -8,9 +8,10 @@
       <NuxtLink class="nav-bar-button" to="/fanarts"><v-btn color="primary" depressed>Fanartok</v-btn></NuxtLink>
       <NuxtLink class="nav-bar-button" to="/admin"><v-btn color="primary" depressed>Admin</v-btn></NuxtLink>
       <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+      <NuxtLink class="nav-bar-avatar" to="/profiles/norticus"><v-avatar size="40"><img height="40" src="~/assets/avatars/norticus.webp"></v-avatar></NuxtLink>
+      <NuxtLink class="nav-bar-avatar" to="/profiles/walrusz"><v-avatar size="40"><img height="40" src="~/assets/avatars/walrusz.webp"></v-avatar></NuxtLink>
+      <NuxtLink class="nav-bar-avatar" to="/profiles/isti"><v-avatar size="40"><img height="40" src="~/assets/avatars/isti.webp"></v-avatar></NuxtLink>
+      <NuxtLink class="nav-bar-avatar" to="/profiles/geiszla"><v-avatar size="40"><img height="40" src="~/assets/avatars/geiszla.webp"></v-avatar></NuxtLink>
     </v-app-bar>
     <v-main>
       <Nuxt />
@@ -53,6 +54,10 @@ export default {
 <style>
   .nav-bar-button {
     margin-right: 15px;
+  }
+
+  .nav-bar-avatar {
+    margin-left: 20px;
   }
 
   :host {
