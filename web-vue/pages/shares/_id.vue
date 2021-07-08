@@ -45,7 +45,11 @@ export default {
                 {
                     name: 'theme-color',
                     content: this.color,
-                }
+                },
+                {
+                    name: 'robots',
+                    content: 'noindex,nofollow',
+                },
             ]
         }
     }
