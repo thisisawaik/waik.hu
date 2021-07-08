@@ -17,7 +17,7 @@
       <Nuxt />
     </v-main>
     <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span>&copy; {{ new Date().getFullYear() }} | zal1000#1001 | <a style="color: #fff;" href="https://github.com/thisisawaik/waik.hu" target="_blank">GitHub</a></span>
     </v-footer>
   </v-app>
 </template>
