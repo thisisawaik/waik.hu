@@ -27,6 +27,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~/assets/global.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -62,7 +63,7 @@ export default {
       authDomain: "zal1000.firebaseapp.com",
       databaseURL: "https://zal1000.firebaseio.com",
       projectId: "zal1000",
-      storageBucket: "zal1000.appspot.com",
+      storageBucket: "zal1000.net",
       messagingSenderId: "512279358183",
       appId: "1:512279358183:web:1a091779e0474dba541042",
       measurementId: "G-W3EFDHYNN1"
@@ -71,7 +72,9 @@ export default {
       firestore: true,
       storage: true,
       database: true,
-      auth: true,
+      auth: {
+        ssr: true,
+      },
     }
   },
 
@@ -82,8 +85,24 @@ export default {
   pwa: {
     manifest: {
       lang: 'hu'
+    },
+    workbox: {
+      importScripts: [
+        // ...
+        '/firebase-auth-sw.js'
+      ],
+      // by default the workbox module will not install the service worker in dev environment to avoid conflicts with HMR
+      // only set this true for testing and remember to always clear your browser cache in development
+      dev: process.env.NODE_ENV === 'development',
     }
   },
+
+  messaging: {
+    createServiceWorker: true,
+    actions: [],
+    // fcmPublicVapidKey: '512279358183' // OPTIONAL : Sets vapid key for FCM after initialization
+  },
+  
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
