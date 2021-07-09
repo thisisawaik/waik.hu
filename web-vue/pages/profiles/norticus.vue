@@ -2,15 +2,15 @@
 <template>
   <div>
     <social-bar user="norticus"></social-bar>
-    <norticus-cards style="margin-top: 30px;"></norticus-cards>
+    <description-card style="margin-top: 30px;" :desc="desc" :imageurl="imageurl" :name="name"></description-card>
   </div>
 </template>
 
 <script>
 import SocialBar from '../../components/SocialBar.vue'
-import NorticusCards from '../../components/profiles/NorticusCards.vue'
+import DescriptionCard from '../../components/DescriptionCard.vue'
 export default {
-  components: { SocialBar, NorticusCards },
+  components: { SocialBar, DescriptionCard },
   data() {
     return {
       name: 'Norticus',
