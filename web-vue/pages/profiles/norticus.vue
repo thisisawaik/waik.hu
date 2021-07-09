@@ -1,30 +1,16 @@
+
 <template>
-  <v-container>
-    <v-card :loading="loading" class="mx-auto my-12" max-width="374">
-      <template slot="progress">
-        <v-progress-linear
-          color="deep-purple"
-          height="10"
-          indeterminate
-        ></v-progress-linear>
-      </template>
-      <v-card-title class="white--text mt-8">
-        <v-avatar size="56"> <img alt="user" :src="imageurl" /></v-avatar>
-
-        <v-card-title>{{ name }}</v-card-title>
-      </v-card-title>
-
-      <v-card-text>
-        <div>
-          {{ desc }}
-        </div>
-      </v-card-text>
-    </v-card>
-  </v-container>
+  <div>
+    <social-bar user="norticus"></social-bar>
+    <norticus-cards style="margin-top: 30px;"></norticus-cards>
+  </div>
 </template>
 
 <script>
+import SocialBar from '../../components/SocialBar.vue'
+import NorticusCards from '../../components/profiles/NorticusCards.vue'
 export default {
+  components: { SocialBar, NorticusCards },
   data() {
     return {
       name: 'Norticus',
@@ -55,6 +41,14 @@ export default {
         {
           name: 'og:image',
           content: this.imageurl,
+        },
+        {
+          name: 'og:image:secure_ur',
+          content: this.imageurl,
+        },
+        {
+          name: 'og:image:alt',
+          content: this.name,
         },
         {
           name: 'theme-color',
