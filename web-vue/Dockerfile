@@ -13,6 +13,4 @@ ENV PORT=8080
 
 RUN npm run build
 
-RUN npm run lint
-
 CMD [ "npm", "run", "start" ]
