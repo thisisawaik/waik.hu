@@ -1,30 +1,15 @@
 <template>
-  <v-container>
-    <v-card :loading="loading" class="mx-auto my-12" max-width="374">
-      <template slot="progress">
-        <v-progress-linear
-          color="primary"
-          height="10"
-          indeterminate
-        ></v-progress-linear>
-      </template>
-      <v-card-title class="white--text mt-8">
-        <v-avatar size="56"> <img alt="user" :src="imageurl" /></v-avatar>
-
-        <v-card-title>{{ name }}</v-card-title>
-      </v-card-title>
-
-      <v-card-text>
-        <div>
-          {{ desc }}
-        </div>
-      </v-card-text>
-    </v-card>
-  </v-container>
+  <div>
+    <social-bar user="isti"></social-bar>
+    <description-card style="margin-top: 30px;" :desc="desc" :imageurl="imageurl" :name="name"></description-card>
+  </div>
 </template>
 
 <script>
+import DescriptionCard from '../../components/DescriptionCard.vue'
+import SocialBar from '../../components/SocialBar.vue'
 export default {
+  components: { SocialBar, DescriptionCard },
   data() {
     return {
       name: 'Isti',
