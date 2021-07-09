@@ -41,7 +41,7 @@
           ><img height="40" src="~/assets/avatars/geiszla.webp" /></v-avatar
       ></NuxtLink>
       <v-divider class="nav-bar-avatar" vertical></v-divider>
-      <v-avatar class="nav-bar-avatar" size="40"><img :src="avatar ? avatar : 'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/demo%2Fpp%2Fdemo.png?alt=media&token=93fec366-cc41-45e0-9ad1-f6a399cc750c'"></v-avatar>
+      <account-dialog></account-dialog>
     </v-app-bar>
     <v-main>
       <Nuxt />
