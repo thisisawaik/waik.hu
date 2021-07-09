@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-    <v-app-bar :clipped-left="clipped" fixed app color="primary" height="60">
+    <v-app-bar :clipped-left="clipped" style="height: 60px;" fixed app color="primary">
       <NuxtLink class="nav-bar-button" to="/"
         ><img
           width="40"
@@ -48,7 +48,7 @@
     </v-main>
     <v-footer :absolute="!fixed" app>
       <span
-        >&copy; {{ new Date().getFullYear() }} | zal1000#1001 |
+        >&copy; 2021 | zal1000#1001 |
         <a
           style="color: #fff"
           href="https://github.com/thisisawaik/waik.hu"
