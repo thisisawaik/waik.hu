@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container style="margin-top: 30px">
     <download-card v-for="item in items" :id="item.id" :key="item.id" />
   </v-container>
 </template>
@@ -35,9 +35,9 @@ export default {
             'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/waik%2Fpublic%2Fwaik_cup.jpg?alt=media&token=5c3a6c28-644a-492a-ba4d-74d9e52470e2',
         },
         {
-            name: 'theme-color',
-            content: '#ffffff'
-        }
+          name: 'theme-color',
+          content: '#ffffff',
+        },
       ],
     }
   },
@@ -54,7 +54,3 @@ export default {
   },
 }
 </script>
-
-<style
-DownloadCard>
-</style>
