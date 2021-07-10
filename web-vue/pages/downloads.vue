@@ -1,5 +1,6 @@
 <template>
-  <v-container style="margin-top: 30px">
+  <v-container >
+    <div style="margin-top: 30px; padding 10px"></div>
     <download-card v-for="item in items" :id="item.id" :key="item.id" />
   </v-container>
 </template>
