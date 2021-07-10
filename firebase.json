@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "web/dist/waik-hu/browser",
+    "public": "web-vue/dist",
     "site": "waik-main",
     "ignore": [
       "firebase.json",
@@ -11,10 +11,6 @@
       {
         "source": "/links/**",
         "dynamicLinks": true
-      },
-      {
-        "source": "**",
-        "destination": "/index.html"
       }
     ]
   },

@@ -8,11 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci && npm run build
+      - run: |
+          cd web-vue
+          npm ci
+          npm run generate
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000 }}'
           projectId: zal1000
+          channelID: pr-${{ github.event.number }}
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
