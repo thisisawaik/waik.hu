@@ -15,23 +15,47 @@
       <v-card>
         <v-card-title class="text-h5 lighten-2"> Fiók </v-card-title>
         <v-divider></v-divider>
-        <v-card-text>
-          <p class="text-h6 lighten-2">Google</p>
-        </v-card-text>
+        <div v-if="user">
+          <v-card-text>
+            <p class="text-h6 lighten-2">Google</p>
+          </v-card-text>
+          <v-card-text>
+            <div v-if="googleData">
+              Google fiók összekötve a {{ googleData.email }} fiókkal
+            </div>
+          </v-card-text>
 
-        <v-divider></v-divider>
-        <v-card-text>
-          <p class="text-h6 lighten-2">Discord</p>
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-text>
-          <p class="text-h6 lighten-2">Profilkép</p>
-        </v-card-text>
+          <v-divider></v-divider>
+          <v-card-text>
+            <p class="text-h6 lighten-2">Discord</p>
+          </v-card-text>
+          <div v-if="dcData">
+            <v-card-text>
+              Discord fiók összekapcsolva {{ dcData.tag }} fiókkal
+            </v-card-text>
+          </div>
+          <v-divider></v-divider>
+          <v-card-text>
+            <p class="text-h6 lighten-2">Profilkép</p>
+          </v-card-text>
+        </div>
+
+        <div v-else>
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-btn elevation="2" @click="googleLogin()">Bejelentkezés google fiókkal</v-btn><br><br>
+            <v-btn elevation="2" disabled @click="googleLogin()">Bejelentkezés discord fiókkal</v-btn>
+          </v-card-text>
+        </div>
+
         <v-divider></v-divider>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="dialog = false"> I accept </v-btn>
+          <v-btn v-if="user" color="red" text @click="logOut()"
+            > Kijelentkezés </v-btn
+          >
+          <v-btn text @click="dialog = false"> Bezárás </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -44,17 +68,52 @@ export default {
     return {
       dialog: false,
       avatar: null,
+      user: null,
+      googleData: null,
+      dcData: null,
+      token: null,
     }
   },
   created() {
     const auth = this.$fire.auth
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(async (user) => {
+      this.user = user
       if (user) {
+        this.googleData = user.providerData.find(e => e.providerId === "google.com") ? user.providerData.find(e => e.providerId === "google.com") : null
         this.avatar = user.photoURL
+        this.fetchUserData(user.uid)
+        this.token = await user.getIdTokenResult(true)
       } else {
         this.avatar = null
       }
     })
+  },
+  methods: {
+    googleLogin() {
+      const provider = new this.$fireModule.auth.GoogleAuthProvider()
+      this.$fire.auth
+        .signInWithPopup(provider)
+        .then((res) => {
+        })
+        .catch((e) => {
+        })
+    },
+    logOut() {
+      this.$fire.auth.signOut()
+    },
+    async fetchUserData(uid) {
+      const db = this.$fire.firestore
+      const ref = db.collection('users').doc(uid)
+      const doc = await ref.get()
+      
+      if(doc.data().dcid) {
+        const dcref = db.collection('dcusers').doc(doc.data().dcid)
+        const dcdoc = await dcref.get()
+        this.dcData = dcdoc.data() ? dcdoc.data() : null
+      } else {
+        this.dcData = null
+      }
+    }
   },
 }
 </script>
