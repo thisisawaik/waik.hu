@@ -20,7 +20,7 @@
       <NuxtLink class="nav-bar-button" to="/fanarts"
         ><v-btn color="primary" depressed>Fanartok</v-btn></NuxtLink
       >
-      <NuxtLink class="nav-bar-button" to="/admin"
+      <NuxtLink v-if="isAdmin" class="nav-bar-button" to="/admin"
         ><v-btn color="primary" depressed>Admin</v-btn></NuxtLink
       >
       <v-spacer />
@@ -68,24 +68,29 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/',
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire',
-        },
-      ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
       title: 'Vuetify.js',
+      isAdmin: false,
     }
   },
+  created() {
+    const auth = this.$fire.auth
+    auth.onAuthStateChanged(async (user) => {
+      // this.user = user
+      if (user) {
+        const token = await user.getIdTokenResult(true)
+        if(token.claims.waikAdmin) {
+          this.isAdmin = true
+        } else {
+          this.isAdmin = false
+        }
+      } else {
+        this.isAdmin = false
+      }
+    })
+  }
 }
 </script>
 
