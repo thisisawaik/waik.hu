@@ -1,9 +1,9 @@
-name: Build and deploy to Cloud Run
+name: Build and deploy to Cloud Run (prod)
 
 on:
   push:
     branches:
-      - producion
+      - prod
   workflow_dispatch:
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
     - name: Setup GCP Service Account
       uses: google-github-actions/setup-gcloud@master
       with:
-        service_account_key: ${{ secrets.GCP_KEY }}
+        service_account_key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         export_default_credentials: true
 
     - name: Configure Docker
@@ -32,6 +32,7 @@ jobs:
       
     - name: Build
       run: |
+        cd web-vue
         docker build --tag gcr.io/zal1000/waik/website:$GITHUB_SHA .
 
     - name: Push
@@ -40,7 +41,7 @@ jobs:
 
     - name: Deploy
       run: |
-        gcloud run deploy waik-main \
+        gcloud run deploy waik-main-prod \
         --region europe-north1 \
         --image gcr.io/zal1000/waik/website:$GITHUB_SHA \
         --platform managed \
