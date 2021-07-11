@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-    <v-app-bar :clipped-left="clipped" style="height: 60px;" fixed app color="primary">
+    <v-app-bar v-if="!maintenance" :clipped-left="clipped" style="height: 60px;" fixed app color="primary">
       <NuxtLink class="nav-bar-button" to="/"
         ><img
           width="40"
@@ -73,9 +73,23 @@ export default {
       rightDrawer: false,
       title: 'Vuetify.js',
       isAdmin: false,
+      maintenance: false,
+    }
+  },
+    watch: {
+    $route () {
+      console.log('route changed', this.$route.path)
+      if(this.$route.path === "/maintenance") {
+        this.maintenance = true
+      } else {
+        this.maintenance = false
+      }
     }
   },
   created() {
+    if(this.$nuxt.$route.path === "/maintenance") {
+      this.maintenance = true
+    }
     const auth = this.$fire.auth
     auth.onAuthStateChanged(async (user) => {
       // this.user = user
