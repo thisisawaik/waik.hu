@@ -20,6 +20,7 @@
     "firebase": "^8.7.0",
     "nuxt": "^2.15.7",
     "nuxt-clipboard2": "^0.2.1",
+    "nuxt-maintenance-mode": "^0.3.1",
     "vuetify": "^2.5.5"
   },
   "devDependencies": {
