@@ -55,7 +55,14 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/firebase',
     'nuxt-clipboard2',
+    'nuxt-maintenance-mode',
   ],
+
+  maintenance: {
+    enabled: !!process.env.MAINTENANCE_MODE, // If given truthy value, activation maintenance mode on startup your nuxt application.
+    path: '/maintenance', // maintenance fallback content routing.
+    // matcher: /^\/admin/ // Path to be in maintenance mode (regex).
+  },
 
   firebase: {
     config: {
