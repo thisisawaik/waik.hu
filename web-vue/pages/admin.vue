@@ -58,7 +58,9 @@
           <v-checkbox v-model="autorole.showchanges" label="Show changes">
           </v-checkbox>
           <div v-if="autorole.showchanges">
-            <p>Changes</p>
+            <div v-for="u in autorole.changes" :key="u">
+              <admin-role-change-card :id="u.id" :added_roles="u.added_roles" :removed_roles="u.removed_roles" :roles="roles"></admin-role-change-card>
+            </div>
           </div>
         </div>
       </v-card-text>
@@ -127,8 +129,11 @@
 </template>
 
 <script>
+import AdminRoleChangeCard from '../components/AdminRoleChangeCard.vue'
 export default {
+  components: { AdminRoleChangeCard },
   data: () => ({
+    roles: {},
     massrole: {
       loading: false,
       selection: 1,
@@ -156,9 +161,13 @@ export default {
     },
   }),
 
-  created() {
+  async created() {
     this.loadMassStatus()
     this.loadSyncStatus()
+    const db = this.$fire.firestore
+    const ref = db.collection('waik').doc('discord')
+    const doc = await ref.get()
+    this.roles = doc.data().autoroles
   },
   methods: {
     loadMassStatus() {
@@ -172,7 +181,6 @@ export default {
         this.massrole.loading = false
         this.massrole.all = snap.val().all
         this.massrole.done = snap.val().done
-        this.massrole.changes = snap.val().changes
         this.massrole.startedAt = snap.val().startedAt
           ? new Date(snap.val().startedAt).toLocaleString()
           : 'Not yet started'
@@ -185,6 +193,10 @@ export default {
           this.massrole.status = 'error'
         } else {
           this.massrole.status = 'success'
+        }
+
+        if(this.massrole.changes !== snap.val().changes) {
+          this.massrole.changes = snap.val().changes
         }
         // console.log(snap.val())
       })
@@ -201,7 +213,6 @@ export default {
         this.autorole.all = snap.val().all
         this.autorole.done = snap.val().done
         this.autorole.changes = snap.val().changes
-        console.log(snap.val().changes)
         this.autorole.startedAt = snap.val().startedAt
           ? new Date(snap.val().startedAt).toLocaleString()
           : 'Not yet started'
