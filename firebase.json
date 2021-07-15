@@ -1,44 +1,62 @@
 {
   "hosting": {
-    "public": "web-vue/dist",
     "site": "waik-main",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "/links/**",
         "dynamicLinks": true
+      },
+      {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "waik-main-api",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/api",
+        "run": {
+          "serviceId": "waik-main-api",
+          "region": "europe-west1"
+        }
+      },
+      {
+        "source": "/dev/**",
+        "run": {
+          "serviceId": "waik-main-dev",
+          "region": "europe-north1" 
+        }
+      },
+      {
+        "source": "/dev",
+        "run": {
+          "serviceId": "waik-main-dev",
+          "region": "europe-north1" 
+        }
+      },
+      {
+        "source": "/beta/**",
+        "run": {
+          "serviceId": "waik-main-beta",
+          "region": "europe-north1" 
+        }
+      },
+      {
+        "source": "/beta",
+        "run": {
+          "serviceId": "waik-main-beta",
+          "region": "europe-north1" 
+        }
+      },
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "waik-main-prod",
+          "region": "europe-north1" 
+        }
       }
     ]
-  },
-  "emulators": {
-    "auth": {
-      "port": 9099
-    },
-    "functions": {
-      "port": 5001
-    },
-    "firestore": {
-      "port": 8080
-    },
-    "database": {
-      "port": 9000
-    },
-    "hosting": {
-      "port": 5000
-    },
-    "pubsub": {
-      "port": 8085
-    },
-    "storage": {
-      "port": 9199
-    },
-    "ui": {
-      "enabled": true
-    }
   },
   "functions": {
     "predeploy": [

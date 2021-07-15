@@ -1,6 +1,13 @@
 <template>
   <v-app dark>
-    <v-app-bar :clipped-left="clipped" style="height: 60px;" fixed app color="primary">
+    <v-app-bar
+      v-if="!maintenance"
+      :clipped-left="clipped"
+      style="height: 60px"
+      fixed
+      app
+      color="primary"
+    >
       <NuxtLink class="nav-bar-button" to="/"
         ><img
           width="40"
@@ -48,7 +55,7 @@
     </v-main>
     <v-footer :absolute="!fixed" app>
       <span
-        >&copy; 2021 | zal1000#1001 |
+        >&copy; 2021 | {{ zalname }} |
         <a
           style="color: #fff"
           href="https://github.com/thisisawaik/waik.hu"
@@ -62,6 +69,14 @@
 
 <script>
 export default {
+  async asyncData({ app }) {
+    const db = app.$fire.firestore
+    const zalref = db.collection('dcusers').doc('423925286350880779')
+    const zaldoc = await zalref.get()
+    return {
+      zalname: zaldoc.data().tag,
+    }
+  },
   data() {
     return {
       avatar: null,
@@ -73,15 +88,30 @@ export default {
       rightDrawer: false,
       title: 'Vuetify.js',
       isAdmin: false,
+      maintenance: false,
+      zalname: 'zal1000#1001',
     }
   },
-  created() {
+  watch: {
+    $route() {
+      // console.log('route changed', this.$route.path)
+      if (this.$route.path === '/maintenance') {
+        this.maintenance = true
+      } else {
+        this.maintenance = false
+      }
+    },
+  },
+  async created() {
+    if (this.$nuxt.$route.path === '/maintenance') {
+      this.maintenance = true
+    }
     const auth = this.$fire.auth
     auth.onAuthStateChanged(async (user) => {
       // this.user = user
       if (user) {
         const token = await user.getIdTokenResult(true)
-        if(token.claims.waikAdmin) {
+        if (token.claims.waikAdmin) {
           this.isAdmin = true
         } else {
           this.isAdmin = false
@@ -90,7 +120,11 @@ export default {
         this.isAdmin = false
       }
     })
-  }
+    const db = this.$fire.firestore
+    const zalref = db.collection('dcusers').doc('423925286350880779')
+    const zaldoc = await zalref.get()
+    this.zalname = zaldoc.data().tag
+  },
 }
 </script>
 

@@ -6,6 +6,8 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import vision from "@google-cloud/vision";
 import * as Discord from "discord.js";
+import DiscordAuth from "discord-oauth2";
+
 // import * as ai from "@google-cloud/aiplatform";
 // import {PubSub} from "@google-cloud/pubsub";
 // import {waikFanartApprove} from "./functions/waikFanartApprove";
@@ -37,13 +39,73 @@ const rdb = admin.database();
 
 // export {waikFanartApprove};
 
-export const fstest = functions.firestore
-    .document("test/YWjeaGh8R7RpKhHOXyov")
-    .onWrite((change) => {
-      console.log(change.after);
-      console.log(change.before);
-      return;
+export const waikDcLogin = functions.https.onCall(async (data, context) => {
+  const oauth = new DiscordAuth({
+    clientId: "804728783973253150",
+    clientSecret: "d59GczrnhZULTU5g7V9m07gv4dzaTvrj",
+  });
+  const token = data.token;
+
+  if (!token) {
+    throw new functions.https.HttpsError("failed-precondition", "no-token-found");
+  }
+  await oauth.tokenRequest({
+    refreshToken: token,
+    grantType: "refresh_token",
+    scope: ["identify", "email"],
+    redirectUri: "",
+  }).then(async (res) => {
+    const atoken = res.access_token;
+    await oauth.getUser(atoken).then(async (dcres) => {
+      const auth = admin.auth();
+
+      const ref = db.collection("dcusers").where("dcid", "==", token);
+      const q = await ref.get();
+
+      if (!q.empty && q.docs[0].data()?.dcid) {
+        await auth.createCustomToken(q.docs[0].id).then((res) => {
+          return {
+            token: res,
+          };
+        });
+      } else {
+        if (dcres.email) {
+          await auth.getUserByEmail(dcres.email).then(async (user) => {
+            await auth.createCustomToken(user.uid).then((token) => {
+              return {
+                token: token,
+              };
+            }).catch((e) => {
+              throw new functions.https.HttpsError("unknown", e);
+            });
+          }).catch(async (e) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const email: any = dcres.email;
+            await auth.createUser({
+              email: email,
+              displayName: dcres.username,
+              photoURL: dcres.avatar ? `https://cdn.discordapp.com/avatars/${dcres.id}/${dcres.avatar}.webp` : null,
+            }).then(async (user) => {
+              await auth.createCustomToken(user.uid).then((token) => {
+                return {
+                  token: token,
+                };
+              }).catch((e) => {
+                throw new functions.https.HttpsError("unknown", e);
+              });
+            }).catch((e) => {
+              throw new functions.https.HttpsError("unknown", e);
+            });
+          });
+        }
+      }
+    }).catch((e) => {
+      throw new functions.https.HttpsError("permission-denied", e);
     });
+  }).catch((e) => {
+    throw new functions.https.HttpsError("permission-denied", e);
+  });
+});
 
 export const waikFanartApprove = functions.https.onCall(
     async (data, context) => {
