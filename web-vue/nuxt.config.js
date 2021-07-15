@@ -1,6 +1,10 @@
 // import colors from 'vuetify/es5/util/colors'
 
 export default {
+
+  router: {
+    base: process.env.BASE_URL || "/",
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Waik',
@@ -67,7 +71,7 @@ export default {
   firebase: {
     config: {
       apiKey: "AIzaSyBmRS5Yy-1ktWXNsYjk9mQ8Rs9RhmQy600",
-      authDomain: "zal1000.firebaseapp.com",
+      authDomain: "auth.zal1000.com",
       databaseURL: "https://waik.europe-west1.firebasedatabase.app",
       projectId: "zal1000",
       storageBucket: "zal1000.net",
@@ -82,6 +86,7 @@ export default {
       auth: {
         ssr: true,
       },
+      functins: true,
     }
   },
 
