@@ -3,7 +3,7 @@
 export default {
 
   router: {
-    base: process.env.BASE_URL || "/",
+    base: process.env.BASE_URL || '/',
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
