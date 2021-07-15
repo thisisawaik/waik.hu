@@ -2,6 +2,7 @@
   "hosting": {
     "site": "waik-main",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    
     "rewrites": [
       {
         "source": "/links/**",
