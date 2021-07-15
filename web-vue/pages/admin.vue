@@ -15,13 +15,13 @@
             src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2Fpending-clock.png?alt=media&token=110fd11e-23fa-4ffc-9533-b8078e23bea9"
           />
         </v-avatar>
-        <v-avatar v-if="massrole.status === 'success'" size="56">
+        <v-avatar v-else-if="massrole.status === 'success'" size="56">
           <img
             alt="Success"
             src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2F1200px-Flat_tick_icon.svg.png?alt=media&token=c8aae673-0454-45bd-bdae-9cf1051d6ada"
           />
         </v-avatar>
-        <v-avatar v-if="massrole.status === 'error'" size="56">
+        <v-avatar v-else size="56">
           <img
             alt="Error"
             src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2F1200px-Flat_cross_icon.svg.png?alt=media&token=066c44c3-c03c-4fee-b6c6-16ce1e8e5f73"
@@ -39,6 +39,7 @@
       <v-card-text>
         <v-progress-linear
           :value="(autorole.done / autorole.all) * 100"
+          :color="autorole.red"
         ></v-progress-linear>
         <p style="margin-top: 10px">
           {{ autorole.done }} out of {{ autorole.all }} done
@@ -50,6 +51,16 @@
             autorole.status === 'pending' ? 'Running...' : autorole.finishedAt
           }}
         </p>
+        <p>
+          Changes: {{ autorole.memberchanges ? autorole.memberchanges : '0' }}
+        </p>
+        <div v-if="autorole.memberchanges > 0">
+          <v-checkbox v-model="autorole.showchanges" label="Show changes">
+          </v-checkbox>
+          <div v-if="autorole.showchanges">
+            <p>Changes</p>
+          </div>
+        </div>
       </v-card-text>
       <v-card-actions>
         <v-btn color="deep-purple lighten-2" text> Reserve </v-btn>
@@ -95,6 +106,7 @@
       <v-card-text>
         <v-progress-linear
           :value="(massrole.done / massrole.all) * 100"
+          :color="massrole.red"
         ></v-progress-linear>
         <p style="margin-top: 10px">
           {{ massrole.done }} out of {{ massrole.all }} done
@@ -125,6 +137,10 @@ export default {
       done: 0,
       startedAt: 0,
       finishedAt: 0,
+      changes: {},
+      memberchanges: 0,
+      showchanges: false,
+      color: 'blue',
     },
     autorole: {
       loading: false,
@@ -134,6 +150,9 @@ export default {
       done: 0,
       startedAt: 0,
       finishedAt: 0,
+      changes: {},
+      memberchanges: 0,
+      color: 'blue',
     },
   }),
 
@@ -145,16 +164,22 @@ export default {
     loadMassStatus() {
       const rdb = this.$fire.database
       const ref = rdb.ref('admin/massadd')
+      this.massrole.loading = true
+      ref.child('changes').on('value', (snapshot) => {
+        this.massrole.memberchanges = snapshot.numChildren() || 0
+      })
       ref.on('value', (snap) => {
+        this.massrole.loading = false
         this.massrole.all = snap.val().all
         this.massrole.done = snap.val().done
+        this.massrole.changes = snap.val().changes
         this.massrole.startedAt = snap.val().startedAt
           ? new Date(snap.val().startedAt).toLocaleString()
           : 'Not yet started'
         this.massrole.finishedAt = snap.val().finishedAt
           ? new Date(snap.val().finishedAt).toLocaleString()
           : 'Not yet finished'
-        if (snap.val().running) {
+        if (snap.val().running === true) {
           this.massrole.status = 'pending'
         } else if (snap.val().error) {
           this.massrole.status = 'error'
@@ -166,18 +191,24 @@ export default {
     },
     loadSyncStatus() {
       const rdb = this.$fire.database
-
-      const ref2 = rdb.ref('admin/sync')
-      ref2.on('value', (snap) => {
+      const ref = rdb.ref('admin/sync')
+      this.autorole.loading = true
+      ref.child('changes').on('value', (snapshot) => {
+        this.autorole.memberchanges = snapshot.numChildren() || 0
+      })
+      ref.on('value', (snap) => {
+        this.autorole.loading = false
         this.autorole.all = snap.val().all
         this.autorole.done = snap.val().done
+        this.autorole.changes = snap.val().changes
+        console.log(snap.val().changes)
         this.autorole.startedAt = snap.val().startedAt
           ? new Date(snap.val().startedAt).toLocaleString()
           : 'Not yet started'
         this.autorole.finishedAt = snap.val().finishedAt
           ? new Date(snap.val().finishedAt).toLocaleString()
           : 'Not yet finished'
-        if (snap.val().running) {
+        if (snap.val().running === true) {
           this.autorole.status = 'pending'
         } else if (snap.val().error) {
           this.autorole.status = 'error'
