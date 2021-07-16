@@ -1,10 +1,6 @@
 // import colors from 'vuetify/es5/util/colors'
 
 export default {
-
-  router: {
-    base: process.env.BASE_URL || '/',
-  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Waik',
