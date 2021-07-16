@@ -1,8 +1,8 @@
 {
   "hosting": {
-    "site": "waik-main",
+    "site": "waik-main-dev",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    
+    "public": "web/dist",
     "rewrites": [
       {
         "source": "/links/**",
@@ -23,7 +23,7 @@
         }
       },
       {
-        "source": "**",
+        "source": "/share/**",
         "run": {
           "serviceId": "waik-main-prod",
           "region": "europe-north1" 
