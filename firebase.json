@@ -23,34 +23,6 @@
         }
       },
       {
-        "source": "/dev/**",
-        "run": {
-          "serviceId": "waik-main-dev",
-          "region": "europe-north1" 
-        }
-      },
-      {
-        "source": "/dev",
-        "run": {
-          "serviceId": "waik-main-dev",
-          "region": "europe-north1" 
-        }
-      },
-      {
-        "source": "/beta/**",
-        "run": {
-          "serviceId": "waik-main-beta",
-          "region": "europe-north1" 
-        }
-      },
-      {
-        "source": "/beta",
-        "run": {
-          "serviceId": "waik-main-beta",
-          "region": "europe-north1" 
-        }
-      },
-      {
         "source": "**",
         "run": {
           "serviceId": "waik-main-prod",
