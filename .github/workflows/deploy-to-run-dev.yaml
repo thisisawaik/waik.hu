@@ -30,16 +30,37 @@ jobs:
         gcloud auth configure-docker
 
       
-    - name: Build
+    - name: Build container image
       run: |
         cd web-vue
         docker build --tag gcr.io/zal1000/waik/website:$GITHUB_SHA .
+    
+    - name: Build nuxt.js app
+      run: |
+        cd web
+        npm ci
+        npm run generate
 
-    - name: Push
+    - name: Push container image to gcr.io
       run: |
         docker push gcr.io/zal1000/waik/website:$GITHUB_SHA
 
-    - name: Deploy
+    - name: Edit firebase deploy file
+      run: |
+        export channel=waik-main-dev
+        node edit-firebase-config-target.js 
+
+    - name: Deploy to Firebase Hosting
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: '${{ secrets.GITHUB_TOKEN }}'
+        firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ZAL1000 }}'
+        projectId: zal1000
+        channelID: live
+      env:
+        FIREBASE_CLI_PREVIEWS: hostingchannels
+
+    - name: Deploy to Cloud Run
       run: |
         gcloud run deploy waik-main-dev \
         --region europe-north1 \
