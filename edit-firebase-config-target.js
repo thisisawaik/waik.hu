@@ -8,6 +8,8 @@ const channel = process.env.channel;
 
 config.hosting.site = channel || 'waik-main-dev'
 
+config.hosting.rewrites.find((e) => e.source === '**').run.serviceId = channel || 'waik-main-dev';
+
 console.log(config);
 
 fs.writeFileSync('./firebase.json', JSON.stringify(config))
