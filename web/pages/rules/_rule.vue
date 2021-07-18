@@ -1,8 +1,8 @@
 <template>
   <article>
 		<h1>{{ article.title }}</h1>
-    <nuxt-content class="nuxt-content" :document="article" />
-    <p>Frissítve: {{ formatDate(article.updatedAt) }}</p>
+    <nuxt-content class="document" :document="article" />
+    <p class="updated">Frissítve: {{ formatDate(article.updatedAt) }}</p>
   </article>
 </template>
 
@@ -39,7 +39,7 @@ export default {
 				},
 				{
 					name: 'color-theme',
-					content: this.article.colorTheme,
+					content: `#${this.article.colorTheme}`,
 				}
 			],
 		}
@@ -53,21 +53,23 @@ export default {
 }
 </script>
 
-<style scoped>
-  .nuxt-content h2 {
+<style lang="scss" scoped>
+  .document h2 {
     font-weight: bold;
     font-size: 28px;
   }
-  .nuxt-content h3 {
+  .document h3 {
     font-weight: bold;
     font-size: 22px;
   }
-  .nuxt-content p {
+  .document p {
     margin-bottom: 20px;
   }
-	.nuxt-content li {
+	.document li {
 		margin-top: 20px;
-		color: green;
+	}
+	.updated {
+		margin-top: 40px;
 	}
 </style>
 
