@@ -57,7 +57,27 @@ export default {
     'nuxt-clipboard2',
     'nuxt-maintenance-mode',
     '@nuxt/content',
+    '@nuxtjs/markdownit'
   ],
+
+  content: {
+    markdown: {
+      prism: {
+        theme: 'prism-themes/themes/prism-material-oceanic.css'
+      }
+    }
+  },  
+
+  markdownit: {
+    runtime: true, // Support `$md()`
+    preset: 'default',
+    linkify: true,
+    breaks: true,
+    use: [
+      'markdown-it-div',
+      'markdown-it-attrs'
+    ]
+  },
 
   maintenance: {
     enabled: !!process.env.MAINTENANCE_MODE, // If given truthy value, activation maintenance mode on startup your nuxt application.
