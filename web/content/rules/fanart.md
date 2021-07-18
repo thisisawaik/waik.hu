@@ -1,5 +1,5 @@
 ---
-title: Fanart verseny szerver szabályai
+title: Fanart verseny szabályai
 description: Itt találhatod meg a fanart verseny szabályait.
 img: 
 alt: 
