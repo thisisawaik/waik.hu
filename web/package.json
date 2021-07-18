@@ -12,16 +12,20 @@
     "test": "jest"
   },
   "dependencies": {
+    "@nuxt/content": "1.14.0",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/device": "^2.1.0",
     "@nuxtjs/firebase": "^7.6.1",
+    "@nuxtjs/markdownit": "^2.0.0",
     "@nuxtjs/pwa": "^3.3.5",
-    "@nuxt/content": "1.14.0",
+    "@voraciousdev/vue-markdown-editor": "^0.3.1",
     "core-js": "^3.15.1",
     "firebase": "^8.7.0",
     "nuxt": "^2.15.7",
     "nuxt-clipboard2": "^0.2.1",
     "nuxt-maintenance-mode": "^0.3.1",
+    "prism-themes": "^1.7.0",
+    "vue3-markdown-it": "^1.0.9",
     "vuetify": "^2.5.5"
   },
   "devDependencies": {
