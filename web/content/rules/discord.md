@@ -1,11 +1,11 @@
 ---
 title: Discord szerver szabályai
 description: Itt találhatod meg a discord szerver szabályokat.
-img: first-blog-post.jpg
-alt: my first blog post
+img: https://discord.com/assets/3437c10597c1526c3dbd98c737c2bcae.svg
+alt: Discord logo
 colorTheme: FFF 
 ---
-
+[comment]: <> (RULE_START)
 - Ne spamelj! Ha valami mondandód van, azt legtöbbször elég egyszer elküldeni, senkinek sem lesz jobb azzal, hogy az egész képernyő a te üzeneteiddel van tele.
 - Kerüljétek a valódi életre vonatkozó sértegetéseket/gúnyolódásokat (ez alá tartozik mindenféle rasszizmus/szexizmus/hátrányos helyzetű emberek sértegetése stb.). Ez egy internetes közösségi szerver, ha valaki nem tetszik nektek, akkor az itteni viselkedését minősítsétek.
 - Ne töltsetek fel offenzív/nsfw képeket és profilképeket. (profilképért először szólunk, csatornába küldött képért egyből kick jár!)
@@ -17,4 +17,4 @@ colorTheme: FFF
 - Ne zaklassatok másokat privát üzenetben! (gondolunk itt a moderátorokra is)
 - A szobákat a rendeltetésük szerint használjátok!
 - Semmiféle politizálás ne legyen a szerveren!
-
+[comment]: <> (RULE_END)
