@@ -1,10 +1,10 @@
 const ignorePaths = ["\u002F__webpack_hmr","\u002F_loading","\u002F_nuxt\u002F"]
 
 importScripts(
-  'https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js'
+  'https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js'
 )
 importScripts(
-  'https://www.gstatic.com/firebasejs/8.7.0/firebase-auth.js'
+  'https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js'
 )
 firebase.initializeApp({"apiKey":"AIzaSyBmRS5Yy-1ktWXNsYjk9mQ8Rs9RhmQy600","authDomain":"auth.zal1000.com","databaseURL":"https:\u002F\u002Fwaik.europe-west1.firebasedatabase.app","projectId":"zal1000","storageBucket":"zal1000.net","messagingSenderId":"512279358183","appId":"1:512279358183:web:1a091779e0474dba541042","measurementId":"G-W3EFDHYNN1"})
 
