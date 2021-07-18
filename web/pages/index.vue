@@ -27,7 +27,7 @@ export default {
   },
   head() {
     return {
-      title: 'Főoldal | Waik',
+      title: 'Waik | Főoldal',
       meta: [
         {
           name: "keywords",
