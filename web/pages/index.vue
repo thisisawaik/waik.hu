@@ -1,9 +1,16 @@
 <template>
-  <p>Homepage here idk</p>
+  <v-container>
+    <current-evet-card />
+    <new-post-dialog />
+  </v-container>
 </template>
 
 <script>
+import CurrentEvetCard from '../components/CurrentEvetCard.vue';
+import NewPostDialog from '../components/NewPostDialog.vue';
+
 export default {
+  components: { CurrentEvetCard, NewPostDialog },
   async asyncData({app}) {
     const db = app.$fire.firestore
     const ref = db.collection('test').doc('test');
@@ -17,6 +24,7 @@ export default {
   },
   data() {
     return {
+      mde: this.$store.state.mdtest,
       title: 'a',
       desc: 'a',
     }

@@ -1,3 +1,4 @@
 export const state = () => ({
-    asd: 0,
+    fanartRules: null,
+    mdtest: '# Hello world'
 });

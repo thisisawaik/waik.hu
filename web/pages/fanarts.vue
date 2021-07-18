@@ -31,6 +31,11 @@ export default {
     FanArtCard,
     FanArtUpload,
   },
+  async asyncData({ $content, store }) {
+    const article = await $content('rules', 'fanart').fetch()
+    store.state.fanartRules = article;
+    return { article }
+  },
   data() {
     return {
       tab: 0,
