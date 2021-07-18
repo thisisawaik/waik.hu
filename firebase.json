@@ -23,7 +23,7 @@
         }
       },
       {
-        "source": "/share/**",
+        "source": "**",
         "run": {
           "serviceId": "waik-main-prod",
           "region": "europe-north1" 
