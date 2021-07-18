@@ -37,7 +37,7 @@ export default {
           content: `${this.article.alt}`,
         },
         {
-          name: 'color-theme',
+          name: 'theme-color',
           content: `#${this.article.colorTheme}`,
         },
       ],

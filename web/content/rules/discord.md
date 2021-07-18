@@ -1,9 +1,9 @@
 ---
 title: Discord szerver szabályai
 description: Itt találhatod meg a discord szerver szabályokat.
-img: https://discord.com/assets/3437c10597c1526c3dbd98c737c2bcae.svg
+img: https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/assets%2FDiscord%2Ficon_clyde_blurple_RGB.png?alt=media&token=287592e8-962d-481c-911c-5f33f9b00c38
 alt: Discord logo
-colorTheme: FFF 
+colorTheme: 5865f2 
 ---
 [comment]: <> (RULE_START)
 - Ne spamelj! Ha valami mondandód van, azt legtöbbször elég egyszer elküldeni, senkinek sem lesz jobb azzal, hogy az egész képernyő a te üzeneteiddel van tele.
