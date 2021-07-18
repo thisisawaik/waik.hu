@@ -6,7 +6,7 @@
 export default {
     head() {
         return {
-            title: 'Streamek | Waik',
+            title: 'Waik | Streamek',
             meta: [],
         }
     }
