@@ -1,34 +1,53 @@
 <template>
-  <v-container >
-    <div style="margin-top: 30px; padding 10px"></div>
-    <fan-art-card v-for="item in items" :id="item.id" :key="item.id" />
-  </v-container>
+  <v-card>
+    <v-tabs v-model="tab" background-color="primary" dark>
+      <v-tab>Fanartok</v-tab>
+      <v-tab>Feltoltés</v-tab>
+      <v-tab>Admin</v-tab>
+    </v-tabs>
+
+    <v-tabs-items v-model="tab">
+      <v-tab-item v-if="tab === 0">
+        <v-container>
+          <div style="margin-top: 30px; padding 10px"></div>
+          <fan-art-card v-for="i in items" :id="i.id" :key="i.id" />
+        </v-container>
+      </v-tab-item>
+     <v-tabs-item v-else-if="tab === 1">
+       <v-container>
+         <fan-art-upload />
+       </v-container>
+     </v-tabs-item>
+    </v-tabs-items>
+  </v-card>
 </template>
 
 <script>
 import FanArtCard from '../components/FanArtCard.vue'
+import FanArtUpload from '../components/FanArtUpload.vue'
 
 export default {
   components: {
     FanArtCard,
+    FanArtUpload,
   },
   data() {
     return {
+      tab: 0,
       items: [],
     }
   },
   head() {
     return {
-      title: 'Waik | Letoltések',
+      title: 'Waik | Fanartok',
       meta: [
         {
           name: 'og:title',
-          content: 'Waik | Letoltések',
+          content: 'Waik | Fanartok',
         },
         {
           name: 'og:description',
-          content:
-            'Itt találhatod meg a waik csapattal kapcsolatos letoltheto dolgokat',
+          content: 'Itt találhatod meg a waik csapatról készult fanartokat',
         },
         {
           name: 'og:image',

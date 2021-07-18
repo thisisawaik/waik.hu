@@ -56,6 +56,7 @@ export default {
     '@nuxtjs/firebase',
     'nuxt-clipboard2',
     'nuxt-maintenance-mode',
+    '@nuxt/content',
   ],
 
   maintenance: {

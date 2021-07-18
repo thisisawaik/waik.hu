@@ -36,7 +36,11 @@ export default {
         {
           name: 'og:description',
           content: 'A hivatalos waik weboldal',
-        }
+        },
+        {
+          name: 'theme-color',
+          content: '#ffffff',
+        },
       ],
     }
   }
