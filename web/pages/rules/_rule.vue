@@ -30,7 +30,7 @@ export default {
         },
         {
           name: 'og:image',
-          content: `${this.article.image}`,
+          content: `${this.article.img}`,
         },
         {
           name: 'og:image:alt',
