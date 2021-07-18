@@ -3,7 +3,7 @@ FROM node:14
 WORKDIR /usr/src/app
 
 COPY . ./
-RUN npm cis
+RUN npm ci
 
 EXPOSE 8080
 
