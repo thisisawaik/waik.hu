@@ -4,6 +4,7 @@
       <v-tab>Fanartok</v-tab>
       <v-tab>Feltoltés</v-tab>
       <v-tab>Admin</v-tab>
+      <v-tab>{{ tab }}</v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tab">
@@ -13,11 +14,11 @@
           <fan-art-card v-for="i in items" :id="i.id" :key="i.id" />
         </v-container>
       </v-tab-item>
-     <v-tabs-item v-else-if="tab === 1">
+      <v-tab-item v-else-if="tab === 1">
        <v-container>
          <fan-art-upload />
        </v-container>
-     </v-tabs-item>
+     </v-tab-item>
     </v-tabs-items>
   </v-card>
 </template>
