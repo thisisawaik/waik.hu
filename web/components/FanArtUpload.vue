@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-form v-model="valid">
-      <v-coll align="end" md="2">
         <v-container style="max-width: 400px">
           <v-text-field
             v-model="firstname"
@@ -21,8 +20,6 @@
 
           <v-file-input truncate-length="15"></v-file-input>
         </v-container>
-      </v-coll>
-      <v-coll md="2"> </v-coll>
     </v-form>
     <v-dialog v-model="rulesDialog" width="500">
       <template #activator="{ on, attrs }">
@@ -32,10 +29,10 @@
       </template>
 
       <v-card>
-				<v-card-title>{{ rule.title }}</v-card-title>
-        <nuxt-content v-if="!rulesLoading" class="document" :document="rule" />
+				<v-card-title>{{ rulesLoading ? 'Loading...' : rules.title }}</v-card-title>
+        <nuxt-content v-if="!rulesLoading" class="document" :document="rules" />
         <v-card-actions>
-					<p class="updated">Frissítve: {{ formatDate(rule.updatedAt) }}</p>
+					<p class="updated">Frissítve: {{ rulesLoading ? 'Loading...' : formatDate(rules.updatedAt) }}</p>
           <v-spacer></v-spacer>
           <v-btn color="primary" text @click="rulesDialog = false">
             I accept
@@ -48,6 +45,7 @@
 
 <script>
 export default {
+  name: 'FanArtUpload',
   data() {
     const title = {
       maxLength: 30,
@@ -59,7 +57,8 @@ export default {
     }
     return {
       rulesDialog: false,
-			rule: this.$store.state.fanartRules,
+      rulesLoading: true,
+			rules: null,
       title,
       desc,
       valid: false,
@@ -82,6 +81,18 @@ export default {
         (v) => /.+@.+/.test(v) || 'E-mail must be valid',
       ],
     }
+  },
+  async created() {
+    const article = await this.$content('rules', 'fanart').fetch()
+    console.log(article)
+    this.rules = article
+    this.rulesLoading = false
+  },
+  methods: {
+    formatDate(date) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(date).toLocaleDateString('hu', options)
+    },
   },
 }
 </script>
