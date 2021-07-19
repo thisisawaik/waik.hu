@@ -40,6 +40,14 @@ export default {
           name: 'theme-color',
           content: `#${this.article.colorTheme}`,
         },
+        {
+          name: 'article:modified_time',
+          content: this.article.updatedAt,
+        },
+				{
+          name: 'og:modified_time',
+          content: this.article.updatedAt,
+        },
       ],
     }
   },
