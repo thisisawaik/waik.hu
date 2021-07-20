@@ -57,6 +57,26 @@ export default {
           name: 'og:modified_time',
           content: this.article.updatedAt,
         },
+        {
+          name: 'twitter:card',
+          content: 'summary',
+        },
+        {
+          name: 'twitter:title',
+          content: `Waik | ${this.article.title}`,
+        },
+        {
+          name: 'twitter:description',
+          content: this.article.description,
+        },
+        {
+          name: 'twitter:image',
+          content: this.article.img,
+        },
+        {	
+          name: 'twitter:image:alt',
+          content: this.article.alt,
+        },
       ],
     }
   },
@@ -70,18 +90,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.document h2 {
+h2 {
   font-weight: bold;
   font-size: 28px;
 }
-.document h3 {
+h3 {
   font-weight: bold;
   font-size: 22px;
 }
-.document p {
+p {
   margin-bottom: 20px;
 }
-.document li {
+li {
   margin-top: 20px;
 }
 .updated {
