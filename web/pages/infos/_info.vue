@@ -22,9 +22,8 @@ export default {
     return { article }
   },
   head() {
-    return {
-      title: `Waik | ${this.article.title}`,
-      meta: [
+
+    const meta = [
         {
           name: 'description',
           content: this.article.description,
@@ -77,7 +76,10 @@ export default {
           name: 'twitter:image:alt',
           content: this.article.alt,
         },
-      ],
+      ];
+    return {
+      title: `Waik | ${this.article.title}`,
+      meta,
     }
   },
   methods: {
