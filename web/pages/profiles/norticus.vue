@@ -1,8 +1,8 @@
 
 <template>
   <div>
-    <social-bar user="norticus"></social-bar>
-    <description-card style="margin-top: 30px;" :desc="desc" :imageurl="imageurl" :name="name"></description-card>
+    <social-bar :profile="profile"></social-bar>
+    <description-card style="margin-top: 30px;" :profile="profile"></description-card>
   </div>
 </template>
 
@@ -11,6 +11,11 @@ import SocialBar from '../../components/SocialBar.vue'
 import DescriptionCard from '../../components/DescriptionCard.vue'
 export default {
   components: { SocialBar, DescriptionCard },
+  async asyncData({ $content }) {
+    const profile = await $content('profiles', 'norticus').fetch()
+    console.log(profile)
+    return { profile }
+  },
   data() {
     return {
       name: 'Norticus',
@@ -24,11 +29,11 @@ export default {
   },
   head() {
     return {
-      title: `Waik | ${this.name}`,
+      title: `Waik | ${this.profile.name}`,
       meta: [
         {
           name: 'og:title',
-          content: `Waik | ${this.name}`,
+          content: `Waik | ${this.profile.name}`,
         },
         {
           name: 'description',
@@ -40,19 +45,19 @@ export default {
         },
         {
           name: 'og:image',
-          content: this.imageurl,
+          content: this.profile.image,
         },
         {
           name: 'og:image:secure_ur',
-          content: this.imageurl,
+          content: this.profile.image,
         },
         {
           name: 'og:image:alt',
-          content: this.name,
+          content: this.profile.name,
         },
         {
           name: 'theme-color',
-          content: this.color,
+          content: `#${this.profile.color}`,
         },
       ],
     }

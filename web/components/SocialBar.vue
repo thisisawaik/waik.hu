@@ -1,6 +1,43 @@
 <template>
   <v-app-bar style="margin-top: 60px; height: 70px" fixed app color="#1e1e1e">
-    <div v-if="user === 'norticus'" class="center">
+    <div class="center">
+      <a
+        v-for="(pf, index) of profile.twitch"
+        :key="`tw${index}`"
+        :href="pf.url"
+        target="_blank"
+        ><img
+          v-if="!pf.img"
+          height="40"
+          src="~/assets/svgs/twitch_logo.svg"
+        /><img v-else height="40" :src="pf.img" />
+      </a>
+      <a
+        v-for="(pf, index) of profile.youtube"
+        :key="`yt${index}`"
+        :href="pf.url"
+        target="_blank"
+        ><img v-if="!pf.img" height="40" src="~/assets/svgs/yt_logo.svg" />
+        <img v-else height="40" :src="pf.img"
+      /></a>
+      <a
+        v-for="(pf, index) of profile.github"
+        :key="`gh${index}`"
+        :href="pf.url"
+        target="_blank"
+      >
+        <img
+          v-if="!pf.img"
+          height="40"
+          src="~/assets/svgs/github_logo.svg" /><img v-else height="40" :src="pf.img"
+      /></a>
+
+      <a><img height="40" class="avatar" :src="profile.image" /></a>
+    </div>
+  </v-app-bar>
+
+  <!--
+      <div v-if="user === 'norticus'" class="center">
       <a href="https://www.twitch.tv/norticus36" target="_blank"
         ><img height="40" src="~/assets/svgs/twitch_logo.svg"
       /></a>
@@ -46,13 +83,12 @@
         ><img height="40" class="avatar" src="~/assets/avatars/walrusz.webp"
       /></a>
     </div>
-  </v-app-bar>
-</template>
+--></template>
 
 <script>
 export default {
   // eslint-disable-next-line vue/require-prop-types
-  props: ['user'],
+  props: ['profile'],
   data() {
     return {}
   },

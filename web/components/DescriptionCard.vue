@@ -9,15 +9,13 @@
         ></v-progress-linear>
       </template>
       <v-card-title class="white--text mt-8">
-        <v-avatar size="56"> <img alt="user" :src="imageurl" /></v-avatar>
+        <v-avatar size="56"> <img alt="user" :src="profile.image" /></v-avatar>
 
-        <v-card-title>{{ name }}</v-card-title>
+        <v-card-title>{{ profile.name }}</v-card-title>
       </v-card-title>
 
       <v-card-text>
-        <div>
-          {{ desc }}
-        </div>
+        <nuxt-content class="document" :document="profile" />
       </v-card-text>
     </v-card>
   </v-container>
@@ -26,7 +24,7 @@
 <script>
 export default {
     // eslint-disable-next-line vue/require-prop-types
-    props: ['imageurl', 'desc', 'name'],
+    props: ['profile'],
   data() {
     return {
       loading: false,
