@@ -6,11 +6,18 @@
         :key="`tw${index}`"
         :href="pf.url"
         target="_blank"
-        ><img
+        >
+        
+        <img
           v-if="!pf.img"
           height="40"
           src="~/assets/svgs/twitch_logo.svg"
-        /><img v-else height="40" :src="pf.img" />
+        /><img
+          v-else
+          height="40"
+          :src="pf.img"
+          :style="`border-radius: ${pf.circle ? '50%' : '0%'};`"
+        />
       </a>
       <a
         v-for="(pf, index) of profile.youtube"
@@ -18,7 +25,11 @@
         :href="pf.url"
         target="_blank"
         ><img v-if="!pf.img" height="40" src="~/assets/svgs/yt_logo.svg" />
-        <img v-else height="40" :src="pf.img"
+        <img
+          v-else
+          height="40"
+          :src="pf.img"
+          :style="`border-radius: ${pf.circle ? '50%' : '0%'};`"
       /></a>
       <a
         v-for="(pf, index) of profile.github"
@@ -29,9 +40,30 @@
         <img
           v-if="!pf.img"
           height="40"
-          src="~/assets/svgs/github_logo.svg" /><img v-else height="40" :src="pf.img"
+          src="~/assets/svgs/github_logo.svg" /><img
+          v-else
+          height="40"
+          :style="`border-radius: ${pf.circle ? '50%' : '0%'};`"
+          :src="pf.img"
       /></a>
-
+            <a
+        v-for="(pf, index) of profile.instagram"
+        :key="`gh${index}`"
+        :href="pf.url"
+        target="_blank"
+      >
+        <img
+          v-if="!pf.img"
+          height="40"
+          src="~/assets/svgs/instagram_logo.svg" /><img
+          v-else
+          height="40"
+          :style="`border-radius: ${pf.circle ? '50%' : '0%'};`"
+          :src="pf.img"
+      /></a>
+<v-divider
+  vertical
+></v-divider>
       <a><img height="40" class="avatar" :src="profile.image" /></a>
     </div>
   </v-app-bar>
