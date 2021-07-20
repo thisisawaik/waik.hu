@@ -11,7 +11,6 @@ discord: Norticus36#7832
 twitch: 
     1:
         url: https://www.twitch.tv/norticus36
-		img: asd
 youtube: 
     1: 
         url: https://www.youtube.com/user/NorticusGaming
