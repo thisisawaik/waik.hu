@@ -1,12 +1,17 @@
 <template>
   <div>
-    <social-bar user="walrusz"></social-bar>
-    <description-card style="margin-top: 30px;" :desc="desc" :imageurl="imageurl" :name="name"></description-card>
+    <social-bar :profile="profile"></social-bar>
+    <description-card style="margin-top: 30px;" :profile="profile"></description-card>
   </div>
 </template>
 
 <script>
 export default {
+    async asyncData({ $content }) {
+    const profile = await $content('profiles', 'walrusz').fetch()
+    console.log(profile)
+    return { profile }
+  },
   data() {
     return {
       name: 'Walrusz',
