@@ -22,8 +22,8 @@ export default {
     ogTitle: false,
     ogDescription: false,
     ogSiteName: false,
-    description: false,
-   },
+    description: false
+  },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
@@ -33,6 +33,20 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
   ],
+
+  compilerOptions: {
+    types: [
+      '@nuxtjs/auth-next'
+    ]
+  },
+
+  typescript: {
+    typeCheck: {
+      eslint: {
+        files: './**/*.{ts,js,vue}'
+      }
+    }
+  },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -45,6 +59,7 @@ export default {
     '@nuxtjs/vuetify',
     '@nuxtjs/firebase',
     '@nuxtjs/device',
+    '@nuxt/typescript-build'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -57,16 +72,19 @@ export default {
     'nuxt-clipboard2',
     'nuxt-maintenance-mode',
     '@nuxt/content',
-    '@nuxtjs/markdownit'
+    '@nuxtjs/markdownit',
+    '@nuxtjs/auth-next'
   ],
-
+  auth: {
+    plugins: ['~/plugins/auth.ts']
+  },
   content: {
     markdown: {
       prism: {
         theme: 'prism-themes/themes/prism-material-oceanic.css'
       }
     }
-  },  
+  },
 
   markdownit: {
     runtime: true, // Support `$md()`
@@ -81,29 +99,29 @@ export default {
 
   maintenance: {
     enabled: !!process.env.MAINTENANCE_MODE, // If given truthy value, activation maintenance mode on startup your nuxt application.
-    path: '/maintenance', // maintenance fallback content routing.
+    path: '/maintenance' // maintenance fallback content routing.
     // matcher: /^\/admin/ // Path to be in maintenance mode (regex).
   },
 
   firebase: {
     config: {
-      apiKey: "AIzaSyBmRS5Yy-1ktWXNsYjk9mQ8Rs9RhmQy600",
-      authDomain: "auth.zal1000.com",
-      databaseURL: "https://waik.europe-west1.firebasedatabase.app",
-      projectId: "zal1000",
-      storageBucket: "zal1000.net",
-      messagingSenderId: "512279358183",
-      appId: "1:512279358183:web:1a091779e0474dba541042",
-      measurementId: "G-W3EFDHYNN1"
+      apiKey: 'AIzaSyBmRS5Yy-1ktWXNsYjk9mQ8Rs9RhmQy600',
+      authDomain: 'auth.zal1000.com',
+      databaseURL: 'https://waik.europe-west1.firebasedatabase.app',
+      projectId: 'zal1000',
+      storageBucket: 'zal1000.net',
+      messagingSenderId: '512279358183',
+      appId: '1:512279358183:web:1a091779e0474dba541042',
+      measurementId: 'G-W3EFDHYNN1'
     },
     services: {
       firestore: true,
       storage: true,
       database: true,
       auth: {
-        ssr: true,
+        ssr: true
       },
-      functins: true,
+      functins: true
     }
   },
 
@@ -122,16 +140,15 @@ export default {
       ],
       // by default the workbox module will not install the service worker in dev environment to avoid conflicts with HMR
       // only set this true for testing and remember to always clear your browser cache in development
-      dev: process.env.NODE_ENV === 'development',
+      dev: process.env.NODE_ENV === 'development'
     }
   },
 
   messaging: {
     createServiceWorker: true,
-    actions: [],
+    actions: []
     // fcmPublicVapidKey: '512279358183' // OPTIONAL : Sets vapid key for FCM after initialization
   },
-  
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -140,13 +157,13 @@ export default {
       dark: true,
       themes: {
         dark: {
-          primary: "#5865f2",
-          accent: "#eb459e",
-          secondary: "#57f287",
-          info: "#5865f2",
-          warning: "#fee75c",
-          error: "#ed4245",
-          success: "#57f287",
+          primary: '#5865f2',
+          accent: '#eb459e',
+          secondary: '#57f287',
+          info: '#5865f2',
+          warning: '#fee75c',
+          error: '#ed4245',
+          success: '#57f287'
         }
       }
     }
