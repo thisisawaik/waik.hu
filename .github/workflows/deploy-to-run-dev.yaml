@@ -48,7 +48,7 @@ jobs:
 
     - name: Edit firebase deploy file
       run: |
-        export channel=waik-main-prod
+        export channel=waik-main
         node edit-firebase-config-target.js 
 
     - name: Deploy to Firebase Hosting
