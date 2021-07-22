@@ -32,7 +32,7 @@ jobs:
       
     - name: Build
       run: |
-        cd web-vue
+        cd web
         docker build --tag gcr.io/zal1000/waik/website:$GITHUB_SHA .
 
     - name: Push
