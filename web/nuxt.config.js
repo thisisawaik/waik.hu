@@ -34,12 +34,6 @@ export default {
   plugins: [
   ],
 
-  compilerOptions: {
-    types: [
-      '@nuxtjs/auth-next'
-    ]
-  },
-
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -65,7 +59,6 @@ export default {
     'nuxt-maintenance-mode',
     '@nuxt/content',
     '@nuxtjs/markdownit',
-    '@nuxtjs/auth-next',
     'nuxt-socket-io'
   ],
   auth: {
