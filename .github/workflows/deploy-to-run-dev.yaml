@@ -3,7 +3,7 @@ name: Build and deploy to Cloud Run (beta)
 on:
   push:
     branches:
-      - prod
+      - dev
   workflow_dispatch:
 
 jobs:
