@@ -40,14 +40,6 @@ export default {
     ]
   },
 
-  typescript: {
-    typeCheck: {
-      eslint: {
-        files: './**/*.{ts,js,vue}'
-      }
-    }
-  },
-
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -73,10 +65,17 @@ export default {
     'nuxt-maintenance-mode',
     '@nuxt/content',
     '@nuxtjs/markdownit',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+    'nuxt-socket-io'
   ],
   auth: {
-    plugins: ['~/plugins/auth.ts']
+    plugins: ['~/plugins/auth.js'],
+    strategies: {
+      discord: {
+        clientId: '804728783973253150',
+        clientSecret: 'd59GczrnhZULTU5g7V9m07gv4dzaTvrj'
+      }
+    }
   },
   content: {
     markdown: {

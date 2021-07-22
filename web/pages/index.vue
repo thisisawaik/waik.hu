@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import CurrentEvetCard from '../components/CurrentEvetCard.vue';
+import CurrentEvetCard from '../components/CurrentEvetCard.vue'
 
 export default {
   components: { CurrentEvetCard },
-  async asyncData({app}) {
+  async asyncData ({ app }) {
     const db = app.$fire.firestore
-    const ref = db.collection('test').doc('test');
-    const doc = await ref.get();
+    const ref = db.collection('test').doc('test')
+    const doc = await ref.get()
     return {
       title: doc.data().title,
       desc: doc.data().desc
@@ -20,32 +20,32 @@ export default {
     // this.title = doc.data().title
     // this.desc = doc.data().desc
   },
-  data() {
+  data () {
     return {
-      mde: this.$store.state.mdtest,
+      mde: this.$store.state.mdtest
     }
   },
-  head() {
+  head () {
     return {
       title: 'Waik | Főoldal',
       meta: [
         {
-          name: "keywords",
-          content: "Waik, Walrusz, Norticus, Isti115, Minecraft"
+          name: 'keywords',
+          content: 'Waik, Walrusz, Norticus, Isti115, Minecraft'
         },
         {
           name: 'og:title',
-          content: 'Főoldal | Waik',
+          content: 'Főoldal | Waik'
         },
         {
           name: 'og:description',
-          content: 'A hivatalos waik weboldal',
+          content: 'A hivatalos waik weboldal'
         },
         {
           name: 'theme-color',
-          content: '#ffffff',
-        },
-      ],
+          content: '#ffffff'
+        }
+      ]
     }
   }
 }

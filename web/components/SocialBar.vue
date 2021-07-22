@@ -6,31 +6,31 @@
         :key="`tw${index}`"
         :href="pf.url"
         target="_blank"
-        >
-        
+      >
+
         <img
           v-if="!pf.img"
           height="40"
           src="~/assets/svgs/twitch_logo.svg"
-        /><img
+        ><img
           v-else
           height="40"
           :src="pf.img"
           :style="`border-radius: ${pf.circle ? '50%' : '0%'};`"
-        />
+        >
       </a>
       <a
         v-for="(pf, index) of profile.youtube"
         :key="`yt${index}`"
         :href="pf.url"
         target="_blank"
-        ><img v-if="!pf.img" height="40" src="~/assets/svgs/yt_logo.svg" />
+      ><img v-if="!pf.img" height="40" src="~/assets/svgs/yt_logo.svg">
         <img
           v-else
           height="40"
           :src="pf.img"
           :style="`border-radius: ${pf.circle ? '50%' : '0%'};`"
-      /></a>
+        ></a>
       <a
         v-for="(pf, index) of profile.github"
         :key="`gh${index}`"
@@ -40,13 +40,14 @@
         <img
           v-if="!pf.img"
           height="40"
-          src="~/assets/svgs/github_logo.svg" /><img
+          src="~/assets/svgs/github_logo.svg"
+        ><img
           v-else
           height="40"
           :style="`border-radius: ${pf.circle ? '50%' : '0%'};`"
           :src="pf.img"
-      /></a>
-            <a
+        ></a>
+      <a
         v-for="(pf, index) of profile.instagram"
         :key="`gh${index}`"
         :href="pf.url"
@@ -55,16 +56,17 @@
         <img
           v-if="!pf.img"
           height="40"
-          src="~/assets/svgs/instagram_logo.svg" /><img
+          src="~/assets/svgs/instagram_logo.svg"
+        ><img
           v-else
           height="40"
           :style="`border-radius: ${pf.circle ? '50%' : '0%'};`"
           :src="pf.img"
-      /></a>
-<v-divider
-  vertical
-></v-divider>
-      <a><img height="40" class="avatar" :src="profile.image" /></a>
+        ></a>
+      <v-divider
+        vertical
+      />
+      <a><img height="40" class="avatar" :src="profile.image"></a>
     </div>
   </v-app-bar>
 
@@ -107,7 +109,7 @@
       <a href="https://twitter.com/walruszmester/" target="_blank"
         ><img height="40" src="~/assets/svgs/twitter_logo.svg"
       /></a>
-      
+
       <a href="https://instagram.com/walrusz/" target="_blank"
         ><img height="40" src="~/assets/svgs/instagram_logo.svg"
       /></a>
@@ -115,16 +117,17 @@
         ><img height="40" class="avatar" src="~/assets/avatars/walrusz.webp"
       /></a>
     </div>
---></template>
+-->
+</template>
 
 <script>
 export default {
   // eslint-disable-next-line vue/require-prop-types
   props: ['profile'],
-  data() {
+  data () {
     return {}
   },
-  methods: {},
+  methods: {}
 }
 </script>
 

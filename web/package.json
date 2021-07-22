@@ -7,7 +7,8 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint:js": "eslint --ext \".ts,.js,.vue\" --ignore-path .gitignore .",
+    "lint:js": "eslint --ext \".js,.vue\" .",
+    "lint:fix": "eslint --ext \".js,.vue\" . --fix",
     "lint": "npm run lint:js",
     "test": "jest"
   },
@@ -27,6 +28,7 @@
     "nuxt": "^2.15.7",
     "nuxt-clipboard2": "^0.2.1",
     "nuxt-maintenance-mode": "^0.3.1",
+    "nuxt-socket-io": "^1.1.18",
     "prism-themes": "^1.7.0",
     "vue3-markdown-it": "^1.0.9",
     "vuetify": "^2.5.5"

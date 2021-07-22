@@ -2,73 +2,94 @@
   <div class="text-center">
     <v-dialog v-model="dialog" width="500">
       <template #activator="{ on, attrs }">
-        <v-avatar v-bind="attrs" class="nav-bar-avatar" size="40" v-on="on"
-          ><img
+        <v-avatar
+          v-bind="attrs"
+          class="nav-bar-avatar"
+          size="40"
+          v-on="on"
+        >
+          <img
+            alt="Account"
             :src="
               avatar
                 ? avatar
                 : 'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/demo%2Fpp%2Fdemo.png?alt=media&token=93fec366-cc41-45e0-9ad1-f6a399cc750c'
             "
-        /></v-avatar>
+          >
+        </v-avatar>
       </template>
 
       <v-card>
-        <v-card-title class="text-h5 lighten-2"> Fiók </v-card-title>
-        <v-divider></v-divider>
+        <v-card-title class="text-h5 lighten-2">
+          Fiók
+        </v-card-title>
+        <v-divider />
         <div v-if="user">
           <v-card-text>
-            <p class="text-h6 lighten-2">Google</p>
+            <p class="text-h6 lighten-2">
+              Google
+            </p>
           </v-card-text>
           <v-card-text>
             <div v-if="googleData">
-              <span><v-avatar v-if="googleData.photoURL"><img :src="googleData.photoURL" /></v-avatar>Google fiók összekötve a {{ googleData.email }} fiókkal</span>
-              
+              <span><v-avatar v-if="googleData.photoURL"><img :src="googleData.photoURL" alt="Accont"></v-avatar>Google fiók összekötve a {{ googleData.email }} fiókkal</span>
             </div>
           </v-card-text>
 
-          <v-divider></v-divider>
+          <v-divider />
           <v-card-text>
-            <p class="text-h6 lighten-2">Discord</p>
+            <p class="text-h6 lighten-2">
+              Discord
+            </p>
             <v-progress-linear
               v-if="discordLoading"
               indeterminate
               color="primary"
-            ></v-progress-linear>
+            />
           </v-card-text>
           <div v-if="dcData">
             <v-card-text>
-              <span
-                ><v-avatar v-if="dcAvatar"><img :src="dcAvatar" /></v-avatar>
-                Discord fiók összekapcsolva {{ dcData.tag }} fiókkal</span
-              >
+              <span><v-avatar v-if="dcAvatar"><img :src="dcAvatar"></v-avatar>
+                Discord fiók összekapcsolva {{ dcData.tag }} fiókkal</span>
             </v-card-text>
           </div>
-          <v-divider></v-divider>
+          <v-divider />
           <v-card-text>
-            <p class="text-h6 lighten-2">Profilkép</p>
+            <p class="text-h6 lighten-2">
+              Profilkép
+            </p>
           </v-card-text>
         </div>
 
         <div v-else>
-          <v-divider></v-divider>
+          <v-divider />
           <v-card-text>
-            <v-btn elevation="2" @click="googleLogin()"
-              >Bejelentkezés google fiókkal</v-btn
-            ><br /><br />
-            <v-btn elevation="2" disabled @click="googleLogin()"
-              >Bejelentkezés discord fiókkal</v-btn
+            <v-btn
+              elevation="2"
+              @click="googleLogin()"
             >
+              Bejelentkezés google fiókkal
+            </v-btn><br><br>
+            <v-btn
+              elevation="2"
+              disabled
+              @click="googleLogin()"
+            >
+              Bejelentkezés discord fiókkal
+            </v-btn>
           </v-card-text>
         </div>
 
-        <v-divider></v-divider>
+        <v-divider />
 
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn v-if="user" color="red" text @click="logOut()">
             Kijelentkezés
           </v-btn>
-          <v-btn text @click="dialog = false"> Bezárás </v-btn>
+          <v-btn text @click="dialog = false">
+            Bezárás
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -77,7 +98,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       dialog: false,
       avatar: null,
@@ -86,18 +107,18 @@ export default {
       dcData: null,
       token: null,
       discordLoading: true,
-      dcAvatar: null,
+      dcAvatar: null
     }
   },
-  created() {
+  created () {
     const auth = this.$fire.auth
     auth.onAuthStateChanged(async (user) => {
       this.user = user
       if (user) {
         this.googleData = user.providerData.find(
-          (e) => e.providerId === 'google.com'
+          e => e.providerId === 'google.com'
         )
-          ? user.providerData.find((e) => e.providerId === 'google.com')
+          ? user.providerData.find(e => e.providerId === 'google.com')
           : null
         this.avatar = user.photoURL
         this.fetchUserData(user.uid)
@@ -108,17 +129,17 @@ export default {
     })
   },
   methods: {
-    googleLogin() {
+    googleLogin () {
       const provider = new this.$fireModule.auth.GoogleAuthProvider()
       this.$fire.auth
         .signInWithPopup(provider)
-        .then((res) => {})
-        .catch((e) => {})
+        .then(() => {})
+        .catch(() => {})
     },
-    logOut() {
+    logOut () {
       this.$fire.auth.signOut()
     },
-    async fetchUserData(uid) {
+    async fetchUserData (uid) {
       this.discordLoading = true
       const db = this.$fire.firestore
       const ref = db.collection('users').doc(uid)
@@ -134,8 +155,8 @@ export default {
         this.dcData = null
         this.discordLoading = false
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

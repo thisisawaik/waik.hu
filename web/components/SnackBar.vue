@@ -12,23 +12,23 @@
 
 <script>
 export default {
-    data() {
-        return {
-            text: '',
-            sclass: '',
-            color: 'green',
-            timeout: 3000,
-            show: false,
-        }
-    },
-    created() {
-        
-    },
-    methods: {
-        close() {
-            this.show = false
-        }
+  data () {
+    return {
+      text: '',
+      sclass: '',
+      color: 'green',
+      timeout: 3000,
+      show: false
     }
+  },
+  created () {
+
+  },
+  methods: {
+    close () {
+      this.show = false
+    }
+  }
 }
 </script>
 

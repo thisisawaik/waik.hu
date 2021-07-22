@@ -1,9 +1,9 @@
-name: Build and deploy to Cloud Run (dev)
+name: Build and deploy to Cloud Run (beta)
 
 on:
   push:
     branches:
-      - dev
+      - prod
   workflow_dispatch:
 
 jobs:
@@ -32,13 +32,14 @@ jobs:
       
     - name: Build container image
       run: |
-        cd web
+        cd web-vue
         docker build --tag gcr.io/zal1000/waik/website:$GITHUB_SHA .
     
     - name: Build nuxt.js app
       run: |
         cd web
         npm ci
+        npm run test
         npm run generate
 
     - name: Push container image to gcr.io
@@ -47,7 +48,7 @@ jobs:
 
     - name: Edit firebase deploy file
       run: |
-        export channel=waik-main-dev
+        export channel=waik-main
         node edit-firebase-config-target.js 
 
     - name: Deploy to Firebase Hosting
@@ -62,7 +63,9 @@ jobs:
 
     - name: Deploy to Cloud Run
       run: |
-        gcloud run deploy waik-main-dev \
+        gcloud run deploy waik-main \
         --region europe-north1 \
         --image gcr.io/zal1000/waik/website:$GITHUB_SHA \
+        --platform managed \
+        --allow-unauthenticated \
         --project zal1000

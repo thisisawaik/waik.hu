@@ -40,6 +40,7 @@ jobs:
       run: |
         cd web
         npm ci
+        npm run test
         npm run generate
 
     - name: Push container image to gcr.io

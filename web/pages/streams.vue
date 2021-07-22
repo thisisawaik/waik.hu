@@ -4,11 +4,11 @@
 
 <script>
 export default {
-    head() {
-        return {
-            title: 'Waik | Streamek',
-            meta: [],
-        }
+  head () {
+    return {
+      title: 'Waik | Streamek',
+      meta: []
     }
+  }
 }
 </script>

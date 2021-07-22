@@ -5,6 +5,8 @@ WORKDIR /usr/src/app
 COPY . ./
 RUN npm ci
 
+RUN npm run lint
+
 EXPOSE 8080
 
 ENV HOST=0.0.0.0

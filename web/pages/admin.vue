@@ -6,41 +6,43 @@
           color="deep-purple"
           height="10"
           indeterminate
-        ></v-progress-linear>
+        />
       </template>
       <v-card-title>
         <v-avatar v-if="massrole.status === 'pending'" size="56">
           <img
             alt="Pending"
             src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2Fpending-clock.png?alt=media&token=110fd11e-23fa-4ffc-9533-b8078e23bea9"
-          />
+          >
         </v-avatar>
         <v-avatar v-else-if="massrole.status === 'success'" size="56">
           <img
             alt="Success"
             src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2F1200px-Flat_tick_icon.svg.png?alt=media&token=c8aae673-0454-45bd-bdae-9cf1051d6ada"
-          />
+          >
         </v-avatar>
         <v-avatar v-else size="56">
           <img
             alt="Error"
             src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2F1200px-Flat_cross_icon.svg.png?alt=media&token=066c44c3-c03c-4fee-b6c6-16ce1e8e5f73"
-          />
+          >
         </v-avatar>
-        <p class="ml-2">Auto role</p>
+        <p class="ml-2">
+          Auto role
+        </p>
       </v-card-title>
 
       <v-card-text>
-        <v-row align="center" class="mx-0"> </v-row>
+        <v-row align="center" class="mx-0" />
 
-        <div></div>
+        <div />
       </v-card-text>
 
       <v-card-text>
         <v-progress-linear
           :value="(autorole.done / autorole.all) * 100"
           :color="autorole.red"
-        ></v-progress-linear>
+        />
         <p style="margin-top: 10px">
           {{ autorole.done }} out of {{ autorole.all }} done
         </p>
@@ -55,17 +57,18 @@
           Changes: {{ autorole.memberchanges ? autorole.memberchanges : '0' }}
         </p>
         <div v-if="autorole.memberchanges > 0">
-          <v-checkbox v-model="autorole.showchanges" label="Show changes">
-          </v-checkbox>
+          <v-checkbox v-model="autorole.showchanges" label="Show changes" />
           <div v-if="autorole.showchanges">
             <div v-for="u in autorole.changes" :key="u">
-              <admin-role-change-card :id="u.id" :added_roles="u.added_roles" :removed_roles="u.removed_roles" :roles="roles"></admin-role-change-card>
+              <admin-role-change-card :id="u.id" :added_roles="u.added_roles" :removed_roles="u.removed_roles" :roles="roles" />
             </div>
           </div>
         </div>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="deep-purple lighten-2" text> Reserve </v-btn>
+        <v-btn color="deep-purple lighten-2" text>
+          Reserve
+        </v-btn>
       </v-card-actions>
     </v-card>
 
@@ -75,41 +78,43 @@
           color="deep-purple"
           height="10"
           indeterminate
-        ></v-progress-linear>
+        />
       </template>
       <v-card-title>
         <v-avatar v-if="massrole.status === 'pending'" size="56">
           <img
             alt="Pending"
             src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2Fpending-clock.png?alt=media&token=110fd11e-23fa-4ffc-9533-b8078e23bea9"
-          />
+          >
         </v-avatar>
         <v-avatar v-if="massrole.status === 'success'" size="56">
           <img
             alt="Success"
             src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2F1200px-Flat_tick_icon.svg.png?alt=media&token=c8aae673-0454-45bd-bdae-9cf1051d6ada"
-          />
+          >
         </v-avatar>
         <v-avatar v-if="massrole.status === 'error'" size="56">
           <img
             alt="Error"
             src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2F1200px-Flat_cross_icon.svg.png?alt=media&token=066c44c3-c03c-4fee-b6c6-16ce1e8e5f73"
-          />
+          >
         </v-avatar>
-        <p class="ml-2">Mass role</p>
+        <p class="ml-2">
+          Mass role
+        </p>
       </v-card-title>
 
       <v-card-text>
-        <v-row align="center" class="mx-0"> </v-row>
+        <v-row align="center" class="mx-0" />
 
-        <div></div>
+        <div />
       </v-card-text>
 
       <v-card-text>
         <v-progress-linear
           :value="(massrole.done / massrole.all) * 100"
           :color="massrole.red"
-        ></v-progress-linear>
+        />
         <p style="margin-top: 10px">
           {{ massrole.done }} out of {{ massrole.all }} done
         </p>
@@ -122,7 +127,9 @@
         </p>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="deep-purple lighten-2" text> Reserve </v-btn>
+        <v-btn color="deep-purple lighten-2" text>
+          Reserve
+        </v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -145,7 +152,7 @@ export default {
       changes: {},
       memberchanges: 0,
       showchanges: false,
-      color: 'blue',
+      color: 'blue'
     },
     autorole: {
       loading: false,
@@ -157,11 +164,11 @@ export default {
       finishedAt: 0,
       changes: {},
       memberchanges: 0,
-      color: 'blue',
-    },
+      color: 'blue'
+    }
   }),
 
-  async created() {
+  async created () {
     this.loadMassStatus()
     this.loadSyncStatus()
     const db = this.$fire.firestore
@@ -170,7 +177,7 @@ export default {
     this.roles = doc.data().autoroles
   },
   methods: {
-    loadMassStatus() {
+    loadMassStatus () {
       const rdb = this.$fire.database
       const ref = rdb.ref('admin/massadd')
       this.massrole.loading = true
@@ -195,13 +202,13 @@ export default {
           this.massrole.status = 'success'
         }
 
-        if(this.massrole.changes !== snap.val().changes) {
+        if (this.massrole.changes !== snap.val().changes) {
           this.massrole.changes = snap.val().changes
         }
         // console.log(snap.val())
       })
     },
-    loadSyncStatus() {
+    loadSyncStatus () {
       const rdb = this.$fire.database
       const ref = rdb.ref('admin/sync')
       this.autorole.loading = true
@@ -229,11 +236,11 @@ export default {
         // console.log(snap.val())
       })
     },
-    reserve() {
+    reserve () {
       this.massrole.loading = true
 
       setTimeout(() => (this.massrole.loading = false), 2000)
-    },
-  },
+    }
+  }
 }
 </script>

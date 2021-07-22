@@ -5,15 +5,15 @@
         color="deep-purple"
         height="10"
         indeterminate
-      ></v-progress-linear>
+      />
     </template>
     <v-card-title>{{ title }}</v-card-title>
-    <v-img v-if="imageurl" height="250" :src="imageurl"></v-img>
+    <v-img v-if="imageurl" height="250" :src="imageurl" />
     <v-card-text>
       <div>{{ desc }}</div>
     </v-card-text>
 
-    <v-divider class="mx-4"></v-divider>
+    <v-divider class="mx-4" />
 
     <v-card-actions>
       <v-list-item class="grow">
@@ -23,31 +23,36 @@
             class="elevation-6"
             alt=""
             :src="authorAvatar"
-          ></v-img>
+          />
         </v-list-item-avatar>
 
         <v-list-item-content v-if="loading || authorName">
-          <v-list-item-title>{{
-            authorName === 'Loading...' ? ' ' : authorName
-          }}</v-list-item-title>
+          <v-list-item-title>
+            {{
+              authorName === 'Loading...' ? ' ' : authorName
+            }}
+          </v-list-item-title>
         </v-list-item-content>
 
         <v-row align="center" justify="end">
-          <v-icon class="mr-1"> mdi-download </v-icon>
+          <v-icon class="mr-1">
+            mdi-download
+          </v-icon>
           <span class="mr-1">·</span>
-          <v-icon class="mr-1"> mdi-share-variant </v-icon>
+          <v-icon class="mr-1">
+            mdi-share-variant
+          </v-icon>
         </v-row>
       </v-list-item>
     </v-card-actions>
   </v-card>
-
 </template>
 
 <script>
 export default {
   // eslint-disable-next-line vue/require-prop-types
   props: ['id'],
-  data() {
+  data () {
     return {
       loading: true,
       title: 'Loading...',
@@ -57,10 +62,10 @@ export default {
       authorName: 'Loading...',
       downloadurl: null,
       githuburl: null,
-      showCopyBar: false,
+      showCopyBar: false
     }
   },
-  async created() {
+  async created () {
     const db = this.$fire.firestore
     // const storage = this.$fire.storage
     const ref = db.collection('waik/website/downloads').doc(this.id)
@@ -87,17 +92,17 @@ export default {
     }
   },
   methods: {
-    copyShareUrl() {},
-    download() {},
-    openGithub() {},
-    async copySomething(text) {
+    copyShareUrl () {},
+    download () {},
+    openGithub () {},
+    async copySomething (text) {
       try {
         await this.$copyText(text)
       } catch (e) {
         // console.error(e);
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

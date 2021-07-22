@@ -2,61 +2,63 @@
   <article>
     <h1>{{ article.title }}</h1>
     <nuxt-content class="document" :document="article" />
-    <p class="updated">Frissítve: {{ formatDate(article.updatedAt) }}</p>
+    <p class="updated">
+      Frissítve: {{ formatDate(article.updatedAt) }}
+    </p>
   </article>
 </template>
 
 <script>
 export default {
-  async asyncData({ $content, params }) {
+  async asyncData ({ $content, params }) {
     const article = await $content('rules', params.rule).fetch()
     return { article }
   },
-  head() {
+  head () {
     return {
       title: `Waik | ${this.article.title}`,
       meta: [
         {
           name: 'description',
-          content: this.article.description,
+          content: this.article.description
         },
         {
           name: 'og:description',
-          content: this.article.description,
+          content: this.article.description
         },
         {
           name: 'og:title',
-          content: `Waik | ${this.article.title}`,
+          content: `Waik | ${this.article.title}`
         },
         {
           name: 'og:image',
-          content: `${this.article.img}`,
+          content: `${this.article.img}`
         },
         {
           name: 'og:image:alt',
-          content: `${this.article.alt}`,
+          content: `${this.article.alt}`
         },
         {
           name: 'theme-color',
-          content: `#${this.article.colorTheme}`,
+          content: `#${this.article.colorTheme}`
         },
         {
           name: 'article:modified_time',
-          content: this.article.updatedAt,
+          content: this.article.updatedAt
         },
-				{
+        {
           name: 'og:modified_time',
-          content: this.article.updatedAt,
-        },
-      ],
+          content: this.article.updatedAt
+        }
+      ]
     }
   },
   methods: {
-    formatDate(date) {
+    formatDate (date) {
       const options = { year: 'numeric', month: 'long', day: 'numeric' }
       return new Date(date).toLocaleDateString('hu', options)
-    },
-  },
+    }
+  }
 }
 </script>
 
@@ -79,4 +81,3 @@ export default {
   margin-top: 40px;
 }
 </style>
-
