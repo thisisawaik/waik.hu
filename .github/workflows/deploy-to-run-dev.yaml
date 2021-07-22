@@ -48,7 +48,7 @@ jobs:
 
     - name: Edit firebase deploy file
       run: |
-        export channel=waik-main
+        export channel=waik-main-prod
         node edit-firebase-config-target.js 
 
     - name: Deploy to Firebase Hosting
@@ -63,7 +63,7 @@ jobs:
 
     - name: Deploy to Cloud Run
       run: |
-        gcloud run deploy waik-main \
+        gcloud run deploy waik-main-prod \
         --region europe-north1 \
         --image gcr.io/zal1000/waik/website:$GITHUB_SHA \
         --platform managed \
