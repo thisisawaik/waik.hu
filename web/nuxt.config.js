@@ -113,8 +113,10 @@ export default {
       auth: {
         ssr: true
       },
-      functins: true
-    }
+      functins: true,
+      performance: true
+    },
+    onFirebaseHosting: true
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
