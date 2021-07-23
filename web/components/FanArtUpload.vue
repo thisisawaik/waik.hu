@@ -139,8 +139,7 @@ export default {
   },
   methods: {
     formatDate (date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      return new Date(date).toLocaleDateString('hu', options)
+      return new Date(date).toLocaleDateString('hu', { year: 'numeric', month: 'long', day: 'numeric' })
     },
     upload (e) {
       const storage = this.$fire.storage
