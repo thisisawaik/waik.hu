@@ -3,7 +3,7 @@
     <v-card :loading="massrole.loading" class="mx-auto my-12" max-width="374">
       <template slot="progress">
         <v-progress-linear
-          color="deep-purple"
+          :color="massrole.progress_color"
           height="10"
           indeterminate
         />
@@ -41,7 +41,7 @@
       <v-card-text>
         <v-progress-linear
           :value="(autorole.done / autorole.all) * 100"
-          :color="autorole.red"
+          :color="autorole.progress_color"
         />
         <p style="margin-top: 10px">
           {{ autorole.done }} out of {{ autorole.all }} done
@@ -75,7 +75,7 @@
     <v-card :loading="autorole.loading" class="mx-auto my-12" max-width="374">
       <template slot="progress">
         <v-progress-linear
-          color="deep-purple"
+          :color="autorole.progress_color"
           height="10"
           indeterminate
         />
@@ -113,7 +113,7 @@
       <v-card-text>
         <v-progress-linear
           :value="(massrole.done / massrole.all) * 100"
-          :color="massrole.red"
+          :color="massrole.progress_color"
         />
         <p style="margin-top: 10px">
           {{ massrole.done }} out of {{ massrole.all }} done
@@ -159,7 +159,8 @@ export default {
       memberchanges: 0,
       showchanges: false,
       color: 'blue',
-      startedBy: null
+      startedBy: null,
+      progress_color: 'deep-purple'
     },
     autorole: {
       loading: false,
@@ -171,17 +172,20 @@ export default {
       finishedAt: 0,
       changes: {},
       memberchanges: 0,
-      color: 'blue'
+      color: 'blue',
+      progress_color: 'deep-purple'
     }
   }),
 
   async created () {
     this.loadMassStatus()
     this.loadSyncStatus()
-    const db = this.$fire.firestore
-    const ref = db.collection('waik').doc('discord')
-    const doc = await ref.get()
-    this.roles = doc.data().autoroles
+    if (process.client) {
+      const db = this.$fire.firestore
+      const ref = db.collection('waik').doc('discord')
+      const doc = await ref.get()
+      this.roles = doc.data().autoroles
+    }
   },
   methods: {
     loadMassStatus () {
@@ -203,10 +207,13 @@ export default {
           : 'Not yet finished'
         if (snap.val().running === true) {
           this.massrole.status = 'pending'
+          this.massrole.progress_color = 'deep-purple'
         } else if (snap.val().error) {
           this.massrole.status = 'error'
+          this.massrole.progress_color = 'red'
         } else {
           this.massrole.status = 'success'
+          this.massrole.progress_color = 'green'
         }
 
         this.massrole.startedBy = snap.val().startedBy
@@ -237,10 +244,13 @@ export default {
           : 'Not yet finished'
         if (snap.val().running === true) {
           this.autorole.status = 'pending'
+          this.autorole.progress_color = 'deep-purple'
         } else if (snap.val().error) {
           this.autorole.status = 'error'
+          this.autorole.progress_color = 'red'
         } else {
           this.autorole.status = 'success'
+          this.autorole.progress_color = 'green'
         }
         // console.log(snap.val())
       })

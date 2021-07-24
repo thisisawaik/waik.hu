@@ -10,8 +10,8 @@
 
 <script>
 export default {
-  async asyncData ({ $content, params }) {
-    const article = await $content('rules', params.rule).fetch()
+  async asyncData ({ $content, params, i18n }) {
+    const article = await $content(`${i18n.localeProperties.code}/rules`, params.rule).fetch()
     return { article }
   },
   head () {
