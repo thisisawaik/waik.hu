@@ -18,17 +18,22 @@
           required
         />
 
-        <v-file-input truncate-length="15" @change="upload" />
+        <v-file-input
+          :label="$t('file')"
+          :message="['Megengedett formátumok: JPEG, PNG, GIF, SVG']"
+          truncate-length="15"
+          @change="upload"
+        />
         <v-progress-linear style="margin-bottom: 20px;" :value="uploadProgress || 0" />
         <v-checkbox
           v-model="isForComp"
-          :label="`Checkbox 1: ${isForComp.toString()}`"
+          label="Beküldés versenyre"
         />
         <v-img
           max-width="486"
-          max-height="1000"
-          :src="image ? image : 'https://picsum.photos/id/11/500/300'"
-          lazy-src="https://picsum.photos/id/11/10/6"
+          :aspect-ratio="1/1"
+          :src="image ? image : 'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/waik%2Ffanarts%2Ftemp%2FWQxQFpK5L3WKfsxb3Ficb4fa90J2%2F11-500x300.png?alt=media&token=0fe24064-fe58-4b5e-bd3b-14155e392f87'"
+          lazy-src="https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/waik%2Ffanarts%2Ftemp%2FWQxQFpK5L3WKfsxb3Ficb4fa90J2%2F11-500x300.png?alt=media&token=0fe24064-fe58-4b5e-bd3b-14155e392f87"
         />
       </v-container>
       <v-dialog v-model="rulesDialog" width="500">
@@ -74,12 +79,12 @@ export default {
   data () {
     const title = {
       maxLength: 30,
-      default: 'Cím',
+      default: `${this.$t('title')}${this.$i18n.locale !== 'hu' ? ' (We recommend writing this in Hungarian)' : ''}`,
       content: ''
     }
     const desc = {
       maxLength: 300,
-      default: 'Leírás',
+      default: `${this.$t('description')}${this.$i18n.locale !== 'hu' ? ' (We recommend writing this in Hungarian)' : ''}`,
       content: ''
     }
     return {

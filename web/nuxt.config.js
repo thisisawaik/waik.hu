@@ -73,15 +73,20 @@ export default {
           streams: 'Streamek',
           downloads: 'Letöltések',
           fanarts: 'Fanartok',
-          upload: 'Feltöltés'
+          upload: 'Feltöltés',
+          title: 'Cím',
+          description: 'Leírás',
+          file: 'Fájl'
         },
         en: {
           homepage: 'Homepage',
           streams: 'Streams',
           downloads: 'Downloads',
           fanarts: 'Fanarts',
-          upload: 'Upload'
-
+          upload: 'Upload',
+          title: 'Title',
+          description: 'Description',
+          file: 'File'
         }
       }
     },

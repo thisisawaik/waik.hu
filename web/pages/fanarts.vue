@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-tabs v-model="tab" fixed-tabs background-color="primary" dark>
+    <v-tabs v-model="tab" fixed-tabs flat background-color="primary" dark>
       <v-tab>{{ $t('fanarts') }}</v-tab>
       <v-tab>{{ $t('upload') }}</v-tab>
       <v-tab>Admin</v-tab>
@@ -32,7 +32,7 @@ export default {
     FanArtUpload
   },
   async asyncData ({ $content, store }) {
-    const article = await $content('rules', 'fanart').fetch()
+    const article = await $content('hu/rules', 'fanart').fetch()
     store.commit('setFanartRules', article)
     return { article }
   },

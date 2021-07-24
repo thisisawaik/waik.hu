@@ -15,7 +15,7 @@ export default {
     }
   },
   async created () {
-    const article = await this.$content('rules', 'fanart').fetch()
+    const article = await this.$content('hu/rules', 'fanart').fetch()
     this.article = article
   }
 }

@@ -9,13 +9,13 @@
         />
       </template>
       <v-card-title>
-        <v-avatar v-if="massrole.status === 'pending'" size="56">
+        <v-avatar v-if="autorole.status === 'pending'" size="56">
           <img
             alt="Pending"
             src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2Fpending-clock.png?alt=media&token=110fd11e-23fa-4ffc-9533-b8078e23bea9"
           >
         </v-avatar>
-        <v-avatar v-else-if="massrole.status === 'success'" size="56">
+        <v-avatar v-else-if="autorole.status === 'success'" size="56">
           <img
             alt="Success"
             src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2F1200px-Flat_tick_icon.svg.png?alt=media&token=c8aae673-0454-45bd-bdae-9cf1051d6ada"
@@ -72,7 +72,7 @@
       </v-card-actions>
     </v-card>
 
-    <v-card :loading="massrole.loading" class="mx-auto my-12" max-width="374">
+    <v-card :loading="autorole.loading" class="mx-auto my-12" max-width="374">
       <template slot="progress">
         <v-progress-linear
           color="deep-purple"
@@ -125,6 +125,12 @@
             massrole.status === 'pending' ? 'Running...' : massrole.finishedAt
           }}
         </p>
+        <p>
+          Started by:
+          {{
+            massrole.startedBy ? massrole.startedBy : 'Unknown'
+          }}
+        </p>
       </v-card-text>
       <v-card-actions>
         <v-btn color="deep-purple lighten-2" text>
@@ -152,7 +158,8 @@ export default {
       changes: {},
       memberchanges: 0,
       showchanges: false,
-      color: 'blue'
+      color: 'blue',
+      startedBy: null
     },
     autorole: {
       loading: false,
@@ -201,6 +208,8 @@ export default {
         } else {
           this.massrole.status = 'success'
         }
+
+        this.massrole.startedBy = snap.val().startedBy
 
         if (this.massrole.changes !== snap.val().changes) {
           this.massrole.changes = snap.val().changes
