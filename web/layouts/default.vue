@@ -48,7 +48,7 @@
         :to="localePath('/fanarts')"
       >
         <v-btn color="primary" depressed>
-          Fanartok
+          {{ $t('fanarts') }}
         </v-btn>
       </NuxtLink>
       <NuxtLink
@@ -115,10 +115,10 @@
           target="_blank"
         >GitHub</a></span>
       <v-spacer />
-      <nuxt-link v-if="$i18n.locale !== 'en' " :to="switchLocalePath('en')">
+      <nuxt-link v-if="$i18n.locale !== 'en' " style="color: #fff" :to="switchLocalePath('en')">
         English
       </nuxt-link>
-      <nuxt-link v-if="$i18n.locale !== 'hu'" :to="switchLocalePath('hu')">
+      <nuxt-link v-if="$i18n.locale !== 'hu'" style="color: #fff" :to="switchLocalePath('hu')">
         Magyar
       </nuxt-link>
     </v-footer>

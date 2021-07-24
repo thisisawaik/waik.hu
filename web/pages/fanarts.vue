@@ -1,8 +1,8 @@
 <template>
   <v-card>
-    <v-tabs v-model="tab" background-color="primary" dark>
-      <v-tab>Fanartok</v-tab>
-      <v-tab>Feltöltés</v-tab>
+    <v-tabs v-model="tab" fixed-tabs background-color="primary" dark>
+      <v-tab>{{ $t('fanarts') }}</v-tab>
+      <v-tab>{{ $t('upload') }}</v-tab>
       <v-tab>Admin</v-tab>
     </v-tabs>
 
@@ -44,11 +44,11 @@ export default {
   },
   head () {
     return {
-      title: 'Waik | Fanartok',
+      title: `Waik | ${this.$t('fanarts')}`,
       meta: [
         {
           name: 'og:title',
-          content: 'Waik | Fanartok'
+          content: `Waik | ${this.$t('fanarts')}`
         },
         {
           name: 'og:description',

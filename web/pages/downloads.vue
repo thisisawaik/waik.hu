@@ -19,11 +19,11 @@ export default {
   },
   head () {
     return {
-      title: 'Waik | Letoltések',
+      title: `Waik | ${this.$t('downloads')}`,
       meta: [
         {
           name: 'og:title',
-          content: 'Waik | Letoltések'
+          content: `Waik | ${this.$t('downloads')}`
         },
         {
           name: 'og:description',

@@ -27,7 +27,7 @@ export default {
   },
   head () {
     return {
-      title: 'Waik | Főoldal',
+      title: `Waik | ${this.$t('homepage')}`,
       meta: [
         {
           name: 'keywords',
@@ -35,7 +35,7 @@ export default {
         },
         {
           name: 'og:title',
-          content: 'Főoldal | Waik'
+          content: `Waik | ${this.$t('homepage')}`
         },
         {
           name: 'og:description',

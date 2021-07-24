@@ -71,12 +71,17 @@ export default {
         hu: {
           homepage: 'Főoldal',
           streams: 'Streamek',
-          downloads: 'Letöltések'
+          downloads: 'Letöltések',
+          fanarts: 'Fanartok',
+          upload: 'Feltöltés'
         },
         en: {
           homepage: 'Homepage',
           streams: 'Streams',
-          downloads: 'Downloads'
+          downloads: 'Downloads',
+          fanarts: 'Fanarts',
+          upload: 'Upload'
+
         }
       }
     },
