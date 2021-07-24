@@ -8,10 +8,12 @@
 
     <v-tabs-items v-model="tab">
       <v-tabs-item v-if="tab === 0">
-        <v-container>
-          <div style="margin-top: 30px; padding 10px" />
-          <fan-art-card v-for="i in items" :id="i.id" :key="i.id" />
-        </v-container>
+        <v-flex class="flexContainer">
+          <v-container fill-height fluid>
+            <div style="margin-top: 30px; padding 10px" />
+            <fan-art-card v-for="i in items" :id="i.id" :key="i.id" />
+          </v-container>
+        </v-flex>
       </v-tabs-item>
       <v-tabs-item v-else-if="tab === 1">
         <v-container>
@@ -78,3 +80,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.flexContainer {
+    overflow: auto;
+}
+</style>
