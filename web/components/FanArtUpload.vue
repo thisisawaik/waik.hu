@@ -204,16 +204,18 @@ export default {
         console.error(e)
       })
       trace.stop()
+      return true
     },
-    submit () {
+    async submit () {
       if (this.submitBtn.disabled === true) { return }
+      await this.save()
       console.log('asd')
       const functions = this.$fire.functions
       this.submitBtn.text = 'Beküldés...'
       this.submitBtn.color = 'yellow'
       this.submitBtn.tcolor = 'black'
       this.submitBtn.disabled = true
-      functions.httpsCallable('waikFanartSubmit')({
+      await functions.httpsCallable('waikFanartSubmit')({
         postId: this.$fire.auth.currentUser.uid
       }).then((res) => {
         console.log(res)
