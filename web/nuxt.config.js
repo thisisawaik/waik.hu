@@ -140,7 +140,11 @@ export default {
         ssr: true
       },
       functins: true,
-      performance: true
+      performance: true,
+      functions: {
+        emulatorPort: process.env.NODE_ENV === 'development' ? 5001 : undefined,
+        emulatorHost: process.env.NODE_ENV === 'development' ? 'http://localhost' : undefined
+      }
     },
     onFirebaseHosting: true
   },
