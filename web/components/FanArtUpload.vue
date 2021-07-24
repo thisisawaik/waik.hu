@@ -3,7 +3,7 @@
     <v-form v-if="!!$fire.auth.currentUser" v-model="valid">
       <v-container style="max-width: 400px">
         <v-text-field
-          v-model="firstname"
+          v-model="titletext"
           :rules="titleRules"
           :counter="title.maxLength"
           :label="title.default"
@@ -11,7 +11,7 @@
         />
 
         <v-text-field
-          v-model="lastname"
+          v-model="desctext"
           :rules="descRules"
           :counter="desc.maxLength"
           :label="desc.default"
@@ -20,7 +20,7 @@
 
         <v-file-input
           :label="$t('file')"
-          :message="['Megengedett formátumok: JPEG, PNG, GIF, SVG']"
+          :message="['Megengedett formátumok: JPEG, PNG, GIF']"
           truncate-length="15"
           @change="upload"
         />
@@ -35,6 +35,7 @@
           :src="image ? image : 'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/waik%2Ffanarts%2Ftemp%2FWQxQFpK5L3WKfsxb3Ficb4fa90J2%2F11-500x300.png?alt=media&token=0fe24064-fe58-4b5e-bd3b-14155e392f87'"
           lazy-src="https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/waik%2Ffanarts%2Ftemp%2FWQxQFpK5L3WKfsxb3Ficb4fa90J2%2F11-500x300.png?alt=media&token=0fe24064-fe58-4b5e-bd3b-14155e392f87"
         />
+        <p>*A kép a teljes méretében fog megjelenni</p>
       </v-container>
       <v-dialog v-model="rulesDialog" width="500">
         <template #activator="{ on, attrs }">
@@ -43,10 +44,10 @@
             <v-btn color="center" dark v-bind="attrs" v-on="on">
               Szabályzat
             </v-btn>
-            <v-btn :style="`color: ${saveBtn.tcolor};`" :disabled="saveBtn.disabled" :color="saveBtn.color" @click="save">
+            <v-btn :style="`color: ${saveBtn.tcolor};`" :color="saveBtn.color" @click="save">
               {{ saveBtn.text }}
             </v-btn>
-            <v-btn :style="`color: ${submitBtn.tcolor};`" :disabled="submitBtn.disabled" :color="submitBtn.color" @click="submit">
+            <v-btn :style="`color: ${submitBtn.tcolor};`" :color="submitBtn.color" @click="submit">
               {{ submitBtn.text }}
             </v-btn>
           </div>
@@ -105,20 +106,22 @@ export default {
       rules: this.$store.state.fanartRules,
       title,
       desc,
+      titletext: '',
+      desctext: '',
       image: null,
       valid: false,
       firstname: '',
       lastname: '',
       titleRules: [
-        v => !!v || 'Cím megadása kotelezo',
+        v => !!v || 'Cím megadása kötelező',
         v =>
           v.length <= title.maxLength ||
-          `Nem lehet tobb mint ${title.maxLength} karakter`
+          `Nem lehet több mint ${title.maxLength} karakter`
       ],
       descRules: [
         v =>
           v.length <= desc.maxLength ||
-          `Nem lehet tobb mint ${desc.maxLength} karakter`
+          `Nem lehet több mint ${desc.maxLength} karakter`
       ],
       uploadProgress: null
     }
@@ -133,8 +136,9 @@ export default {
     if (user) {
       const artref = db.collection('waik/website/fanarts').doc(user.uid)
       const doc = await artref.get()
-      if (doc.data().title) { this.title.content = doc.data().title }
-      if (doc.data().desc) { this.desc.content = doc.data().desc }
+      console.log(doc.data())
+      if (doc.data().title) { this.titletext = doc.data().title }
+      if (doc.data().desc) { this.desctext = doc.data().desc }
       if (doc.data().forComp) { this.isForComp = doc.data().forComp }
       if (doc.data().gsURL) {
         const url = await this.$fire.storage.ref(doc.data().gsURL).getDownloadURL()
@@ -171,6 +175,7 @@ export default {
       })
     },
     async save () {
+      if (this.saveBtn.disabled === true) { return }
       const db = this.$fire.firestore
       const user = this.$fire.auth.currentUser
       const perf = this.$fire.performance
@@ -182,8 +187,9 @@ export default {
       const trace = perf.trace('fanart_save')
       trace.start()
       await artref.set({
-        desc: this.desc.content ? this.desc.content : null,
-        title: this.desc.title ? this.desc.title : null
+        desc: this.desc.titletext ? null : this.titletext,
+        title: this.desc.desctext ? null : this.desctext,
+        forComp: this.isForComp || false
       }, { merge: true }).then(() => {
         this.saveBtn.text = 'Sikeres mentés!'
         this.saveBtn.color = 'green'
@@ -198,7 +204,40 @@ export default {
       trace.stop()
     },
     submit () {
+      if (this.submitBtn.disabled === true) { return }
       console.log('asd')
+      const functions = this.$fire.functions
+      this.submitBtn.text = 'Beküldés...'
+      this.submitBtn.color = 'yellow'
+      this.submitBtn.tcolor = 'black'
+      this.submitBtn.disabled = true
+      functions.httpsCallable('waikFanartSubmit')({
+        postId: this.$fire.auth.currentUser.uid
+      }).then((res) => {
+        console.log(res)
+        this.submitBtn.text = 'Sikeres beküldés'
+        this.submitBtn.color = 'green'
+        this.submitBtn.tcolor = 'white'
+        this.submitBtn.disabled = true
+        setTimeout(() => {
+          this.submitBtn.text = 'Beküldés'
+          this.submitBtn.color = 'green'
+          this.submitBtn.tcolor = 'white'
+          this.submitBtn.disabled = false
+        }, 5000)
+      }).catch((e) => {
+        console.error(e)
+        this.submitBtn.text = 'Hiba történt beküldés közben! Próbáld újra később!'
+        this.submitBtn.color = 'red'
+        this.submitBtn.tcolor = 'white'
+        this.submitBtn.disabled = true
+        setTimeout(() => {
+          this.submitBtn.text = 'Beküldés'
+          this.submitBtn.color = 'green'
+          this.submitBtn.tcolor = 'white'
+          this.submitBtn.disabled = false
+        }, 5000)
+      })
     }
   }
 }
