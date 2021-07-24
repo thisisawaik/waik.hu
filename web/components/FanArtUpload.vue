@@ -200,6 +200,8 @@ export default {
           this.saveBtn.tcolor = 'white'
           this.saveBtn.disabled = false
         }, 5000)
+      }).catch((e) => {
+        console.error(e)
       })
       trace.stop()
     },
