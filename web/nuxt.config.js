@@ -59,15 +59,31 @@ export default {
     'nuxt-maintenance-mode',
     '@nuxt/content',
     '@nuxtjs/markdownit',
-    'nuxt-socket-io'
+    'nuxt-socket-io',
+    'nuxt-i18n'
   ],
-  auth: {
-    plugins: ['~/plugins/auth.js'],
-    strategies: {
-      discord: {
-        clientId: '804728783973253150',
-        clientSecret: 'd59GczrnhZULTU5g7V9m07gv4dzaTvrj'
+  i18n: {
+    locales: ['hu', 'en'],
+    defaultLocale: 'hu',
+    vueI18n: {
+      fallbackLocale: 'hu',
+      messages: {
+        hu: {
+          homepage: 'Főoldal',
+          streams: 'Streamek',
+          downloads: 'Letöltések'
+        },
+        en: {
+          homepage: 'Homepage',
+          streams: 'Streams',
+          downloads: 'Downloads'
+        }
       }
+    },
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      onlyOnRoot: true // recommended
     }
   },
   content: {

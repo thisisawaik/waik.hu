@@ -10,7 +10,7 @@
     >
       <NuxtLink
         class="nav-bar-button"
-        to="/"
+        :to="localePath('/')"
       >
         <img
           width="40"
@@ -21,31 +21,31 @@
       </NuxtLink>
       <NuxtLink
         class="nav-bar-button"
-        to="/"
+        :to="localePath('/')"
       >
         <v-btn color="primary" depressed>
-          Főoldal
+          {{ $t('homepage') }}
         </v-btn>
       </NuxtLink>
       <NuxtLink
         class="nav-bar-button"
-        to="/streams"
+        :to="localePath('/streams')"
       >
         <v-btn color="primary" depressed>
-          Streamek
+          {{ $t('streams') }}
         </v-btn>
       </NuxtLink>
       <NuxtLink
         class="nav-bar-button"
-        to="/downloads"
+        :to="localePath('/downloads')"
       >
         <v-btn color="primary" depressed>
-          Letöltések
+          {{ $t('downloads') }}
         </v-btn>
       </NuxtLink>
       <NuxtLink
         class="nav-bar-button"
-        to="/fanarts"
+        :to="localePath('/fanarts')"
       >
         <v-btn color="primary" depressed>
           Fanartok
@@ -54,7 +54,7 @@
       <NuxtLink
         v-if="isAdmin"
         class="nav-bar-button"
-        to="/admin"
+        :to="localePath('/admin')"
       >
         <v-btn color="primary" depressed>
           Admin
@@ -114,6 +114,13 @@
           href="https://github.com/thisisawaik/waik.hu"
           target="_blank"
         >GitHub</a></span>
+      <v-spacer />
+      <nuxt-link v-if="$i18n.locale !== 'en' " :to="switchLocalePath('en')">
+        English
+      </nuxt-link>
+      <nuxt-link v-if="$i18n.locale !== 'hu'" :to="switchLocalePath('hu')">
+        Magyar
+      </nuxt-link>
     </v-footer>
   </v-app>
 </template>
