@@ -7,29 +7,25 @@
 
 <script>
 export default {
-  async asyncData ({ $content }) {
-    const profile = await $content('profiles', 'walrusz').fetch()
-    console.log(profile)
-    return { profile }
+  async asyncData ({ $content, i18n }) {
+    const profile = await $content(`${i18n.localeProperties.code}/profiles`, 'walrusz').fetch()
+    return {
+      profile,
+      desc: profile.body.children[0].children[0].value
+    }
   },
   data () {
     return {
-      name: 'Walrusz',
-      imageurl:
-        'https://cdn.discordapp.com/avatars/183302720030113792/4fecad104687bc2c889bda7043276a6c.webp',
-      dctag: 'Walrusz#1019',
-      color: '#7f5b26',
-      desc: 'Üdvözöllek! Walrusz vagyok és úgy hiszem, bármiről lehet érdekes, kreatív és szórakoztató videót készíteni, hogyha az ember elegendő munkát fektet bele. Mesterségem elsősorban a szórakoztató ismeretterjesztő tartalmak gyártása, de emellett sok más mindent is találhatsz a csatornámon. Szeretek nagy hangsúlyt fektetni a videók vágására, az utómunkára és hiszek abban, hogy a minőségi szórakoztatás kulcsa a kreativitásban rejlik. Bátran nézz szét a csatornámon, háthatalálsz valamit, ami tetszik :)',
       loading: false
     }
   },
   head () {
     return {
-      title: `Waik | ${this.name}`,
+      title: `Waik | ${this.profile.name}`,
       meta: [
         {
           name: 'og:title',
-          content: `Waik | ${this.name}`
+          content: `Waik | ${this.profile.name}`
         },
         {
           name: 'description',
@@ -41,11 +37,11 @@ export default {
         },
         {
           name: 'og:image',
-          content: this.imageurl
+          content: this.profile.imageurl
         },
         {
           name: 'theme-color',
-          content: this.color
+          content: `#${this.profile.color}`
         }
       ]
     }

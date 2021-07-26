@@ -1,6 +1,8 @@
 <template>
   <v-container>
-    <current-evet-card />
+    <div v-for="content of currentContent" :key="content.title">
+      <current-evet-card :title="content.title" :description="content.description" :html="content.html" :markdown="content.markdown" />
+    </div>
   </v-container>
 </template>
 
@@ -22,7 +24,8 @@ export default {
   },
   data () {
     return {
-      mde: this.$store.state.mdtest
+      loading: true,
+      currentContent: []
     }
   },
   head () {
@@ -47,6 +50,17 @@ export default {
         }
       ]
     }
+  },
+  async created () {
+    const db = this.$fire.firestore
+    const ref = db.collection('waik/website/content').where('visible', '==', true)
+    const docs = await ref.get()
+    const current = []
+    for (const doc of docs.docs) {
+      if (doc.data().when === 'current') { current.push(doc.data()) }
+    }
+    this.currentContent = current
+    this.loading = false
   }
 }
 </script>

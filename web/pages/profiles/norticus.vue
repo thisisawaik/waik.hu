@@ -11,8 +11,8 @@ import SocialBar from '../../components/SocialBar.vue'
 import DescriptionCard from '../../components/DescriptionCard.vue'
 export default {
   components: { SocialBar, DescriptionCard },
-  async asyncData ({ $content }) {
-    const profile = await $content('profiles', 'norticus').fetch()
+  async asyncData ({ $content, i18n }) {
+    const profile = await $content(`${i18n.localeProperties.code}/profiles`, 'norticus').fetch()
     return {
       profile,
       desc: profile.body.children[0].children[0].value

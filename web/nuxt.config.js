@@ -144,6 +144,10 @@ export default {
       functions: {
         emulatorPort: process.env.NODE_ENV === 'development' ? 5001 : undefined,
         emulatorHost: process.env.NODE_ENV === 'development' ? 'http://localhost' : undefined
+      },
+      messaging: {
+        createServiceWorker: true,
+        actions: []
       }
     },
     onFirebaseHosting: true

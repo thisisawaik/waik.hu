@@ -49,7 +49,7 @@
         ></a>
       <a
         v-for="(pf, index) of profile.instagram"
-        :key="`gh${index}`"
+        :key="`in${index}`"
         :href="pf.url"
         target="_blank"
       >
@@ -57,6 +57,22 @@
           v-if="!pf.img"
           height="40"
           src="~/assets/svgs/instagram_logo.svg"
+        ><img
+          v-else
+          height="40"
+          :style="`border-radius: ${pf.circle ? '50%' : '0%'};`"
+          :src="pf.img"
+        ></a>
+      <a
+        v-for="(pf, index) of profile.twitter"
+        :key="`twi${index}`"
+        :href="pf.url"
+        target="_blank"
+      >
+        <img
+          v-if="!pf.img"
+          height="40"
+          src="~/assets/svgs/twitter_logo.svg"
         ><img
           v-else
           height="40"

@@ -1,22 +1,25 @@
 <template>
-  <v-card max-width="374" elevation="2">
-    <nuxt-content v-if="article" class="document" :document="article" />
-
-    <div v-html="$md.render(model)" />
+  <v-card
+    outlined
+    max-width="390"
+    elevation="2"
+    style="border-color: var(--green); padding: 8px"
+  >
+    <h1 v-if="title">
+      {{ title }}
+    </h1>
+    <p v-if="description">
+      {{ description }}
+    </p>
+    <br>
+    <div v-if="html" v-html="html" />
+    <div v-if="markdown" v-html="$md.render(markdown)" />
   </v-card>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      model: this.$store.state.mdtest,
-      article: null
-    }
-  },
-  async created () {
-    const article = await this.$content('hu/rules', 'fanart').fetch()
-    this.article = article
-  }
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['title', 'description', 'html', 'markdown']
 }
 </script>

@@ -1,6 +1,7 @@
 ---
 # Required
 name: Walrusz
+# !IMPORTANT Must be HEX
 color: 7f5b26
 image: https://cdn.discordapp.com/avatars/183302720030113792/4fecad104687bc2c889bda7043276a6c.webp
 
