@@ -40,7 +40,7 @@ export default {
         },
         {
           name: 'og:image',
-          content: this.profile.imageurl
+          content: this.profile.image
         },
         {
           name: 'theme-color',
