@@ -1,31 +1,40 @@
 <template>
-  <v-container>
-    <div v-for="content of currentContent" :key="content.title">
-      <current-evet-card :title="content.title" :description="content.description" :html="content.html" :markdown="content.markdown" />
-    </div>
-  </v-container>
+  <v-flex class="flexContainer">
+    <v-container fill-height fluid>
+      <div style="margin-top: 30px; padding 10px" />
+      <current-evet-card
+        v-for="content of currentContent"
+        :key="content.title"
+        :title="content.title"
+        :description="content.description"
+        :html="content.html"
+        :markdown="content.markdown"
+        class="eventCart"
+      />
+      <past-event-card
+        v-for="content of pastContent"
+        :key="content.title"
+        :title="content.title"
+        :description="content.description"
+        :html="content.html"
+        :markdown="content.markdown"
+        class="eventCart"
+      />
+    </v-container>
+  </v-flex>
 </template>
 
 <script>
 import CurrentEvetCard from '../components/CurrentEvetCard.vue'
+import PastEventCard from '../components/PastEventCard.vue'
 
 export default {
-  components: { CurrentEvetCard },
-  async asyncData ({ app }) {
-    const db = app.$fire.firestore
-    const ref = db.collection('test').doc('test')
-    const doc = await ref.get()
-    return {
-      title: doc.data().title,
-      desc: doc.data().desc
-    }
-    // this.title = doc.data().title
-    // this.desc = doc.data().desc
-  },
+  components: { CurrentEvetCard, PastEventCard },
   data () {
     return {
       loading: true,
-      currentContent: []
+      currentContent: [],
+      pastContent: []
     }
   },
   head () {
@@ -56,11 +65,24 @@ export default {
     const ref = db.collection('waik/website/content').where('visible', '==', true)
     const docs = await ref.get()
     const current = []
+    const past = []
     for (const doc of docs.docs) {
       if (doc.data().when === 'current') { current.push(doc.data()) }
+      if (doc.data().when === 'past') { past.push(doc.data()) }
     }
     this.currentContent = current
+    this.pastContent = past
     this.loading = false
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.flexContainer {
+    overflow: auto;
+}
+
+.eventCart {
+  margin: 15px;
+}
+</style>
