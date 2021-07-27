@@ -46,11 +46,11 @@ export default {
       },
       {
         name: 'article:modified_time',
-        content: this.article.updatedAt
+        content: new Date(this.article.updatedAt).getTime()
       },
       {
         name: 'og:modified_time',
-        content: this.article.updatedAt
+        content: new Date(this.article.updatedAt).getTime()
       },
       {
         name: 'twitter:card',
