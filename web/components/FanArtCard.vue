@@ -62,7 +62,8 @@ export default {
       authorName: 'Loading...',
       downloadurl: null,
       githuburl: null,
-      showCopyBar: false
+      showCopyBar: false,
+      isFromPhone: this.$device.isMobileOrTablet
     }
   },
   async created () {

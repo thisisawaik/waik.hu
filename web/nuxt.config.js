@@ -12,9 +12,7 @@ export default {
       { name: 'twitter:site', content: 'https://waik.hu/' },
       { name: 'fb:app_id', content: '581458672492860' }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
   meta: {
@@ -26,13 +24,10 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    '~/assets/global.scss'
-  ],
+  css: ['~/assets/global.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -63,32 +58,24 @@ export default {
     'nuxt-i18n'
   ],
   i18n: {
-    locales: ['hu', 'en'],
-    defaultLocale: 'hu',
-    vueI18n: {
-      fallbackLocale: 'hu',
-      messages: {
-        hu: {
-          homepage: 'Főoldal',
-          streams: 'Streamek',
-          downloads: 'Letöltések',
-          fanarts: 'Fanartok',
-          upload: 'Feltöltés',
-          title: 'Cím',
-          description: 'Leírás',
-          file: 'Fájl'
-        },
-        en: {
-          homepage: 'Homepage',
-          streams: 'Streams',
-          downloads: 'Downloads',
-          fanarts: 'Fanarts',
-          upload: 'Upload',
-          title: 'Title',
-          description: 'Description',
-          file: 'File'
-        }
+    locales: [
+      {
+        code: 'hu',
+        file: 'hu.js',
+        iso: 'hu',
+        isCatchallLocale: true
+      },
+      {
+        code: 'en',
+        file: 'en.js',
+        iso: 'en'
       }
+    ],
+    defaultLocale: 'hu',
+    lazy: true,
+    langDir: 'lang/',
+    vueI18n: {
+      fallbackLocale: 'hu'
     },
     detectBrowserLanguage: {
       useCookie: true,
@@ -109,10 +96,7 @@ export default {
     preset: 'default',
     linkify: true,
     breaks: true,
-    use: [
-      'markdown-it-div',
-      'markdown-it-attrs'
-    ]
+    use: ['markdown-it-div', 'markdown-it-attrs']
   },
 
   maintenance: {
@@ -143,7 +127,10 @@ export default {
       performance: true,
       functions: {
         emulatorPort: process.env.NODE_ENV === 'development' ? 5001 : undefined,
-        emulatorHost: process.env.NODE_ENV === 'development' ? 'http://localhost' : undefined
+        emulatorHost:
+          process.env.NODE_ENV === 'development'
+            ? 'http://localhost'
+            : undefined
       },
       messaging: {
         createServiceWorker: true,
@@ -198,6 +185,5 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
+  build: {}
 }

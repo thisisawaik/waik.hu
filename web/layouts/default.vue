@@ -147,7 +147,7 @@ export default {
       title: 'Vuetify.js',
       isAdmin: false,
       maintenance: false,
-      zalname: 'zal1000#1001'
+      zalname: 'zal1000#0497'
     }
   },
   watch: {

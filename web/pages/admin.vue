@@ -178,9 +178,9 @@ export default {
   }),
 
   async created () {
-    this.loadMassStatus()
-    this.loadSyncStatus()
     if (process.client) {
+      this.loadMassStatus()
+      this.loadSyncStatus()
       const db = this.$fire.firestore
       const ref = db.collection('waik').doc('discord')
       const doc = await ref.get()

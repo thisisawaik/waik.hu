@@ -1,14 +1,9 @@
 <template>
   <div>
-    <template slot="progress">
-      <v-progress-linear
-        :color="`#${article.colorTheme}`"
-        value="100"
-      />
-    </template>
-    {{ article.colorTheme }}
     <article>
-      <h1>{{ article.title }}</h1>
+      <h2>{{ article.title }}</h2>
+      <h1>{{ article.description }}</h1>
+      <br>
       <nuxt-content class="document" :document="article" />
       <p class="updated">
         Frissítve: {{ formatDate(article.updatedAt) }}
@@ -19,8 +14,8 @@
 
 <script>
 export default {
-  async asyncData ({ $content, params }) {
-    const article = await $content('infos', params.info).fetch()
+  async asyncData ({ $content, params, i18n }) {
+    const article = await $content(`${i18n.localeProperties.code}/infos`, params.info).fetch()
     return { article }
   },
   head () {

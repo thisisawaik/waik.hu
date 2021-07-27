@@ -36,6 +36,8 @@ export default {
   async asyncData ({ $content, store }) {
     const article = await $content('hu/rules', 'fanart').fetch()
     store.commit('setFanartRules', article)
+    const infos = await $content('hu/infos', 'fanart_comp').fetch()
+    store.commit('setFanartInfos', infos)
     return { article }
   },
   data () {

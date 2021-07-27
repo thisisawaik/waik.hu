@@ -20,10 +20,42 @@
 
         <v-file-input
           :label="$t('file')"
-          :message="['Megengedett formátumok: JPEG, PNG, GIF']"
           truncate-length="15"
           @change="upload"
         />
+        <v-dialog v-model="infosDialog" width="500">
+          <template #activator="{ on, attrs }">
+            <div>
+              <p class="imghint">
+                Megengedett formátumok: JPEG, PNG, GIF
+              </p>
+              <p class="imghint">
+                Javasolt szélesség: 374px
+              </p>
+              <p class="imghint">
+                Javasolt maximum magasság: 1000px
+              </p>
+              <a class="imghint" v-bind="attrs" v-on="on">További információk</a>
+            </div>
+          </template>
+
+          <v-card>
+            <v-card-title class="infosTitle">
+              {{ $store.state.fanartInfos.title }}
+            </v-card-title>
+            <nuxt-content class="infosContent" :document="$store.state.fanartInfos" />
+            <v-card-actions>
+              <p class="updated">
+                Frissítve: {{ formatDate($store.state.fanartInfos.updatedAt) }}
+              </p>
+              <v-spacer />
+              <v-btn color="primary" text @click="rulesDialog = false">
+                Bezárás
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
         <v-progress-linear style="margin-bottom: 20px;" :value="uploadProgress || 0" />
         <v-checkbox
           v-model="isForComp"
@@ -35,7 +67,7 @@
           :src="image ? image : 'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/waik%2Ffanarts%2Ftemp%2FWQxQFpK5L3WKfsxb3Ficb4fa90J2%2F11-500x300.png?alt=media&token=0fe24064-fe58-4b5e-bd3b-14155e392f87'"
           lazy-src="https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/waik%2Ffanarts%2Ftemp%2FWQxQFpK5L3WKfsxb3Ficb4fa90J2%2F11-500x300.png?alt=media&token=0fe24064-fe58-4b5e-bd3b-14155e392f87"
         />
-        <p>*A kép a teljes méretében fog megjelenni</p>
+        <p>*A kép a maximum 374px széles és 1000px magas módon fog megjelenni</p>
       </v-container>
       <v-dialog v-model="rulesDialog" width="500">
         <template #activator="{ on, attrs }">
@@ -103,6 +135,7 @@ export default {
       },
       isForComp: false,
       rulesDialog: false,
+      infosDialog: false,
       rules: this.$store.state.fanartRules,
       title,
       desc,
@@ -136,7 +169,6 @@ export default {
     if (user) {
       const artref = db.collection('waik/website/fanarts').doc(user.uid)
       const doc = await artref.get()
-      console.log(doc.data())
       if (doc.data().title) { this.titletext = doc.data().title }
       if (doc.data().desc) { this.desctext = doc.data().desc }
       if (doc.data().forComp) { this.isForComp = doc.data().forComp }
@@ -201,6 +233,7 @@ export default {
           this.saveBtn.disabled = false
         }, 5000)
       }).catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e)
       })
       trace.stop()
@@ -209,7 +242,6 @@ export default {
     async submit () {
       if (this.submitBtn.disabled === true) { return }
       await this.save()
-      console.log('asd')
       const functions = this.$fire.functions
       this.submitBtn.text = 'Beküldés...'
       this.submitBtn.color = 'yellow'
@@ -217,8 +249,7 @@ export default {
       this.submitBtn.disabled = true
       await functions.httpsCallable('waikFanartSubmit')({
         postId: this.$fire.auth.currentUser.uid
-      }).then((res) => {
-        console.log(res)
+      }).then(() => {
         this.submitBtn.text = 'Sikeres beküldés'
         this.submitBtn.color = 'green'
         this.submitBtn.tcolor = 'white'
@@ -230,6 +261,7 @@ export default {
           this.submitBtn.disabled = false
         }, 5000)
       }).catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e)
         this.submitBtn.text = 'Hiba történt beküldés közben! Próbáld újra később!'
         this.submitBtn.color = 'red'
@@ -251,5 +283,19 @@ export default {
 .btns {
   position: relative;
   left: 100%;
+}
+
+.imghint {
+  margin-bottom: 0px;
+  font-size: 13px;
+}
+
+.infosContent {
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
+
+.infosTitle {
+  margin-bottom: 10px;
 }
 </style>
