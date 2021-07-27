@@ -9,24 +9,6 @@
         />
       </template>
       <v-card-title>
-        <v-avatar v-if="autorole.status === 'pending'" size="56">
-          <img
-            alt="Pending"
-            src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2Fpending-clock.png?alt=media&token=110fd11e-23fa-4ffc-9533-b8078e23bea9"
-          >
-        </v-avatar>
-        <v-avatar v-else-if="autorole.status === 'success'" size="56">
-          <img
-            alt="Success"
-            src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2F1200px-Flat_tick_icon.svg.png?alt=media&token=c8aae673-0454-45bd-bdae-9cf1051d6ada"
-          >
-        </v-avatar>
-        <v-avatar v-else size="56">
-          <img
-            alt="Error"
-            src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2F1200px-Flat_cross_icon.svg.png?alt=media&token=066c44c3-c03c-4fee-b6c6-16ce1e8e5f73"
-          >
-        </v-avatar>
         <p class="ml-2">
           Auto role
         </p>
@@ -81,24 +63,6 @@
         />
       </template>
       <v-card-title>
-        <v-avatar v-if="massrole.status === 'pending'" size="56">
-          <img
-            alt="Pending"
-            src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2Fpending-clock.png?alt=media&token=110fd11e-23fa-4ffc-9533-b8078e23bea9"
-          >
-        </v-avatar>
-        <v-avatar v-if="massrole.status === 'success'" size="56">
-          <img
-            alt="Success"
-            src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2F1200px-Flat_tick_icon.svg.png?alt=media&token=c8aae673-0454-45bd-bdae-9cf1051d6ada"
-          >
-        </v-avatar>
-        <v-avatar v-if="massrole.status === 'error'" size="56">
-          <img
-            alt="Error"
-            src="https://firebasestorage.googleapis.com/v0/b/zal1000.appspot.com/o/LinkImages%2F1200px-Flat_cross_icon.svg.png?alt=media&token=066c44c3-c03c-4fee-b6c6-16ce1e8e5f73"
-          >
-        </v-avatar>
         <p class="ml-2">
           Mass role
         </p>
