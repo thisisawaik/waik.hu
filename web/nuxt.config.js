@@ -34,9 +34,7 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
-    // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
     '@nuxtjs/firebase',
     '@nuxtjs/device',
@@ -45,9 +43,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     '@nuxtjs/firebase',
     'nuxt-clipboard2',
@@ -135,6 +131,15 @@ export default {
       messaging: {
         createServiceWorker: true,
         actions: []
+      },
+      remoteConfig: {
+        settings: {
+          fetchTimeoutMillis: 60000, // default
+          minimumFetchIntervalMillis: 43200000 // default
+        },
+        defaultConfig: {
+          welcome_message: 'Welcome'
+        }
       }
     },
     onFirebaseHosting: true
