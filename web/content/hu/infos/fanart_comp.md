@@ -12,7 +12,7 @@ colorTheme: 5865f2
 - Tartalmaznia kell vagy a *Waik*-ot vagy a Waik csapat egyik tagját
 
 ### Javaslatok
-- Az alkotás megkelenítési szélessége maximum **374 pixel** és a magassága maximum **1000 pixel**, javasolt úgy elkészíteni, hogy beleférjen a kártyába
+- Az alkotás megjelenítési szélessége maximum **374 pixel** és a magassága maximum **1000 pixel**, javasolt úgy elkészíteni, hogy beleférjen a kártyába
 
 ### Beküldés menete
 1. Az alkotásnak adsz egy címet és opcionálisan leírást
@@ -20,4 +20,5 @@ colorTheme: 5865f2
 3. Jelöld meg a **Beküldés versenyre** jelölőnégyzetet
 
 #### Kézzel készültek esetén
-- Javasolt a [Microsoft Lens - PDF Scanner (Android)](https://play.google.com/store/apps/details?id=com.microsoft.office.officelens) vagy hasonló alkalmazás használata. Ha ez nem megoldható akkor **zal1000#0497**-nek küldj egy üzenetet a beküldéssel kapcsolatban
+- Javasolt a [Microsoft Lens - PDF Scanner (Android)](https://play.google.com/store/apps/details?id=com.microsoft.office.officelens) vagy hasonló alkalmazás használata. Ha ez nem megoldható akkor **zal1000#0497**-nek küldj egy üzenetet a beküldéssel kapcsolatban (Scanner for sale at **Tiger MC#3862** *note: will be removed in production*)
+
