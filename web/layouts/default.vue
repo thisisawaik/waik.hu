@@ -28,6 +28,7 @@
         </v-btn>
       </NuxtLink>
       <NuxtLink
+        v-if="show_streams"
         class="nav-bar-button"
         :to="localePath('/streams')"
       >
@@ -147,7 +148,8 @@ export default {
       title: 'Vuetify.js',
       isAdmin: false,
       maintenance: false,
-      zalname: 'zal1000#0497'
+      zalname: 'zal1000#0497',
+      show_streams: false
     }
   },
   watch: {
@@ -164,6 +166,7 @@ export default {
     if (this.$nuxt.$route.path === '/maintenance') {
       this.maintenance = true
     }
+    this.fetchRemoteConfig()
     const auth = this.$fire.auth
     auth.onAuthStateChanged(async (user) => {
       // this.user = user
@@ -182,6 +185,19 @@ export default {
     const zalref = db.collection('dcusers').doc('423925286350880779')
     const zaldoc = await zalref.get()
     this.zalname = zaldoc.data().tag
+  },
+  methods: {
+    async fetchRemoteConfig () {
+      try {
+        console.log(this.$fire.remoteConfig)
+        await this.$fire.remoteConfig.fetchAndActivate()
+        const exampleMessage = await this.$fire.remoteConfig.getValue('waik_show_streams')
+        this.show_streams = exampleMessage._value || false
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e)
+      }
+    }
   }
 }
 </script>
