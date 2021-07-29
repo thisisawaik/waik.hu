@@ -105,7 +105,7 @@ export default {
   },
   head () {
     return {
-      title: this.user ? 'Waik | Fiók' : 'Waik | Bejelentkezés'
+      title: `Waik | ${this.user ? 'Fiók' : 'Bejelentkezés'}`
     }
   },
   created () {
