@@ -32,19 +32,19 @@ jobs:
     - name: Run tests
       run: |
         cd web
-#        npm ci
-#        npm run test
+        npm ci
+        npm run test
+        npm run lint
 
     - name: Build container image
       run: |
         cd web
         docker build --tag gcr.io/zal1000/waik/website:$GITHUB_SHA .
 
-#    - name: Build nuxt.js app
-#      run: |
-#        cd web
-#        npm run generate
-#        rm -r ./dist/login
+    - name: Build nuxt.js app
+      run: |
+        cd web
+        npm run generate
 
     - name: Push container image to gcr.io
       run: |

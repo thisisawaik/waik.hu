@@ -109,7 +109,7 @@
       <v-divider class="nav-bar-avatar" vertical />
       <NuxtLink
         class="nav-bar-avatar"
-        :to="localePath('/login')"
+        :to="localePath('/auth')"
       >
         <v-avatar
           size="40"

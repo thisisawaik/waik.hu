@@ -65,7 +65,7 @@
               </v-btn><br><br>
               <v-btn
                 elevation="2"
-                :href="dcurl"
+                @click="discordLogin()"
               >
                 Bejelentkezés discord fiókkal
               </v-btn>
@@ -109,10 +109,6 @@ export default {
     }
   },
   created () {
-    if (this.$nuxt.$route.query.code && !process.server) {
-      console.log(`dc token found: ${this.$nuxt.$route.query.code}`)
-      this.discordLogin(this.$nuxt.$route.query.code)
-    }
     const auth = this.$fire.auth
     auth.onAuthStateChanged(async (user) => {
       this.user = user
@@ -138,29 +134,8 @@ export default {
         .then(() => {})
         .catch(() => {})
     },
-    async discordLogin (token) {
-      this.loading = true
-      console.log('progress bar true')
-      const functions = this.$fire.functions
-      try {
-        const path = window.location.href.split('?')[0]
-        this.$router.replace({ query: null })
-        console.log('query nulled')
-        // console.log(path)
-        console.log('sending login request')
-        const res = await functions.httpsCallable('waikDcLogin')({
-          token,
-          source: path
-        })
-        console.log('login request success')
-        await this.$fire.auth.signInWithCustomToken(res.data.token)
-        console.log('login success with token: ', res.data.token)
-        this.loading = false
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error)
-        this.loading = false
-      }
+    discordLogin () {
+      location = `https://discord.com/api/oauth2/authorize?client_id=737849483194269818&redirect_uri=${window.location.protocol}//${window.location.host}/auth/discord/callback&response_type=code&scope=identify%20email`
     },
     logOut () {
       this.$fire.auth.signOut()
