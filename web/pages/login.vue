@@ -147,14 +147,14 @@ export default {
         this.$router.replace({ query: null })
         console.log('query nulled')
         // console.log(path)
-        onsole.log('sending login request')
+        console.log('sending login request')
         const res = await functions.httpsCallable('waikDcLogin')({
           token,
           source: path
         })
-        onsole.log('login request success')
+        console.log('login request success')
         await this.$fire.auth.signInWithCustomToken(res.data.token)
-        onsole.log('login success with token: ', res.data.token)
+        console.log('login success with token: ', res.data.token)
         this.loading = false
       } catch (error) {
         // eslint-disable-next-line no-console
