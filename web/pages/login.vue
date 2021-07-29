@@ -100,7 +100,7 @@ export default {
       discordLoading: true,
       dcAvatar: null,
       loading: false,
-      dcurl: 'https://discord.com/api/oauth2/authorize?client_id=737849483194269818&redirect_uri=http://localhost:3000/login&response_type=code&scope=identify%20email'
+      dcurl: 'https://discord.com/api/oauth2/authorize?client_id=737849483194269818&redirect_uri=https%3A%2F%2Fdev.waik.hu%2Flogin&response_type=code&scope=identify%20email'
     }
   },
   head () {
