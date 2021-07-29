@@ -29,6 +29,7 @@ const imageai = new vision.ImageAnnotatorClient();
 
 admin.initializeApp({
   databaseURL: "https://waik.europe-west1.firebasedatabase.app/",
+  serviceAccountId: 'owner-level-service-account@zal1000.iam.gserviceaccount.com',
 });
 
 const db = admin.firestore();
