@@ -27,9 +27,13 @@ const imageai = new vision.ImageAnnotatorClient();
 
 // const pubSubClient = new PubSub();
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const serviceAccount = require("../key.json");
+
 admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://waik.europe-west1.firebasedatabase.app/",
-  serviceAccountId: 'owner-level-service-account@zal1000.iam.gserviceaccount.com',
+  serviceAccountId: "owner-level-service-account@zal1000.iam.gserviceaccount.com",
 });
 
 const db = admin.firestore();
