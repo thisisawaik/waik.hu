@@ -135,7 +135,7 @@ export default {
         .catch(() => {})
     },
     discordLogin () {
-      location = `https://discord.com/api/oauth2/authorize?client_id=737849483194269818&redirect_uri=${window.location.protocol}//${window.location.host}/auth/discord/callback&response_type=code&scope=identify%20email`
+      location = `https://discord.com/api/oauth2/authorize?client_id=737849483194269818&redirect_uri=${window.location.protocol}//${window.location.host}${this.$i18n.locale !== 'hu' ? `/${this.$i18n.locale}` : ''}/auth/discord/callback&response_type=code&scope=identify%20email`
     },
     logOut () {
       this.$fire.auth.signOut()
