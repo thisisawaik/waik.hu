@@ -193,7 +193,7 @@ export default {
       avatar: null,
       drawer: false,
       group: null,
-      clipped: false,
+      clipped: true,
       navItems: [
         {
           name: 'homepage',

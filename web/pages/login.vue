@@ -100,7 +100,7 @@ export default {
       discordLoading: true,
       dcAvatar: null,
       loading: false,
-      dcurl: 'https://discord.com/api/oauth2/authorize?client_id=737849483194269818&redirect_uri=https%3A%2F%2Fdev.waik.hu%2Flogin&response_type=code&scope=identify%20email'
+      dcurl: 'https://discord.com/api/oauth2/authorize?client_id=737849483194269818&redirect_uri=http://localhost:3000/login&response_type=code&scope=identify%20email'
     }
   },
   head () {
@@ -109,7 +109,8 @@ export default {
     }
   },
   created () {
-    if (this.$nuxt.$route.query.code && process.client) {
+    if (this.$nuxt.$route.query.code && !process.server) {
+      console.log(`dc token found: ${this.$nuxt.$route.query.code}`)
       this.discordLogin(this.$nuxt.$route.query.code)
     }
     const auth = this.$fire.auth
@@ -139,20 +140,25 @@ export default {
     },
     async discordLogin (token) {
       this.loading = true
+      console.log('progress bar true')
       const functions = this.$fire.functions
       try {
         const path = window.location.href.split('?')[0]
         this.$router.replace({ query: null })
+        console.log('query nulled')
         // console.log(path)
+        onsole.log('sending login request')
         const res = await functions.httpsCallable('waikDcLogin')({
           token,
           source: path
         })
+        onsole.log('login request success')
         await this.$fire.auth.signInWithCustomToken(res.data.token)
+        onsole.log('login success with token: ', res.data.token)
         this.loading = false
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error(error)
+        console.log(error)
         this.loading = false
       }
     },
