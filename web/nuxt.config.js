@@ -138,11 +138,11 @@ export default {
           minimumFetchIntervalMillis: 43200000 // default
         },
         defaultConfig: {
-          welcome_message: 'Welcome'
+          waik_show_streams: false
         }
       }
     },
-    onFirebaseHosting: true
+    onFirebaseHosting: process.env.NODE_ENV === 'production'
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

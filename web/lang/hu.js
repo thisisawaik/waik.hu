@@ -6,5 +6,6 @@ export default {
   upload: 'Feltöltés',
   title: 'Cím',
   description: 'Leírás',
-  file: 'Fájl'
+  file: 'Fájl',
+  admin: 'Admin'
 }

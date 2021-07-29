@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -6,7 +7,9 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import vision from "@google-cloud/vision";
 import * as Discord from "discord.js";
-import DiscordAuth from "discord-oauth2";
+import DiscordOauth2 = require("discord-oauth2");
+
+const DcAuth: any = DiscordOauth2;
 
 // import * as ai from "@google-cloud/aiplatform";
 // import {PubSub} from "@google-cloud/pubsub";
@@ -18,6 +21,8 @@ const aiendp = new ai.EndpointServiceClient({
   location: "us-central1",
 });
 */
+
+// eslint-disable-next-line new-cap
 const imageai = new vision.ImageAnnotatorClient();
 
 // const pubSubClient = new PubSub();
@@ -40,37 +45,48 @@ const rdb = admin.database();
 // export {waikFanartApprove};
 
 export const waikDcLogin = functions.https.onCall(async (data, context) => {
-  const oauth = new DiscordAuth({
-    clientId: "804728783973253150",
-    clientSecret: "d59GczrnhZULTU5g7V9m07gv4dzaTvrj",
-  });
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line new-cap
   const token = data.token;
-
+  const source = data.source;
   if (!token) {
     throw new functions.https.HttpsError("failed-precondition", "no-token-found");
   }
-  await oauth.tokenRequest({
-    refreshToken: token,
-    grantType: "refresh_token",
-    scope: ["identify", "email"],
-    redirectUri: "",
-  }).then(async (res) => {
-    const atoken = res.access_token;
-    await oauth.getUser(atoken).then(async (dcres) => {
-      const auth = admin.auth();
+  if (!source) {
+    throw new functions.https.HttpsError("failed-precondition", "source-not-provided");
+  }
+  const authdoc = await db.collection("waik").doc("bot").get();
+  console.log(authdoc.data());
+  const oauth = new DcAuth({
+    redirectUri: source,
+    clientId: authdoc.data()?.auth.id,
+    clientSecret: authdoc.data()?.auth.secret,
+  });
 
-      const ref = db.collection("dcusers").where("dcid", "==", token);
+  return await oauth.tokenRequest({
+    code: token,
+    scope: "email",
+    grantType: "authorization_code",
+  // eslint-disable-next-line camelcase
+  }).then(async (res: { access_token: any; }) => {
+    const atoken = res.access_token;
+    return await oauth.getUser(atoken).then(async (dcres: { email: string; username: any; avatar: any; id: any; }) => {
+      const auth = admin.auth();
+      // console.log(dcres);
+      const ref = db.collection("users").where("dcid", "==", dcres.id);
       const q = await ref.get();
 
       if (!q.empty && q.docs[0].data()?.dcid) {
-        await auth.createCustomToken(q.docs[0].id).then((res) => {
+        return await auth.createCustomToken(q.docs[0].id).then((res) => {
+          // console.log(res);
           return {
             token: res,
           };
         });
       } else {
+        console.log(2);
         if (dcres.email) {
-          await auth.getUserByEmail(dcres.email).then(async (user) => {
+          return await auth.getUserByEmail(dcres.email).then(async (user) => {
             await auth.createCustomToken(user.uid).then((token) => {
               return {
                 token: token,
@@ -81,12 +97,12 @@ export const waikDcLogin = functions.https.onCall(async (data, context) => {
           }).catch(async (e) => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const email: any = dcres.email;
-            await auth.createUser({
+            return await auth.createUser({
               email: email,
               displayName: dcres.username,
               photoURL: dcres.avatar ? `https://cdn.discordapp.com/avatars/${dcres.id}/${dcres.avatar}.webp` : null,
             }).then(async (user) => {
-              await auth.createCustomToken(user.uid).then((token) => {
+              return await auth.createCustomToken(user.uid).then((token) => {
                 return {
                   token: token,
                 };
@@ -99,10 +115,12 @@ export const waikDcLogin = functions.https.onCall(async (data, context) => {
           });
         }
       }
-    }).catch((e) => {
+    }).catch((e: string) => {
+      console.error(e);
       throw new functions.https.HttpsError("permission-denied", e);
     });
-  }).catch((e) => {
+  }).catch((e: string) => {
+    console.error(e);
     throw new functions.https.HttpsError("permission-denied", e);
   });
 });

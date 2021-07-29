@@ -3,7 +3,9 @@
     <v-tabs v-model="tab" fixed-tabs flat background-color="primary" dark>
       <v-tab>{{ $t('fanarts') }}</v-tab>
       <v-tab>{{ $t('upload') }}</v-tab>
-      <v-tab>Admin</v-tab>
+      <v-tab v-if="isAdmin">
+        Admin
+      </v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tab">
@@ -43,7 +45,8 @@ export default {
   data () {
     return {
       tab: 0,
-      items: []
+      items: [],
+      isAdmin: false
     }
   },
   head () {
@@ -71,6 +74,20 @@ export default {
     }
   },
   async created () {
+    const auth = this.$fire.auth
+    auth.onAuthStateChanged(async (user) => {
+      // this.user = user
+      if (user) {
+        const token = await user.getIdTokenResult(true)
+        if (token.claims.waikAdmin) {
+          this.isAdmin = true
+        } else {
+          this.isAdmin = false
+        }
+      } else {
+        this.isAdmin = false
+      }
+    })
     const db = this.$fire.firestore
     const query = db
       .collection('waik/website/fanarts')

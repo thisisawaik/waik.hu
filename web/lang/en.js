@@ -6,5 +6,6 @@ export default {
   upload: 'Upload',
   title: 'Title',
   description: 'Description',
-  file: 'File'
+  file: 'File',
+  admin: 'Admin'
 }

@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="loading" class="mx-auto my-12" max-width="374">
+  <v-card :loading="loading" class="mx-auto my-12" :max-width="isFromPhone ? '90vw' : '374'">
     <template slot="progress">
       <v-progress-linear
         color="deep-purple"
@@ -62,7 +62,9 @@ export default {
       authorName: 'Loading...',
       downloadurl: null,
       githuburl: null,
-      showCopyBar: false
+      showCopyBar: false,
+      isFromPhone: this.$device.isMobileOrTablet
+
     }
   },
   async created () {

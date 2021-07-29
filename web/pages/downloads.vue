@@ -1,7 +1,12 @@
 <template>
   <v-container>
-    <div style="margin-top: 30px; padding 10px" />
-    <download-card v-for="item in items" :id="item.id" :key="item.id" />
+    <v-flex class="flexContainer">
+      <v-container fill-height fluid>
+        <div style="margin-top: 30px; padding 10px" />
+        <div style="margin-top: 30px; padding 10px" />
+        <download-card v-for="item in items" :id="item.id" :key="item.id" />
+      </v-container>
+    </v-flex>
   </v-container>
 </template>
 
@@ -55,3 +60,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.flexContainer {
+    overflow: auto;
+}
+</style>
