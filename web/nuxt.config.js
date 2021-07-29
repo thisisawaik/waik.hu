@@ -73,6 +73,7 @@ export default {
     vueI18n: {
       fallbackLocale: 'hu'
     },
+    vueI18nLoader: true,
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
