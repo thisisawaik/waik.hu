@@ -1,3 +1,12 @@
+<i18n lang="yaml">
+hu:
+  login_in_progress: "Bejelentkezés fojamatban! Kérem várjon!"
+  cancel: "Megszakítás"
+en:
+  login_in_progress: "Login in progress! Please wait!"
+  cancel: "Cancel"
+</i18n>
+
 <template>
   <div class="background">
     <div class="split left">
@@ -11,7 +20,7 @@
             />
           </template>
           <v-card-title class="text-h5 lighten-2">
-            Bejelentkezés fojamatban! Kérem várjon!
+            {{ $t('login_in_progress') }}
           </v-card-title>
 
           <v-divider />
@@ -19,7 +28,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn color="red" text @click="cancel()">
-              Megszakítás
+              {{ $t('cancel') }}
             </v-btn>
           </v-card-actions>
         </v-card>
