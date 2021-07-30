@@ -251,8 +251,14 @@ export const waikFanartSubmit = functions.https.onCall(
         if (artq.docs.length > 3) {
           throw new functions.https.HttpsError(
               "failed-precondition",
-              "Már küldtél be 3 alkotást a versenyre!"
+              "3-alerady-sent-for-comp"
           );
+        }
+
+        const userDoc = await db.doc(`users/${uid}`).get();
+
+        if (!userDoc.data()?.dcid) {
+          throw new functions.https.HttpsError("failed-precondition", "discord-not-linked");
         }
 
         const bot = new Discord.Client();
@@ -264,16 +270,16 @@ export const waikFanartSubmit = functions.https.onCall(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const artdocdata: any = artdoc.data();
 
+
         await db.collection("waik/website/fanarts").add({
           ...artdocdata,
           safeSearchDetection: result.safeSearchAnnotation,
           status: "PENDING",
           getFromGS: true,
+          author: userDoc.data()?.dcid,
         }).then((res) => {
           console.log(res.id);
         });
-
-        const userDoc = await db.doc(`users/${uid}`).get();
 
         // console.log(userDoc.data()?.dcid);
 
