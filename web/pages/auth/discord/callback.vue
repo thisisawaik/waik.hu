@@ -1,6 +1,6 @@
 <i18n lang="yaml">
 hu:
-  login_in_progress: "Bejelentkezés fojamatban! Kérem várjon!"
+  login_in_progress: "Bejelentkezés folyamatban! Kérem várjon!"
   cancel: "Megszakítás"
 en:
   login_in_progress: "Login in progress! Please wait!"
