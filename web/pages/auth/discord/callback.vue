@@ -56,27 +56,19 @@ export default {
   created () {
     this.canceled = false
     if (this.$nuxt.$route.query.code && !process.server) {
-      console.log(`dc token found: ${this.$nuxt.$route.query.code}`)
       this.discordLogin(this.$nuxt.$route.query.code)
     }
   },
   methods: {
     async discordLogin (token) {
-      console.log('progress bar true')
       const functions = this.$fire.functions
       const path = window.location.href.split('?')[0]
       this.$router.replace({ query: null })
-      console.log('query nulled')
-      // console.log(path)
-      console.log('sending login request')
       await functions.httpsCallable('waikDcLogin')({
         token,
         source: path
       }).then(async (res) => {
-        console.log('login request success')
-        await this.$fire.auth.signInWithCustomToken(res.data.token).then((user) => {
-          console.log('login success with token: ', res.data.token)
-          console.log('user: ', user.uid)
+        await this.$fire.auth.signInWithCustomToken(res.data.token).then(() => {
           if (!this.canceled) {
             this.$router.push('/auth')
           }

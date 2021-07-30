@@ -359,7 +359,7 @@ export const waikFanartAddLike = functions.https.onCall((data, context) => {
     );
   }
 
-  const id = data.postId;
+  const id = data.postId || data.id;
   if (!id) {
     throw new functions.https.HttpsError(
         "invalid-argument",
@@ -368,7 +368,7 @@ export const waikFanartAddLike = functions.https.onCall((data, context) => {
   }
   const postref = db.doc(`waik/website/fanarts/${id}`);
 
-  postref.get().then(async (doc) => {
+  return postref.get().then(async (doc) => {
     if (!doc.exists) {
       throw new functions.https.HttpsError("not-found", `post-not-found-${id}`);
     }
@@ -389,7 +389,7 @@ export const waikFanartAddLike = functions.https.onCall((data, context) => {
       await likesRef.update({
         likes: admin.database.ServerValue.increment(1),
       });
-      await likeRef
+      return await likeRef
           .set({
             likedAt: admin.firestore.Timestamp.now(),
           })
@@ -430,7 +430,7 @@ export const waikFanartLikeRemove = functions.https.onCall((data, context) => {
   }
   const postref = db.doc(`waik/website/fanarts/${id}`);
 
-  postref.get().then(async (doc) => {
+  return postref.get().then(async (doc) => {
     if (!doc.exists) {
       throw new functions.https.HttpsError("not-found", `post-not-found-${id}`);
     }
@@ -452,7 +452,7 @@ export const waikFanartLikeRemove = functions.https.onCall((data, context) => {
       await likesRef.update({
         likes: admin.database.ServerValue.increment(-1),
       });
-      await likeRef.delete().then((res) => {
+      return await likeRef.delete().then((res) => {
         return {
           status: "OK",
           likes: doc.data()?.likes,

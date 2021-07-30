@@ -101,7 +101,12 @@
       </v-dialog>
     </v-form>
     <div v-else>
-      <h1>Fanart feltöltéshez be kell jelentkezned!</h1>
+      <h1>Fanart feltöltéshez be kell jelentkezned!</h1> <NuxtLink
+        class="nav-bar-button"
+        :to="localePath('auth')"
+      >
+        <h1>Kattints ide a bejelentkezéshez</h1>
+      </NuxtLink>
     </div>
   </div>
 </template>
@@ -169,12 +174,14 @@ export default {
     if (user) {
       const artref = db.collection('waik/website/fanarts').doc(user.uid)
       const doc = await artref.get()
-      if (doc.data().title) { this.titletext = doc.data().title }
-      if (doc.data().desc) { this.desctext = doc.data().desc }
-      if (doc.data().forComp) { this.isForComp = doc.data().forComp }
-      if (doc.data().gsURL) {
-        const url = await this.$fire.storage.ref(doc.data().gsURL).getDownloadURL()
-        this.image = url
+      if (doc.exist) {
+        if (doc.data().title) { this.titletext = doc.data().title }
+        if (doc.data().desc) { this.desctext = doc.data().desc }
+        if (doc.data().forComp) { this.isForComp = doc.data().forComp }
+        if (doc.data().gsURL) {
+          const url = await this.$fire.storage.ref(doc.data().gsURL).getDownloadURL()
+          this.image = url
+        }
       }
     }
   },

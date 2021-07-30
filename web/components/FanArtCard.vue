@@ -35,8 +35,9 @@
         </v-list-item-content>
 
         <v-row align="center" justify="end">
-          <v-icon class="mr-1">
-            mdi-heart
+          {{ likes }}
+          <v-icon class="mr-1" @click="changeLikeStatus()">
+            {{ isLiked ? 'mdi-heart' : 'mdi-heart-outline' }}
           </v-icon>
           <span class="mr-1">·</span>
           <v-icon class="mr-1">
@@ -63,11 +64,15 @@ export default {
       downloadurl: null,
       githuburl: null,
       showCopyBar: false,
-      isFromPhone: this.$device.isMobileOrTablet
+      isFromPhone: this.$device.isMobileOrTablet,
+      likes: 0,
+      isLiked: false,
+      likesListener: null
     }
   },
   async created () {
     const db = this.$fire.firestore
+    const database = this.$fire.database
     // const storage = this.$fire.storage
     const ref = db.collection('waik/website/fanarts').doc(this.id)
     try {
@@ -87,6 +92,18 @@ export default {
         this.authorAvatar = dcDoc.data().pp
         this.authorName = dcDoc.data().tag
       }
+      const user = this.$fire.auth.currentUser
+      if (user) {
+        const userLikeRef = db.doc(`waik/website/fanarts/hVRDj6DZlvfWyPAnyEEE/likes/${user.uid}`)
+        await userLikeRef.get().then((doc) => {
+          this.isLiked = !!doc.exists
+        })
+      }
+      const likesref = database.ref(`fanarts/${this.id}`)
+      // eslint-disable-next-line require-await
+      this.likesListener = likesref.on('value', async (snap) => {
+        this.likes = snap.val().likes ? snap.val().likes : 0
+      })
       this.loading = false
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -94,10 +111,48 @@ export default {
       this.loading = false
     }
   },
+  destroyed () {
+    try {
+      this.likesListener()
+    } catch (e) {
+      console.warn('Detatching listener failed')
+    }
+  },
   methods: {
     copyShareUrl () {},
-    like () {},
-    remove_like () {},
+    changeLikeStatus () {
+      if (this.isLiked) {
+        this.remove_like()
+      } else {
+        this.like()
+      }
+    },
+    async like () {
+      const functions = this.$fire.functions
+      this.isLiked = true
+      this.likes = this.likes + 1
+      await functions.httpsCallable('waikFanartAddLike')({
+        id: this.id
+      }).catch((e) => {
+        console.log(e)
+        this.isLiked = false
+        this.likes = this.likes - 1
+      })
+      // waikFanartAddLike
+    },
+    async remove_like () {
+      const functions = this.$fire.functions
+      this.isLiked = false
+      this.likes = this.likes - 1
+      await functions.httpsCallable('waikFanartLikeRemove')({
+        id: this.id
+      }).catch((e) => {
+        console.log(e)
+        this.isLiked = true
+        this.likes = this.likes + 1
+      })
+      // waikFanartLikeRemove
+    },
     async copySomething (text) {
       try {
         await this.$copyText(text)

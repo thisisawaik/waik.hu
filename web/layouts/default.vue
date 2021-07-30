@@ -243,7 +243,6 @@ export default {
     if (this.$nuxt.$route.path === '/maintenance') {
       this.maintenance = true
     }
-    // this.fetchRemoteConfig()
     const auth = this.$fire.auth
     auth.onAuthStateChanged(async (user) => {
       // this.user = user
