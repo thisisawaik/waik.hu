@@ -1,7 +1,11 @@
 export const state = () => ({
   fanartRules: null,
   fanartInfos: null,
-  mdtest: '# Hello world'
+  email: {
+    status: null,
+    error: null
+  }
+
 })
 
 export const mutations = {
@@ -10,5 +14,11 @@ export const mutations = {
   },
   setFanartInfos (state, infos) {
     state.fanartInfos = infos
+  },
+  setAuthEmailStatus (state, status) {
+    state.email.status = status
+  },
+  setAuthEmailError (state, error) {
+    state.email.status = error
   }
 }

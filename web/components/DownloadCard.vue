@@ -35,11 +35,15 @@
         </v-list-item-content>
 
         <v-row align="center" justify="end">
-          <v-icon class="mr-1">
+          <v-icon v-if="githuburl" class="mr-1" @click="openGithub">
+            mdi-github
+          </v-icon>
+          <span v-if="githuburl && downloadurl" class="mr-1">·</span>
+          <v-icon v-if="downloadurl" class="mr-1" @click="download">
             mdi-download
           </v-icon>
-          <span class="mr-1">·</span>
-          <v-icon class="mr-1">
+          <span v-if="shareId && downloadurl || shareId && githuburl" class="mr-1">·</span>
+          <v-icon v-if="shareId" class="mr-1" @click="copyShareUrl">
             mdi-share-variant
           </v-icon>
         </v-row>
@@ -63,13 +67,14 @@ export default {
       downloadurl: null,
       githuburl: null,
       showCopyBar: false,
-      isFromPhone: this.$device.isMobileOrTablet
+      isFromPhone: this.$device.isMobileOrTablet,
+      shareId: null
 
     }
   },
   async created () {
     const db = this.$fire.firestore
-    // const storage = this.$fire.storage
+    const storage = this.$fire.storage
     const ref = db.collection('waik/website/downloads').doc(this.id)
     try {
       const doc = await ref.get()
@@ -86,6 +91,18 @@ export default {
         this.authorAvatar = dcDoc.data().pp
         this.authorName = dcDoc.data().tag
       }
+      if (doc.data().githuburl) {
+        this.githuburl = doc.data().githuburl
+      }
+      if (doc.data().shareid) {
+        this.shareId = doc.data().shareid
+      }
+      if (doc.data().downloadgs) {
+        const sref = storage.refFromURL(doc.data().downloadgs)
+        this.downloadurl = await sref.getDownloadURL()
+      } else {
+        this.downloadurl = doc.data().downloadurl
+      }
       this.loading = false
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -94,9 +111,22 @@ export default {
     }
   },
   methods: {
-    copyShareUrl () {},
-    download () {},
-    openGithub () {},
+    copyShareUrl () {
+      if (this.shareId) {
+        const url = `https://waik.hu/share/${this.shareId}`
+        this.copySomething(url)
+      }
+    },
+    download () {
+      if (this.downloadurl) {
+        open(this.downloadurl)
+      }
+    },
+    openGithub () {
+      if (this.githuburl) {
+        open(this.githuburl)
+      }
+    },
     async copySomething (text) {
       try {
         await this.$copyText(text)

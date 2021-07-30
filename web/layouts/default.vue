@@ -180,14 +180,6 @@
 
 <script>
 export default {
-  async asyncData ({ app }) {
-    const db = app.$fire.firestore
-    const zalref = db.collection('dcusers').doc('423925286350880779')
-    const zaldoc = await zalref.get()
-    return {
-      zalname: zaldoc.data().tag
-    }
-  },
   data () {
     return {
       avatar: null,

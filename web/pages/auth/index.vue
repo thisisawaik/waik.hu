@@ -45,12 +45,7 @@
             </div>
             <v-divider />
             <v-card-text>
-              <p class="text-h6 lighten-2">
-                Profilkép
-              </p>
-              <p>
-                (Coming soon)
-              </p>
+              <account-email :user="user" />
             </v-card-text>
           </div>
 
@@ -89,7 +84,12 @@
 </template>
 
 <script>
+import AccountEmail from '@/components/auth/AccountEmail.vue'
+
 export default {
+  components: {
+    AccountEmail
+  },
   data () {
     return {
       avatar: null,
@@ -99,7 +99,7 @@ export default {
       token: null,
       discordLoading: true,
       dcAvatar: null,
-      loading: false,
+      loading: true,
       dcurl: 'https://discord.com/api/oauth2/authorize?client_id=737849483194269818&redirect_uri=https%3A%2F%2Fdev.waik.hu%2Flogin&response_type=code&scope=identify%20email'
     }
   },
@@ -124,6 +124,7 @@ export default {
       } else {
         this.avatar = null
       }
+      this.loading = false
     })
   },
   methods: {

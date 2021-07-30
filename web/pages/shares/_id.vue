@@ -12,10 +12,10 @@ export default {
     const id = params.id
     const ref = db.collection('waik/website/shares').doc(id)
     const doc = await ref.get()
-    let title = doc.data().title
-    let desc = doc.data().title
-    let image = doc.data().title
-    let color = doc.data().title
+    let title
+    let desc
+    let image
+    let color
 
     if (doc.data().type === 'fanart') {
       const artref = db.collection('waik/website/fanarts').doc(doc.data().id)
