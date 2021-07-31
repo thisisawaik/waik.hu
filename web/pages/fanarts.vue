@@ -22,18 +22,25 @@
           <fan-art-upload />
         </v-container>
       </v-tabs-item>
+      <v-tabs-item v-else-if="tab === 2">
+        <v-container>
+          <fan-art-admin />
+        </v-container>
+      </v-tabs-item>
     </v-tabs-items>
   </v-card>
 </template>
 
 <script>
+import FanArtAdmin from '../components/FanArtAdmin.vue'
 import FanArtCard from '../components/FanArtCard.vue'
 import FanArtUpload from '../components/FanArtUpload.vue'
 
 export default {
   components: {
     FanArtCard,
-    FanArtUpload
+    FanArtUpload,
+    FanArtAdmin
   },
   async asyncData ({ $content, store }) {
     const article = await $content('hu/rules', 'fanart').fetch()

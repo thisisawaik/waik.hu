@@ -13,7 +13,7 @@
       <div>{{ desc }}</div>
     </v-card-text>
 
-    <v-divider class="mx-4" />
+    <v-divider />
 
     <v-card-actions>
       <v-list-item class="grow">

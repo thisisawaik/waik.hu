@@ -175,9 +175,76 @@ export const waikFanartApprove = functions.https.onCall(
         likes: 0,
       });
 
+      await db.collection("waik/website/shares").doc(id.substring(0, 5)).set({
+        type: "fanart",
+        id: id,
+      });
+
       await artref.update({
         status: "PUBLIC",
       });
+
+      const bot = new Discord.Client();
+
+      const adminUserDoc = await db.doc(`users/${uid}`).get();
+
+      if (artdoc.data()?.author) {
+        try {
+          const botDoc = await db.doc("waik/bot").get();
+          await bot.login(botDoc.data()?.token);
+          const user = await bot.users.fetch(artdoc.data()?.author);
+          const adminUser = await bot.users.fetch(adminUserDoc.data()?.dcid);
+          const embed = new Discord.MessageEmbed()
+              .setTitle(artdoc.data()?.title)
+          // eslint-disable-next-line max-len
+              .setAuthor(
+                  `${user.tag}`,
+                  user.avatarURL({dynamic: true}) || undefined
+              )
+              .setColor("#4caf50");
+          const gsURL: string = artdoc.data()?.gsURL;
+
+          const imageURL = await admin
+              .storage()
+              .bucket("zal1000.net")
+              .file(gsURL.substring(1))
+              .getSignedUrl({
+                action: "read",
+                expires: new Date(Date.now() + 2592000000),
+              });
+
+          if (imageURL) {
+            embed.setImage(imageURL[0]);
+          }
+
+          if (artdoc.data()?.desc) {
+            embed.addField("\u200B", artdoc.data()?.desc);
+          }
+
+          const modchannel = await bot.channels.fetch("541997126025084929");
+
+          // eslint-disable-next-line max-len
+          // const authordata = await db.collection('dcusers').doc(user.id).get();
+
+          if (modchannel.isText()) {
+            await modchannel.send(`<@${adminUser.id}> approved an art`, embed);
+          }
+
+          await user
+              .send(
+                  `Gratulálok, az alkotásod mostmár publikusan megtekinthető!
+Reméljük még sok hasonlót kapunk tőled!
+https://waik.hu/share/${id.substring(0, 5)}`,
+                  embed
+              )
+              .then((msg) => {
+                console.log(`Message sent to ${user.tag} (${msg.id})`);
+              });
+          bot.destroy();
+        } catch (error) {
+          console.error(error);
+        }
+      }
 
       return {};
     });
@@ -276,7 +343,6 @@ export const waikFanartSubmit = functions.https.onCall(
           safeSearchDetection: result.safeSearchAnnotation,
           status: "PENDING",
           getFromGS: true,
-          author: userDoc.data()?.dcid,
         }).then((res) => {
           console.log(res.id);
         });
@@ -299,7 +365,6 @@ export const waikFanartSubmit = functions.https.onCall(
                 .setColor("#fee75c");
             const gsURL: string = doc.data()?.gsURL;
 
-            // eslint-disable-next-line max-len
             const imageURL = await admin
                 .storage()
                 .bucket("zal1000.net")
@@ -323,14 +388,13 @@ export const waikFanartSubmit = functions.https.onCall(
             // const authordata = await db.collection('dcusers').doc(user.id).get();
 
             if (modchannel.isText()) {
-              await modchannel.send(`${user.tag} submitted an art`, embed);
+              await modchannel.send(`<@${user.id}> submitted an art`, embed);
             }
 
             await user
                 .send(
                     `Sikeres beküldés!
-                    \nA moderátorok nemsokára ellenőrizni fogják, ha minden szabálynak megfelel akkor publikálásra kerül.
-                    \nHa szeretnél valamit módosítani akkor a https://waik.hu/fanarts oldalon megteheted!`,
+A moderátorok nemsokára ellenőrizni fogják, ha minden szabálynak megfelel akkor publikálásra kerül.`,
                     embed
                 )
                 .then((msg) => {

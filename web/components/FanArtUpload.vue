@@ -150,6 +150,7 @@ export default {
       valid: false,
       firstname: '',
       lastname: '',
+      dcid: null,
       titleRules: [
         v => !!v || 'Cím megadása kötelező',
         v =>
@@ -183,6 +184,9 @@ export default {
           this.image = url
         }
       }
+      const userref = db.collection('users').doc(user.uid)
+      const userdoc = await userref.get()
+      this.dcid = userdoc.data().dcid || null
     }
   },
   methods: {
@@ -228,7 +232,8 @@ export default {
       await artref.set({
         desc: this.desc.titletext ? null : this.titletext,
         title: this.desc.desctext ? null : this.desctext,
-        forComp: this.isForComp || false
+        forComp: this.isForComp,
+        author: this.dcid
       }, { merge: true }).then(() => {
         this.saveBtn.text = 'Sikeres mentés!'
         this.saveBtn.color = 'green'

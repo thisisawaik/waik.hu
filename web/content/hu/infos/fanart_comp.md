@@ -18,7 +18,8 @@ colorTheme: 5865f2
 1. Az alkotásnak adsz egy címet és opcionálisan leírást
 2. Feltöltöd az alkotást a Fájl mezőre kattintva a **JPEG**, **PNG** vagy **GIF** formátumu filet (bármi más esetén **zal1000#0497**-nek jelezd discordon privátban)
 3. Jelöld meg a **Beküldés versenyre** jelölőnégyzetet
+**A verszenyre beküldött alkotások eredményhírrdetés után bekerülnek a többi küzé! A duplikálások törölve lesznek!**
 
 #### Kézzel készültek esetén
-- Javasolt a [Microsoft Lens - PDF Scanner (Android)](https://play.google.com/store/apps/details?id=com.microsoft.office.officelens) vagy hasonló alkalmazás használata. Ha ez nem megoldható akkor **zal1000#0497**-nek küldj egy üzenetet a beküldéssel kapcsolatban (Scanner for sale at **Tiger MC#3862** *note: will be removed in production*)
+- Javasolt a [Microsoft Lens - PDF Scanner (Android)](https://play.google.com/store/apps/details?id=com.microsoft.office.officelens) vagy hasonló alkalmazás használata. Ha ez nem megoldható akkor **zal1000#0497**-nek küldj egy üzenetet a beküldéssel kapcsolatban
 
