@@ -74,3 +74,6 @@ jobs:
         --platform managed \
         --allow-unauthenticated \
         --project zal1000
+
+    - name: Send notification to testers
+      run: node discord-notification-on-successful-deply.js GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.FIREBASE_SERVICE_ACCOUNT }}

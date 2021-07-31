@@ -1,0 +1,24 @@
+{
+  "name": "waik-hu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "discord-notification-on-successful-deply.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thisisawaik/waik.hu.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thisisawaik/waik.hu/issues"
+  },
+  "homepage": "https://github.com/thisisawaik/waik.hu#readme",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "firebase-admin": "^9.11.0"
+  }
+}
