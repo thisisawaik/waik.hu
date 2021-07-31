@@ -121,7 +121,7 @@ export default {
       content: ''
     }
     const desc = {
-      maxLength: 300,
+      maxLength: 256,
       default: `${this.$t('description')}${this.$i18n.locale !== 'hu' ? ' (We recommend writing this in Hungarian)' : ''}`,
       content: ''
     }

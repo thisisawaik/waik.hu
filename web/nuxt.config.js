@@ -141,6 +141,9 @@ export default {
         defaultConfig: {
           waik_show_streams: false
         }
+      },
+      analytics: {
+        collectionEnabled: process.env.NODE_ENV === 'production'
       }
     },
     onFirebaseHosting: process.env.NODE_ENV === 'production'

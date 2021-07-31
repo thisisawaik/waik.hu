@@ -130,6 +130,79 @@ export const waikDcLogin = functions.https.onCall(async (data, context) => {
   });
 });
 
+export const waikDcLink = functions.https.onCall(async (data, context) => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line new-cap
+  const token = data.token;
+  const source = data.source;
+  const uid = context.auth?.uid;
+  if (!token) {
+    throw new functions.https.HttpsError("failed-precondition", "no-token-found");
+  }
+  if (!source) {
+    throw new functions.https.HttpsError("failed-precondition", "source-not-provided");
+  }
+  if (!uid) {
+    throw new functions.https.HttpsError("unauthenticated", "uid-not-found");
+  }
+  const authdoc = await db.collection("waik").doc("bot").get();
+  // console.log(authdoc.data());
+  const oauth = new DcAuth({
+    redirectUri: source,
+    clientId: authdoc.data()?.auth.id,
+    clientSecret: authdoc.data()?.auth.secret,
+  });
+
+  console.log(uid);
+
+  const userdoc = await db.collection("users").doc(uid).get();
+  console.log(userdoc.exists);
+  if (!userdoc.exists) {
+    throw new functions.https.HttpsError("unauthenticated", "user-not-found");
+  }
+
+  return await oauth.tokenRequest({
+    code: token,
+    scope: "email",
+    grantType: "authorization_code",
+  // eslint-disable-next-line camelcase
+  }).then(async (res: { access_token: any; }) => {
+    const atoken = res.access_token;
+    return await oauth.getUser(atoken).then(async (dcres: { email: string; username: any; avatar: any; id: any; }) => {
+      // const auth = admin.auth();
+      // console.log(dcres);
+      const ref = db.collection("users").where("dcid", "==", dcres.id);
+      const q = await ref.get();
+
+      if (!q.empty && q.docs[0].data()?.dcid) {
+        throw new functions.https.HttpsError("already-exists", "discord-account-alerady-linked");
+      } else {
+        if (dcres.email) {
+          const userref = userdoc.ref;
+          return await userref.update({
+            dcid: dcres.id,
+            dclinked: true,
+          }).then(async () => {
+            return {
+              status: "OK",
+            };
+          }).catch((e) => {
+            throw new functions.https.HttpsError("unknown", e);
+          });
+        } else {
+          throw new functions.https.HttpsError("data-loss", "email-not-found");
+        }
+      }
+    }).catch((e: string) => {
+      console.error(e);
+      throw new functions.https.HttpsError("permission-denied", e);
+    });
+  }).catch((e: string) => {
+    console.error(e);
+    throw new functions.https.HttpsError("permission-denied", e);
+  });
+});
+
 export const waikFanartApprove = functions.https.onCall(
     async (data, context) => {
       // if (context.app == undefined) {
@@ -221,7 +294,7 @@ export const waikFanartApprove = functions.https.onCall(
             embed.addField("\u200B", artdoc.data()?.desc);
           }
 
-          const modchannel = await bot.channels.fetch("541997126025084929");
+          const modchannel = await bot.channels.fetch("871006671281983508");
 
           // eslint-disable-next-line max-len
           // const authordata = await db.collection('dcusers').doc(user.id).get();
@@ -382,7 +455,7 @@ export const waikFanartSubmit = functions.https.onCall(
               embed.addField("\u200B", doc.data()?.desc);
             }
 
-            const modchannel = await bot.channels.fetch("541997126025084929");
+            const modchannel = await bot.channels.fetch("871006671281983508");
 
             // eslint-disable-next-line max-len
             // const authordata = await db.collection('dcusers').doc(user.id).get();

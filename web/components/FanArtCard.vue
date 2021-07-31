@@ -69,7 +69,8 @@ export default {
       isLiked: false,
       likesListener: null,
       shareId: null,
-      user: null
+      user: null,
+      isActionClicked: false
     }
   },
   async created () {
