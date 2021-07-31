@@ -14,6 +14,9 @@ twitch:
 youtube: 
     1: 
         url: https://www.youtube.com/user/NorticusGaming
+twitter:
+    1:
+        url: https://twitter.com/norticus36
 github:
     1:
         url: https://github.com/norticus36/
