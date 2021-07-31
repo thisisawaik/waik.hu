@@ -110,11 +110,9 @@ export default {
   methods: {
     async approve () {
       const functions = this.$fire.functions
-      console.log('approve')
       await functions.httpsCallable('waikFanartApprove')({
         postId: this.id
-      }).then((res) => {
-        console.log(res)
+      }).then(() => {
       }).catch((e) => {
         // eslint-disable-next-line no-console
         console.log(e)
@@ -122,12 +120,9 @@ export default {
     },
     async deny () {
       const functions = this.$fire.functions
-
-      console.log('deny')
       await functions.httpsCallable('waikFanartDeny')({
         postId: this.id
-      }).then((res) => {
-        console.log(res)
+      }).then(() => {
       }).catch((e) => {
         // eslint-disable-next-line no-console
         console.log(e)
