@@ -99,6 +99,7 @@ export default {
     const query = db
       .collection('waik/website/fanarts')
       .where('status', '==', 'PUBLIC')
+      .where('forComp', '==', false)
     const queryres = await query.get()
     let a = []
     a = queryres.docs

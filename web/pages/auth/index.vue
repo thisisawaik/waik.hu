@@ -43,6 +43,11 @@
                   Discord fiók összekapcsolva {{ dcData.tag }} fiókkal</span>
               </v-card-text>
             </div>
+            <div v-else>
+              <p style="text-decoration: underline; cursor: pointer;" @click="discordLink()">
+                Kattints ide a discord fiókod összekapcsolásához
+              </p>
+            </div>
             <v-divider />
             <v-card-text>
               <account-email :user="user" />
@@ -125,6 +130,8 @@ export default {
         this.avatar = null
       }
       this.loading = false
+      localStorage.setItem('authDiscordLinkStatus', false)
+      localStorage.setItem('authDiscordUid', null)
     })
   },
   methods: {
@@ -136,6 +143,11 @@ export default {
         .catch(() => {})
     },
     discordLogin () {
+      location = `https://discord.com/api/oauth2/authorize?client_id=827711777495187487&redirect_uri=${window.location.protocol}//${window.location.host}${this.$i18n.locale !== 'hu' ? `/${this.$i18n.locale}` : ''}/auth/discord/callback&response_type=code&scope=identify%20email`
+    },
+    discordLink () {
+      localStorage.setItem('authDiscordLinkStatus', true)
+      localStorage.setItem('authDiscordUid', this.user.uid)
       location = `https://discord.com/api/oauth2/authorize?client_id=827711777495187487&redirect_uri=${window.location.protocol}//${window.location.host}${this.$i18n.locale !== 'hu' ? `/${this.$i18n.locale}` : ''}/auth/discord/callback&response_type=code&scope=identify%20email`
     },
     logOut () {

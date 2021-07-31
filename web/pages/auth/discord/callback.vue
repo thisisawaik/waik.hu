@@ -45,7 +45,8 @@ export default {
     return {
       token: null,
       loading: true,
-      canceled: false
+      canceled: false,
+      error: null
     }
   },
   head () {
@@ -64,16 +65,35 @@ export default {
       const functions = this.$fire.functions
       const path = window.location.href.split('?')[0]
       this.$router.replace({ query: null })
-      await functions.httpsCallable('waikDcLogin')({
-        token,
-        source: path
-      }).then(async (res) => {
-        await this.$fire.auth.signInWithCustomToken(res.data.token).then(() => {
-          if (!this.canceled) {
-            this.$router.push('/auth')
-          }
+      console.log(localStorage.getItem('authDiscordUid'))
+      if (localStorage.getItem('authDiscordLinkStatus')) {
+        await functions.httpsCallable('waikDcLink')({
+          token,
+          source: path,
+          uid: localStorage.getItem('authDiscordUid') || null
+        // eslint-disable-next-line require-await
+        }).then(async () => {
+          localStorage.setItem('authDiscordLinkStatus', false)
+          localStorage.setItem('authDiscordUid', null)
+          this.$router.push('/auth')
+        }).catch((e) => {
+          console.error(e)
+          localStorage.setItem('authDiscordLinkStatus', false)
+          localStorage.setItem('authDiscordUid', null)
+          this.error = e
         })
-      })
+      } else {
+        await functions.httpsCallable('waikDcLogin')({
+          token,
+          source: path
+        }).then(async (res) => {
+          await this.$fire.auth.signInWithCustomToken(res.data.token).then(() => {
+            if (!this.canceled) {
+              this.$router.push('/auth')
+            }
+          })
+        })
+      }
     },
     cancel () {
       this.canceled = true

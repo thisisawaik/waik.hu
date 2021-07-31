@@ -4,6 +4,10 @@ export const state = () => ({
   email: {
     status: null,
     error: null
+  },
+  discord: {
+    isLinking: false,
+    uid: null
   }
 
 })
@@ -20,5 +24,11 @@ export const mutations = {
   },
   setAuthEmailError (state, error) {
     state.email.status = error
+  },
+  setAuthDiscordLinkStatus (state, status) {
+    state.discord.isLinking = status
+  },
+  setAuthDiscordUid (state, uid) {
+    state.discord.uid = uid
   }
 }
