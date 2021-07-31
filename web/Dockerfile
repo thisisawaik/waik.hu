@@ -1,7 +1,14 @@
 FROM node:14
-WORKDIR /
-COPY . .
-RUN ls dist/waik-hu/server
-ENV PORT=4000
-EXPOSE 4000
-CMD [ "npm", "run", "serve:ssr" ]
+
+WORKDIR /usr/src/app
+
+COPY . ./
+
+EXPOSE 8080
+
+ENV HOST=0.0.0.0
+ENV PORT=8080
+
+RUN npm run build
+
+CMD [ "npm", "run", "start" ]

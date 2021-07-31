@@ -9,9 +9,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          cd web-vue
+          cd web
           npm ci
+          npm run lint
+          npm run test
           npm run generate
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

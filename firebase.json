@@ -1,7 +1,8 @@
 {
   "hosting": {
-    "site": "waik-main",
+    "site": "waik-main-dev",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "public": "web/dist",
     "rewrites": [
       {
         "source": "/links/**",
@@ -22,39 +23,20 @@
         }
       },
       {
-        "source": "/dev/**",
-        "run": {
-          "serviceId": "waik-main-dev",
-          "region": "europe-north1" 
-        }
-      },
-      {
-        "source": "/dev",
-        "run": {
-          "serviceId": "waik-main-dev",
-          "region": "europe-north1" 
-        }
-      },
-      {
-        "source": "/beta/**",
-        "run": {
-          "serviceId": "waik-main-beta",
-          "region": "europe-north1" 
-        }
-      },
-      {
-        "source": "/beta",
-        "run": {
-          "serviceId": "waik-main-beta",
-          "region": "europe-north1" 
-        }
-      },
-      {
         "source": "**",
         "run": {
           "serviceId": "waik-main-prod",
           "region": "europe-north1" 
         }
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|svg)",
+        "headers": [ {
+          "key": "Cache-Control",
+          "value": "max-age=7200"
+        } ]
       }
     ]
   },
