@@ -23,7 +23,7 @@
         }
       },
       {
-        "source": "/ws/**",
+        "source": "/socket.io/**",
         "run": {
           "serviceId": "waik-main-ws-dev",
           "region": "europe-north1"

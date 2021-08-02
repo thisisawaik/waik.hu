@@ -87,7 +87,7 @@ export default {
     sockets: [
       {
         name: 'main',
-        url: '/ws',
+        url: '/',
         default: true
       }
     ]

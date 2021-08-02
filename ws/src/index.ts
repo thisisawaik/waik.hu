@@ -27,7 +27,7 @@ instrument(io, {
 
 // const db = admin.firestore();
 
-io.of('/ws').on("connection", (socket: Socket) => {
+io.on("connection", (socket: Socket) => {
   console.log(socket.id);
 
   socket.on("ping", (data) => {
