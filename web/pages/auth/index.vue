@@ -145,9 +145,12 @@ export default {
     discordLogin () {
       location = `https://discord.com/api/oauth2/authorize?client_id=827711777495187487&redirect_uri=${window.location.protocol}//${window.location.host}${this.$i18n.locale !== 'hu' ? `/${this.$i18n.locale}` : ''}/auth/discord/callback&response_type=code&scope=identify%20email`
     },
-    discordLink () {
-      localStorage.setItem('authDiscordLinkStatus', true)
-      localStorage.setItem('authDiscordUid', this.user.uid)
+    async discordLink () {
+      const token = await this.user.getIdToken()
+      this.$mainSocket.emit('changeDiscordIsLinkingStatus', {
+        status: true,
+        token
+      })
       location = `https://discord.com/api/oauth2/authorize?client_id=827711777495187487&redirect_uri=${window.location.protocol}//${window.location.host}${this.$i18n.locale !== 'hu' ? `/${this.$i18n.locale}` : ''}/auth/discord/callback&response_type=code&scope=identify%20email`
     },
     logOut () {

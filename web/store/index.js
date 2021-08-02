@@ -8,8 +8,11 @@ export const state = () => ({
   discord: {
     isLinking: false,
     uid: null
+  },
+  ws: {
+    status: 'connecting',
+    color: 'yellow'
   }
-
 })
 
 export const mutations = {
@@ -30,5 +33,15 @@ export const mutations = {
   },
   setAuthDiscordUid (state, uid) {
     state.discord.uid = uid
+  },
+  changeWsStatus (state, status) {
+    state.ws.status = status
+    if (status === 'connected') {
+      state.ws.color = 'green'
+    } else if (status === 'error' || status === 'disconnected') {
+      state.ws.color = 'red'
+    } else {
+      state.ws.color = 'yellow'
+    }
   }
 }

@@ -1,3 +1,11 @@
+<i18n lang="yaml">
+hu:
+  connecting: 'Csatlakozás folyamatban...'
+  connected: 'Csatlakozva'
+  disconnected: 'Szétkapcsolva'
+  reconnecting: 'Újracsatlakozás folyamatban...'
+</i18n>
+
 <template>
   <v-app dark>
     <v-app-bar
@@ -125,38 +133,6 @@
         </v-avatar>
       </NuxtLink>
     </v-app-bar>
-    <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      bottom
-      temporary
-    >
-      <v-list
-        nav
-        dense
-      >
-        <v-list-item-group
-          v-model="group"
-          active-class="deep-purple--text text--accent-4"
-        >
-          <v-list-item>
-            <v-list-item-title>Foo</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Bar</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Fizz</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Buzz</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
     <v-main>
       <Nuxt />
     </v-main>
@@ -168,6 +144,8 @@
           target="_blank"
         >GitHub</a></span>
       <v-spacer />
+      <socket-status :status="$mainSocket" />
+      <span>{{ $t($store.state.ws.status) }}</span><div :style="`background-color: var(--${$store.state.ws.color});`" class="circle" />
       <nuxt-link v-if="$i18n.locale !== 'en' " style="color: #fff" :to="switchLocalePath('en')">
         English
       </nuxt-link>
@@ -179,7 +157,9 @@
 </template>
 
 <script>
+import SocketStatus from '../components/SocketStatus.vue'
 export default {
+  components: { SocketStatus },
   data () {
     return {
       avatar: null,
@@ -218,7 +198,8 @@ export default {
       maintenance: false,
       zalname: 'zal1000#0497',
       show_streams: false,
-      isFromPhone: this.$device.isMobileOrTablet
+      isFromPhone: this.$device.isMobileOrTablet,
+      wsStatus: 'connecting'
     }
   },
   watch: {
@@ -285,6 +266,14 @@ export default {
 
 .nav-bar-avatar {
   margin-left: 20px;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 20px;
+  margin-left: 10px;
 }
 
 :host {

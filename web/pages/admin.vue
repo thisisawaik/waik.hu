@@ -1,5 +1,8 @@
 <template>
   <div>
+    <v-btn @click="getMessage">
+      test
+    </v-btn>
     <v-card :loading="massrole.loading" class="mx-auto my-12" max-width="374">
       <template slot="progress">
         <v-progress-linear
@@ -138,7 +141,8 @@ export default {
       memberchanges: 0,
       color: 'blue',
       progress_color: 'deep-purple'
-    }
+    },
+    testSocket: {}
   }),
 
   async created () {
@@ -152,6 +156,11 @@ export default {
     }
   },
   methods: {
+    async getMessage () {
+      this.$mainSocket.emit('ping', 'PING')
+      const token = await this.$fire.auth.currentUser.getIdToken(true)
+      this.$mainSocket.emit('userData', { token: token || null })
+    },
     loadMassStatus () {
       const rdb = this.$fire.database
       const ref = rdb.ref('admin/massadd')

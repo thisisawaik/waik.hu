@@ -62,11 +62,41 @@ export default {
   },
   methods: {
     async discordLogin (token) {
-      const functions = this.$fire.functions
-      const path = window.location.href.split('?')[0]
+      const socket = this.$mainSocket
+      // const functions = this.$fire.functions
+      const source = window.location.href.split('?')[0]
       this.$router.replace({ query: null })
-      console.log(localStorage.getItem('authDiscordUid'))
+      try {
+        this.user.getIdToken().then((token) => {
+          socket.emit('discordLink', {
+            token
+          })
+        })
+      } catch (error) {
+        socket.emit('discordLogin', {
+          token,
+          source
+        })
+        const discordLoginP = new Promise((resolve, reject) => {
+          socket.once('discordLoginSuccess', (data) => {
+            resolve(data)
+          })
+          socket.once('discordLoginError', (data) => {
+            reject(data)
+          })
+        })
+        await discordLoginP.then(async (data) => {
+          await this.$fire.auth.signInWithCustomToken(data.token).then(() => {
+            if (!this.canceled) {
+              this.$router.push('/auth')
+            }
+          })
+        })
+      }
+
+      /*
       if (localStorage.getItem('authDiscordLinkStatus')) {
+
         await functions.httpsCallable('waikDcLink')({
           token,
           source: path,
@@ -94,6 +124,7 @@ export default {
           })
         })
       }
+      */
     },
     cancel () {
       this.canceled = true

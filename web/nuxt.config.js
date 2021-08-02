@@ -1,4 +1,5 @@
 // import colors from 'vuetify/es5/util/colors'
+/** @type {import('nuxt-socket-io/io/types').NuxtSocketIoOptions} */
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -27,7 +28,9 @@ export default {
   css: ['~/assets/global.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    'plugins/socket.js'
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -79,6 +82,15 @@ export default {
       cookieKey: 'i18n_redirected',
       onlyOnRoot: true // recommended
     }
+  },
+  io: {
+    sockets: [
+      {
+        name: 'main',
+        url: '/ws',
+        default: true
+      }
+    ]
   },
   content: {
     markdown: {
