@@ -1,9 +1,9 @@
 import * as express from "express";
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
-import { instrument } from "@socket.io/admin-ui";
+//import { instrument } from "@socket.io/admin-ui";
 import * as admin from "firebase-admin";
-import * as cors from "cors";
+// import * as cors from "cors";
 
 import discordLogin from "./functions/discordLogin";
 import discordAccountLink from "./functions/discordAccountLink";
@@ -12,11 +12,7 @@ admin.initializeApp();
 
 const app = express();
 
-app.use(cors({
-  origin: '*'
-}))
-
-const PORT =  process.env.PORT || 8080;
+const PORT =  process.env.PORT || 3000;
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -25,9 +21,11 @@ const io = new Server(httpServer, {
   },
 });
 
+/*
 instrument(io, {
   auth: false,
 });
+*/
 
 // const db = admin.firestore();
 
