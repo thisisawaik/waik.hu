@@ -88,7 +88,8 @@ export default {
       {
         name: 'main',
         url: 'https://waik-ws-dot-zal1000.ew.r.appspot.com',
-        default: true
+        default: true,
+        secure: true
       }
     ]// ,
     // transports: ['websocket']
