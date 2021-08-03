@@ -87,7 +87,7 @@ export default {
     sockets: [
       {
         name: 'main',
-        url: 'https://waik-ws-dot-zal1000.ew.r.appspot.com',
+        url: 'https://waik-main-ws-dev-zd72hz742a-lz.a.run.app',
         default: true,
         secure: true
       }
