@@ -61,38 +61,44 @@ export default {
     }
   },
   methods: {
-    async discordLogin (token) {
+    discordLogin (token) {
       const socket = this.$mainSocket
       // const functions = this.$fire.functions
       const source = window.location.href.split('?')[0]
       this.$router.replace({ query: null })
-      try {
-        this.user.getIdToken().then((token) => {
-          socket.emit('discordLink', {
-            token
-          })
-        })
-      } catch (error) {
-        socket.emit('discordLogin', {
-          token,
-          source
-        })
-        const discordLoginP = new Promise((resolve, reject) => {
-          socket.once('discordLoginSuccess', (data) => {
-            resolve(data)
-          })
-          socket.once('discordLoginError', (data) => {
-            reject(data)
-          })
-        })
-        await discordLoginP.then(async (data) => {
-          await this.$fire.auth.signInWithCustomToken(data.token).then(() => {
-            if (!this.canceled) {
-              this.$router.push('/auth')
-            }
-          })
-        })
-      }
+      this.$mainSocket.once('connect', () => {
+        console.log('connected')
+        setTimeout(async () => {
+          console.log('sending-dcdata')
+          try {
+            this.user.getIdToken().then((token) => {
+              socket.emit('discordLink', {
+                token
+              })
+            })
+          } catch (error) {
+            socket.emit('discordLogin', {
+              token,
+              source
+            })
+            const discordLoginP = new Promise((resolve, reject) => {
+              socket.once('discordLoginSuccess', (data) => {
+                resolve(data)
+              })
+              socket.once('discordLoginError', (data) => {
+                reject(data)
+              })
+            })
+            await discordLoginP.then(async (data) => {
+              await this.$fire.auth.signInWithCustomToken(data.token).then(() => {
+                if (!this.canceled) {
+                  this.$router.push('/auth')
+                }
+              })
+            })
+          }
+        }, 2000)
+      })
 
       /*
       if (localStorage.getItem('authDiscordLinkStatus')) {

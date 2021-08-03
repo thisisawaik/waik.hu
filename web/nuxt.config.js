@@ -87,11 +87,11 @@ export default {
     sockets: [
       {
         name: 'main',
-        url: '/',
+        url: 'https://waik-ws-dot-zal1000.ew.r.appspot.com',
         default: true
       }
-    ],
-    transports: ['websocket']
+    ]// ,
+    // transports: ['websocket']
   },
   content: {
     markdown: {

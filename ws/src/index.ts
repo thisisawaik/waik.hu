@@ -3,7 +3,7 @@ import { createServer } from "http";
 import { Server, Socket } from "socket.io";
 import { instrument } from "@socket.io/admin-ui";
 import * as admin from "firebase-admin";
-import * as qdb from "quick.db";
+import * as cors from "cors";
 
 import discordLogin from "./functions/discordLogin";
 import discordAccountLink from "./functions/discordAccountLink";
@@ -12,13 +12,16 @@ admin.initializeApp();
 
 const app = express();
 
+app.use(cors({
+  origin: '*'
+}))
+
 const PORT =  process.env.PORT || 3005;
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: ["https://admin.socket.io", "http://localhost:3000", "https://dev.waik.hu", "https://dev.waik.zal1000.com"],
-    transports: ['websocket']
+    origin: '*',
   },
 });
 
@@ -71,6 +74,7 @@ io.on("connection", (socket: Socket) => {
           console.log(uid);
           // ...
           socket.emit("userSyncComplete", uid);
+          /*
           qdb.set(`socket.${socket.id}.uid`, uid);
           if (!qdb.get(`user.${uid}.sockets`))
             qdb.set(`user.${uid}.sockets`, []);
@@ -79,6 +83,7 @@ io.on("connection", (socket: Socket) => {
           )
             qdb.push(`user.${uid}.sockets`, socket.id);
           console.log(qdb.get(`user.${uid}.sockets`));
+          */
         });
     }
   });

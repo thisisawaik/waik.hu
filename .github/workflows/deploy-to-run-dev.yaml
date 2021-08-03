@@ -45,6 +45,12 @@ jobs:
       run: |
         cd web
         npm run generate
+    
+    - name: Install dependencies and build socket.io server
+      run: |
+        cd ws
+        npm install
+        npm run build
 
     - name: Push container image to gcr.io
       run: |
@@ -54,6 +60,11 @@ jobs:
       run: |
         export channel=waik-main-dev
         node edit-firebase-config-target.js 
+
+    - name: Edit firebase deploy file
+      run: |
+        cd ws
+        gcloud app deploy
 
     - name: Deploy to Firebase Hosting
       uses: FirebaseExtended/action-hosting-deploy@v0

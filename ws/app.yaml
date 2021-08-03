@@ -1,0 +1,8 @@
+runtime: nodejs14 # or another supported version
+
+instance_class: F2
+service: waik-ws
+service_account: owner-level-service-account@zal1000.iam.gserviceaccount.com
+
+network:
+  session_affinity: true
