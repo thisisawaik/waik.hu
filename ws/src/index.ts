@@ -12,14 +12,14 @@ admin.initializeApp();
 
 const app = express();
 
-const PORT = process.env.PORT || 3005;
+const PORT =  process.env.PORT || 3005;
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: '*',
+    origin: ["https://admin.socket.io", "http://localhost:3000", "https://dev.waik.hu", "https://dev.waik.zal1000.com"],
+    transports: ['websocket']
   },
-  transports: ['websocket'],
 });
 
 instrument(io, {
