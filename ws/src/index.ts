@@ -16,7 +16,7 @@ app.use(cors({
   origin: '*'
 }))
 
-const PORT =  process.env.PORT || 3005;
+const PORT =  process.env.PORT || 8080;
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
