@@ -61,10 +61,10 @@ jobs:
         export channel=waik-main-dev
         node edit-firebase-config-target.js 
 
-    - name: Edit firebase deploy file
+    - name: Deploy socket.io server to appengine
       run: |
         cd ws
-        gcloud app deploy
+        gcloud app deploy --project zal1000
 
     - name: Deploy to Firebase Hosting
       uses: FirebaseExtended/action-hosting-deploy@v0
