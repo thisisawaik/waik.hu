@@ -6,3 +6,6 @@ service_account: owner-level-service-account@zal1000.iam.gserviceaccount.com
 
 network:
   session_affinity: true
+
+env_variables:
+  PORT: 8080
