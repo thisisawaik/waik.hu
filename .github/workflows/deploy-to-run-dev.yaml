@@ -36,7 +36,7 @@ jobs:
         npm run test
         npm run lint
 
-    - name: Build container image
+    - name: Build nuxt.js container
       run: |
         cd web
         docker build --tag gcr.io/zal1000/waik/website:$GITHUB_SHA .
@@ -46,15 +46,15 @@ jobs:
         cd web
         npm run generate
     
-    - name: Install dependencies and build socket.io server
+    - name: Build socket.io container
       run: |
         cd ws
-        npm install
-        npm run build
+        docker build --tag gcr.io/zal1000/waik/website/ws:$GITHUB_SHA .
 
-    - name: Push container image to gcr.io
+    - name: Push container images to gcr.io
       run: |
         docker push gcr.io/zal1000/waik/website:$GITHUB_SHA
+        docker push gcr.io/zal1000/waik/website/ws:$GITHUB_SHA
 
     - name: Edit firebase deploy file
       run: |
@@ -64,7 +64,13 @@ jobs:
     - name: Deploy socket.io server to appengine
       run: |
         cd ws
-        gcloud app deploy --project zal1000
+        gcloud run deploy waik-main-ws-dev \
+        --region europe-north1 \
+        --image gcr.io/zal1000/waik/website/ws:$GITHUB_SHA \
+        --platform managed \
+        --allow-unauthenticated \
+        --project zal1000 \
+        --use-http2
 
     - name: Deploy to Firebase Hosting
       uses: FirebaseExtended/action-hosting-deploy@v0
