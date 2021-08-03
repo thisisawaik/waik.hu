@@ -12,13 +12,14 @@ admin.initializeApp();
 
 const app = express();
 
-const PORT = 3005 || process.env.PORT;
+const PORT = process.env.PORT || 3005;
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
     origin: '*',
   },
+  transports: ['websocket'],
 });
 
 instrument(io, {

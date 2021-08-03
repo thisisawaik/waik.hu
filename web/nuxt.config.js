@@ -90,7 +90,8 @@ export default {
         url: '/',
         default: true
       }
-    ]
+    ],
+    transports: ['websocket']
   },
   content: {
     markdown: {

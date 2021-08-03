@@ -12,7 +12,7 @@ RUN npm i typescript -g
 RUN npm install bcrypt
 RUN tsc
 
-ENV PORT=3005
+ENV PORT=3000
 ENV HOST=0.0.0.0
 
 CMD [ "npm", "run", "start" ]
