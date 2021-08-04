@@ -39,7 +39,7 @@ en:
   </div>
 </template>
 
-<script lang="ts">
+<script>
 export default {
   data () {
     return {
@@ -89,7 +89,7 @@ export default {
                 reject(data);
               });
             });
-            await discordLoginP.then(async (data: any) => {
+            await discordLoginP.then(async (data) => {
               await this.$fire.auth.signInWithCustomToken(data.token).then(() => {
                 if (!this.canceled) {
                   this.$router.push('/auth');
