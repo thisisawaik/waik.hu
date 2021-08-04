@@ -11,9 +11,9 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'twitter:creator', content: '@zal1000original' },
       { name: 'twitter:site', content: 'https://waik.hu/' },
-      { name: 'fb:app_id', content: '581458672492860' }
+      { name: 'fb:app_id', content: '581458672492860' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
   meta: {
@@ -21,7 +21,7 @@ export default {
     ogTitle: false,
     ogDescription: false,
     ogSiteName: false,
-    description: false
+    description: false,
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -29,7 +29,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    'plugins/socket.js'
+    'plugins/socket.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -41,7 +41,7 @@ export default {
     '@nuxtjs/vuetify',
     '@nuxtjs/firebase',
     '@nuxtjs/device',
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -54,7 +54,7 @@ export default {
     '@nuxt/content',
     '@nuxtjs/markdownit',
     'nuxt-socket-io',
-    'nuxt-i18n'
+    'nuxt-i18n',
   ],
   i18n: {
     locales: [
@@ -62,44 +62,44 @@ export default {
         code: 'hu',
         file: 'hu.js',
         iso: 'hu',
-        isCatchallLocale: true
+        isCatchallLocale: true,
       },
       {
         code: 'en',
         file: 'en.js',
-        iso: 'en'
-      }
+        iso: 'en',
+      },
     ],
     defaultLocale: 'hu',
     lazy: true,
     langDir: 'lang/',
     vueI18n: {
-      fallbackLocale: 'hu'
+      fallbackLocale: 'hu',
     },
     vueI18nLoader: true,
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
-      onlyOnRoot: true // recommended
-    }
+      onlyOnRoot: true, // recommended
+    },
   },
   io: {
     sockets: [
       {
         name: 'main',
-        url: 'https://waik-main-ws-dev-zd72hz742a-lz.a.run.app',
+        url: 'http://localhost:3005',
         default: true,
-        secure: true
-      }
-    ]// ,
+        secure: true,
+      },
+    ], // ,
     // transports: ['websocket']
   },
   content: {
     markdown: {
       prism: {
-        theme: 'prism-themes/themes/prism-material-oceanic.css'
-      }
-    }
+        theme: 'prism-themes/themes/prism-material-oceanic.css',
+      },
+    },
   },
 
   markdownit: {
@@ -107,12 +107,12 @@ export default {
     preset: 'default',
     linkify: true,
     breaks: true,
-    use: ['markdown-it-div', 'markdown-it-attrs']
+    use: ['markdown-it-div', 'markdown-it-attrs'],
   },
 
   maintenance: {
     enabled: !!process.env.MAINTENANCE_MODE, // If given truthy value, activation maintenance mode on startup your nuxt application.
-    path: '/maintenance' // maintenance fallback content routing.
+    path: '/maintenance', // maintenance fallback content routing.
     // matcher: /^\/admin/ // Path to be in maintenance mode (regex).
   },
 
@@ -125,14 +125,14 @@ export default {
       storageBucket: 'zal1000.net',
       messagingSenderId: '512279358183',
       appId: '1:512279358183:web:1a091779e0474dba541042',
-      measurementId: 'G-W3EFDHYNN1'
+      measurementId: 'G-W3EFDHYNN1',
     },
     services: {
       firestore: true,
       storage: true,
       database: true,
       auth: {
-        ssr: true
+        ssr: true,
       },
       functins: true,
       performance: true,
@@ -141,26 +141,26 @@ export default {
         emulatorHost:
           process.env.NODE_ENV === 'development'
             ? 'http://localhost'
-            : undefined
+            : undefined,
       },
       messaging: {
         createServiceWorker: true,
-        actions: []
+        actions: [],
       },
       remoteConfig: {
         settings: {
           fetchTimeoutMillis: 60000, // default
-          minimumFetchIntervalMillis: 43200000 // default
+          minimumFetchIntervalMillis: 43200000, // default
         },
         defaultConfig: {
-          waik_show_streams: false
-        }
+          waik_show_streams: false,
+        },
       },
       analytics: {
-        collectionEnabled: process.env.NODE_ENV === 'production'
-      }
+        collectionEnabled: process.env.NODE_ENV === 'production',
+      },
     },
-    onFirebaseHosting: process.env.NODE_ENV === 'production'
+    onFirebaseHosting: process.env.NODE_ENV === 'production',
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -169,22 +169,22 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: 'hu'
+      lang: 'hu',
     },
     workbox: {
       importScripts: [
         // ...
-        '/firebase-auth-sw.js'
+        '/firebase-auth-sw.js',
       ],
       // by default the workbox module will not install the service worker in dev environment to avoid conflicts with HMR
       // only set this true for testing and remember to always clear your browser cache in development
-      dev: process.env.NODE_ENV === 'development'
-    }
+      dev: process.env.NODE_ENV === 'development',
+    },
   },
 
   messaging: {
     createServiceWorker: true,
-    actions: []
+    actions: [],
     // fcmPublicVapidKey: '512279358183' // OPTIONAL : Sets vapid key for FCM after initialization
   },
 
@@ -201,12 +201,12 @@ export default {
           info: '#5865f2',
           warning: '#fee75c',
           error: '#ed4245',
-          success: '#57f287'
-        }
-      }
-    }
+          success: '#57f287',
+        },
+      },
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {}
-}
+  build: {},
+};

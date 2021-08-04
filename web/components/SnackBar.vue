@@ -18,18 +18,18 @@ export default {
       sclass: '',
       color: 'green',
       timeout: 3000,
-      show: false
-    }
+      show: false,
+    };
   },
   created () {
 
   },
   methods: {
     close () {
-      this.show = false
-    }
-  }
-}
+      this.show = false;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

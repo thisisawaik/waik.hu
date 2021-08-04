@@ -32,29 +32,29 @@
 </template>
 
 <script>
-import FanArtAdmin from '../components/FanArtAdmin.vue'
-import FanArtCard from '../components/FanArtCard.vue'
-import FanArtUpload from '../components/FanArtUpload.vue'
+import FanArtAdmin from '../components/FanArtAdmin.vue';
+import FanArtCard from '../components/FanArtCard.vue';
+import FanArtUpload from '../components/FanArtUpload.vue';
 
 export default {
   components: {
     FanArtCard,
     FanArtUpload,
-    FanArtAdmin
+    FanArtAdmin,
   },
   async asyncData ({ $content, store }) {
-    const article = await $content('hu/rules', 'fanart').fetch()
-    store.commit('setFanartRules', article)
-    const infos = await $content('hu/infos', 'fanart_comp').fetch()
-    store.commit('setFanartInfos', infos)
-    return { article }
+    const article = await $content('hu/rules', 'fanart').fetch();
+    store.commit('setFanartRules', article);
+    const infos = await $content('hu/infos', 'fanart_comp').fetch();
+    store.commit('setFanartInfos', infos);
+    return { article };
   },
   data () {
     return {
       tab: 0,
       items: [],
-      isAdmin: false
-    }
+      isAdmin: false,
+    };
   },
   head () {
     return {
@@ -62,50 +62,50 @@ export default {
       meta: [
         {
           name: 'og:title',
-          content: `Waik | ${this.$t('fanarts')}`
+          content: `Waik | ${this.$t('fanarts')}`,
         },
         {
           name: 'og:description',
-          content: 'Itt találhatod meg a waik csapatról készult fanartokat'
+          content: 'Itt találhatod meg a waik csapatról készult fanartokat',
         },
         {
           name: 'og:image',
           content:
-            'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/waik%2Fpublic%2Fwaik_cup.jpg?alt=media&token=5c3a6c28-644a-492a-ba4d-74d9e52470e2'
+            'https://firebasestorage.googleapis.com/v0/b/zal1000.net/o/waik%2Fpublic%2Fwaik_cup.jpg?alt=media&token=5c3a6c28-644a-492a-ba4d-74d9e52470e2',
         },
         {
           name: 'theme-color',
-          content: '#ffffff'
-        }
-      ]
-    }
+          content: '#ffffff',
+        },
+      ],
+    };
   },
   async created () {
-    const auth = this.$fire.auth
+    const auth = this.$fire.auth;
     auth.onAuthStateChanged(async (user) => {
       // this.user = user
       if (user) {
-        const token = await user.getIdTokenResult(true)
+        const token = await user.getIdTokenResult(true);
         if (token.claims.waikAdmin) {
-          this.isAdmin = true
+          this.isAdmin = true;
         } else {
-          this.isAdmin = false
+          this.isAdmin = false;
         }
       } else {
-        this.isAdmin = false
+        this.isAdmin = false;
       }
-    })
-    const db = this.$fire.firestore
+    });
+    const db = this.$fire.firestore;
     const query = db
       .collection('waik/website/fanarts')
       .where('status', '==', 'PUBLIC')
-      .where('forComp', '==', false)
-    const queryres = await query.get()
-    let a = []
-    a = queryres.docs
-    this.items = a
-  }
-}
+      .where('forComp', '==', false);
+    const queryres = await query.get();
+    let a = [];
+    a = queryres.docs;
+    this.items = a;
+  },
+};
 </script>
 
 <style lang="scss" scoped>

@@ -29,8 +29,8 @@ export default {
   props: ['profile'],
   data () {
     return {
-      loading: false
-    }
-  }
-}
+      loading: false,
+    };
+  },
+};
 </script>

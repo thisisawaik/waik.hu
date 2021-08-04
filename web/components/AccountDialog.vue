@@ -107,57 +107,57 @@ export default {
       dcData: null,
       token: null,
       discordLoading: true,
-      dcAvatar: null
-    }
+      dcAvatar: null,
+    };
   },
   created () {
-    const auth = this.$fire.auth
+    const auth = this.$fire.auth;
     auth.onAuthStateChanged(async (user) => {
-      this.user = user
+      this.user = user;
       if (user) {
         this.googleData = user.providerData.find(
-          e => e.providerId === 'google.com'
+          e => e.providerId === 'google.com',
         )
           ? user.providerData.find(e => e.providerId === 'google.com')
-          : null
-        this.avatar = user.photoURL
-        this.fetchUserData(user.uid)
-        this.token = await user.getIdTokenResult(true)
+          : null;
+        this.avatar = user.photoURL;
+        this.fetchUserData(user.uid);
+        this.token = await user.getIdTokenResult(true);
       } else {
-        this.avatar = null
+        this.avatar = null;
       }
-    })
+    });
   },
   methods: {
     googleLogin () {
-      const provider = new this.$fireModule.auth.GoogleAuthProvider()
+      const provider = new this.$fireModule.auth.GoogleAuthProvider();
       this.$fire.auth
         .signInWithPopup(provider)
         .then(() => {})
-        .catch(() => {})
+        .catch(() => {});
     },
     logOut () {
-      this.$fire.auth.signOut()
+      this.$fire.auth.signOut();
     },
     async fetchUserData (uid) {
-      this.discordLoading = true
-      const db = this.$fire.firestore
-      const ref = db.collection('users').doc(uid)
-      const doc = await ref.get()
+      this.discordLoading = true;
+      const db = this.$fire.firestore;
+      const ref = db.collection('users').doc(uid);
+      const doc = await ref.get();
 
       if (doc.data().dcid) {
-        const dcref = db.collection('dcusers').doc(doc.data().dcid)
-        const dcdoc = await dcref.get()
-        this.dcData = dcdoc.data() ? dcdoc.data() : null
-        this.dcAvatar = dcdoc.data().pp ? dcdoc.data().pp : null
-        this.discordLoading = false
+        const dcref = db.collection('dcusers').doc(doc.data().dcid);
+        const dcdoc = await dcref.get();
+        this.dcData = dcdoc.data() ? dcdoc.data() : null;
+        this.dcAvatar = dcdoc.data().pp ? dcdoc.data().pp : null;
+        this.discordLoading = false;
       } else {
-        this.dcData = null
-        this.discordLoading = false
+        this.dcData = null;
+        this.discordLoading = false;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

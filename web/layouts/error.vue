@@ -18,23 +18,23 @@ export default {
   props: {
     error: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   data () {
     return {
       pageNotFound: '404 Oldal nem található',
-      otherError: 'Ismeretlen hiba történt'
-    }
+      otherError: 'Ismeretlen hiba történt',
+    };
   },
   head () {
     const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
+      this.error.statusCode === 404 ? this.pageNotFound : this.otherError;
     return {
-      title
-    }
-  }
-}
+      title,
+    };
+  },
+};
 </script>
 
 <style scoped>

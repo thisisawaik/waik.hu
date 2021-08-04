@@ -31,10 +31,10 @@ export default {
   head () {
     return {
       title: 'Waik | Streamek',
-      meta: []
-    }
-  }
-}
+      meta: [],
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>

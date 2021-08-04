@@ -87,18 +87,7 @@ io.on("connection", (socket: Socket) => {
   });
 
   socket.on("userData", async (data) => {
-    console.log("--------------------------------------------------------");
-    console.log(data.token);
-    console.log("--------------------------------------------------------");
-
-    admin
-      .auth()
-      .verifyIdToken(data.token)
-      .then((decodedToken) => {
-        const uid = decodedToken.uid;
-        console.log(uid);
-        // ...
-      });
+    console.log('test_message', data)
   });
 });
 

@@ -136,6 +136,7 @@ hu:
     <v-main>
       <Nuxt />
     </v-main>
+    <notifications-component />
     <v-footer :absolute="!fixed" app>
       <span>&copy; 2021 | {{ zalname }} |
         <a
@@ -157,9 +158,10 @@ hu:
 </template>
 
 <script>
-import SocketStatus from '../components/SocketStatus.vue'
+import NotificationsComponent from '../components/NotificationsComponent.vue';
+import SocketStatus from '../components/SocketStatus.vue';
 export default {
-  components: { SocketStatus },
+  components: { SocketStatus, NotificationsComponent },
   data () {
     return {
       avatar: null,
@@ -170,28 +172,28 @@ export default {
         {
           name: 'homepage',
           to: '/',
-          show: true
+          show: true,
         },
         {
           name: 'streams',
           to: '/streams',
-          show: false
+          show: false,
         },
         {
           name: 'downloads',
           to: '/downloads',
-          show: true
+          show: true,
         },
         {
           name: 'fanarts',
           to: '/fanarts',
-          show: true
+          show: true,
         },
         {
           name: 'admin',
           to: '/admin',
-          show: false
-        }
+          show: false,
+        },
       ],
       fixed: false,
       isAdmin: false,
@@ -199,64 +201,86 @@ export default {
       zalname: 'zal1000#0497',
       show_streams: false,
       isFromPhone: this.$device.isMobileOrTablet,
-      wsStatus: 'connecting'
-    }
+      wsStatus: 'connecting',
+    };
   },
   watch: {
     $route () {
       // console.log('route changed', this.$route.path)
       if (this.$route.path === '/maintenance') {
-        this.maintenance = true
+        this.maintenance = true;
       } else {
-        this.maintenance = false
+        this.maintenance = false;
       }
-    }
+    },
   },
   async created () {
     if (this.$nuxt.$route.path === '/maintenance') {
-      this.maintenance = true
+      this.maintenance = true;
     }
-    const auth = this.$fire.auth
+    const auth = this.$fire.auth;
     auth.onAuthStateChanged(async (user) => {
       // this.user = user
       if (user) {
-        this.avatar = user.photoURL
-        const token = await user.getIdTokenResult(true)
+        this.avatar = user.photoURL;
+        const token = await user.getIdTokenResult(true);
         if (token.claims.waikAdmin) {
-          this.isAdmin = true
-          this.navItems.find(e => e.name === 'admin').show = true
+          this.isAdmin = true;
+          this.navItems.find(e => e.name === 'admin').show = true;
         } else {
-          this.isAdmin = false
-          this.navItems.find(e => e.name === 'admin').show = false
+          this.isAdmin = false;
+          this.navItems.find(e => e.name === 'admin').show = false;
         }
       } else {
-        this.isAdmin = false
-        this.avatar = null
-        this.navItems.find(e => e.name === 'admin').show = false
+        this.isAdmin = false;
+        this.avatar = null;
+        this.navItems.find(e => e.name === 'admin').show = false;
       }
-    })
-    const db = this.$fire.firestore
-    const zalref = db.collection('dcusers').doc('423925286350880779')
-    const zaldoc = await zalref.get()
-    this.zalname = zaldoc.data().tag
+    });
+    const db = this.$fire.firestore;
+    const zalref = db.collection('dcusers').doc('423925286350880779');
+    const zaldoc = await zalref.get();
+    this.zalname = zaldoc.data().tag;
     if (process.client) {
-      this.fetchRemoteConfig()
+      this.fetchRemoteConfig();
     }
   },
   methods: {
     async fetchRemoteConfig () {
       try {
-        const remoteConfig = this.$fire.remoteConfig
-        await remoteConfig.fetchAndActivate()
-        const exampleMessage = await remoteConfig.getValue('waik_show_streams')
-        this.navItems.find(e => e.name === 'streams').show = exampleMessage._value.show || false
+        const remoteConfig = this.$fire.remoteConfig;
+        await remoteConfig.fetchAndActivate();
+        const exampleMessage = await remoteConfig.getValue('waik_show_streams');
+        this.navItems.find(e => e.name === 'streams').show = exampleMessage._value.show || false;
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e)
+        console.error(e);
       }
-    }
-  }
-}
+    },
+  },
+};
+//                 .
+//                .;;:,.
+//                 ;iiii;:,.                                   .,:;.
+//                 :i;iiiiii:,                            .,:;;iiii.
+//                  ;iiiiiiiii;:.                    .,:;;iiiiii;i:
+//                   :iiiiiiiiiii:......,,,,,.....,:;iiiiiiiiiiii;
+//                    ,iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii:
+//                     .:iii;iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii;,
+//                       .:;;iiiiiiiiiiiiiiiiiiiiiiiiiii;;ii;,
+//                        :iiii;;iiiiiiiiiiiiiii;;iiiiiii;:.
+//                       ,iiii;1f:;iiiiiiiiiiii;if;:iiiiiii.
+//                      .iiiii:iL..iiiiiiiiiiii;:f: iiiiiiii.
+//                      ;iiiiii:.,;iiii;iiiiiiii:..:iiiiiiii:
+//                     .i;;;iiiiiiiiii;,,;iiiiiiiiiiii;;iiiii.
+//                     ::,,,,:iiiiiiiiiiiiiiiiiiiiii:,,,,:;ii:
+//                     ;,,,,,:iiiiiiii;;;;;;;iiiiii;,,,,,,;iii.
+//                     ;i;;;;iiiiiiii;:;;;;;:iiiiiii;::::;iiii:
+//                     ,iiiiiiiiiiiiii;;;;;;:iiiiiiiiiiiiiiiiii.
+//                      .iiiiiiiiiiiiii;;;;;iiiiiiiiiiiiiiiiiii:
+//                       .;iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii;
+//                        ;iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.
+//                       .;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;,
 </script>
 
 <style>

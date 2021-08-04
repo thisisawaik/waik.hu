@@ -7,5 +7,5 @@ export default {
   title: 'Title',
   description: 'Description',
   file: 'File',
-  admin: 'Admin'
-}
+  admin: 'Admin',
+};

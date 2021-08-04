@@ -5,18 +5,18 @@
 </template>
 
 <script>
-import MarkdownEditor from '@voraciousdev/vue-markdown-editor'
+import MarkdownEditor from '@voraciousdev/vue-markdown-editor';
 
 export default {
   components: {
-    MarkdownEditor
+    MarkdownEditor,
   },
   data () {
     return {
-      markdown: this.$store.state.mde
-    }
-  }
-}
+      markdown: this.$store.state.mde,
+    };
+  },
+};
 
 </script>
 

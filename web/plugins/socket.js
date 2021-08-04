@@ -3,54 +3,54 @@
 export default ({ app, store }, inject) => {
   let socket = app.$nuxtSocket({
     channel: '/',
-    reconnection: true
-  })
+    reconnection: true,
+  });
 
   function reconnect (t) {
-    const time = t || 3000
-    let connected = false
-    socket = null
+    const time = t || 3000;
+    let connected = false;
+    socket = null;
     socket = app.$nuxtSocket({
       channel: '/',
-      reconnection: true
-    })
+      reconnection: true,
+    });
     socket.once('connect', () => {
-      console.log('reconnected')
-      store.commit('changeWsStatus', 'connected')
-      connected = true
-    })
+      console.log('reconnected');
+      store.commit('changeWsStatus', 'connected');
+      connected = true;
+    });
 
     setTimeout(() => {
       if (!connected) {
-        reconnect()
+        reconnect();
       }
-    }, time)
+    }, time);
   }
 
-  const auth = app.$fire.auth
+  const auth = app.$fire.auth;
 
   socket.on('disconnect', (reason) => {
-    console.log('disconnected', reason)
-    store.commit('changeWsStatus', 'disconnected')
+    console.log('disconnected', reason);
+    store.commit('changeWsStatus', 'disconnected');
     if (reason === 'transport error') {
-      console.log('asd')
-      reconnect()
+      console.log('asd');
+      reconnect();
     }
-  })
+  });
 
   socket.on('connect', () => {
-    console.log('connected')
-    store.commit('changeWsStatus', 'connected')
-  })
+    console.log('connected');
+    store.commit('changeWsStatus', 'connected');
+  });
 
   auth.onAuthStateChanged(async (user) => {
     if (user) {
-      const token = await user.getIdToken(true)
-      socket.emit('userStateUpdate', token)
+      const token = await user.getIdToken(true);
+      socket.emit('userStateUpdate', token);
     } else {
-      socket.emit('userStateUpdate', null)
+      socket.emit('userStateUpdate', null);
     }
-  })
+  });
 
-  inject('mainSocket', socket)
-}
+  inject('mainSocket', socket);
+};

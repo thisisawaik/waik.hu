@@ -8,16 +8,16 @@
 <script>
 export default {
   async asyncData ({ $content, i18n }) {
-    const profile = await $content(`${i18n.localeProperties.code}/profiles`, 'walrusz').fetch()
+    const profile = await $content(`${i18n.localeProperties.code}/profiles`, 'walrusz').fetch();
     return {
       profile,
-      desc: profile.body.children[0].children[0].value
-    }
+      desc: profile.body.children[0].children[0].value,
+    };
   },
   data () {
     return {
-      loading: false
-    }
+      loading: false,
+    };
   },
   head () {
     return {
@@ -25,28 +25,28 @@ export default {
       meta: [
         {
           name: 'og:title',
-          content: `Waik | ${this.profile.name}`
+          content: `Waik | ${this.profile.name}`,
         },
         {
           name: 'description',
-          content: this.desc
+          content: this.desc,
         },
         {
           name: 'og:description',
-          content: this.desc
+          content: this.desc,
         },
         {
           name: 'og:image',
-          content: this.profile.imageurl
+          content: this.profile.imageurl,
         },
         {
           name: 'theme-color',
-          content: `#${this.profile.color}`
-        }
-      ]
-    }
-  }
-}
+          content: `#${this.profile.color}`,
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style>

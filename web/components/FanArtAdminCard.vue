@@ -72,64 +72,64 @@ export default {
       likesListener: null,
       shareId: null,
       isForComp: false,
-      user: null
-    }
+      user: null,
+    };
   },
   async created () {
-    const db = this.$fire.firestore
+    const db = this.$fire.firestore;
     // const storage = this.$fire.storage
-    const ref = db.collection('waik/website/fanarts').doc(this.id)
+    const ref = db.collection('waik/website/fanarts').doc(this.id);
     try {
-      const doc = await ref.get()
-      this.title = doc.data().title
-      this.desc = doc.data().desc
+      const doc = await ref.get();
+      this.title = doc.data().title;
+      this.desc = doc.data().desc;
       if (doc.data().getFromGS) {
-        const storage = this.$fire.storage
-        const sref = storage.ref(doc.data().gsURL)
-        this.imageurl = await sref.getDownloadURL()
+        const storage = this.$fire.storage;
+        const sref = storage.ref(doc.data().gsURL);
+        this.imageurl = await sref.getDownloadURL();
       } else {
-        this.imageurl = doc.data().downloadurl
+        this.imageurl = doc.data().downloadurl;
       }
 
       if (doc.data().author) {
-        const dcRef = db.collection('dcusers').doc(doc.data().author)
-        const dcDoc = await dcRef.get()
-        this.authorAvatar = dcDoc.data().pp
-        this.authorName = dcDoc.data().tag
+        const dcRef = db.collection('dcusers').doc(doc.data().author);
+        const dcDoc = await dcRef.get();
+        this.authorAvatar = dcDoc.data().pp;
+        this.authorName = dcDoc.data().tag;
       }
 
-      this.isForComp = doc.data().isForComp
+      this.isForComp = doc.data().isForComp;
 
-      this.loading = false
+      this.loading = false;
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e)
-      this.loading = false
+      console.error(e);
+      this.loading = false;
     }
   },
   methods: {
     async approve () {
-      const functions = this.$fire.functions
+      const functions = this.$fire.functions;
       await functions.httpsCallable('waikFanartApprove')({
-        postId: this.id
+        postId: this.id,
       }).then(() => {
       }).catch((e) => {
         // eslint-disable-next-line no-console
-        console.log(e)
-      })
+        console.log(e);
+      });
     },
     async deny () {
-      const functions = this.$fire.functions
+      const functions = this.$fire.functions;
       await functions.httpsCallable('waikFanartDeny')({
-        postId: this.id
+        postId: this.id,
       }).then(() => {
       }).catch((e) => {
         // eslint-disable-next-line no-console
-        console.log(e)
-        this.isLiked = true
-        this.likes = this.likes + 1
-      })
-    }
-  }
-}
+        console.log(e);
+        this.isLiked = true;
+        this.likes = this.likes + 1;
+      });
+    },
+  },
+};
 </script>

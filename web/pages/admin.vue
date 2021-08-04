@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import AdminRoleChangeCard from '../components/AdminRoleChangeCard.vue'
+import AdminRoleChangeCard from '../components/AdminRoleChangeCard.vue';
 export default {
   components: { AdminRoleChangeCard },
   data: () => ({
@@ -127,7 +127,7 @@ export default {
       showchanges: false,
       color: 'blue',
       startedBy: null,
-      progress_color: 'deep-purple'
+      progress_color: 'deep-purple',
     },
     autorole: {
       loading: false,
@@ -140,99 +140,99 @@ export default {
       changes: {},
       memberchanges: 0,
       color: 'blue',
-      progress_color: 'deep-purple'
+      progress_color: 'deep-purple',
     },
-    testSocket: {}
+    testSocket: {},
   }),
 
   async created () {
     if (process.client) {
-      this.loadMassStatus()
-      this.loadSyncStatus()
-      const db = this.$fire.firestore
-      const ref = db.collection('waik').doc('discord')
-      const doc = await ref.get()
-      this.roles = doc.data().autoroles
+      this.loadMassStatus();
+      this.loadSyncStatus();
+      const db = this.$fire.firestore;
+      const ref = db.collection('waik').doc('discord');
+      const doc = await ref.get();
+      this.roles = doc.data().autoroles;
     }
   },
   methods: {
     async getMessage () {
-      this.$mainSocket.emit('ping', 'PING')
-      const token = await this.$fire.auth.currentUser.getIdToken(true)
-      this.$mainSocket.emit('userData', { token: token || null })
+      this.$mainSocket.emit('ping', 'PING');
+      const token = await this.$fire.auth.currentUser.getIdToken(true);
+      this.$mainSocket.emit('userData', { token: token || null });
     },
     loadMassStatus () {
-      const rdb = this.$fire.database
-      const ref = rdb.ref('admin/massadd')
-      this.massrole.loading = true
+      const rdb = this.$fire.database;
+      const ref = rdb.ref('admin/massadd');
+      this.massrole.loading = true;
       ref.child('changes').on('value', (snapshot) => {
-        this.massrole.memberchanges = snapshot.numChildren() || 0
-      })
+        this.massrole.memberchanges = snapshot.numChildren() || 0;
+      });
       ref.on('value', (snap) => {
-        this.massrole.loading = false
-        this.massrole.all = snap.val().all
-        this.massrole.done = snap.val().done
+        this.massrole.loading = false;
+        this.massrole.all = snap.val().all;
+        this.massrole.done = snap.val().done;
         this.massrole.startedAt = snap.val().startedAt
           ? new Date(snap.val().startedAt).toLocaleString()
-          : 'Not yet started'
+          : 'Not yet started';
         this.massrole.finishedAt = snap.val().finishedAt
           ? new Date(snap.val().finishedAt).toLocaleString()
-          : 'Not yet finished'
+          : 'Not yet finished';
         if (snap.val().running === true) {
-          this.massrole.status = 'pending'
-          this.massrole.progress_color = 'deep-purple'
+          this.massrole.status = 'pending';
+          this.massrole.progress_color = 'deep-purple';
         } else if (snap.val().error) {
-          this.massrole.status = 'error'
-          this.massrole.progress_color = 'red'
+          this.massrole.status = 'error';
+          this.massrole.progress_color = 'red';
         } else {
-          this.massrole.status = 'success'
-          this.massrole.progress_color = 'green'
+          this.massrole.status = 'success';
+          this.massrole.progress_color = 'green';
         }
 
-        this.massrole.startedBy = snap.val().startedBy
+        this.massrole.startedBy = snap.val().startedBy;
 
         if (this.massrole.changes !== snap.val().changes) {
-          this.massrole.changes = snap.val().changes
+          this.massrole.changes = snap.val().changes;
         }
         // console.log(snap.val())
-      })
+      });
     },
     loadSyncStatus () {
-      const rdb = this.$fire.database
-      const ref = rdb.ref('admin/sync')
-      this.autorole.loading = true
+      const rdb = this.$fire.database;
+      const ref = rdb.ref('admin/sync');
+      this.autorole.loading = true;
       ref.child('changes').on('value', (snapshot) => {
-        this.autorole.memberchanges = snapshot.numChildren() || 0
-      })
+        this.autorole.memberchanges = snapshot.numChildren() || 0;
+      });
       ref.on('value', (snap) => {
-        this.autorole.loading = false
-        this.autorole.all = snap.val().all
-        this.autorole.done = snap.val().done
-        this.autorole.changes = snap.val().changes
+        this.autorole.loading = false;
+        this.autorole.all = snap.val().all;
+        this.autorole.done = snap.val().done;
+        this.autorole.changes = snap.val().changes;
         this.autorole.startedAt = snap.val().startedAt
           ? new Date(snap.val().startedAt).toLocaleString()
-          : 'Not yet started'
+          : 'Not yet started';
         this.autorole.finishedAt = snap.val().finishedAt
           ? new Date(snap.val().finishedAt).toLocaleString()
-          : 'Not yet finished'
+          : 'Not yet finished';
         if (snap.val().running === true) {
-          this.autorole.status = 'pending'
-          this.autorole.progress_color = 'deep-purple'
+          this.autorole.status = 'pending';
+          this.autorole.progress_color = 'deep-purple';
         } else if (snap.val().error) {
-          this.autorole.status = 'error'
-          this.autorole.progress_color = 'red'
+          this.autorole.status = 'error';
+          this.autorole.progress_color = 'red';
         } else {
-          this.autorole.status = 'success'
-          this.autorole.progress_color = 'green'
+          this.autorole.status = 'success';
+          this.autorole.progress_color = 'green';
         }
         // console.log(snap.val())
-      })
+      });
     },
     reserve () {
-      this.massrole.loading = true
+      this.massrole.loading = true;
 
-      setTimeout(() => (this.massrole.loading = false), 2000)
-    }
-  }
-}
+      setTimeout(() => (this.massrole.loading = false), 2000);
+    },
+  },
+};
 </script>

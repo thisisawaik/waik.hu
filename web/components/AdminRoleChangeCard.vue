@@ -29,16 +29,16 @@ export default {
   data () {
     return {
       avatarURL: 'https://vue-tenant.github.io/images/default-avatar.png',
-      name: 'Loading...'
-    }
+      name: 'Loading...',
+    };
   },
   async created () {
-    const db = this.$fire.firestore
-    const userref = db.doc('dcusers/' + this.id)
-    const userdoc = await userref.get()
+    const db = this.$fire.firestore;
+    const userref = db.doc('dcusers/' + this.id);
+    const userdoc = await userref.get();
 
-    this.name = userdoc.data().tag
-    this.avatarURL = userdoc.data().pp
-  }
-}
+    this.name = userdoc.data().tag;
+    this.avatarURL = userdoc.data().pp;
+  },
+};
 </script>
