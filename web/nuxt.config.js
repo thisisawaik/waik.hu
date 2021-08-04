@@ -87,7 +87,7 @@ export default {
     sockets: [
       {
         name: 'main',
-        url: 'http://localhost:3005',
+        url: 'https://waik-main-ws-dev-zd72hz742a-lz.a.run.app',
         default: true,
         secure: true,
       },
