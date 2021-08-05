@@ -29,7 +29,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    'plugins/socket.js',
+    'plugins/socket.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -53,7 +53,6 @@ export default {
     'nuxt-maintenance-mode',
     '@nuxt/content',
     '@nuxtjs/markdownit',
-    'nuxt-socket-io',
     'nuxt-i18n',
   ],
   i18n: {
@@ -82,17 +81,6 @@ export default {
       cookieKey: 'i18n_redirected',
       onlyOnRoot: true, // recommended
     },
-  },
-  io: {
-    sockets: [
-      {
-        name: 'main',
-        url: 'https://waik-main-ws-dev-zd72hz742a-lz.a.run.app',
-        default: true,
-        secure: true,
-      },
-    ], // ,
-    // transports: ['websocket']
   },
   content: {
     markdown: {
