@@ -47,58 +47,58 @@ export default {
       loading: true,
       canceled: false,
       error: null,
-    };
+    }
   },
   head () {
     return {
       title: `Waik | ${this.user ? 'Fiók' : 'Bejelentkezés'}`,
-    };
+    }
   },
   created () {
-    this.canceled = false;
+    this.canceled = false
     if (this.$nuxt.$route.query.code && !process.server) {
-      this.discordLogin(this.$nuxt.$route.query.code);
+      this.discordLogin(this.$nuxt.$route.query.code)
     }
   },
   methods: {
     discordLogin (token) {
-      const socket = this.$mainSocket;
+      const socket = this.$mainSocket
       // const functions = this.$fire.functions
-      const source = window.location.href.split('?')[0];
-      this.$router.replace({ query: null });
+      const source = window.location.href.split('?')[0]
+      this.$router.replace({ query: null })
       this.$mainSocket.once('connect', () => {
-        console.log('connected');
+        console.log('connected')
         setTimeout(async () => {
-          console.log('sending-dcdata');
+          console.log('sending-dcdata')
           try {
             this.user.getIdToken().then((token) => {
               socket.emit('discordLink', {
                 token,
-              });
-            });
+              })
+            })
           } catch (error) {
             socket.emit('discordLogin', {
               token,
               source,
-            });
+            })
             const discordLoginP = new Promise((resolve, reject) => {
               socket.once('discordLoginSuccess', (data) => {
-                resolve(data);
-              });
+                resolve(data)
+              })
               socket.once('discordLoginError', (data) => {
-                reject(data);
-              });
-            });
+                reject(data)
+              })
+            })
             await discordLoginP.then(async (data) => {
               await this.$fire.auth.signInWithCustomToken(data.token).then(() => {
                 if (!this.canceled) {
-                  this.$router.push('/auth');
+                  this.$router.push('/auth')
                 }
-              });
-            });
+              })
+            })
           }
-        }, 2000);
-      });
+        }, 2000)
+      })
 
       /*
       if (localStorage.getItem('authDiscordLinkStatus')) {
@@ -133,11 +133,11 @@ export default {
       */
     },
     cancel () {
-      this.canceled = true;
-      this.$router.push('/auth');
+      this.canceled = true
+      this.$router.push('/auth')
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

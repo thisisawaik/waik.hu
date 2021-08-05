@@ -8,16 +8,16 @@
 <script>
 export default {
   async asyncData ({ $content, i18n }) {
-    const profile = await $content(`${i18n.localeProperties.code}/profiles`, 'walrusz').fetch();
+    const profile = await $content(`${i18n.localeProperties.code}/profiles`, 'walrusz').fetch()
     return {
       profile,
       desc: profile.body.children[0].children[0].value,
-    };
+    }
   },
   data () {
     return {
       loading: false,
-    };
+    }
   },
   head () {
     return {
@@ -44,9 +44,9 @@ export default {
           content: `#${this.profile.color}`,
         },
       ],
-    };
+    }
   },
-};
+}
 </script>
 
 <style>

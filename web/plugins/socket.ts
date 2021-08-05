@@ -1,13 +1,11 @@
-/* eslint-disable no-console */
 import { io } from "socket.io-client";
-import { Plugin } from '@nuxt/types'
-
+import { Plugin } from '@nuxt/types';
+;
 declare module 'vue/types/vue' {
-  // this.$myInjectedFunction inside Vue components
   interface Vue {
     $myInjectedFunction(message: string): void
   }
-}
+};
 
 declare module '@nuxt/types' {
   // nuxtContext.app.$myInjectedFunction inside asyncData, fetch, plugins, middleware, nuxtServerInit
@@ -18,10 +16,10 @@ declare module '@nuxt/types' {
   interface Context {
     $myInjectedFunction(message: string): void
   }
-}
+};
 
 const myPlugin: Plugin = (context, inject) => {
-  const socket = io('http://localhost:3005/');
+  const socket = io('/');
   const store = context.store
 
   function reconnect (t?: number) {

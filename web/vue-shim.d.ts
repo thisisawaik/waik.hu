@@ -6,6 +6,12 @@ declare module 'vue/types/vue/' {
         $router: VueRouter
     }
 }
+declare namespace NodeJS {
+    export interface Process {
+      client: boolean
+      server: boolean
+    }
+}
 
 declare module "*.vue" {
     export default Vue

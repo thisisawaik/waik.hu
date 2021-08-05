@@ -32,9 +32,9 @@ export default {
     return {
       title: 'Waik | Streamek',
       meta: [],
-    };
+    }
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

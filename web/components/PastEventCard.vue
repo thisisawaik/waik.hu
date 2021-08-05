@@ -21,5 +21,5 @@
 export default {
   // eslint-disable-next-line vue/require-prop-types
   props: ['title', 'description', 'html', 'markdown'],
-};
+}
 </script>

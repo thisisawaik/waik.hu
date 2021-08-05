@@ -71,121 +71,121 @@ export default {
       shareId: null,
       user: null,
       isActionClicked: false,
-    };
+    }
   },
   async created () {
-    const db = this.$fire.firestore;
-    const database = this.$fire.database;
+    const db = this.$fire.firestore
+    const database = this.$fire.database
     // const storage = this.$fire.storage
-    const ref = db.collection('waik/website/fanarts').doc(this.id);
+    const ref = db.collection('waik/website/fanarts').doc(this.id)
     try {
-      const doc = await ref.get();
-      this.title = doc.data().title;
-      this.desc = doc.data().desc;
+      const doc = await ref.get()
+      this.title = doc.data().title
+      this.desc = doc.data().desc
       if (doc.data().getFromGS) {
-        const storage = this.$fire.storage;
-        const sref = storage.ref(doc.data().gsURL);
-        this.imageurl = await sref.getDownloadURL();
+        const storage = this.$fire.storage
+        const sref = storage.ref(doc.data().gsURL)
+        this.imageurl = await sref.getDownloadURL()
       } else {
-        this.imageurl = doc.data().downloadurl;
+        this.imageurl = doc.data().downloadurl
       }
 
       if (doc.data().author) {
-        const dcRef = db.collection('dcusers').doc(doc.data().author);
-        const dcDoc = await dcRef.get();
-        this.authorAvatar = dcDoc.data().pp;
-        this.authorName = dcDoc.data().tag;
+        const dcRef = db.collection('dcusers').doc(doc.data().author)
+        const dcDoc = await dcRef.get()
+        this.authorAvatar = dcDoc.data().pp
+        this.authorName = dcDoc.data().tag
       }
 
       if (doc.data().shareid) {
-        this.shareId = doc.data().shareid;
+        this.shareId = doc.data().shareid
       }
 
       this.$fire.auth.onAuthStateChanged(async (user) => {
-        this.user = user;
+        this.user = user
         if (user) {
-          const userLikeRef = db.doc(`waik/website/fanarts/${this.id}/likes/${user.uid}`);
+          const userLikeRef = db.doc(`waik/website/fanarts/${this.id}/likes/${user.uid}`)
           await userLikeRef.get().then((doc) => {
-            this.isLiked = doc.exists;
-          });
+            this.isLiked = doc.exists
+          })
         }
-      });
+      })
 
-      const likesref = database.ref(`fanarts/${this.id}`);
+      const likesref = database.ref(`fanarts/${this.id}`)
       // eslint-disable-next-line require-await
       this.likesListener = likesref.on('value', async (snap) => {
         if (snap !== undefined) {
-          this.likes = snap.val().likes ? snap.val().likes : 0;
+          this.likes = snap.val().likes ? snap.val().likes : 0
         }
-      });
-      this.loading = false;
+      })
+      this.loading = false
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e);
-      this.loading = false;
+      console.error(e)
+      this.loading = false
     }
   },
   destroyed () {
     try {
-      this.likesListener();
+      this.likesListener()
     } catch (e) {
       try {
-        this.likesListener().off();
+        this.likesListener().off()
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.warn('Detatching listener failed');
+        console.warn('Detatching listener failed')
       }
     }
   },
   methods: {
     copyShareUrl () {
-      const url = `https://waik.hu/share/${this.shareId}`;
-      this.copySomething(url);
+      const url = `https://waik.hu/share/${this.shareId}`
+      this.copySomething(url)
     },
     changeLikeStatus () {
       if (this.user) {
         if (this.isLiked) {
-          this.remove_like();
+          this.remove_like()
         } else {
-          this.like();
+          this.like()
         }
       } else {
-        this.$router.push('/auth');
+        this.$router.push('/auth')
       }
     },
     async like () {
-      const functions = this.$fire.functions;
-      this.isLiked = true;
-      this.likes = this.likes + 1;
+      const functions = this.$fire.functions
+      this.isLiked = true
+      this.likes = this.likes + 1
       await functions.httpsCallable('waikFanartAddLike')({
         postId: this.id,
       }).catch((e) => {
         // eslint-disable-next-line no-console
-        console.log(e);
-        this.isLiked = false;
-        this.likes = this.likes - 1;
-      });
+        console.log(e)
+        this.isLiked = false
+        this.likes = this.likes - 1
+      })
     },
     async remove_like () {
-      const functions = this.$fire.functions;
-      this.isLiked = false;
-      this.likes = this.likes - 1;
+      const functions = this.$fire.functions
+      this.isLiked = false
+      this.likes = this.likes - 1
       await functions.httpsCallable('waikFanartLikeRemove')({
         postId: this.id,
       }).catch((e) => {
         // eslint-disable-next-line no-console
-        console.log(e);
-        this.isLiked = true;
-        this.likes = this.likes + 1;
-      });
+        console.log(e)
+        this.isLiked = true
+        this.likes = this.likes + 1
+      })
     },
     async copySomething (text) {
       try {
-        await this.$copyText(text);
+        await this.$copyText(text)
       } catch (e) {
         // console.error(e);
       }
     },
   },
-};
+}
 </script>

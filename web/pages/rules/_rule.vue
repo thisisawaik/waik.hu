@@ -11,8 +11,8 @@
 <script>
 export default {
   async asyncData ({ $content, params, i18n }) {
-    const article = await $content(`${i18n.localeProperties.code}/rules`, params.rule).fetch();
-    return { article };
+    const article = await $content(`${i18n.localeProperties.code}/rules`, params.rule).fetch()
+    return { article }
   },
   head () {
     return {
@@ -51,15 +51,15 @@ export default {
           content: this.article.updatedAt,
         },
       ],
-    };
+    }
   },
   methods: {
     formatDate (date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(date).toLocaleDateString('hu', options);
+      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(date).toLocaleDateString('hu', options)
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

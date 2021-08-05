@@ -20,7 +20,6 @@ module.exports = {
   rules: {
     'vue/no-multiple-template-root': 'off',
     'vue/no-v-html': 'off',
-    semi: ['error', 'always'],
     'comma-dangle': ['error', 'always-multiline'],
   },
-};
+}

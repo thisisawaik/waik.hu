@@ -141,10 +141,10 @@ export default {
   // eslint-disable-next-line vue/require-prop-types
   props: ['profile'],
   data () {
-    return {};
+    return {}
   },
   methods: {},
-};
+}
 </script>
 
 <style lang="scss" scoped>

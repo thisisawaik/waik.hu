@@ -20,30 +20,30 @@ export default {
     status: {
       type: Object,
       default () {
-        return {};
+        return {}
       },
     },
   },
   computed: {
     statusTbl () {
-      const { status } = this;
-      let err;
+      const { status } = this
+      let err
       const items = Object.entries(status).reduce((arr, [item, info]) => {
         if (item !== 'connectUrl' && info !== undefined && info !== '') {
           if (item.match(/Error|Failed/)) {
-            err = true;
+            err = true
           }
-          arr.push({ item, info });
+          arr.push({ item, info })
         }
-        return arr;
-      }, []);
+        return arr
+      }, [])
       if (!err) {
-        items.unshift({ item: 'status', info: 'OK' });
+        items.unshift({ item: 'status', info: 'OK' })
       }
-      return items;
+      return items
     },
   },
-};
+}
 </script>
 
 <style scoped>

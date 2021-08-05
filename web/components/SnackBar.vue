@@ -19,17 +19,17 @@ export default {
       color: 'green',
       timeout: 3000,
       show: false,
-    };
+    }
   },
   created () {
 
   },
   methods: {
     close () {
-      this.show = false;
+      this.show = false
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

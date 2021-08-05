@@ -32,9 +32,9 @@
 </template>
 
 <script>
-import FanArtAdmin from '../components/FanArtAdmin.vue';
-import FanArtCard from '../components/FanArtCard.vue';
-import FanArtUpload from '../components/FanArtUpload.vue';
+import FanArtAdmin from '../components/FanArtAdmin.vue'
+import FanArtCard from '../components/FanArtCard.vue'
+import FanArtUpload from '../components/FanArtUpload.vue'
 
 export default {
   components: {
@@ -43,18 +43,18 @@ export default {
     FanArtAdmin,
   },
   async asyncData ({ $content, store }) {
-    const article = await $content('hu/rules', 'fanart').fetch();
-    store.commit('setFanartRules', article);
-    const infos = await $content('hu/infos', 'fanart_comp').fetch();
-    store.commit('setFanartInfos', infos);
-    return { article };
+    const article = await $content('hu/rules', 'fanart').fetch()
+    store.commit('setFanartRules', article)
+    const infos = await $content('hu/infos', 'fanart_comp').fetch()
+    store.commit('setFanartInfos', infos)
+    return { article }
   },
   data () {
     return {
       tab: 0,
       items: [],
       isAdmin: false,
-    };
+    }
   },
   head () {
     return {
@@ -78,34 +78,34 @@ export default {
           content: '#ffffff',
         },
       ],
-    };
+    }
   },
   async created () {
-    const auth = this.$fire.auth;
+    const auth = this.$fire.auth
     auth.onAuthStateChanged(async (user) => {
       // this.user = user
       if (user) {
-        const token = await user.getIdTokenResult(true);
+        const token = await user.getIdTokenResult(true)
         if (token.claims.waikAdmin) {
-          this.isAdmin = true;
+          this.isAdmin = true
         } else {
-          this.isAdmin = false;
+          this.isAdmin = false
         }
       } else {
-        this.isAdmin = false;
+        this.isAdmin = false
       }
-    });
-    const db = this.$fire.firestore;
+    })
+    const db = this.$fire.firestore
     const query = db
       .collection('waik/website/fanarts')
       .where('status', '==', 'PUBLIC')
-      .where('forComp', '==', false);
-    const queryres = await query.get();
-    let a = [];
-    a = queryres.docs;
-    this.items = a;
+      .where('forComp', '==', false)
+    const queryres = await query.get()
+    let a = []
+    a = queryres.docs
+    this.items = a
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

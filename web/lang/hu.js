@@ -8,4 +8,4 @@ export default {
   description: 'Leírás',
   file: 'Fájl',
   admin: 'Admin',
-};
+}

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import FanArtAdminCard from './FanArtAdminCard.vue';
+import FanArtAdminCard from './FanArtAdminCard.vue'
 export default {
   components: { FanArtAdminCard },
   data () {
@@ -31,36 +31,36 @@ export default {
       itemsLatest: [],
       isNewUpdate: false,
       isFirstFetch: true,
-    };
+    }
   },
   async created () {
-    const db = this.$fire.firestore;
+    const db = this.$fire.firestore
     const query = db
       .collection('waik/website/fanarts')
-      .where('status', '==', 'PENDING');
-    const queryres = await query.get();
-    let a = [];
-    a = queryres.docs;
-    this.items = a;
+      .where('status', '==', 'PENDING')
+    const queryres = await query.get()
+    let a = []
+    a = queryres.docs
+    this.items = a
     query.onSnapshot((snap) => {
       if (this.isFirstFetch) {
-        this.isFirstFetch = false;
+        this.isFirstFetch = false
       }
       if (snap.docs !== this.items && !this.isFirstFetch) {
-        this.isNewUpdate = true;
-        this.itemsLatest = snap.docs;
+        this.isNewUpdate = true
+        this.itemsLatest = snap.docs
       }
-    });
+    })
   },
   methods: {
     update () {
       if (this.items !== this.itemsLatest) {
-        this.isNewUpdate = false;
-        this.items = this.itemsLatest;
+        this.isNewUpdate = false
+        this.items = this.itemsLatest
       }
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

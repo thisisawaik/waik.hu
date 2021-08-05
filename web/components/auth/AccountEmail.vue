@@ -34,25 +34,25 @@ export default {
       pendingVerification: false,
       emailSent: false,
       verificationError: null,
-    };
+    }
   },
   created () {
     // console.log(this.user)
   },
   methods: {
     sendVerificationEmail () {
-      const auth = this.$fire.auth;
+      const auth = this.$fire.auth
       if (!this.sendingEmail) {
-        this.sendingEmail = true;
+        this.sendingEmail = true
         auth.currentUser.sendEmailVerification().then(() => {
-          this.sendingEmail = false;
-          this.emailSent = true;
+          this.sendingEmail = false
+          this.emailSent = true
         }).catch((e) => {
-          console.error(e);
-          this.verificationError = e.message;
-        });
+          console.error(e)
+          this.verificationError = e.message
+        })
       }
     },
   },
-};
+}
 </script>

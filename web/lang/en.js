@@ -8,4 +8,4 @@ export default {
   description: 'Description',
   file: 'File',
   admin: 'Admin',
-};
+}

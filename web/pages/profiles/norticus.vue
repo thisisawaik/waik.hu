@@ -7,21 +7,21 @@
 </template>
 
 <script>
-import SocialBar from '../../components/SocialBar.vue';
-import DescriptionCard from '../../components/DescriptionCard.vue';
+import SocialBar from '../../components/SocialBar.vue'
+import DescriptionCard from '../../components/DescriptionCard.vue'
 export default {
   components: { SocialBar, DescriptionCard },
   async asyncData ({ $content, i18n }) {
-    const profile = await $content(`${i18n.localeProperties.code}/profiles`, 'norticus').fetch();
+    const profile = await $content(`${i18n.localeProperties.code}/profiles`, 'norticus').fetch()
     return {
       profile,
       desc: profile.body.children[0].children[0].value,
-    };
+    }
   },
   data () {
     return {
       loading: false,
-    };
+    }
   },
   head () {
     return {
@@ -56,9 +56,9 @@ export default {
           content: `#${this.profile.color}`,
         },
       ],
-    };
+    }
   },
-};
+}
 </script>
 
 <style>

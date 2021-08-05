@@ -44,17 +44,17 @@ export default {
       loading: true,
       error: null,
       state: 'started',
-    };
+    }
   },
   // eslint-disable-next-line require-await
   async created () {
     setTimeout(() => {
-      this.state = 'success';
-      this.$store.commit('setAuthEmailStatus', this.state);
-      this.$router.push('/auth');
-    }, 5000);
+      this.state = 'success'
+      this.$store.commit('setAuthEmailStatus', this.state)
+      this.$router.push('/auth')
+    }, 5000)
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

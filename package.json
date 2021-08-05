@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/thisisawaik/waik.hu#readme",
   "dependencies": {
+    "discord-oauth2": "^2.7.1",
     "discord.js": "^12.5.3",
     "firebase-admin": "^9.11.0"
   }

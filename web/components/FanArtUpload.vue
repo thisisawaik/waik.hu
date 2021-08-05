@@ -119,12 +119,12 @@ export default {
       maxLength: 30,
       default: `${this.$t('title')}${this.$i18n.locale !== 'hu' ? ' (We recommend writing this in Hungarian)' : ''}`,
       content: '',
-    };
+    }
     const desc = {
       maxLength: 256,
       default: `${this.$t('description')}${this.$i18n.locale !== 'hu' ? ' (We recommend writing this in Hungarian)' : ''}`,
       content: '',
-    };
+    }
     return {
       saveBtn: {
         text: 'Mentés',
@@ -163,132 +163,132 @@ export default {
           `Nem lehet több mint ${desc.maxLength} karakter`,
       ],
       uploadProgress: null,
-    };
+    }
   },
   async created () {
-    const article = this.$store.state.fanartRules;
+    const article = this.$store.state.fanartRules
     // console.log(article)
-    this.rules = article;
-    this.rulesLoading = false;
-    const db = this.$fire.firestore;
-    const user = this.$fire.auth.currentUser;
+    this.rules = article
+    this.rulesLoading = false
+    const db = this.$fire.firestore
+    const user = this.$fire.auth.currentUser
     if (user) {
-      const artref = db.collection('waik/website/fanarts').doc(user.uid);
-      const doc = await artref.get();
+      const artref = db.collection('waik/website/fanarts').doc(user.uid)
+      const doc = await artref.get()
       if (doc.exist) {
-        if (doc.data().title) { this.titletext = doc.data().title; }
-        if (doc.data().desc) { this.desctext = doc.data().desc; }
-        if (doc.data().forComp) { this.isForComp = doc.data().forComp; }
+        if (doc.data().title) { this.titletext = doc.data().title }
+        if (doc.data().desc) { this.desctext = doc.data().desc }
+        if (doc.data().forComp) { this.isForComp = doc.data().forComp }
         if (doc.data().gsURL) {
-          const url = await this.$fire.storage.ref(doc.data().gsURL).getDownloadURL();
-          this.image = url;
+          const url = await this.$fire.storage.ref(doc.data().gsURL).getDownloadURL()
+          this.image = url
         }
       }
-      const userref = db.collection('users').doc(user.uid);
-      const userdoc = await userref.get();
-      this.dcid = userdoc.data().dcid || null;
+      const userref = db.collection('users').doc(user.uid)
+      const userdoc = await userref.get()
+      this.dcid = userdoc.data().dcid || null
     }
   },
   methods: {
     formatDate (date) {
-      return new Date(date).toLocaleDateString('hu', { year: 'numeric', month: 'long', day: 'numeric' });
+      return new Date(date).toLocaleDateString('hu', { year: 'numeric', month: 'long', day: 'numeric' })
     },
     upload (e) {
-      const storage = this.$fire.storage;
-      const user = this.$fire.auth.currentUser;
-      const ref = storage.ref(`/waik/fanarts/temp/${user.uid}/${e.name}`);
-      const perf = this.$fire.performance;
-      const trace = perf.trace('fanart_save');
-      trace.start();
+      const storage = this.$fire.storage
+      const user = this.$fire.auth.currentUser
+      const ref = storage.ref(`/waik/fanarts/temp/${user.uid}/${e.name}`)
+      const perf = this.$fire.performance
+      const trace = perf.trace('fanart_save')
+      trace.start()
       // eslint-disable-next-line require-await
       ref.put(e).on('state_changed', async (snap) => {
-        trace.incrementMetric('size', e.size);
-        const uploadPrecentage = (snap.bytesTransferred / snap.totalBytes) * 100;
-        this.uploadProgress = uploadPrecentage;
+        trace.incrementMetric('size', e.size)
+        const uploadPrecentage = (snap.bytesTransferred / snap.totalBytes) * 100
+        this.uploadProgress = uploadPrecentage
         if (uploadPrecentage === 100) {
-          const db = this.$fire.firestore;
-          const user = this.$fire.auth.currentUser;
-          const artref = db.collection('waik/website/fanarts').doc(user.uid);
-          this.image = await this.$fire.storage.ref(`/waik/fanarts/temp/${user.uid}/${e.name}`).getDownloadURL();
+          const db = this.$fire.firestore
+          const user = this.$fire.auth.currentUser
+          const artref = db.collection('waik/website/fanarts').doc(user.uid)
+          this.image = await this.$fire.storage.ref(`/waik/fanarts/temp/${user.uid}/${e.name}`).getDownloadURL()
           await artref.set({
             gsURL: `/waik/fanarts/temp/${user.uid}/${e.name}`,
-          }, { merge: true });
-          trace.stop();
+          }, { merge: true })
+          trace.stop()
         }
-      });
+      })
     },
     async save () {
-      if (this.saveBtn.disabled === true) { return; }
-      const db = this.$fire.firestore;
-      const user = this.$fire.auth.currentUser;
-      const perf = this.$fire.performance;
-      const artref = db.collection('waik/website/fanarts').doc(user.uid);
-      this.saveBtn.text = 'Mentés...';
-      this.saveBtn.color = 'yellow';
-      this.saveBtn.tcolor = 'black';
-      this.saveBtn.disabled = true;
-      const trace = perf.trace('fanart_save');
-      trace.start();
+      if (this.saveBtn.disabled === true) { return }
+      const db = this.$fire.firestore
+      const user = this.$fire.auth.currentUser
+      const perf = this.$fire.performance
+      const artref = db.collection('waik/website/fanarts').doc(user.uid)
+      this.saveBtn.text = 'Mentés...'
+      this.saveBtn.color = 'yellow'
+      this.saveBtn.tcolor = 'black'
+      this.saveBtn.disabled = true
+      const trace = perf.trace('fanart_save')
+      trace.start()
       await artref.set({
         desc: this.desc.titletext ? null : this.titletext,
         title: this.desc.desctext ? null : this.desctext,
         forComp: this.isForComp,
         author: this.dcid,
       }, { merge: true }).then(() => {
-        this.saveBtn.text = 'Sikeres mentés!';
-        this.saveBtn.color = 'green';
-        this.saveBtn.tcolor = 'white';
+        this.saveBtn.text = 'Sikeres mentés!'
+        this.saveBtn.color = 'green'
+        this.saveBtn.tcolor = 'white'
         setTimeout(() => {
-          this.saveBtn.text = 'Mentés';
-          this.saveBtn.color = 'green';
-          this.saveBtn.tcolor = 'white';
-          this.saveBtn.disabled = false;
-        }, 5000);
+          this.saveBtn.text = 'Mentés'
+          this.saveBtn.color = 'green'
+          this.saveBtn.tcolor = 'white'
+          this.saveBtn.disabled = false
+        }, 5000)
       }).catch((e) => {
         // eslint-disable-next-line no-console
-        console.error(e);
-      });
-      trace.stop();
-      return true;
+        console.error(e)
+      })
+      trace.stop()
+      return true
     },
     async submit () {
-      if (this.submitBtn.disabled === true) { return; }
-      await this.save();
-      const functions = this.$fire.functions;
-      this.submitBtn.text = 'Beküldés...';
-      this.submitBtn.color = 'yellow';
-      this.submitBtn.tcolor = 'black';
-      this.submitBtn.disabled = true;
+      if (this.submitBtn.disabled === true) { return }
+      await this.save()
+      const functions = this.$fire.functions
+      this.submitBtn.text = 'Beküldés...'
+      this.submitBtn.color = 'yellow'
+      this.submitBtn.tcolor = 'black'
+      this.submitBtn.disabled = true
       await functions.httpsCallable('waikFanartSubmit')({
         postId: this.$fire.auth.currentUser.uid,
       }).then(() => {
-        this.submitBtn.text = 'Sikeres beküldés';
-        this.submitBtn.color = 'green';
-        this.submitBtn.tcolor = 'white';
-        this.submitBtn.disabled = true;
+        this.submitBtn.text = 'Sikeres beküldés'
+        this.submitBtn.color = 'green'
+        this.submitBtn.tcolor = 'white'
+        this.submitBtn.disabled = true
         setTimeout(() => {
-          this.submitBtn.text = 'Beküldés';
-          this.submitBtn.color = 'green';
-          this.submitBtn.tcolor = 'white';
-          this.submitBtn.disabled = false;
-        }, 5000);
+          this.submitBtn.text = 'Beküldés'
+          this.submitBtn.color = 'green'
+          this.submitBtn.tcolor = 'white'
+          this.submitBtn.disabled = false
+        }, 5000)
       }).catch((e) => {
         // eslint-disable-next-line no-console
-        console.error(e);
-        this.submitBtn.text = 'Hiba történt beküldés közben! Próbáld újra később!';
-        this.submitBtn.color = 'red';
-        this.submitBtn.tcolor = 'white';
-        this.submitBtn.disabled = true;
+        console.error(e)
+        this.submitBtn.text = 'Hiba történt beküldés közben! Próbáld újra később!'
+        this.submitBtn.color = 'red'
+        this.submitBtn.tcolor = 'white'
+        this.submitBtn.disabled = true
         setTimeout(() => {
-          this.submitBtn.text = 'Beküldés';
-          this.submitBtn.color = 'green';
-          this.submitBtn.tcolor = 'white';
-          this.submitBtn.disabled = false;
-        }, 5000);
-      });
+          this.submitBtn.text = 'Beküldés'
+          this.submitBtn.color = 'green'
+          this.submitBtn.tcolor = 'white'
+          this.submitBtn.disabled = false
+        }, 5000)
+      })
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -15,8 +15,8 @@
 <script>
 export default {
   async asyncData ({ $content, params, i18n }) {
-    const article = await $content(`${i18n.localeProperties.code}/infos`, params.info).fetch();
-    return { article };
+    const article = await $content(`${i18n.localeProperties.code}/infos`, params.info).fetch()
+    return { article }
   },
   head () {
     const meta = [
@@ -72,19 +72,19 @@ export default {
         name: 'twitter:image:alt',
         content: this.article.alt,
       },
-    ];
+    ]
     return {
       title: `Waik | ${this.article.title}`,
       meta,
-    };
+    }
   },
   methods: {
     formatDate (date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(date).toLocaleDateString('hu', options);
+      const options = { year: 'numeric', month: 'long', day: 'numeric' }
+      return new Date(date).toLocaleDateString('hu', options)
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

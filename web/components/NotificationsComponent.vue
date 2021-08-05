@@ -35,5 +35,5 @@ export default {
     text: 'My timeout is set to 2000.',
     timeout: 2000,
   }),
-};
+}
 </script>

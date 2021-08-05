@@ -7,8 +7,8 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint:js": "eslint --ext \".js,.vue\" .",
-    "lint:fix": "eslint --ext \".js,.vue\" . --fix",
+    "lint:js": "eslint --ext \".js,.vue,.ts\" .",
+    "lint:fix": "eslint --ext \".js,.vue,.ts\" . --fix",
     "lint": "npm run lint:js",
     "test": "jest",
     "desktop-start": "electron ./dist"

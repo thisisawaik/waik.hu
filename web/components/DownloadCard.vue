@@ -70,72 +70,72 @@ export default {
       isFromPhone: this.$device.isMobileOrTablet,
       shareId: null,
 
-    };
+    }
   },
   async created () {
-    const db = this.$fire.firestore;
-    const storage = this.$fire.storage;
-    const ref = db.collection('waik/website/downloads').doc(this.id);
+    const db = this.$fire.firestore
+    const storage = this.$fire.storage
+    const ref = db.collection('waik/website/downloads').doc(this.id)
     try {
-      const doc = await ref.get();
-      this.title = doc.data().name;
-      this.desc = doc.data().desc;
+      const doc = await ref.get()
+      this.title = doc.data().name
+      this.desc = doc.data().desc
       if (doc.data().imageurl) {
         // const sref = storage.ref(doc.data().gsURL)
         // this.imageurl = await sref.getDownloadURL()
-        this.imageurl = doc.data().imageurl;
+        this.imageurl = doc.data().imageurl
       }
       if (doc.data().author) {
-        const dcRef = db.collection('dcusers').doc(doc.data().author);
-        const dcDoc = await dcRef.get();
-        this.authorAvatar = dcDoc.data().pp;
-        this.authorName = dcDoc.data().tag;
+        const dcRef = db.collection('dcusers').doc(doc.data().author)
+        const dcDoc = await dcRef.get()
+        this.authorAvatar = dcDoc.data().pp
+        this.authorName = dcDoc.data().tag
       }
       if (doc.data().githuburl) {
-        this.githuburl = doc.data().githuburl;
+        this.githuburl = doc.data().githuburl
       }
       if (doc.data().shareid) {
-        this.shareId = doc.data().shareid;
+        this.shareId = doc.data().shareid
       }
       if (doc.data().downloadgs) {
-        const sref = storage.refFromURL(doc.data().downloadgs);
-        this.downloadurl = await sref.getDownloadURL();
+        const sref = storage.refFromURL(doc.data().downloadgs)
+        this.downloadurl = await sref.getDownloadURL()
       } else {
-        this.downloadurl = doc.data().downloadurl;
+        this.downloadurl = doc.data().downloadurl
       }
-      this.loading = false;
+      this.loading = false
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e);
-      this.loading = false;
+      console.error(e)
+      this.loading = false
     }
   },
   methods: {
     copyShareUrl () {
       if (this.shareId) {
-        const url = `https://waik.hu/share/${this.shareId}`;
-        this.copySomething(url);
+        const url = `https://waik.hu/share/${this.shareId}`
+        this.copySomething(url)
       }
     },
     download () {
       if (this.downloadurl) {
-        open(this.downloadurl);
+        open(this.downloadurl)
       }
     },
     openGithub () {
       if (this.githuburl) {
-        open(this.githuburl);
+        open(this.githuburl)
       }
     },
     async copySomething (text) {
       try {
-        await this.$copyText(text);
+        await this.$copyText(text)
       } catch (e) {
         // console.error(e);
       }
     },
   },
-};
+}
 </script>
 
 <style>

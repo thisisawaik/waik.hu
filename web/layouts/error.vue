@@ -25,16 +25,16 @@ export default {
     return {
       pageNotFound: '404 Oldal nem található',
       otherError: 'Ismeretlen hiba történt',
-    };
+    }
   },
   head () {
     const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError;
+      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
     return {
       title,
-    };
+    }
   },
-};
+}
 </script>
 
 <style scoped>

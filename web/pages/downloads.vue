@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import DownloadCard from '../components/DownloadCard.vue';
+import DownloadCard from '../components/DownloadCard.vue'
 
 export default {
   components: {
@@ -20,7 +20,7 @@ export default {
   data () {
     return {
       items: [],
-    };
+    }
   },
   head () {
     return {
@@ -45,20 +45,20 @@ export default {
           content: '#ffffff',
         },
       ],
-    };
+    }
   },
   async created () {
-    const db = this.$fire.firestore;
+    const db = this.$fire.firestore
     const query = db
       .collection('waik/website/downloads')
       .where('visible', '==', true)
-      .orderBy('timestamp');
-    const queryres = await query.get();
-    let a = [];
-    a = queryres.docs;
-    this.items = a.reverse();
+      .orderBy('timestamp')
+    const queryres = await query.get()
+    let a = []
+    a = queryres.docs
+    this.items = a.reverse()
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
