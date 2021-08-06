@@ -7,11 +7,11 @@ export default async (req: Request, res: Response) => {
         await login(token, req, res);
     } catch (e) {
         if (e === "no-token-found") {
-            res.status(401).send("No token found");
+            return res.status(401).send("No token found");
           } else if (e === "source-not-provided") {
-            res.status(400).send("Source not provided");
+            return res.status(400).send("Source not provided");
           } else {
-            res.status(500).send(e);
+            return res.status(500).send(e);
           }
     }
     return res.status(200).send("OK");
