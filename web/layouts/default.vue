@@ -145,8 +145,6 @@ hu:
           target="_blank"
         >GitHub</a></span>
       <v-spacer />
-      <socket-status :status="$mainSocket" />
-      <span>{{ $t($store.state.ws.status) }}</span><div :style="`background-color: var(--${$store.state.ws.color});`" class="circle" />
       <nuxt-link v-if="$i18n.locale !== 'en' " style="color: #fff" :to="switchLocalePath('en')">
         English
       </nuxt-link>
@@ -159,9 +157,8 @@ hu:
 
 <script>
 import NotificationsComponent from '../components/NotificationsComponent.vue'
-import SocketStatus from '../components/SocketStatus.vue'
 export default {
-  components: { SocketStatus, NotificationsComponent },
+  components: { NotificationsComponent },
   data () {
     return {
       avatar: null,
@@ -204,20 +201,7 @@ export default {
       wsStatus: 'connecting',
     }
   },
-  watch: {
-    $route () {
-      // console.log('route changed', this.$route.path)
-      if (this.$route.path === '/maintenance') {
-        this.maintenance = true
-      } else {
-        this.maintenance = false
-      }
-    },
-  },
   async created () {
-    if (this.$nuxt.$route.path === '/maintenance') {
-      this.maintenance = true
-    }
     const auth = this.$fire.auth
     auth.onAuthStateChanged(async (user) => {
       // this.user = user

@@ -61,11 +61,13 @@ export default {
     }
   },
   methods: {
-    discordLogin (token) {
-      const socket = this.$mainSocket
+    discordLogin () {
       // const functions = this.$fire.functions
-      const source = window.location.href.split('?')[0]
+      // const source = window.location.href.split('?')[0]
       this.$router.replace({ query: null })
+      // TODO: fix this
+
+      /*
       this.$mainSocket.once('connect', () => {
         console.log('connected')
         setTimeout(async () => {
@@ -99,7 +101,7 @@ export default {
           }
         }, 2000)
       })
-
+      */
       /*
       if (localStorage.getItem('authDiscordLinkStatus')) {
 

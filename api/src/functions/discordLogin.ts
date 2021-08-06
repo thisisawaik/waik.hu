@@ -1,9 +1,9 @@
 import { firestore, auth } from "firebase-admin";
 import DcAuth = require("discord-oauth2");
+import { Request, Response } from "express";
 
-export default async function (data: any): Promise<Token> {
+export default async function (data: any, req: Request, res: Response): Promise<Token> {
   const db = firestore();
-
   const token = data.token;
   const source = data.source;
   if (!token) {

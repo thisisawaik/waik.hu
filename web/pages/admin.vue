@@ -157,9 +157,7 @@ export default {
   },
   methods: {
     async getMessage () {
-      this.$mainSocket.emit('ping', 'PING')
-      const token = await this.$fire.auth.currentUser.getIdToken(true)
-      this.$mainSocket.emit('userData', { token: token || null })
+
     },
     loadMassStatus () {
       const rdb = this.$fire.database

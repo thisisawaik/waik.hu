@@ -75,6 +75,9 @@
           <v-divider v-if="user" />
 
           <v-card-actions>
+            <v-btn text color="blue" @click="testToken">
+              Token test
+            </v-btn>
             <v-spacer />
             <v-btn v-if="user" color="red" text @click="logOut()">
               Kijelentkezés
@@ -145,12 +148,19 @@ export default {
     discordLogin () {
       location = `https://discord.com/api/oauth2/authorize?client_id=827711777495187487&redirect_uri=${window.location.protocol}//${window.location.host}${this.$i18n.locale !== 'hu' ? `/${this.$i18n.locale}` : ''}/auth/discord/callback&response_type=code&scope=identify%20email`
     },
-    async discordLink () {
-      const token = await this.user.getIdToken()
-      this.$mainSocket.emit('changeDiscordIsLinkingStatus', {
-        status: true,
-        token,
-      })
+    testToken () {
+      const auth = this.$fire.auth
+      const user = auth.currentUser
+      if (user) {
+        // const token = await user.getIdTokenResult(true)
+        this.$axios.get('/discord/users/423925286350880779/get').then((res) => {
+          console.log(res)
+        })
+      }
+    },
+    discordLink () {
+      // const token = await this.user.getIdToken()
+      // TODO: implement discord link
       location = `https://discord.com/api/oauth2/authorize?client_id=827711777495187487&redirect_uri=${window.location.protocol}//${window.location.host}${this.$i18n.locale !== 'hu' ? `/${this.$i18n.locale}` : ''}/auth/discord/callback&response_type=code&scope=identify%20email`
     },
     logOut () {

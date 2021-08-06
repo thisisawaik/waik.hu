@@ -6,12 +6,8 @@ export default async function (data: any): Promise<any> {
 
   const token = data.token;
   const source = data.source;
-  const jwt = source.jst;
   if (!token) {
     throw new Error("no-token-found");
-  }
-  if (!jwt) {
-    throw new Error("no-jwt-found");
   }
   if (!source) {
     throw new Error("source-not-provided");
