@@ -187,6 +187,11 @@ export default {
           show: true,
         },
         {
+          name: 'Gyakori kérdések',
+          to: '/faq',
+          show: true,
+        },
+        {
           name: 'admin',
           to: '/admin',
           show: false,
