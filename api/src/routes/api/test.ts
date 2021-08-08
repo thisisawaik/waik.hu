@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 
+// http://localhost:8080/api/test
 
 export default (req: Request, res: Response) => {
     console.log('test')
-    console.log(res.locals.decodedToken)
-    return res.status(200).send("OK");
+    return res.sendStatus(200);
 }
 
 export const autoRegister = true;

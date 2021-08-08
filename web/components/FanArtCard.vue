@@ -27,11 +27,16 @@
         </v-list-item-avatar>
 
         <v-list-item-content v-if="loading || authorName">
-          <v-list-item-title>
-            {{
-              authorName === 'Loading...' ? ' ' : authorName
-            }}
-          </v-list-item-title>
+          <span>
+            <p class="badge">
+              {{
+                authorName === 'Loading...' ? ' ' : authorName
+              }}
+            </p>
+            <v-icon v-if="isVerified" class="mr-1 badge">
+              mdi-check-decagram
+            </v-icon>
+          </span>
         </v-list-item-content>
 
         <v-row align="center" justify="end">
@@ -71,17 +76,29 @@ export default {
       shareId: null,
       user: null,
       isActionClicked: false,
+      isVerified: false,
     }
   },
   async created () {
     const db = this.$fire.firestore
     const database = this.$fire.database
     // const storage = this.$fire.storage
+    try {
+      const fanart = JSON.parse(localStorage.getItem(`cache.fanarts.${this.id}`))
+      if (fanart) {
+        this.loading = false
+        this.title = fanart.title
+        this.desc = fanart.desc
+        this.imageurl = fanart.imageurl
+      }
+    } catch (error) {}
+    // const postData = await this.$axios.get(`/fanart/${this.id}/`)
     const ref = db.collection('waik/website/fanarts').doc(this.id)
     try {
       const doc = await ref.get()
       this.title = doc.data().title
       this.desc = doc.data().desc
+      localStorage.setItem(`cache.fanarts.${this.id}`, JSON.stringify(doc.data()))
       if (doc.data().getFromGS) {
         const storage = this.$fire.storage
         const sref = storage.ref(doc.data().gsURL)
@@ -91,10 +108,35 @@ export default {
       }
 
       if (doc.data().author) {
+        try {
+          const user = JSON.parse(localStorage.getItem(`cache.users.${doc.data().author}`))
+          this.authorAvatar = user.pp
+          this.authorName = user.username
+          this.isVerified = !!user.badges.find(b => b === 'verified')
+          console.log(!!user.badges.find(b => b === 'verified'))
+        } catch (error) {}
+        try {
+          const user = await this.$axios.get(`/discord/users/${doc.data().author}/get`)
+          if (process.client) {
+            const ls = localStorage
+            ls.setItem(`cache.users.${doc.data().author}`, JSON.stringify(user.data))
+          }
+          console.log(user.data)
+          this.authorAvatar = user.data.pp
+          this.authorName = user.data.username
+          try {
+            this.isVerified = !!user.data.badges.find(b => b === 'verified')
+          } catch (error) {}
+        } catch (error) {
+          console.log(error)
+        }
+
+        /*
         const dcRef = db.collection('dcusers').doc(doc.data().author)
         const dcDoc = await dcRef.get()
         this.authorAvatar = dcDoc.data().pp
         this.authorName = dcDoc.data().tag
+        */
       }
 
       if (doc.data().shareid) {
@@ -189,3 +231,6 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+</style>

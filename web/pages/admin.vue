@@ -156,8 +156,12 @@ export default {
     }
   },
   methods: {
-    async getMessage () {
-
+    getMessage () {
+      this.$axios.get('/admin/test').then((res) => {
+        console.log(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
     },
     loadMassStatus () {
       const rdb = this.$fire.database

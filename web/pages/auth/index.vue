@@ -149,14 +149,7 @@ export default {
       location = `https://discord.com/api/oauth2/authorize?client_id=827711777495187487&redirect_uri=${window.location.protocol}//${window.location.host}${this.$i18n.locale !== 'hu' ? `/${this.$i18n.locale}` : ''}/auth/discord/callback&response_type=code&scope=identify%20email`
     },
     testToken () {
-      const auth = this.$fire.auth
-      const user = auth.currentUser
-      if (user) {
-        // const token = await user.getIdTokenResult(true)
-        this.$axios.get('/discord/users/423925286350880779/get').then((res) => {
-          console.log(res)
-        })
-      }
+      location = 'about:neterror?e=corruptedContentErrorv2&u=https%3A//google.com&c=UTF-8&d=The site at http%3A//localhost%3A3000/fanarts has experienced a network protocol violation that cannot be repaired.'
     },
     discordLink () {
       // const token = await this.user.getIdToken()

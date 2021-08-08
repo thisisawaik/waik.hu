@@ -29,7 +29,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    'plugins/api.ts',
+    'plugins/api.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -42,6 +42,7 @@ export default {
     '@nuxtjs/firebase',
     '@nuxtjs/device',
     '@nuxt/typescript-build',
+    '@nuxtjs/tailwindcss',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -187,7 +188,7 @@ export default {
         dark: {
           primary: '#5865f2',
           accent: '#eb459e',
-          secondary: '#57f287',
+          secondary: '#2C2F33',
           info: '#5865f2',
           warning: '#fee75c',
           error: '#ed4245',

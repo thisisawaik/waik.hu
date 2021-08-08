@@ -19,6 +19,7 @@
     "@nuxtjs/firebase": "^7.6.1",
     "@nuxtjs/markdownit": "^2.0.0",
     "@nuxtjs/pwa": "^3.3.5",
+    "@nuxtjs/tailwindcss": "^4.2.1",
     "@voraciousdev/vue-markdown-editor": "^0.3.1",
     "core-js": "^3.15.1",
     "firebase": "^8.7.0",

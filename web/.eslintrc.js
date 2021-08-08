@@ -21,6 +21,6 @@ module.exports = {
     'vue/no-multiple-template-root': 'off',
     'vue/no-v-html': 'off',
     'comma-dangle': ['error', 'always-multiline'],
-    semi: ['error', 'never'],
+    'no-console': 'off',
   },
 }

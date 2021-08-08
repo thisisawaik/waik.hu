@@ -13,7 +13,7 @@
         <v-flex class="flexContainer">
           <v-container fill-height fluid>
             <div style="margin-top: 30px; padding 10px" />
-            <fan-art-card v-for="i in items" :id="i.id" :key="i.id" />
+            <fan-art-card v-for="i in items" :id="i" :key="i" />
           </v-container>
         </v-flex>
       </v-tabs-item>
@@ -95,15 +95,24 @@ export default {
         this.isAdmin = false
       }
     })
-    const db = this.$fire.firestore
-    const query = db
-      .collection('waik/website/fanarts')
-      .where('status', '==', 'PUBLIC')
-      .where('forComp', '==', false)
-    const queryres = await query.get()
-    let a = []
-    a = queryres.docs
-    this.items = a
+    try {
+      // eslint-disable-next-line no-constant-condition
+      if (process.client) {
+        const list = JSON.parse(localStorage.getItem('cache.fanartList'))
+        if (list) {
+          this.items = list
+        }
+      }
+    } catch (error) {}
+    const list = await this.$axios.get('/fanart/list')
+    if (list.data !== this.items) {
+      let a = []
+      a = list.data
+      this.items = a
+      if (process.client) {
+        localStorage.setItem('cache.fanartList', JSON.stringify(a))
+      }
+    }
   },
 }
 </script>
