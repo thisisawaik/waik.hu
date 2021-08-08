@@ -10,6 +10,8 @@ const api = async (context, inject) => {
   })
   await context.$axios.get('/warmup').then(() => {
     console.log('API warmup complete')
+  }).catch((error) => {
+    console.error('API warmup failed', error)
   })
 
   const refreshToken = async () => {
