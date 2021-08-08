@@ -100,7 +100,6 @@ jobs:
         --region europe-north1 \
         --image gcr.io/zal1000/waik/website:$GITHUB_SHA \
         --platform managed \
-        --allow-unauthenticated \
         --project zal1000
 
   build-api-container:
