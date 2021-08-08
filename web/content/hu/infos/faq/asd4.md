@@ -1,5 +1,5 @@
 ---
-q: Mi az a Waik? Mit jelent? Minek a rövidítése?
+q: Mi az a Waik? Mit jelent? Honnan jött?
 ---
-
-A Waik nem egy rövidítés. A Waik az angol walk (sétálás) szó félreolvasásából keletkezett.
+A **Waik** szó az angol **walk** szó félreolvasásából keletkezett.
+A Waik figura abból jött, hogy valaki rajzólt egy nyalókát a táblára és ők meg elkezdték kiegészÍteni.
