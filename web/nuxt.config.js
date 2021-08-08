@@ -69,6 +69,10 @@ export default {
         file: 'en.js',
         iso: 'en',
       },
+      {
+        code: 'zoli',
+        file: 'zoli.js',
+      },
     ],
     defaultLocale: 'hu',
     lazy: true,

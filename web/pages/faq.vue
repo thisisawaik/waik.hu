@@ -3,14 +3,14 @@
     <v-container>
       <v-expansion-panels>
         <v-expansion-panel
-          v-for="(item, index) in questions"
+          v-for="(item, index) in faq"
           :key="index"
         >
           <v-expansion-panel-header>
-            {{ item.question }}
+            {{ item.q }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            {{ item.answer }}
+            <nuxt-content :document="item" />
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -21,7 +21,8 @@
 <script>
 export default {
   async asyncData ({ $content, i18n }) {
-    const faq = await $content(`${i18n.localeProperties.code}/infos`, 'faq').fetch()
+    const faq = await $content(`${i18n.localeProperties.code}/infos/faq`).fetch()
+    console.log(faq)
     return {
       faq,
       questions: faq.questions,
