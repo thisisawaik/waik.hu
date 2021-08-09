@@ -19,6 +19,7 @@
     "discord-oauth2": "^2.7.1",
     "express": "^4.17.1",
     "firebase-admin": "^9.9.0",
+    "glob": "^7.1.7",
     "pug": "^3.0.2"
   },
   "devDependencies": {
