@@ -63,10 +63,19 @@ export default {
   methods: {
     discordLogin () {
       // const functions = this.$fire.functions
-      // const source = window.location.href.split('?')[0]
+      const source = window.location.href.split('?')[0]
       this.$router.replace({ query: null })
       // TODO: fix this
-
+      this.$axios.post(`/discord/auth/login?token=${this.$nuxt.$route.query.code}&source=${source}`, {
+        token: this.$nuxt.$route.query.code,
+        source,
+      }).then(async (resp) => {
+        await this.$fire.auth.signInWithCustomToken(resp.data.token).then(() => {
+          if (!this.canceled) {
+            this.$router.push('/auth')
+          }
+        })
+      })
       /*
       this.$mainSocket.once('connect', () => {
         console.log('connected')

@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { auth } from 'firebase-admin'
 
 export default async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.headers);
+    // console.log(req.headers);
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     const token: any = req.header('Auth-Token')

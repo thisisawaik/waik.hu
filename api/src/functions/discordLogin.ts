@@ -6,6 +6,7 @@ export default async function (data: any, req: Request, res: Response): Promise<
   const db = firestore();
   const token = data.token;
   const source = data.source;
+  const isDefaultSource = data.isDefaultSource;
   if (!token) {
     throw new Error("no-token-found");
   }
@@ -13,9 +14,7 @@ export default async function (data: any, req: Request, res: Response): Promise<
     throw new Error("source-not-provided");
   }
   const authdoc = await db.collection("waik").doc("bot").get();
-  console.log(authdoc.data());
   const oauth = new DcAuth({
-    redirectUri: source,
     clientId: authdoc.data()?.auth.id,
     clientSecret: authdoc.data()?.auth.secret,
   });
@@ -25,6 +24,7 @@ export default async function (data: any, req: Request, res: Response): Promise<
       code: token,
       scope: "email",
       grantType: "authorization_code",
+      redirectUri: isDefaultSource ? `${source}/auth/discord/callback` : source,
     })
     .then(async (res) => {
       const atoken = res.access_token;
@@ -101,6 +101,12 @@ export default async function (data: any, req: Request, res: Response): Promise<
     });
 }
 
-interface Token {
+export interface Token {
   token: string;
+}
+
+export interface RequestData {
+  token: string;
+  source: string;
+  isDefaultSource: boolean;
 }
