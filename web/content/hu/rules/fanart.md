@@ -6,4 +6,5 @@ alt:
 colorTheme: FFFFFF
 ---
 - A versenyre maximum 3 alkotást lehet beküldeni
-- Az alkotásnak legalább tartalamaznia kell a waikot vagy a csapat legalább egyik tagját tartalmaznia kell
+- Az alkotásnak tartalamaznia kell a waikot vagy legalább a csapat egyik tagját
+- Tilos a sértő/NSFW rajzok beküldése
