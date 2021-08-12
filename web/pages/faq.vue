@@ -18,13 +18,13 @@
   </v-flex>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 
 export default Vue.extend({
   async asyncData ({ app }) {
     const faq = await app.$content(`${app.i18n.localeProperties.code}/infos/faq`).fetch()
-    console.log(faq)
+    // console.log(faq)
     return { faq }
   },
   data () {
@@ -39,6 +39,10 @@ export default Vue.extend({
         {
           name: 'og:title',
           content: 'Waik | GYIK',
+        },
+        {
+          name: 'og:description',
+          content: 'Itt találod meg a Waik gyakori kéedéseket',
         },
       ],
     }
