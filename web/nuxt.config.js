@@ -12,12 +12,12 @@ export default {
       { name: 'twitter:creator', content: '@zal1000original' },
       { name: 'twitter:site', content: 'https://waik.hu/' },
       { name: 'fb:app_id', content: '581458672492860' },
+      { name: 'theme-color', content: '#ffffff' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
   meta: {
-    ogType: false,
     ogTitle: false,
     ogDescription: false,
     ogSiteName: false,
