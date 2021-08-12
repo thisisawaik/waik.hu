@@ -108,7 +108,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 import AdminRoleChangeCard from '../components/AdminRoleChangeCard.vue'
 

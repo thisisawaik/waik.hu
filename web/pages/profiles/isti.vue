@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 import DescriptionCard from '../../components/DescriptionCard.vue'
 import SocialBar from '../../components/SocialBar.vue'

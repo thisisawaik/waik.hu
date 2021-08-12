@@ -10,7 +10,7 @@
   </v-container>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 import DownloadCard from '../components/DownloadCard.vue'
 

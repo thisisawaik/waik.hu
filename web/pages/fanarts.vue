@@ -31,7 +31,7 @@
   </v-card>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 import FanArtAdmin from '../components/FanArtAdmin.vue'
 import FanArtCard from '../components/FanArtCard.vue'
