@@ -31,21 +31,22 @@
   </v-card>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import FanArtAdmin from '../components/FanArtAdmin.vue'
 import FanArtCard from '../components/FanArtCard.vue'
 import FanArtUpload from '../components/FanArtUpload.vue'
 
-export default {
+export default Vue.extend({
   components: {
     FanArtCard,
     FanArtUpload,
     FanArtAdmin,
   },
-  async asyncData ({ $content, store }) {
-    const article = await $content('hu/rules', 'fanart').fetch()
+  async asyncData ({ app, store }) {
+    const article = await app.$content('hu/rules', 'fanart').fetch()
     store.commit('setFanartRules', article)
-    const infos = await $content('hu/infos', 'fanart_comp').fetch()
+    const infos = await app.$content('hu/infos', 'fanart_comp').fetch()
     store.commit('setFanartInfos', infos)
     return { article }
   },
@@ -114,7 +115,7 @@ export default {
       }
     }
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -10,10 +10,11 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import DownloadCard from '../components/DownloadCard.vue'
 
-export default {
+export default Vue.extend({
   components: {
     DownloadCard,
   },
@@ -58,7 +59,7 @@ export default {
     a = queryres.docs
     this.items = a.reverse()
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

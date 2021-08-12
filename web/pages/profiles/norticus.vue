@@ -7,10 +7,9 @@
 </template>
 
 <script>
-import SocialBar from '../../components/SocialBar.vue'
-import DescriptionCard from '../../components/DescriptionCard.vue'
-export default {
-  components: { SocialBar, DescriptionCard },
+import Vue from 'vue'
+
+export default Vue.extend({
   async asyncData ({ $content, i18n }) {
     const profile = await $content(`${i18n.localeProperties.code}/profiles`, 'norticus').fetch()
     return {
@@ -58,7 +57,7 @@ export default {
       ],
     }
   },
-}
+})
 </script>
 
 <style>

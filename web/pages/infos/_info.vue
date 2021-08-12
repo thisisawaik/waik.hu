@@ -12,8 +12,9 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
   async asyncData ({ $content, params, i18n }) {
     const article = await $content(`${i18n.localeProperties.code}/infos`, params.info).fetch()
     return { article }
@@ -80,11 +81,10 @@ export default {
   },
   methods: {
     formatDate (date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      return new Date(date).toLocaleDateString('hu', options)
+      return new Date(date).toLocaleDateString('hu', { year: 'numeric', month: 'long', day: 'numeric' })
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

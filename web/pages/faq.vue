@@ -18,15 +18,14 @@
   </v-flex>
 </template>
 
-<script>
-export default {
-  async asyncData ({ $content, i18n }) {
-    const faq = await $content(`${i18n.localeProperties.code}/infos/faq`).fetch()
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
+  async asyncData ({ app }) {
+    const faq = await app.$content(`${app.i18n.localeProperties.code}/infos/faq`).fetch()
     console.log(faq)
-    return {
-      faq,
-      questions: faq.questions,
-    }
+    return { faq }
   },
   data () {
     return {
@@ -44,7 +43,7 @@ export default {
       ],
     }
   },
-}
+})
 </script>
 
 <style>

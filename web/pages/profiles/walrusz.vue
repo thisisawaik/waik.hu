@@ -5,8 +5,9 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
   async asyncData ({ $content, i18n }) {
     const profile = await $content(`${i18n.localeProperties.code}/profiles`, 'walrusz').fetch()
     return {
@@ -46,7 +47,7 @@ export default {
       ],
     }
   },
-}
+})
 </script>
 
 <style>

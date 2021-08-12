@@ -1,9 +1,11 @@
 <i18n lang="yaml">
 hu:
-  connecting: 'Csatlakozás folyamatban...'
-  connected: 'Csatlakozva'
-  disconnected: 'Szétkapcsolva'
-  reconnecting: 'Újracsatlakozás folyamatban...'
+  faq: 'Gyakori kérdések'
+  homepage: 'Főoldal'
+  streams: 'Streamek'
+  downloads: 'Letöltések'
+  fanarts: 'Fanartok'
+  admin: 'Admin'
 </i18n>
 
 <template>
@@ -187,7 +189,7 @@ export default {
           show: true,
         },
         {
-          name: 'Gyakori kérdések',
+          name: 'faq',
           to: '/faq',
           show: true,
         },

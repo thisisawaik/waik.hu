@@ -2,10 +2,10 @@
   <p>Loading... ({{ id }})</p>
 </template>
 
-<script>
+<script lang="ts">
 /* eslint-disable prefer-const */
-
-export default {
+import Vue from 'vue'
+export default Vue.extend({
   async asyncData ({ app, params }) {
     const db = app.$fire.firestore
     const storage = app.$fire.storage
@@ -80,9 +80,5 @@ export default {
       ],
     }
   },
-}
+})
 </script>
-
-<style lang="scss" scoped>
-
-</style>

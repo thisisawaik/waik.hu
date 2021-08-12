@@ -28,7 +28,8 @@
       "@nuxtjs/axios",
       "@types/node",
       "@nuxtjs/firebase",
-      "vue-router/types"
+      "vue-router/types",
+      "@nuxtjs/i18n",
     ]
   },
   "exclude": [

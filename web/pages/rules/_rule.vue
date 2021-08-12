@@ -8,8 +8,9 @@
   </article>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
   async asyncData ({ $content, params, i18n }) {
     const article = await $content(`${i18n.localeProperties.code}/rules`, params.rule).fetch()
     return { article }
@@ -59,7 +60,7 @@ export default {
       return new Date(date).toLocaleDateString('hu', options)
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

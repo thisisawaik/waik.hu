@@ -26,15 +26,16 @@
   </v-row>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
   head () {
     return {
       title: 'Waik | Streamek',
       meta: [],
     }
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

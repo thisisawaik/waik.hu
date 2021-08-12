@@ -39,8 +39,9 @@ en:
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
   data () {
     return {
       token: null,
@@ -56,7 +57,7 @@ export default {
   },
   created () {
     this.canceled = false
-    if (this.$nuxt.$route.query.code && !process.server) {
+    if (this.$nuxt.$route.query.code && process.client) {
       this.discordLogin(this.$nuxt.$route.query.code)
     }
   },
@@ -148,7 +149,7 @@ export default {
       this.$router.push('/auth')
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -27,10 +27,12 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
 import CurrentEvetCard from '../components/CurrentEvetCard.vue'
 import PastEventCard from '../components/PastEventCard.vue'
 
-export default {
+export default Vue.extend({
   components: { CurrentEvetCard, PastEventCard },
   data () {
     return {
@@ -79,7 +81,7 @@ export default {
     this.pastContent = past
     this.loading = false
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -91,13 +91,10 @@
   </div>
 </template>
 
-<script>
-import AccountEmail from '@/components/auth/AccountEmail.vue'
+<script lang="ts">
+import Vue from 'vue'
 
-export default {
-  components: {
-    AccountEmail,
-  },
+export default Vue.extend({
   data () {
     return {
       avatar: null,
@@ -133,8 +130,6 @@ export default {
         this.avatar = null
       }
       this.loading = false
-      localStorage.setItem('authDiscordLinkStatus', false)
-      localStorage.setItem('authDiscordUid', null)
     })
   },
   methods: {
@@ -146,15 +141,15 @@ export default {
         .catch(() => {})
     },
     discordLogin () {
-      location = `https://discord.com/api/oauth2/authorize?client_id=827711777495187487&redirect_uri=${window.location.protocol}//${window.location.host}${this.$i18n.locale !== 'hu' ? `/${this.$i18n.locale}` : ''}/auth/discord/callback&response_type=code&scope=identify%20email`
+      location.href = `https://discord.com/api/oauth2/authorize?client_id=827711777495187487&redirect_uri=${window.location.protocol}//${window.location.host}${this.$i18n.locale !== 'hu' ? `/${this.$i18n.locale}` : ''}/auth/discord/callback&response_type=code&scope=identify%20email`
     },
     testToken () {
-      location = 'about:neterror?e=corruptedContentErrorv2&u=https%3A//google.com&c=UTF-8&d=The site at http%3A//localhost%3A3000/fanarts has experienced a network protocol violation that cannot be repaired.'
+      location.href = 'about:neterror?e=corruptedContentErrorv2&u=https%3A//google.com&c=UTF-8&d=The site at http%3A//localhost%3A3000/fanarts has experienced a network protocol violation that cannot be repaired.'
     },
     discordLink () {
       // const token = await this.user.getIdToken()
       // TODO: implement discord link
-      location = `https://discord.com/api/oauth2/authorize?client_id=827711777495187487&redirect_uri=${window.location.protocol}//${window.location.host}${this.$i18n.locale !== 'hu' ? `/${this.$i18n.locale}` : ''}/auth/discord/callback&response_type=code&scope=identify%20email`
+      location.href = `https://discord.com/api/oauth2/authorize?client_id=827711777495187487&redirect_uri=${window.location.protocol}//${window.location.host}${this.$i18n.locale !== 'hu' ? `/${this.$i18n.locale}` : ''}/auth/discord/callback&response_type=code&scope=identify%20email`
     },
     logOut () {
       this.$fire.auth.signOut()
@@ -177,7 +172,7 @@ export default {
       }
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

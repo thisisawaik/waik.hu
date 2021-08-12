@@ -108,9 +108,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import AdminRoleChangeCard from '../components/AdminRoleChangeCard.vue'
-export default {
+
+export default Vue.extend({
   components: { AdminRoleChangeCard },
   data: () => ({
     roles: {},
@@ -236,5 +238,5 @@ export default {
       setTimeout(() => (this.massrole.loading = false), 2000)
     },
   },
-}
+})
 </script>

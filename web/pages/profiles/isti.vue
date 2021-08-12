@@ -5,10 +5,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import DescriptionCard from '../../components/DescriptionCard.vue'
 import SocialBar from '../../components/SocialBar.vue'
-export default {
+export default Vue.extend({
   components: { SocialBar, DescriptionCard },
   async asyncData ({ $content, i18n }) {
     const profile = await $content(`${i18n.localeProperties.code}/profiles`, 'isti').fetch()
@@ -49,7 +50,7 @@ export default {
       ],
     }
   },
-}
+})
 </script>
 
 <style>
