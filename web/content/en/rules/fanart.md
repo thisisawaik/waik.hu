@@ -1,8 +1,6 @@
 ---
 title: Waik Fanart verseny szabályai
 description: Itt találhatod meg a fanart verseny szabályait.
-img: 
-alt: 
 colorTheme: FFFFFF
 ---
 - A versenyre maximum 3 alkotást lehet beküldeni
