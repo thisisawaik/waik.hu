@@ -2,7 +2,7 @@
   <p>Loading... ({{ id }})</p>
 </template>
 
-<script lang="ts">
+<script>
 /* eslint-disable prefer-const */
 import Vue from 'vue'
 export default Vue.extend({

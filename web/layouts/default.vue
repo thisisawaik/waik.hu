@@ -148,7 +148,7 @@ hu:
         >GitHub</a></span>
       <v-spacer />
       <nuxt-link v-if="$i18n.locale !== 'en' " style="color: #fff" :to="switchLocalePath('en')">
-        English
+        English (Beta)
       </nuxt-link>
       <nuxt-link v-if="$i18n.locale !== 'hu'" style="color: #fff" :to="switchLocalePath('hu')">
         Magyar
