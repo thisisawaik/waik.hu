@@ -1,4 +1,4 @@
 ---
 q: Mikor lesz minecraft?
 ---
-Valamikor, nem kell folyamatosan kérdezni.
+Valamikor, nem kell mindig kérdezni *note: will be removed in production*
