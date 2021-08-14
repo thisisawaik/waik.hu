@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { auth } from 'firebase-admin';
+import submit from '../../../../functions/fanartApprove';
 export default async function (req: Request, res: Response) {
     const data: FanartSubmitRequest = req.body;
     if (!data.id) {
@@ -9,6 +10,7 @@ export default async function (req: Request, res: Response) {
     if (!user) {
         return res.status(401).end();
     }
+    const resutl = await submit(data.id, user.uid);
 
 }
 
