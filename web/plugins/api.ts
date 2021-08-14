@@ -5,11 +5,9 @@ declare module 'vue/types/vue' {
   }
 };
 declare module '@nuxt/types' {
-  // nuxtContext.app.$myInjectedFunction inside asyncData, fetch, plugins, middleware, nuxtServerInit
   interface NuxtAppOptions {
     $myInjectedFunction(message: string): void
   }
-  // nuxtContext.$myInjectedFunction
   interface Context {
     $myInjectedFunction(message: string): void
   }
