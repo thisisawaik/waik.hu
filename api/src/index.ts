@@ -3,7 +3,9 @@ import * as admin from "firebase-admin";
 // import { spawn } from 'child_process';
 import router from './router'
 
-admin.initializeApp();
+admin.initializeApp({
+  databaseURL: 'https://waik.europe-west1.firebasedatabase.app/',
+});
 
 const app = express();
 const port = process.env.PORT || 8080;

@@ -73,35 +73,34 @@ export default {
     }
   },
   async created () {
-    const db = this.$fire.firestore
     const storage = this.$fire.storage
-    const ref = db.collection('waik/website/downloads').doc(this.id)
     try {
-      const doc = await ref.get()
-      this.title = doc.data().name
-      this.desc = doc.data().desc
-      if (doc.data().imageurl) {
-        // const sref = storage.ref(doc.data().gsURL)
+      const req = await this.$axios.get(`/downloads/download/${this.id}`)
+      const data = req.data
+
+      this.title = data.name
+      this.desc = data.desc
+      if (data.imageurl) {
+        // const sref = storage.ref(data.gsURL)
         // this.imageurl = await sref.getDownloadURL()
-        this.imageurl = doc.data().imageurl
+        this.imageurl = data.imageurl
       }
-      if (doc.data().author) {
-        const dcRef = db.collection('dcusers').doc(doc.data().author)
-        const dcDoc = await dcRef.get()
-        this.authorAvatar = dcDoc.data().pp
-        this.authorName = dcDoc.data().tag
+      if (data.author) {
+        const author = await this.$axios.get(`/discord/users/${data.author}/get`)
+        this.authorAvatar = author.data.pp
+        this.authorName = author.data.tag
       }
-      if (doc.data().githuburl) {
-        this.githuburl = doc.data().githuburl
+      if (data.githuburl) {
+        this.githuburl = data.githuburl
       }
-      if (doc.data().shareid) {
-        this.shareId = doc.data().shareid
+      if (data.shareid) {
+        this.shareId = data.shareid
       }
-      if (doc.data().downloadgs) {
-        const sref = storage.refFromURL(doc.data().downloadgs)
+      if (data.downloadgs) {
+        const sref = storage.refFromURL(data.downloadgs)
         this.downloadurl = await sref.getDownloadURL()
       } else {
-        this.downloadurl = doc.data().downloadurl
+        this.downloadurl = data.downloadurl
       }
       this.loading = false
     } catch (e) {

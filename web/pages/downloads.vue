@@ -4,7 +4,7 @@
       <v-container fill-height fluid>
         <div style="margin-top: 30px; padding 10px" />
         <div style="margin-top: 30px; padding 10px" />
-        <download-card v-for="item in items" :id="item.id" :key="item.id" />
+        <download-card v-for="item in items" :id="item" :key="item" />
       </v-container>
     </v-flex>
   </v-container>
@@ -49,15 +49,8 @@ export default Vue.extend({
     }
   },
   async created () {
-    const db = this.$fire.firestore
-    const query = db
-      .collection('waik/website/downloads')
-      .where('visible', '==', true)
-      .orderBy('timestamp')
-    const queryres = await query.get()
-    let a = []
-    a = queryres.docs
-    this.items = a.reverse()
+    const request = await this.$axios.$get('/downloads')
+    this.items = request
   },
 })
 </script>

@@ -55,7 +55,8 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+export default Vue.extend({
   // eslint-disable-next-line vue/require-prop-types
   props: ['id'],
   data () {
@@ -196,12 +197,9 @@ export default {
       }
     },
     async like () {
-      const functions = this.$fire.functions
       this.isLiked = true
       this.likes = this.likes + 1
-      await functions.httpsCallable('waikFanartAddLike')({
-        postId: this.id,
-      }).catch((e) => {
+      await this.$axios.post(`/fanart/posts/${this.id}/like`).catch((e) => {
         // eslint-disable-next-line no-console
         console.log(e)
         this.isLiked = false
@@ -209,12 +207,9 @@ export default {
       })
     },
     async remove_like () {
-      const functions = this.$fire.functions
       this.isLiked = false
       this.likes = this.likes - 1
-      await functions.httpsCallable('waikFanartLikeRemove')({
-        postId: this.id,
-      }).catch((e) => {
+      await this.$axios.delete(`/fanart/posts/${this.id}/like`).catch((e) => {
         // eslint-disable-next-line no-console
         console.log(e)
         this.isLiked = true
@@ -229,7 +224,7 @@ export default {
       }
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

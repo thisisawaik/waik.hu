@@ -1,19 +1,4 @@
 import { Plugin } from '@nuxt/types';
-declare module 'vue/types/vue' {
-  interface Vue {
-    $myInjectedFunction(message: string): void
-  }
-};
-declare module '@nuxt/types' {
-  // nuxtContext.app.$myInjectedFunction inside asyncData, fetch, plugins, middleware, nuxtServerInit
-  interface NuxtAppOptions {
-    $myInjectedFunction(message: string): void
-  }
-  // nuxtContext.$myInjectedFunction
-  interface Context {
-    $myInjectedFunction(message: string): void
-  }
-};
 
 const api: Plugin = async (context, inject) => {
   const auth = context.$fire.auth
@@ -33,14 +18,16 @@ const api: Plugin = async (context, inject) => {
 
   const refreshToken = async () => {
     if (auth.currentUser) {
+      console.log('Refreshing token')
       const token = await auth.currentUser.getIdToken(true)
       context.$axios.setHeader('Auth-Token', token)
+      console.log('Token refreshed')
     }
   }
 
   setTimeout(() => {
     refreshToken()
-  }, 600000)
+  }, 1000 * 60 * 10)
   inject('$refreshAuthToken', refreshToken)
   // inject('api', api);
 }
