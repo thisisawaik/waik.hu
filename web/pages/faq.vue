@@ -1,8 +1,16 @@
 <template>
   <v-flex>
     <v-container>
-      <div v-for="category of contents" :key="category.key">
+      <div v-for="(category, rootIndex) of contents" :key="category.key">
         <v-expansion-panels>
+          <v-expansion-panel v-if="contentNames[rootIndex] !== '[DEFAULT]'" :readonly="true">
+            <v-expansion-panel-header>
+              {{ contentNames[rootIndex] }}
+              <template #actions>
+                <v-icon />
+              </template>
+            </v-expansion-panel-header>
+          </v-expansion-panel>
           <v-expansion-panel
             v-for="(item, index) in category"
             :key="index"
@@ -30,9 +38,11 @@ export default Vue.extend({
     const faq = await app.$content(`${app.i18n.localeProperties.code}/infos/faq`).where({ show: true }).sortBy('index').fetch()
     const config = await app.$content(`${app.i18n.localeProperties.code}/infos/faq`, 'config').fetch()
     const contents = []
+    const contentNames = []
     for (const category of config.categorys) {
       console.log(category)
       const a = []
+      contentNames.push(category.name)
       for (const item of faq) {
         // eslint-disable-next-line no-mixed-operators
         if (!item.category && category.key === 'default') {
@@ -48,9 +58,9 @@ export default Vue.extend({
     // console.log(faq)
     console.log(contents)
     return {
-      faq,
       contents,
       categorys: config.categorys,
+      contentNames,
     }
   },
   data () {
