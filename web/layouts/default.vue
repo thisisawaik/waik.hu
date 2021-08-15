@@ -33,6 +33,7 @@ hu:
         v-for="item in navItems"
         :key="item.to"
         class="nav-bar-button"
+        no-prefetch
         :to="localePath(item.to)"
       >
         <v-btn v-if="item.show" color="primary" depressed>
@@ -79,6 +80,7 @@ hu:
       <NuxtLink
         class="nav-bar-avatar"
         :to="localePath('/profiles/norticus')"
+        no-prefetch
       >
         <v-avatar
           size="40"
@@ -89,6 +91,7 @@ hu:
       <NuxtLink
         class="nav-bar-avatar"
         :to="localePath('/profiles/walrusz')"
+        no-prefetch
       >
         <v-avatar
           size="40"
@@ -99,6 +102,7 @@ hu:
       <NuxtLink
         class="nav-bar-avatar"
         :to="localePath('/profiles/isti')"
+        no-prefetch
       >
         <v-avatar
           size="40"
@@ -109,6 +113,7 @@ hu:
       <NuxtLink
         class="nav-bar-avatar"
         :to="localePath('/profiles/geiszla')"
+        no-prefetch
       >
         <v-avatar
           size="40"
@@ -120,6 +125,7 @@ hu:
       <NuxtLink
         class="nav-bar-avatar"
         :to="localePath('/auth')"
+        no-prefetch
       >
         <v-avatar
           size="40"
