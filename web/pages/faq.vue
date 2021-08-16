@@ -40,7 +40,6 @@ export default Vue.extend({
     const contents = []
     const contentNames = []
     for (const category of config.categorys) {
-      console.log(category)
       const a = []
       contentNames.push(category.name)
       for (const item of faq) {
@@ -51,12 +50,8 @@ export default Vue.extend({
           a.push(item)
         }
       }
-      console.log(a)
       contents.push(a)
     }
-    console.log(config)
-    // console.log(faq)
-    console.log(contents)
     return {
       contents,
       categorys: config.categorys,
