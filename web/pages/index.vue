@@ -3,24 +3,32 @@
     <v-flex class="flexContainer">
       <v-container fill-height fluid>
         <div style="margin-top: 30px; padding 10px" />
-        <current-evet-card
-          v-for="content of currentContent"
-          :key="content.title"
-          :title="content.title"
-          :description="content.description"
-          :html="content.html"
-          :markdown="content.markdown"
-          class="eventCart"
-        />
-        <past-event-card
-          v-for="content of pastContent"
-          :key="content.title"
-          :title="content.title"
-          :description="content.description"
-          :html="content.html"
-          :markdown="content.markdown"
-          class="eventCart"
-        />
+        <div v-for="content of allContent" :key="content.title">
+          <CurrentEventCard
+            v-if="content.when === 'current'"
+            :title="content.title"
+            :description="content.description"
+            :html="content.html"
+            :markdown="content.markdown"
+            class="eventCart"
+          />
+          <PastEventCard
+            v-else-if="content.when === 'past'"
+            :title="content.title"
+            :description="content.description"
+            :html="content.html"
+            :markdown="content.markdown"
+            class="eventCart"
+          />
+          <NeutralEventCard
+            v-else
+            :title="content.title"
+            :description="content.description"
+            :html="content.html"
+            :markdown="content.markdown"
+            class="eventCart"
+          />
+        </div>
       </v-container>
     </v-flex>
   </div>
@@ -29,16 +37,14 @@
 <script>
 import Vue from 'vue'
 
-import CurrentEvetCard from '../components/CurrentEvetCard.vue'
-import PastEventCard from '../components/PastEventCard.vue'
-
 export default Vue.extend({
-  components: { CurrentEvetCard, PastEventCard },
   data () {
     return {
       loading: true,
       currentContent: [],
       pastContent: [],
+      neutralContent: [],
+      allContent: [],
       snackbar: false,
       text: 'My timeout is set to 2000.',
       timeout: 2000,
@@ -73,12 +79,16 @@ export default Vue.extend({
     const docs = await ref.get()
     const current = []
     const past = []
+    const neutral = []
+    const all = []
     for (const doc of docs.docs) {
-      if (doc.data().when === 'current') { current.push(doc.data()) }
-      if (doc.data().when === 'past') { past.push(doc.data()) }
+      all.push(doc.data())
+      if (doc.data().when === 'current') { current.push(doc.data()) } else if (doc.data().when === 'past') { past.push(doc.data()) } else { neutral.push(doc.data()) }
     }
     this.currentContent = current
     this.pastContent = past
+    this.neutralContent = neutral
+    this.allContent = all
     this.loading = false
   },
 })
