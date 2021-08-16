@@ -37,6 +37,8 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",
+    "@cypress/vue": "^2.2.3",
+    "@cypress/webpack-dev-server": "^1.4.0",
     "@nuxt/types": "^2.15.7",
     "@nuxt/typescript-build": "^2.1.0",
     "@nuxtjs/device": "^2.1.0",
@@ -48,11 +50,13 @@
     "@vue/test-utils": "^1.2.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^27.0.5",
+    "cypress": "^8.3.0",
     "electron": "^13.1.7",
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.12.1",
+    "html-webpack-plugin": "^4.5.2",
     "jest": "^27.0.5",
     "prettier": "^2.3.2",
     "vue-jest": "^3.0.4"
