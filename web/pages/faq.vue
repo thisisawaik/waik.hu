@@ -14,6 +14,7 @@
           <v-expansion-panel
             v-for="(item, index) in category"
             :key="index"
+            @click="log(item.slug)"
           >
             <v-expansion-panel-header>
               {{ item.q }}
@@ -32,7 +33,7 @@
 
 <script>
 import Vue from 'vue'
-
+import { getAnalytics, logEvent } from 'firebase/analytics'
 export default Vue.extend({
   async asyncData ({ app }) {
     const faq = await app.$content(`${app.i18n.localeProperties.code}/infos/faq`).where({ show: true }).sortBy('index').fetch()
@@ -56,10 +57,6 @@ export default Vue.extend({
       contents,
       categorys: config.categorys,
       contentNames,
-    }
-  },
-  data () {
-    return {
       loading: false,
     }
   },
@@ -77,6 +74,13 @@ export default Vue.extend({
         },
       ],
     }
+  },
+  methods: {
+    log (cardName) {
+      if (process.client) {
+        logEvent(getAnalytics(), `faq_click_${cardName || 'unknown'}`)
+      }
+    },
   },
 })
 </script>

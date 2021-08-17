@@ -109,6 +109,8 @@
 </template>
 
 <script>
+import { getFirestore, doc, getDoc } from '@firebase/firestore'
+import { getDatabase, ref, child, onValue } from 'firebase/database'
 import Vue from 'vue'
 import AdminRoleChangeCard from '../components/AdminRoleChangeCard.vue'
 
@@ -116,6 +118,8 @@ export default Vue.extend({
   components: { AdminRoleChangeCard },
   data: () => ({
     roles: {},
+    db: getFirestore(),
+    rdb: getDatabase(),
     massrole: {
       loading: false,
       selection: 1,
@@ -151,10 +155,9 @@ export default Vue.extend({
     if (process.client) {
       this.loadMassStatus()
       this.loadSyncStatus()
-      const db = this.$fire.firestore
-      const ref = db.collection('waik').doc('discord')
-      const doc = await ref.get()
-      this.roles = doc.data().autoroles
+      const ref = doc(this.db, 'waik/discord') // db.collection('waik').doc('discord')
+      const resp = await getDoc(ref)
+      this.roles = resp.data().autoroles
     }
   },
   methods: {
@@ -166,13 +169,13 @@ export default Vue.extend({
       })
     },
     loadMassStatus () {
-      const rdb = this.$fire.database
-      const ref = rdb.ref('admin/massadd')
+      const dbref = ref(this.rdb, 'admin/massadd')
       this.massrole.loading = true
-      ref.child('changes').on('value', (snapshot) => {
-        this.massrole.memberchanges = snapshot.numChildren() || 0
+      onValue(child(dbref, 'changes'), (snapshot) => {
+        console.log(snapshot)
+        // this.massrole.memberchanges = snapshot.numChildren() || 0
       })
-      ref.on('value', (snap) => {
+      onValue(dbref, (snap) => {
         this.massrole.loading = false
         this.massrole.all = snap.val().all
         this.massrole.done = snap.val().done
@@ -202,13 +205,12 @@ export default Vue.extend({
       })
     },
     loadSyncStatus () {
-      const rdb = this.$fire.database
-      const ref = rdb.ref('admin/sync')
+      const dbref = ref(this.rdb, 'admin/sync')
       this.autorole.loading = true
-      ref.child('changes').on('value', (snapshot) => {
-        this.autorole.memberchanges = snapshot.numChildren() || 0
+      onValue(child(dbref, 'changes'), (_snapshot) => {
+        // this.autorole.memberchanges = snapshot.numChildren() || 0
       })
-      ref.on('value', (snap) => {
+      onValue(dbref, (snap) => {
         this.autorole.loading = false
         this.autorole.all = snap.val().all
         this.autorole.done = snap.val().done

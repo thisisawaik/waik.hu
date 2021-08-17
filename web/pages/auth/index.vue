@@ -48,10 +48,12 @@
                 Kattints ide a discord fiókod összekapcsolásához
               </p>
             </div>
+            <!--
             <v-divider />
             <v-card-text>
-              <account-email :user="user" />
+              <AccountEmail :user="user" />
             </v-card-text>
+            -->
           </div>
 
           <div v-else>
@@ -93,10 +95,13 @@
 
 <script>
 import Vue from 'vue'
-
+import { getAuth, onAuthStateChanged, getIdTokenResult, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
 export default Vue.extend({
   data () {
     return {
+      auth: getAuth(),
+      db: getFirestore(),
       avatar: null,
       user: null,
       googleData: null,
@@ -114,8 +119,7 @@ export default Vue.extend({
     }
   },
   created () {
-    const auth = this.$fire.auth
-    auth.onAuthStateChanged(async (user) => {
+    onAuthStateChanged(this.auth, async (user) => {
       this.user = user
       if (user) {
         this.googleData = user.providerData.find(
@@ -125,7 +129,7 @@ export default Vue.extend({
           : null
         this.avatar = user.photoURL
         this.fetchUserData(user.uid)
-        this.token = await user.getIdTokenResult(true)
+        this.token = await getIdTokenResult(this.auth, true)
       } else {
         this.avatar = null
       }
@@ -134,9 +138,8 @@ export default Vue.extend({
   },
   methods: {
     googleLogin () {
-      const provider = new this.$fireModule.auth.GoogleAuthProvider()
-      this.$fire.auth
-        .signInWithPopup(provider)
+      const provider = new GoogleAuthProvider()
+      signInWithPopup(this.auth, provider)
         .then(() => {})
         .catch(() => {})
     },
@@ -152,17 +155,16 @@ export default Vue.extend({
       location.href = `https://discord.com/api/oauth2/authorize?client_id=827711777495187487&redirect_uri=${window.location.protocol}//${window.location.host}${this.$i18n.locale !== 'hu' ? `/${this.$i18n.locale}` : ''}/auth/discord/callback&response_type=code&scope=identify%20email`
     },
     logOut () {
-      this.$fire.auth.signOut()
+      signOut(this.auth)
     },
     async fetchUserData (uid) {
       this.discordLoading = true
-      const db = this.$fire.firestore
-      const ref = db.collection('users').doc(uid)
-      const doc = await ref.get()
+      const ref = doc(this.db, `users/${uid}`) // db.collection('users').doc(uid)
+      const res = await getDoc(ref)
 
-      if (doc.data().dcid) {
-        const dcref = db.collection('dcusers').doc(doc.data().dcid)
-        const dcdoc = await dcref.get()
+      if (res.data().dcid) {
+        const dcref = doc(this.db, `dcusers/${res.data().dcid}`)
+        const dcdoc = await getDoc(dcref)
         this.dcData = dcdoc.data() ? dcdoc.data() : null
         this.dcAvatar = dcdoc.data().pp ? dcdoc.data().pp : null
         this.discordLoading = false

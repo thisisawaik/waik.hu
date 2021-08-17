@@ -33,16 +33,8 @@
 
 <script>
 import Vue from 'vue'
-import FanArtAdmin from '../components/FanArtAdmin.vue'
-import FanArtCard from '../components/FanArtCard.vue'
-import FanArtUpload from '../components/FanArtUpload.vue'
-
+import { getAuth, onAuthStateChanged, getIdTokenResult } from 'firebase/auth'
 export default Vue.extend({
-  components: {
-    FanArtCard,
-    FanArtUpload,
-    FanArtAdmin,
-  },
   async asyncData ({ app, store }) {
     const article = await app.$content('hu/rules', 'fanart').fetch()
     store.commit('setFanartRules', article)
@@ -55,6 +47,7 @@ export default Vue.extend({
       tab: 0,
       items: [],
       isAdmin: false,
+      auth: getAuth(),
     }
   },
   head () {
@@ -82,11 +75,10 @@ export default Vue.extend({
     }
   },
   async created () {
-    const auth = this.$fire.auth
-    auth.onAuthStateChanged(async (user) => {
+    onAuthStateChanged(this.auth, async (user) => {
       // this.user = user
       if (user) {
-        const token = await user.getIdTokenResult(true)
+        const token = await getIdTokenResult(user, true)
         if (token.claims.waikAdmin) {
           this.isAdmin = true
         } else {

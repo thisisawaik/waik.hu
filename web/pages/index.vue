@@ -36,6 +36,7 @@
 
 <script>
 import Vue from 'vue'
+import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore'
 
 export default Vue.extend({
   data () {
@@ -48,6 +49,7 @@ export default Vue.extend({
       snackbar: false,
       text: 'My timeout is set to 2000.',
       timeout: 2000,
+      db: getFirestore(),
     }
   },
   head () {
@@ -74,9 +76,8 @@ export default Vue.extend({
     }
   },
   async created () {
-    const db = this.$fire.firestore
-    const ref = db.collection('waik/website/content').where('visible', '==', true)
-    const docs = await ref.get()
+    const ref = query(collection(this.db, 'waik/website/content'), where('visible', '==', true)) // db.collection('waik/website/content').where('visible', '==', true)
+    const docs = await getDocs(ref)
     const current = []
     const past = []
     const neutral = []

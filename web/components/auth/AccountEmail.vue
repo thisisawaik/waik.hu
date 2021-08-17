@@ -25,11 +25,13 @@
 </template>
 
 <script>
+import { getAuth, onAuthStateChanged, sendEmailVerification } from 'firebase/auth'
 export default {
   // eslint-disable-next-line vue/require-prop-types
-  props: ['user'],
   data () {
     return {
+      user: null,
+      auth: getAuth(),
       sendingEmail: false,
       pendingVerification: false,
       emailSent: false,
@@ -37,14 +39,16 @@ export default {
     }
   },
   created () {
-    // console.log(this.user)
+    this.user = this.auth.currentUser
+    onAuthStateChanged(this.auth, (user) => {
+      this.user = user
+    })
   },
   methods: {
     sendVerificationEmail () {
-      const auth = this.$fire.auth
       if (!this.sendingEmail) {
         this.sendingEmail = true
-        auth.currentUser.sendEmailVerification().then(() => {
+        sendEmailVerification(this.auth).then(() => {
           this.sendingEmail = false
           this.emailSent = true
         }).catch((e) => {

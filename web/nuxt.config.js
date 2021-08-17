@@ -29,7 +29,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    'plugins/api.ts',
+    'plugins/api.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -39,7 +39,6 @@ export default {
   buildModules: [
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
-    '@nuxtjs/firebase',
     '@nuxtjs/device',
     '@nuxt/typescript-build',
     '@nuxtjs/tailwindcss',
@@ -49,7 +48,6 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/firebase',
     'nuxt-clipboard2',
     'nuxt-maintenance-mode',
     '@nuxt/content',
@@ -107,53 +105,6 @@ export default {
     enabled: !!process.env.MAINTENANCE_MODE, // If given truthy value, activation maintenance mode on startup your nuxt application.
     path: '/maintenance', // maintenance fallback content routing.
     // matcher: /^\/admin/ // Path to be in maintenance mode (regex).
-  },
-
-  firebase: {
-    config: {
-      apiKey: 'AIzaSyBmRS5Yy-1ktWXNsYjk9mQ8Rs9RhmQy600',
-      authDomain: 'auth.zal1000.com',
-      databaseURL: 'https://waik.europe-west1.firebasedatabase.app',
-      projectId: 'zal1000',
-      storageBucket: 'zal1000.net',
-      messagingSenderId: '512279358183',
-      appId: '1:512279358183:web:1a091779e0474dba541042',
-      measurementId: 'G-W3EFDHYNN1',
-    },
-    services: {
-      firestore: true,
-      storage: true,
-      database: true,
-      auth: {
-        ssr: true,
-      },
-      functins: true,
-      performance: true,
-      functions: {
-        emulatorPort: process.env.NODE_ENV === 'development' ? 5001 : undefined,
-        emulatorHost:
-          process.env.NODE_ENV === 'development'
-            ? 'http://localhost'
-            : undefined,
-      },
-      messaging: {
-        createServiceWorker: true,
-        actions: [],
-      },
-      remoteConfig: {
-        settings: {
-          fetchTimeoutMillis: 60000, // default
-          minimumFetchIntervalMillis: 43200000, // default
-        },
-        defaultConfig: {
-          waik_show_streams: false,
-        },
-      },
-      analytics: {
-        collectionEnabled: process.env.NODE_ENV === 'production',
-      },
-    },
-    onFirebaseHosting: process.env.NODE_ENV === 'production',
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

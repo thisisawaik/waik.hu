@@ -164,8 +164,12 @@ hu:
 </template>
 
 <script>
+import Vue from 'vue'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
+import { getRemoteConfig, fetchAndActivate, getValue } from 'firebase/remote-config'
 import NotificationsComponent from '../components/NotificationsComponent.vue'
-export default {
+export default Vue.extend({
   components: { NotificationsComponent },
   data () {
     return {
@@ -215,8 +219,9 @@ export default {
     }
   },
   async created () {
-    const auth = this.$fire.auth
-    auth.onAuthStateChanged(async (user) => {
+    const auth = getAuth()
+    const db = getFirestore()
+    onAuthStateChanged(auth, async (user) => {
       // this.user = user
       if (user) {
         this.avatar = user.photoURL
@@ -234,9 +239,8 @@ export default {
         this.navItems.find(e => e.name === 'admin').show = false
       }
     })
-    const db = this.$fire.firestore
-    const zalref = db.collection('dcusers').doc('423925286350880779')
-    const zaldoc = await zalref.get()
+    const zalref = doc(db, 'dcusers/423925286350880779') // db.collection('dcusers').doc('423925286350880779')
+    const zaldoc = await getDoc(zalref)
     this.zalname = zaldoc.data().tag
     if (process.client) {
       this.fetchRemoteConfig()
@@ -245,17 +249,17 @@ export default {
   methods: {
     async fetchRemoteConfig () {
       try {
-        const remoteConfig = this.$fire.remoteConfig
-        await remoteConfig.fetchAndActivate()
-        const exampleMessage = await remoteConfig.getValue('waik_show_streams')
-        this.navItems.find(e => e.name === 'streams').show = exampleMessage._value.show || false
+        const rc = getRemoteConfig()
+        await fetchAndActivate(rc)
+        const exampleMessage = getValue(rc, 'waik_show_streams')
+        this.navItems.find((e => e.name === 'streams').show = exampleMessage.asBoolean() || false)
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e)
       }
     },
   },
-}
+})
 //                 .
 //                .;;:,.
 //                 ;iiii;:,.                                   .,:;.

@@ -53,11 +53,14 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+import { getDownloadURL, getStorage, ref } from 'firebase/storage'
+export default Vue.extend({
   // eslint-disable-next-line vue/require-prop-types
   props: ['id'],
   data () {
     return {
+      storage: getStorage(),
       loading: true,
       title: 'Loading...',
       desc: 'Loading...',
@@ -73,7 +76,6 @@ export default {
     }
   },
   async created () {
-    const storage = this.$fire.storage
     try {
       const req = await this.$axios.get(`/downloads/download/${this.id}`)
       const data = req.data
@@ -97,8 +99,8 @@ export default {
         this.shareId = data.shareid
       }
       if (data.downloadgs) {
-        const sref = storage.refFromURL(data.downloadgs)
-        this.downloadurl = await sref.getDownloadURL()
+        const sref = ref(this.storage, data.downloadgs)
+        this.downloadurl = await getDownloadURL(sref)
       } else {
         this.downloadurl = data.downloadurl
       }
@@ -134,7 +136,7 @@ export default {
       }
     },
   },
-}
+})
 </script>
 
 <style>
