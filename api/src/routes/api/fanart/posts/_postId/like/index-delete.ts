@@ -1,11 +1,20 @@
 import { Request, Response } from "express";
-import { firestore, auth } from "firebase-admin";
+import { firestore, auth, appCheck } from "firebase-admin";
 
 const db = firestore();
 
 export default async (req: Request, res: Response) => {
     const user: auth.UserRecord = res.locals.auth
     if (!user) {
+        return res.status(401).end();
+    }
+    const appCheckToken = req.body?.appCheckToken;
+    if (!appCheckToken) {
+        return res.status(401).end();
+    }
+    try {
+        await appCheck().verifyToken(appCheckToken);
+    } catch (error) {
         return res.status(401).end();
     }
     const postId = req.params.postId;
