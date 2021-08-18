@@ -40,42 +40,6 @@ hu:
           {{ $t(item.name) }}
         </v-btn>
       </NuxtLink>
-      <!--
-      <NuxtLink
-        v-if="show_streams"
-        class="nav-bar-button"
-        :to="localePath('/streams')"
-      >
-        <v-btn color="primary" depressed>
-          {{ $t('streams') }}
-        </v-btn>
-      </NuxtLink>
-      <NuxtLink
-        class="nav-bar-button"
-        :to="localePath('/downloads')"
-      >
-        <v-btn color="primary" depressed>
-          {{ $t('downloads') }}
-        </v-btn>
-      </NuxtLink>
-      <NuxtLink
-        class="nav-bar-button"
-        :to="localePath('/fanarts')"
-      >
-        <v-btn color="primary" depressed>
-          {{ $t('fanarts') }}
-        </v-btn>
-      </NuxtLink>
-      <NuxtLink
-        v-if="isAdmin"
-        class="nav-bar-button"
-        :to="localePath('/admin')"
-      >
-        <v-btn color="primary" depressed>
-          Admin
-        </v-btn>
-      </NuxtLink>
-      -->
       <v-spacer />
       <NuxtLink
         class="nav-bar-avatar"
@@ -141,6 +105,9 @@ hu:
         </v-avatar>
       </NuxtLink>
     </v-app-bar>
+    <div v-if="showEngWarn" class="eng-warn">
+      <span class="inline"><p>The English version is currently in beta and some features might not be available. We strongly recommend switching to the Hungarian version for now! You can change it in the bottom right corner.</p><a @click="dismissEngWarn">Dismiss</a></span>
+    </div>
     <v-main>
       <Nuxt />
     </v-main>
@@ -157,7 +124,7 @@ hu:
         English (Beta)
       </nuxt-link>
       <nuxt-link v-if="$i18n.locale !== 'hu'" style="color: #fff" :to="switchLocalePath('hu')">
-        Magyar
+        Magyar (Recommended)
       </nuxt-link>
     </v-footer>
   </v-app>
@@ -177,6 +144,7 @@ export default Vue.extend({
       drawer: false,
       group: null,
       clipped: true,
+      showEngWarn: false,
       navItems: [
         {
           name: 'homepage',
@@ -218,9 +186,16 @@ export default Vue.extend({
       wsStatus: 'connecting',
     }
   },
+  watch: {
+    $route (route) {
+      console.log('route changed', route)
+      this.checkEngWarn(route)
+    },
+  },
   async created () {
     const auth = getAuth()
     const db = getFirestore()
+    this.checkEngWarn(this.$route)
     onAuthStateChanged(auth, async (user) => {
       // this.user = user
       if (user) {
@@ -247,6 +222,27 @@ export default Vue.extend({
     }
   },
   methods: {
+    dismissEngWarn () {
+      if (process.client) {
+        console.log('dismissing eng warn')
+        localStorage.setItem('engWarnDismissed', true)
+        this.checkEngWarn(this.$route)
+      }
+    },
+    checkEngWarn (route) {
+      if (process.client) {
+        if (route.path.startsWith('/en')) {
+          const isDismissed = localStorage.getItem('engWarnDismissed') || false
+          if (isDismissed) {
+            this.showEngWarn = false
+          } else {
+            this.showEngWarn = true
+          }
+        } else {
+          this.showEngWarn = false
+        }
+      }
+    },
     async fetchRemoteConfig () {
       try {
         const rc = getRemoteConfig()
@@ -284,7 +280,7 @@ export default Vue.extend({
 //                       .;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;,
 </script>
 
-<style>
+<style lang="scss">
 .nav-bar-button {
   margin-right: 15px;
 }
@@ -299,6 +295,26 @@ export default Vue.extend({
   border-radius: 50%;
   margin-right: 20px;
   margin-left: 10px;
+}
+
+.eng-warn {
+  p {
+    display: inline;
+  };
+  a {
+    display: inline;
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 10px
+  };
+  min-height: 40px;
+  margin-top: 60px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: var(--red);
+  text-align: center;
 }
 
 :host {
