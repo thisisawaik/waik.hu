@@ -1,37 +1,33 @@
-<template>
-  <div>
-    <v-flex class="flexContainer">
-      <v-container fill-height fluid>
-        <div style="margin-top: 30px; padding 10px" />
-        <div v-for="content of allContent" :key="content.title">
-          <CurrentEventCard
+<template lang="pug">
+  div
+    v-flex(class="flexContainer")
+      v-container(fill-height fluid)
+        div(style="margin-top: 30px; padding 10px")
+        div(v-for="content of allContent" :key="content.title")
+          CurrentEventCard(
             v-if="content.when === 'current'"
             :title="content.title"
             :description="content.description"
             :html="content.html"
             :markdown="content.markdown"
             class="eventCart"
-          />
-          <PastEventCard
+          )
+          PastEventCard(
             v-else-if="content.when === 'past'"
             :title="content.title"
             :description="content.description"
             :html="content.html"
             :markdown="content.markdown"
             class="eventCart"
-          />
-          <NeutralEventCard
+          )
+          NeutralEventCard(
             v-else
             :title="content.title"
             :description="content.description"
             :html="content.html"
             :markdown="content.markdown"
             class="eventCart"
-          />
-        </div>
-      </v-container>
-    </v-flex>
-  </div>
+          )
 </template>
 
 <script>
