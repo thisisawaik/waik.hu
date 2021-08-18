@@ -247,8 +247,8 @@ export default Vue.extend({
       try {
         const rc = getRemoteConfig()
         await fetchAndActivate(rc)
-        const exampleMessage = getValue(rc, 'waik_show_streams')
-        this.navItems.find((e => e.name === 'streams').show = exampleMessage.asBoolean() || false)
+        const showWaikStreams = getValue(rc, 'waik_show_streams')
+        this.navItems.find((e => e.name === 'streams').show = showWaikStreams.asBoolean() || false)
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e)
