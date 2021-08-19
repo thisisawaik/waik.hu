@@ -103,8 +103,8 @@ jobs:
         --platform managed \
         --project zal1000
 
-#    - name: Send notification to testers
-#      run: node discord-notification-on-successful-deply.js GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+    - name: Send notification to testers
+      run: node discord-notification-on-successful-deply.js GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
 
   build-api-container:
