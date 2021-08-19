@@ -9,7 +9,7 @@ colorTheme: 5865f2
 - Az alkotásnak meg kell felelnie a szabályzatnak
 - Az alkotásnak digitálisan vagy kézzel kell készülnie
 - A végleges alkotásnak **JPEG**, **PNG** vagy **GIF** formátumban kell lennie, ha bármilyen más formátumban szeretnéd beküldeni akkor azt **zal1000#0497**-nek jelezd discordon privátban
-- Tartalmaznia kell vagy a *Waik*-ot vagy a Waik csapat egyik tagját
+- Tartalmaznia kell vagy a *Waik*-ot vagy a Waik csapat legallán egyik tagját
 
 ### Javaslatok
 - Az alkotás megjelenítési szélessége maximum **374 pixel** és a magassága maximum **1000 pixel**, javasolt úgy elkészíteni, hogy beleférjen a kártyába

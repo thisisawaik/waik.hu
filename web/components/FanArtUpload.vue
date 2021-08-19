@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-form v-if="!!$fire.auth.currentUser" v-model="valid">
+    <v-form v-if="!!auth.currentUser" v-model="valid">
       <v-container style="max-width: 400px">
         <v-text-field
           v-model="titletext"
@@ -112,7 +112,13 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+import { collection, doc, getDoc, getFirestore, setDoc } from 'firebase/firestore'
+import { getAuth } from 'firebase/auth'
+import { getPerformance, trace } from 'firebase/performance'
+import { getStorage, ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
+import { getAnalytics } from 'firebase/analytics'
+export default Vue.extend({
   name: 'FanArtUpload',
   data () {
     const title = {
@@ -126,6 +132,11 @@ export default {
       content: '',
     }
     return {
+      db: getFirestore(),
+      auth: getAuth(),
+      performance: getPerformance(),
+      storage: getStorage(),
+      analytics: getAnalytics(),
       saveBtn: {
         text: 'Mentés',
         color: 'green',
@@ -170,22 +181,21 @@ export default {
     // console.log(article)
     this.rules = article
     this.rulesLoading = false
-    const db = this.$fire.firestore
-    const user = this.$fire.auth.currentUser
+    const user = this.auth.currentUser
     if (user) {
-      const artref = db.collection('waik/website/fanarts').doc(user.uid)
-      const doc = await artref.get()
-      if (doc.exist) {
-        if (doc.data().title) { this.titletext = doc.data().title }
-        if (doc.data().desc) { this.desctext = doc.data().desc }
-        if (doc.data().forComp) { this.isForComp = doc.data().forComp }
-        if (doc.data().gsURL) {
-          const url = await this.$fire.storage.ref(doc.data().gsURL).getDownloadURL()
+      const artref = doc(collection(this.db, 'waik/website/fanarts'), user.uid)
+      const res = await getDoc(artref)
+      if (res.exists()) {
+        if (res.data().title) { this.titletext = res.data().title }
+        if (res.data().desc) { this.desctext = res.data().desc }
+        if (res.data().forComp) { this.isForComp = res.data().forComp }
+        if (res.data().gsURL) {
+          const url = await getDownloadURL(ref(this.storage, res.data().gsURL))
           this.image = url
         }
       }
-      const userref = db.collection('users').doc(user.uid)
-      const userdoc = await userref.get()
+      const userref = doc(collection(this.db, 'users'), user.uid)
+      const userdoc = await getDoc(userref)
       this.dcid = userdoc.data().dcid || null
     }
   },
@@ -194,42 +204,37 @@ export default {
       return new Date(date).toLocaleDateString('hu', { year: 'numeric', month: 'long', day: 'numeric' })
     },
     upload (e) {
-      const storage = this.$fire.storage
-      const user = this.$fire.auth.currentUser
-      const ref = storage.ref(`/waik/fanarts/temp/${user.uid}/${e.name}`)
-      const perf = this.$fire.performance
-      const trace = perf.trace('fanart_save')
-      trace.start()
+      const user = this.auth.currentUser
+      const sref = ref(this.storage, `/waik/fanarts/temp/${user.uid}/${e.name}`)
+      const strace = trace(this.performance, 'fanart_save')
+      strace.start()
       // eslint-disable-next-line require-await
-      ref.put(e).on('state_changed', async (snap) => {
-        trace.incrementMetric('size', e.size)
+      uploadBytesResumable(sref, e).on('state_changed', async (snap) => {
+        strace.incrementMetric('size', e.size)
         const uploadPrecentage = (snap.bytesTransferred / snap.totalBytes) * 100
         this.uploadProgress = uploadPrecentage
         if (uploadPrecentage === 100) {
-          const db = this.$fire.firestore
-          const user = this.$fire.auth.currentUser
-          const artref = db.collection('waik/website/fanarts').doc(user.uid)
-          this.image = await this.$fire.storage.ref(`/waik/fanarts/temp/${user.uid}/${e.name}`).getDownloadURL()
-          await artref.set({
+          const user = this.auth.currentUser
+          const artref = doc(collection(this.db, 'waik/website/fanarts'), user.uid)
+          this.image = await getDownloadURL(ref(this.storage, `/waik/fanarts/temp/${user.uid}/${e.name}`))
+          await setDoc(artref, {
             gsURL: `/waik/fanarts/temp/${user.uid}/${e.name}`,
           }, { merge: true })
-          trace.stop()
+          strace.stop()
         }
       })
     },
     async save () {
       if (this.saveBtn.disabled === true) { return }
-      const db = this.$fire.firestore
-      const user = this.$fire.auth.currentUser
-      const perf = this.$fire.performance
-      const artref = db.collection('waik/website/fanarts').doc(user.uid)
+      const user = this.auth.currentUser
+      const artref = doc(collection(this.db, 'waik/website/fanarts'), user.uid)
       this.saveBtn.text = 'Mentés...'
       this.saveBtn.color = 'yellow'
       this.saveBtn.tcolor = 'black'
       this.saveBtn.disabled = true
-      const trace = perf.trace('fanart_save')
-      trace.start()
-      await artref.set({
+      const strace = trace(this.performance, 'fanart_save')
+      strace.start()
+      await setDoc(artref, {
         desc: this.desc.titletext ? null : this.titletext,
         title: this.desc.desctext ? null : this.desctext,
         forComp: this.isForComp,
@@ -248,17 +253,49 @@ export default {
         // eslint-disable-next-line no-console
         console.error(e)
       })
-      trace.stop()
+      strace.stop()
       return true
     },
     async submit () {
       if (this.submitBtn.disabled === true) { return }
       await this.save()
-      const functions = this.$fire.functions
       this.submitBtn.text = 'Beküldés...'
       this.submitBtn.color = 'yellow'
       this.submitBtn.tcolor = 'black'
       this.submitBtn.disabled = true
+      // TODO: replace with a real API call
+      await this.$axios.post('/fanart/submit', {
+        id: this.auth.currentUser.uid,
+      }).then(() => {
+        this.submitBtn.text = 'Sikeres beküldés'
+        this.submitBtn.color = 'green'
+        this.submitBtn.tcolor = 'white'
+        this.submitBtn.disabled = true
+        setTimeout(() => {
+          this.submitBtn.text = 'Beküldés'
+          this.submitBtn.color = 'green'
+          this.submitBtn.tcolor = 'white'
+          this.submitBtn.disabled = false
+        }, 5000)
+      }).catch((e) => {
+        // eslint-disable-next-line no-console
+        console.error(e)
+        if (e.code === 'mt3') {
+          this.submitBtn.text = 'Már beküldtél 3 alkotást a versenyre!'
+        } else {
+          this.submitBtn.text = 'Hiba történt beküldés közben! Próbáld újra később!'
+        }
+        this.submitBtn.color = 'red'
+        this.submitBtn.tcolor = 'white'
+        this.submitBtn.disabled = true
+        setTimeout(() => {
+          this.submitBtn.text = 'Beküldés'
+          this.submitBtn.color = 'green'
+          this.submitBtn.tcolor = 'white'
+          this.submitBtn.disabled = false
+        }, 5000)
+      })
+      /*
       await functions.httpsCallable('waikFanartSubmit')({
         postId: this.$fire.auth.currentUser.uid,
       }).then(() => {
@@ -286,9 +323,10 @@ export default {
           this.submitBtn.disabled = false
         }, 5000)
       })
+      */
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -24,6 +24,7 @@ const asd = async (context, inject) => {
     inject('appCheck', appcheck)
   }
   const auth = getAuth()
+  context.$axios.setHeader('api-key', 'waik_public')
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       const token = await user.getIdToken(true)
