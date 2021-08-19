@@ -184,24 +184,31 @@ export default Vue.extend({
     const user = this.auth.currentUser
     if (user) {
       const artref = doc(collection(this.db, 'waik/website/fanarts'), user.uid)
-      const res = await getDoc(artref)
-      if (res.exists()) {
-        if (res.data().title) { this.titletext = res.data().title }
-        if (res.data().desc) { this.desctext = res.data().desc }
-        if (res.data().forComp) { this.isForComp = res.data().forComp }
-        if (res.data().gsURL) {
-          const url = await getDownloadURL(ref(this.storage, res.data().gsURL))
-          this.image = url
+      try {
+        const res = await getDoc(artref)
+        if (res.exists()) {
+          if (res.data().title) { this.titletext = res.data().title }
+          if (res.data().desc) { this.desctext = res.data().desc }
+          if (res.data().forComp) { this.isForComp = res.data().forComp }
+          if (res.data().gsURL) {
+            const url = await getDownloadURL(ref(this.storage, res.data().gsURL))
+            this.image = url
+          }
+        } else {
+          console.log(this.dcid)
+          setDoc(artref, {
+            author: this.dcid,
+          }, { merge: true })
         }
-      } else {
+        const userref = doc(collection(this.db, 'users'), user.uid)
+        const userdoc = await getDoc(userref)
+        this.dcid = userdoc.data().dcid || null
+      } catch (error) {
         console.log(this.dcid)
         setDoc(artref, {
           author: this.dcid,
         }, { merge: true })
       }
-      const userref = doc(collection(this.db, 'users'), user.uid)
-      const userdoc = await getDoc(userref)
-      this.dcid = userdoc.data().dcid || null
     }
   },
   methods: {
@@ -210,7 +217,7 @@ export default Vue.extend({
     },
     upload (e) {
       const user = this.auth.currentUser
-      const sref = ref(this.storage, `/waik/fanarts/temp/${user.uid}/${e.name}`)
+      const sref = ref(this.storage, `/waik/fanarts/${user.uid}/${e.name}`)
       const strace = trace(this.performance, 'fanart_save')
       strace.start()
       // eslint-disable-next-line require-await
@@ -221,9 +228,9 @@ export default Vue.extend({
         if (uploadPrecentage === 100) {
           const user = this.auth.currentUser
           const artref = doc(collection(this.db, 'waik/website/fanarts'), user.uid)
-          this.image = await getDownloadURL(ref(this.storage, `/waik/fanarts/temp/${user.uid}/${e.name}`))
+          this.image = await getDownloadURL(ref(this.storage, `/waik/fanarts/${user.uid}/${e.name}`))
           await setDoc(artref, {
-            gsURL: `/waik/fanarts/temp/${user.uid}/${e.name}`,
+            gsURL: `/waik/fanarts/${user.uid}/${e.name}`,
           }, { merge: true })
           strace.stop()
         }
