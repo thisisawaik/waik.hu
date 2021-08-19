@@ -24,9 +24,7 @@
 <script>
 import Vue from 'vue'
 import { getFirestore, getDocs, collection, query, where, onSnapshot } from 'firebase/firestore'
-import FanArtAdminCard from './FanArtAdminCard.vue'
 export default Vue.extend({
-  components: { FanArtAdminCard },
   data () {
     return {
       db: getFirestore(),
