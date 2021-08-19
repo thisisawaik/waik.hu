@@ -29,8 +29,9 @@ export default async function (rid: string, user: auth.UserRecord): Promise<fire
 
     console.log(oriData);
 
-    return collRef.add({
+    return await collRef.add({
         ...oriData,
+        status: 'PENDING'
     })
     
 }
