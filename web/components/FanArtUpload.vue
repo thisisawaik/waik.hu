@@ -193,6 +193,11 @@ export default Vue.extend({
           const url = await getDownloadURL(ref(this.storage, res.data().gsURL))
           this.image = url
         }
+      } else {
+        console.log(this.dcid)
+        setDoc(artref, {
+          author: this.dcid,
+        }, { merge: true })
       }
       const userref = doc(collection(this.db, 'users'), user.uid)
       const userdoc = await getDoc(userref)
