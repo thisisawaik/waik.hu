@@ -129,7 +129,7 @@ export default Vue.extend({
           : null
         this.avatar = user.photoURL
         this.fetchUserData(user.uid)
-        this.token = await getIdTokenResult(this.auth, true)
+        this.token = await getIdTokenResult(user, true)
       } else {
         this.avatar = null
       }
