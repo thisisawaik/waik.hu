@@ -41,9 +41,11 @@ en:
 
 <script>
 import Vue from 'vue'
+import { getAuth, signInWithCustomToken } from 'firebase/auth'
 export default Vue.extend({
   data () {
     return {
+      auth: getAuth(),
       token: null,
       loading: true,
       canceled: false,
@@ -71,7 +73,7 @@ export default Vue.extend({
         token: this.$nuxt.$route.query.code,
         source,
       }).then(async (resp) => {
-        await this.$fire.auth.signInWithCustomToken(resp.data.token).then(() => {
+        await signInWithCustomToken(this.auth, resp.data.token).then(() => {
           if (!this.canceled) {
             this.$router.push('/auth')
           }
