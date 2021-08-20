@@ -7,6 +7,7 @@ export default async function (data: any, req: Request, res: Response): Promise<
   const token = data.token;
   const source = data.source;
   const isDefaultSource = data.isDefaultSource;
+  console.log('login')
   if (!token) {
     throw new Error("no-token-found");
   }
