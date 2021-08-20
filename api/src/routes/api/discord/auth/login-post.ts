@@ -5,6 +5,7 @@ export default async (req: Request, res: Response) => {
     try {
         const dctoken = req.query.token;
         console.log(dctoken);
+        console.log(res.locals.auth);
         if (typeof dctoken !== 'string') {
             return res.status(400).send('Missing token');
         }
