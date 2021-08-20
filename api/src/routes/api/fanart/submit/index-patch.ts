@@ -5,10 +5,10 @@ export default async function (req: Request, res: Response) {
     const db = firestore();
     const appCheckToken = req.body.appCheckToken;
     if (!appCheckToken) {
-        return res.status(403).send({ error: "Missing parameter 'appCheckToken'" });
+        return res.status(403).end();
     }
     return await appCheck().verifyToken(appCheckToken).catch(err => {
-        return res.status(403).send({ error: "Invalid 'appCheckToken'" });
+        return res.status(403).end();
     }).then(async () => {
         const user: auth.UserRecord = res.locals.auth;
         console.log("User:", user.uid);
@@ -18,7 +18,14 @@ export default async function (req: Request, res: Response) {
         const userRef = db.collection("users").doc(user.uid);
         const userDoc = await userRef.get();
         if (!userDoc.exists) {
-            return res.status(500).end();
+            return await userRef.set({
+                dclinked: false,
+            }).then(() => {
+                return res.status(401).end();
+            }).catch(err => {
+                console.error(err);
+                return res.status(500).end();
+            });
         }
         if (!userDoc.data()?.dcid) {
             return res.status(401).end();
