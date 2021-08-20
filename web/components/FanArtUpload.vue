@@ -196,6 +196,15 @@ export default Vue.extend({
           }
         } else {
           console.log(this.dcid)
+          if (!this.dcid) {
+            const userref = doc(collection(this.db, 'users'), user.uid)
+            const res = await getDoc(userref)
+            if (res.data().dcid) {
+              this.dcid = res.data().dcid
+            } else {
+              this.dcid = null
+            }
+          }
           setDoc(artref, {
             author: this.dcid,
           }, { merge: true })
@@ -246,6 +255,16 @@ export default Vue.extend({
       this.saveBtn.disabled = true
       const strace = trace(this.performance, 'fanart_save')
       strace.start()
+      if (!this.dcid) {
+        const userref = doc(collection(this.db, 'users'), user.uid)
+        const res = await getDoc(userref)
+        console.log(res.data())
+        if (res.data().dcid) {
+          this.dcid = res.data().dcid
+        } else {
+          this.dcid = null
+        }
+      }
       await setDoc(artref, {
         desc: this.desc.titletext ? null : this.titletext,
         title: this.desc.desctext ? null : this.desctext,
