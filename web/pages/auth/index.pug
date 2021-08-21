@@ -1,0 +1,53 @@
+.background
+  .split.left
+    .centered
+      v-card(:loading='loading' width='450')
+        template(slot='progress')
+          v-progress-linear(color='primary' height='10' indeterminate='')
+        v-card-title.text-h5.lighten-2
+          | {{ user ? &apos;Fi&oacute;k&apos; : &apos;Bejelentkez&eacute;s&apos; }}
+        v-divider
+          div(v-if='user')
+            v-card-text
+              p.text-h6.lighten-2
+                | Google
+            v-card-text
+              div(v-if='googleData')
+                span
+                  v-avatar(v-if='googleData.photoURL')
+                    img(:src='googleData.photoURL' alt='Accont')
+                  | Google fi&oacute;k &ouml;sszek&ouml;tve a {{ googleData.email }} fi&oacute;kkal
+            v-divider
+              v-card-text
+                p.text-h6.lighten-2
+                  | Discord
+                v-progress-linear(v-if='discordLoading' indeterminate='' color='primary')
+              div(v-if='dcData')
+                v-card-text
+                  span
+                    v-avatar(v-if='dcAvatar')
+                      img(:src='dcAvatar')
+                    |                   Discord fi&oacute;k &ouml;sszekapcsolva {{ dcData.tag }} fi&oacute;kkal
+              div(v-else)
+                p(style='text-decoration: underline; cursor: pointer;' @click='discordLink()')
+                  | Kattints ide a discord fi&oacute;kod &ouml;sszekapcsol&aacute;s&aacute;hoz
+              //
+                <v-divider />
+                <v-card-text>
+                <AccountEmail :user="user" />
+                </v-card-text>
+          div(v-else)
+            v-divider
+              v-card-text
+                v-btn(elevation='2' @click='googleLogin()')
+                  | Bejelentkez&eacute;s google fi&oacute;kkal
+                br
+                br
+                v-btn(elevation='2' @click='discordLogin()')
+                  | Bejelentkez&eacute;s discord fi&oacute;kkal
+          v-divider(v-if='user')
+            v-card-actions
+              v-spacer
+                v-btn(v-if='user' color='red' text @click='logOut()')
+                  | Kijelentkez&eacute;s
+  .split.right

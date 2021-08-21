@@ -1,118 +1,7 @@
-<template>
-  <div>
-    <v-btn @click="getMessage">
-      test
-    </v-btn>
-    <v-card :loading="massrole.loading" class="mx-auto my-12" max-width="374">
-      <template slot="progress">
-        <v-progress-linear
-          :color="massrole.progress_color"
-          height="10"
-          indeterminate
-        />
-      </template>
-      <v-card-title>
-        <p class="ml-2">
-          Auto role
-        </p>
-      </v-card-title>
-
-      <v-card-text>
-        <v-row align="center" class="mx-0" />
-
-        <div />
-      </v-card-text>
-
-      <v-card-text>
-        <v-progress-linear
-          :value="(autorole.done / autorole.all) * 100"
-          :color="autorole.progress_color"
-        />
-        <p style="margin-top: 10px">
-          {{ autorole.done }} out of {{ autorole.all }} done
-        </p>
-        <p>Started at: {{ autorole.startedAt }}</p>
-        <p>
-          Finished at:
-          {{
-            autorole.status === 'pending' ? 'Running...' : autorole.finishedAt
-          }}
-        </p>
-        <p>
-          Changes: {{ autorole.memberchanges ? autorole.memberchanges : '0' }}
-        </p>
-        <div v-if="autorole.memberchanges > 0">
-          <v-checkbox v-model="autorole.showchanges" label="Show changes" />
-          <div v-if="autorole.showchanges">
-            <div v-for="u in autorole.changes" :key="u">
-              <admin-role-change-card :id="u.id" :added_roles="u.added_roles" :removed_roles="u.removed_roles" :roles="roles" />
-            </div>
-          </div>
-        </div>
-      </v-card-text>
-      <v-card-actions>
-        <v-btn color="deep-purple lighten-2" text>
-          Reserve
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-
-    <v-card :loading="autorole.loading" class="mx-auto my-12" max-width="374">
-      <template slot="progress">
-        <v-progress-linear
-          :color="autorole.progress_color"
-          height="10"
-          indeterminate
-        />
-      </template>
-      <v-card-title>
-        <p class="ml-2">
-          Mass role
-        </p>
-      </v-card-title>
-
-      <v-card-text>
-        <v-row align="center" class="mx-0" />
-
-        <div />
-      </v-card-text>
-
-      <v-card-text>
-        <v-progress-linear
-          :value="(massrole.done / massrole.all) * 100"
-          :color="massrole.progress_color"
-        />
-        <p style="margin-top: 10px">
-          {{ massrole.done }} out of {{ massrole.all }} done
-        </p>
-        <p>Started at: {{ massrole.startedAt }}</p>
-        <p>
-          Finished at:
-          {{
-            massrole.status === 'pending' ? 'Running...' : massrole.finishedAt
-          }}
-        </p>
-        <p>
-          Started by:
-          {{
-            massrole.startedBy ? massrole.startedBy : 'Unknown'
-          }}
-        </p>
-      </v-card-text>
-      <v-card-actions>
-        <v-btn color="deep-purple lighten-2" text>
-          Reserve
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </div>
-</template>
-
-<script>
 import { getFirestore, doc, getDoc } from '@firebase/firestore'
 import { getDatabase, ref, child, onValue } from 'firebase/database'
 import Vue from 'vue'
-import AdminRoleChangeCard from '../components/AdminRoleChangeCard.vue'
+import AdminRoleChangeCard from '../../components/AdminRoleChangeCard.vue'
 
 export default Vue.extend({
   components: { AdminRoleChangeCard },
@@ -126,8 +15,8 @@ export default Vue.extend({
       status: 'pending',
       all: 0,
       done: 0,
-      startedAt: 0,
-      finishedAt: 0,
+      startedAt: '0',
+      finishedAt: '0',
       changes: {},
       memberchanges: 0,
       showchanges: false,
@@ -141,8 +30,8 @@ export default Vue.extend({
       status: 'pending',
       all: 0,
       done: 0,
-      startedAt: 0,
-      finishedAt: 0,
+      startedAt: '0',
+      finishedAt: '0',
       changes: {},
       memberchanges: 0,
       color: 'blue',
@@ -157,7 +46,7 @@ export default Vue.extend({
       this.loadSyncStatus()
       const ref = doc(this.db, 'waik/discord') // db.collection('waik').doc('discord')
       const resp = await getDoc(ref)
-      this.roles = resp.data().autoroles
+      this.roles = resp.data()?.autoroles
     }
   },
   methods: {
@@ -241,4 +130,3 @@ export default Vue.extend({
     },
   },
 })
-</script>

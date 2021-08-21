@@ -1,0 +1,11 @@
+div.background
+    div.split.left
+        div.centered
+            v-card(:loading="loading" width="500px")
+                template(slot="progress")
+                    v-progress-linear(color="primary" hight="10" indeterminate)
+            v-devider
+            v-card-actions
+                v-spacer
+                v-btn(color="red" text @click="cancel()") {{ $t('cancel') }}
+    div.split.right
