@@ -1,35 +1,4 @@
-<template>
-  <v-card>
-    <v-tabs v-model="tab" fixed-tabs flat background-color="primary" dark>
-      <v-tab>{{ $t('fanarts') }}</v-tab>
-      <v-tab>{{ $t('upload') }}</v-tab>
-      <v-tab v-if="isAdmin">
-        Admin
-      </v-tab>
-    </v-tabs>
-
-    <v-tabs-items v-model="tab">
-      <v-tabs-item v-if="tab === 0">
-        <v-flex class="flexContainer">
-          <v-container fill-height fluid>
-            <div style="margin-top: 30px; padding 10px" />
-            <fan-art-card v-for="i in items" :id="i" :key="i" />
-          </v-container>
-        </v-flex>
-      </v-tabs-item>
-      <v-tabs-item v-else-if="tab === 1">
-        <v-container>
-          <fan-art-upload />
-        </v-container>
-      </v-tabs-item>
-      <v-tabs-item v-else-if="tab === 2">
-        <v-container>
-          <fan-art-admin />
-        </v-container>
-      </v-tabs-item>
-    </v-tabs-items>
-  </v-card>
-</template>
+<template src="./index.pug" />
 
 <script>
 import Vue from 'vue'
