@@ -1,14 +1,9 @@
-<template>
-  <div>
-    <social-bar :profile="profile" />
-    <description-card style="margin-top: 30px;" :profile="profile" />
-  </div>
-</template>
+<template src="./index.pug" />
 
 <script>
 import Vue from 'vue'
-import DescriptionCard from '../../components/DescriptionCard.vue'
-import SocialBar from '../../components/SocialBar.vue'
+import DescriptionCard from '../../../components/DescriptionCard.vue'
+import SocialBar from '../../../components/SocialBar.vue'
 export default Vue.extend({
   components: { SocialBar, DescriptionCard },
   async asyncData ({ $content, i18n }) {

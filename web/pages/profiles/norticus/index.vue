@@ -1,10 +1,4 @@
-
-<template>
-  <div>
-    <social-bar :profile="profile" />
-    <description-card style="margin-top: 30px;" :profile="profile" />
-  </div>
-</template>
+<template src="./index.pug" />
 
 <script>
 import Vue from 'vue'
