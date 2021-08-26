@@ -11,12 +11,12 @@ hu:
 <template>
   <v-app dark>
     <v-app-bar
-      v-if="!maintenance && !isFromPhone"
+      v-if="false"
       :clipped-left="clipped"
       style="height: 60px"
       fixed
       app
-      color="primary"
+      class="bg-gray-800"
     >
       <NuxtLink
         class="nav-bar-button"
@@ -32,13 +32,17 @@ hu:
       <NuxtLink
         v-for="item in navItems"
         :key="item.to"
-        class="nav-bar-button"
+
         no-prefetch
         :to="localePath(item.to)"
       >
-        <v-btn v-if="item.show" color="primary" depressed>
+        <a
+          v-if="item.show"
+          :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block px-3 py-2 rounded-md text-base font-medium']"
+          :aria-current="item.current ? 'page' : undefined"
+        >
           {{ $t(item.name) }}
-        </v-btn>
+        </a>
       </NuxtLink>
       <v-spacer />
       <NuxtLink
@@ -105,6 +109,7 @@ hu:
         </v-avatar>
       </NuxtLink>
     </v-app-bar>
+    <nav-bar />
     <div v-if="showEngWarn" class="eng-warn">
       <span class="inline"><p>The English version is currently in beta and some features might not be available. We strongly recommend switching to the Hungarian version for now! You can change it in the bottom right corner.</p><a @click="dismissEngWarn">Dismiss</a></span>
     </div>
@@ -150,31 +155,37 @@ export default Vue.extend({
           name: 'homepage',
           to: '/',
           show: true,
+          current: true,
         },
         {
           name: 'streams',
           to: '/streams',
           show: false,
+          current: false,
         },
         {
           name: 'downloads',
           to: '/downloads',
           show: true,
+          current: false,
         },
         {
           name: 'fanarts',
           to: '/fanarts',
           show: true,
+          current: false,
         },
         {
           name: 'faq',
           to: '/faq',
           show: true,
+          current: false,
         },
         {
           name: 'admin',
           to: '/admin',
           show: false,
+          current: false,
         },
       ],
       fixed: false,

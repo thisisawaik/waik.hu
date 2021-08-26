@@ -1,6 +1,6 @@
 <template src="./index.pug" />
 
-<script src="./index.ts" />
+<script src="./index.js" />
 
 <style>
 </style>
