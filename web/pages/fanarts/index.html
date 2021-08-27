@@ -15,24 +15,16 @@
                     </v-container>
                 </v-flex>
             </div>
+            <div v-else-if="tab === 1" class="bg-gray-900">
+                <v-container>
+                    <FanArtUpload />
+                </v-container>
+            </div>
+            <div v-else-if="tab === 2">
+                <v-container>
+                    <FanArtAdmin />
+                </v-container>
+            </div>
         </div>
     </div>
 </v-card>
-<!--
-    v-tabs(v-model="tab" fixed-tabs flat background-color="primary" dark)
-        v-tab {{ $t('fanarts') }}
-        v-tab {{ $t('upload') }}
-        v-tab(v-if="isAdmin") Admin 
-    v-tabs-items(v-model=tab)
-        v-tabs-item(v-if="tab === 0")
-            v-flex.flexContainer
-                v-container(fill-height fluid)
-                    div(style="margin-top: 30px;")
-                    fan-art-card(v-for="i in items" :id="i" :key="i")
-        v-tabs-item(v-else-if="tab === 1")
-            v-container
-                fan-art-upload
-        v-tabs-item(v-else-if="tab === 2")
-            v-container
-                fan-art-admin
--->
