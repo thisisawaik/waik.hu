@@ -33,6 +33,7 @@ export default async function fanartLikeAdd(req: Request, res: Response): Promis
         await likesRef.update({
           likes: database.ServerValue.increment(1),
         });
+        const likes: any = doc.data()?.likes;
         return await likeRef
             .set({
               likedAt: firestore.Timestamp.now(),
@@ -40,7 +41,7 @@ export default async function fanartLikeAdd(req: Request, res: Response): Promis
             .then((res) => {
               return {
                 status: "OK",
-                likes: doc.data()?.likes,
+                likes,
               };
             });
       } catch (error) {
