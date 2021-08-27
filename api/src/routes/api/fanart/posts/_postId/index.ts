@@ -16,7 +16,8 @@ export default async (req: Request, res: Response): Promise<Response> => {
         }
         return res.json(doc.data());
     } catch (error) {
-        throw new Error(error);        
+        console.error(error);
+        throw new Error('unknow error!');
     }
 
 }

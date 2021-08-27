@@ -45,7 +45,8 @@ export default async function fanartLikeAdd(req: Request, res: Response): Promis
               };
             });
       } catch (error) {
-        throw new Error(error);
+        console.error(error);
+        throw new Error('unknown error!');
       }
     });
   }
