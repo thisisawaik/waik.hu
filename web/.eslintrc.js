@@ -15,6 +15,7 @@ module.exports = {
     '@nuxtjs/eslint-config-typescript',
   ],
   plugins: [
+    '@typescript-eslint',
   ],
   // add your custom rules here
   rules: {
@@ -22,5 +23,6 @@ module.exports = {
     'vue/no-v-html': 'off',
     'comma-dangle': ['error', 'always-multiline'],
     'no-console': 'off',
+    'vue/no-use-v-if-with-v-for': 'off',
   },
 }

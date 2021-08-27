@@ -1,4 +1,4 @@
-<template src="./index.pug" />
+<template src="./index.html" />
 
 <script>
 import Vue from 'vue'

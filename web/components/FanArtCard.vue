@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="loading" class="mx-auto my-12" elevation="15" :max-width="isFromPhone ? '90vw' : '374'">
+  <v-card :loading="loading" class="mx-auto my-12" elevation="15" :max-width="isFromPhone ? '90vw' : '374'" color="#1f2937">
     <template slot="progress">
       <v-progress-linear
         color="deep-purple"

@@ -1,10 +1,10 @@
 <template>
   <v-flex>
     <v-container>
-      <div v-for="(category, rootIndex) of contents" :key="category.key">
+      <div v-for="(category, rootIndex) of contents" :key="category.key" class="categorys">
         <v-expansion-panels>
           <v-expansion-panel v-if="contentNames[rootIndex] !== '[DEFAULT]'" :readonly="true">
-            <v-expansion-panel-header>
+            <v-expansion-panel-header color="#1f2937">
               {{ contentNames[rootIndex] }}
               <template #actions>
                 <v-icon />
@@ -16,10 +16,10 @@
             :key="index"
             @click="log(item.slug)"
           >
-            <v-expansion-panel-header>
+            <v-expansion-panel-header color="#1f2937">
               {{ item.q }}
             </v-expansion-panel-header>
-            <v-expansion-panel-content>
+            <v-expansion-panel-content color="#1f2937">
               <nuxt-content :document="item" />
             </v-expansion-panel-content>
           </v-expansion-panel>
@@ -85,5 +85,8 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style lang="scss" scoped>
+.categorys {
+  background-color: chocolate;
+}
 </style>

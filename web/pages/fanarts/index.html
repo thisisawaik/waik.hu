@@ -1,0 +1,38 @@
+<v-card>
+    <div>
+        <div class="bg-gray-700">
+            <nav class="flex items-center justify-center">
+                <button @click="tab = 0" :class="`text-white py-4 px-6 block hover:text-blue-500 focus:outline-none ${ tab === 0 ? 'text-blue-500 border-b-2 font-medium border-blue-500' : ''}`">{{ $t('fanarts') }}</button>
+                <button @click="tab = 1" :class="`text-white py-4 px-6 block hover:text-blue-500 focus:outline-none ${ tab === 1 ? 'text-blue-500 border-b-2 font-medium border-blue-500' : ''}`">{{ $t('upload') }}</button>
+                <button @click="tab = 2" v-if="isAdmin" :class="`text-white py-4 px-6 block hover:text-blue-500 focus:outline-none ${ tab === 2 ? 'text-blue-500 border-b-2 font-medium border-blue-500' : ''}`">Admin</button>
+            </nav>
+        </div>
+        <div>
+            <div v-if="tab === 0">
+                <v-flex class="flexContainer bg-gray-900">
+                    <v-container fill-height fluid>
+                        <FanArtCard v-for="i in items" :id="i" :key="i" />
+                    </v-container>
+                </v-flex>
+            </div>
+        </div>
+    </div>
+</v-card>
+<!--
+    v-tabs(v-model="tab" fixed-tabs flat background-color="primary" dark)
+        v-tab {{ $t('fanarts') }}
+        v-tab {{ $t('upload') }}
+        v-tab(v-if="isAdmin") Admin 
+    v-tabs-items(v-model=tab)
+        v-tabs-item(v-if="tab === 0")
+            v-flex.flexContainer
+                v-container(fill-height fluid)
+                    div(style="margin-top: 30px;")
+                    fan-art-card(v-for="i in items" :id="i" :key="i")
+        v-tabs-item(v-else-if="tab === 1")
+            v-container
+                fan-art-upload
+        v-tabs-item(v-else-if="tab === 2")
+            v-container
+                fan-art-admin
+-->

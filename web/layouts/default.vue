@@ -109,15 +109,15 @@ hu:
         </v-avatar>
       </NuxtLink>
     </v-app-bar>
-    <nav-bar />
+    <nav-bar :nav-items="navItems" />
     <div v-if="showEngWarn" class="eng-warn">
       <span class="inline"><p>The English version is currently in beta and some features might not be available. We strongly recommend switching to the Hungarian version for now! You can change it in the bottom right corner.</p><a @click="dismissEngWarn">Dismiss</a></span>
     </div>
-    <v-main>
+    <v-main class="bg-gray-900">
       <Nuxt />
     </v-main>
     <notifications-component />
-    <v-footer :absolute="!fixed" app>
+    <v-footer :absolute="!fixed" app color="#1f2937">
       <span>&copy; 2021 | {{ zalname }} |
         <a
           style="color: #fff"
@@ -200,7 +200,9 @@ export default Vue.extend({
   watch: {
     $route (route) {
       console.log('route changed', route)
+      // console.log(route.name.split('_')[0])
       this.checkEngWarn(route)
+      this.checkCurrentPage(route)
     },
   },
   async created () {
@@ -233,11 +235,26 @@ export default Vue.extend({
     }
   },
   methods: {
+    checkCurrentPage (route) {
+      try {
+        this.navItems.forEach((item) => {
+          console.log(item.name)
+          if (route.name.split('_')[0] === item.name) {
+            console.log('fanarts')
+            this.navItems.find(e => e.current === true).current = false
+            this.navItems.find(e => e.name === item.name).current = true
+          }
+        })
+      } catch (error) {
+        console.debug(error)
+      }
+    },
     dismissEngWarn () {
       if (process.client) {
         console.log('dismissing eng warn')
         localStorage.setItem('engWarnDismissed', true)
         this.checkEngWarn(this.$route)
+        this.checkCurrentPage(this.$route)
       }
     },
     checkEngWarn (route) {
@@ -320,7 +337,6 @@ export default Vue.extend({
     margin-left: 10px
   };
   min-height: 40px;
-  margin-top: 60px;
   top: 0px;
   left: 0px;
   right: 0px;

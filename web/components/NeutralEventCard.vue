@@ -6,7 +6,7 @@
           <h4 v-if="title" class="text-xl font-semibold mb-2">
             {{ title }}
           </h4>
-          <div v-if="html" class="mt-2" v-html="html" />
+          <div v-if="html" class="mt-2 html-embed" v-html="html" />
           <div v-if="markdown" class="mt-2" v-html="$md.render(markdown)" />
         </div>
       </div>
@@ -42,6 +42,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.html-embed {
+  width: 100%;
+}
 .video-container {
   position: relative;
   padding-bottom: 56.25%;
@@ -59,4 +62,8 @@ export default {
   width: 100%;
   height: 100%;
   }
+.card {
+  max-width: 390px;
+  background-color: #1f2937;
+}
 </style>

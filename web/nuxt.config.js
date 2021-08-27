@@ -1,6 +1,3 @@
-// import colors from 'vuetify/es5/util/colors'
-/** @type {import('nuxt-socket-io/io/types').NuxtSocketIoOptions} */
-
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -16,7 +13,6 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-
   meta: {
     ogTitle: false,
     ogDescription: false,
@@ -43,6 +39,7 @@ export default {
     '@nuxtjs/device',
     '@nuxt/typescript-build',
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/composition-api/module',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -148,5 +145,7 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: ['vue-instantsearch', 'instantsearch.js/es'],
+  },
 }
