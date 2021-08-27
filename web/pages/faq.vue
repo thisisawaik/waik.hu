@@ -86,7 +86,4 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-.categorys {
-  background-color: chocolate;
-}
 </style>
