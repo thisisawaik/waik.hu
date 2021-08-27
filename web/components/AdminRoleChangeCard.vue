@@ -29,7 +29,7 @@ export default {
   data () {
     return {
       avatarURL: 'https://vue-tenant.github.io/images/default-avatar.png',
-      name: 'Loading...'
+      name: 'Loading...',
     }
   },
   async created () {
@@ -39,6 +39,6 @@ export default {
 
     this.name = userdoc.data().tag
     this.avatarURL = userdoc.data().pp
-  }
+  },
 }
 </script>

@@ -1,33 +1,33 @@
-// import colors from 'vuetify/es5/util/colors'
-
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Waik',
+    title: 'Waik | %s',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'twitter:creator', content: '@zal1000original' },
       { name: 'twitter:site', content: 'https://waik.hu/' },
-      { name: 'fb:app_id', content: '581458672492860' }
+      { name: 'fb:app_id', content: '581458672492860' },
+      { name: 'theme-color', content: '#ffffff' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-
   meta: {
-    ogType: false,
     ogTitle: false,
     ogDescription: false,
     ogSiteName: false,
-    description: false
+    description: false,
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['~/assets/global.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    'plugins/api.js',
+    'plugins/algolia.js',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -36,22 +36,21 @@ export default {
   buildModules: [
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
-    '@nuxtjs/firebase',
     '@nuxtjs/device',
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/composition-api/module',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/firebase',
     'nuxt-clipboard2',
     'nuxt-maintenance-mode',
     '@nuxt/content',
     '@nuxtjs/markdownit',
-    'nuxt-socket-io',
-    'nuxt-i18n'
+    'nuxt-i18n',
   ],
   i18n: {
     locales: [
@@ -59,33 +58,37 @@ export default {
         code: 'hu',
         file: 'hu.js',
         iso: 'hu',
-        isCatchallLocale: true
+        isCatchallLocale: true,
       },
       {
         code: 'en',
         file: 'en.js',
-        iso: 'en'
-      }
+        iso: 'en',
+      },
+      {
+        code: 'zoli',
+        file: 'zoli.js',
+      },
     ],
     defaultLocale: 'hu',
     lazy: true,
     langDir: 'lang/',
     vueI18n: {
-      fallbackLocale: 'hu'
+      fallbackLocale: 'hu',
     },
     vueI18nLoader: true,
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
-      onlyOnRoot: true // recommended
-    }
+      onlyOnRoot: true, // recommended
+    },
   },
   content: {
     markdown: {
       prism: {
-        theme: 'prism-themes/themes/prism-material-oceanic.css'
-      }
-    }
+        theme: 'prism-themes/themes/prism-material-oceanic.css',
+      },
+    },
   },
 
   markdownit: {
@@ -93,85 +96,33 @@ export default {
     preset: 'default',
     linkify: true,
     breaks: true,
-    use: ['markdown-it-div', 'markdown-it-attrs']
+    use: ['markdown-it-div', 'markdown-it-attrs'],
   },
 
   maintenance: {
     enabled: !!process.env.MAINTENANCE_MODE, // If given truthy value, activation maintenance mode on startup your nuxt application.
-    path: '/maintenance' // maintenance fallback content routing.
+    path: '/maintenance', // maintenance fallback content routing.
     // matcher: /^\/admin/ // Path to be in maintenance mode (regex).
   },
 
-  firebase: {
-    config: {
-      apiKey: 'AIzaSyBmRS5Yy-1ktWXNsYjk9mQ8Rs9RhmQy600',
-      authDomain: 'auth.zal1000.com',
-      databaseURL: 'https://waik.europe-west1.firebasedatabase.app',
-      projectId: 'zal1000',
-      storageBucket: 'zal1000.net',
-      messagingSenderId: '512279358183',
-      appId: '1:512279358183:web:1a091779e0474dba541042',
-      measurementId: 'G-W3EFDHYNN1'
-    },
-    services: {
-      firestore: true,
-      storage: true,
-      database: true,
-      auth: {
-        ssr: true
-      },
-      functins: true,
-      performance: true,
-      functions: {
-        emulatorPort: process.env.NODE_ENV === 'development' ? 5001 : undefined,
-        emulatorHost:
-          process.env.NODE_ENV === 'development'
-            ? 'http://localhost'
-            : undefined
-      },
-      messaging: {
-        createServiceWorker: true,
-        actions: []
-      },
-      remoteConfig: {
-        settings: {
-          fetchTimeoutMillis: 60000, // default
-          minimumFetchIntervalMillis: 43200000 // default
-        },
-        defaultConfig: {
-          waik_show_streams: false
-        }
-      },
-      analytics: {
-        collectionEnabled: process.env.NODE_ENV === 'production'
-      }
-    },
-    onFirebaseHosting: process.env.NODE_ENV === 'production'
-  },
-
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:8080/api',
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: 'hu'
+      lang: 'hu',
     },
     workbox: {
       importScripts: [
-        // ...
-        '/firebase-auth-sw.js'
+        '/sw-test.js',
       ],
       // by default the workbox module will not install the service worker in dev environment to avoid conflicts with HMR
       // only set this true for testing and remember to always clear your browser cache in development
-      dev: process.env.NODE_ENV === 'development'
-    }
-  },
-
-  messaging: {
-    createServiceWorker: true,
-    actions: []
-    // fcmPublicVapidKey: '512279358183' // OPTIONAL : Sets vapid key for FCM after initialization
+      dev: process.env.NODE_ENV === 'development',
+    },
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -183,16 +134,18 @@ export default {
         dark: {
           primary: '#5865f2',
           accent: '#eb459e',
-          secondary: '#57f287',
+          secondary: '#2C2F33',
           info: '#5865f2',
           warning: '#fee75c',
           error: '#ed4245',
-          success: '#57f287'
-        }
-      }
-    }
+          success: '#57f287',
+        },
+      },
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {}
+  build: {
+    transpile: ['vue-instantsearch', 'instantsearch.js/es'],
+  },
 }

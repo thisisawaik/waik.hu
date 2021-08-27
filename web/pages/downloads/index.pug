@@ -1,0 +1,7 @@
+v-container
+    downloads-search-bar
+    v-flex.flexContainer
+        v-container(fill-height fluid)
+            div(style="margin-top: 30px; padding: 10px")
+            div(style="margin-top: 30px; padding: 10px")
+            DownloadCard(v-for="item in items" :id="item" :key="item")

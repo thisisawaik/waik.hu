@@ -4,8 +4,8 @@
 
 <script>
 /* eslint-disable prefer-const */
-
-export default {
+import Vue from 'vue'
+export default Vue.extend({
   async asyncData ({ app, params }) {
     const db = app.$fire.firestore
     const storage = app.$fire.storage
@@ -37,7 +37,7 @@ export default {
       desc,
       image,
       color,
-      id: params.id
+      id: params.id,
     }
   },
   data () {
@@ -46,7 +46,7 @@ export default {
       title: 'Loading...',
       desc: 'loading...',
       image: 'Loading...',
-      color: 'Loading...'
+      color: 'Loading...',
     }
   },
   head () {
@@ -55,34 +55,30 @@ export default {
       meta: [
         {
           name: 'og:title',
-          content: this.title
+          content: this.title,
         },
         {
           name: 'og:descriprion',
-          content: this.desc
+          content: this.desc,
         },
         {
           name: 'descriprion',
-          content: this.desc
+          content: this.desc,
         },
         {
           name: 'og:image',
-          content: this.image
+          content: this.image,
         },
         {
           name: 'theme-color',
-          content: this.color
+          content: this.color,
         },
         {
           name: 'robots',
-          content: 'noindex,nofollow'
-        }
-      ]
+          content: 'noindex,nofollow',
+        },
+      ],
     }
-  }
-}
+  },
+})
 </script>
-
-<style lang="scss" scoped>
-
-</style>

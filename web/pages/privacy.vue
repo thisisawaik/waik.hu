@@ -9,7 +9,8 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+export default Vue.extend({
   async asyncData ({ $content, i18n }) {
     const article = await $content(`${i18n.localeProperties.code}/legal`, 'privacy').fetch()
     return { article }
@@ -20,38 +21,37 @@ export default {
       meta: [
         {
           name: 'description',
-          content: 'waik.hu privacy policy'
+          content: 'waik.hu privacy policy',
         },
         {
           name: 'og:description',
-          content: 'waik.hu privacy policy'
+          content: 'waik.hu privacy policy',
         },
         {
           name: 'og:title',
-          content: 'waik.hu privacy policy'
+          content: 'waik.hu privacy policy',
         },
         {
           name: 'theme-color',
-          content: `#${this.article.colorTheme}`
+          content: `#${this.article.colorTheme}`,
         },
         {
           name: 'article:modified_time',
-          content: this.article.updatedAt
+          content: this.article.updatedAt,
         },
         {
           name: 'og:modified_time',
-          content: this.article.updatedAt
-        }
-      ]
+          content: this.article.updatedAt,
+        },
+      ],
     }
   },
   methods: {
     formatDate (date) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' }
-      return new Date(date).toLocaleDateString('hu', options)
-    }
-  }
-}
+      return new Date(date).toLocaleDateString('hu', { year: 'numeric', month: 'long', day: 'numeric' })
+    },
+  },
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="loading" class="mx-auto my-12" :max-width="isFromPhone ? '90vw' : '374'">
+  <v-card :loading="loading" class="mx-auto my-12 card" color="#1f2937" :width="$device.isMobileOrTablet ? '90vw' : '374'">
     <template slot="progress">
       <v-progress-linear
         color="deep-purple"
@@ -53,11 +53,14 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+import { getDownloadURL, getStorage, ref } from 'firebase/storage'
+export default Vue.extend({
   // eslint-disable-next-line vue/require-prop-types
   props: ['id'],
   data () {
     return {
+      storage: getStorage(),
       loading: true,
       title: 'Loading...',
       desc: 'Loading...',
@@ -68,40 +71,38 @@ export default {
       githuburl: null,
       showCopyBar: false,
       isFromPhone: this.$device.isMobileOrTablet,
-      shareId: null
+      shareId: null,
 
     }
   },
   async created () {
-    const db = this.$fire.firestore
-    const storage = this.$fire.storage
-    const ref = db.collection('waik/website/downloads').doc(this.id)
     try {
-      const doc = await ref.get()
-      this.title = doc.data().name
-      this.desc = doc.data().desc
-      if (doc.data().imageurl) {
-        // const sref = storage.ref(doc.data().gsURL)
+      const req = await this.$axios.get(`/downloads/download/${this.id}`)
+      const data = req.data
+
+      this.title = data.name
+      this.desc = data.desc
+      if (data.imageurl) {
+        // const sref = storage.ref(data.gsURL)
         // this.imageurl = await sref.getDownloadURL()
-        this.imageurl = doc.data().imageurl
+        this.imageurl = data.imageurl
       }
-      if (doc.data().author) {
-        const dcRef = db.collection('dcusers').doc(doc.data().author)
-        const dcDoc = await dcRef.get()
-        this.authorAvatar = dcDoc.data().pp
-        this.authorName = dcDoc.data().tag
+      if (data.author) {
+        const author = await this.$axios.get(`/discord/users/${data.author}/get`)
+        this.authorAvatar = author.data.pp
+        this.authorName = author.data.tag
       }
-      if (doc.data().githuburl) {
-        this.githuburl = doc.data().githuburl
+      if (data.githuburl) {
+        this.githuburl = data.githuburl
       }
-      if (doc.data().shareid) {
-        this.shareId = doc.data().shareid
+      if (data.shareid) {
+        this.shareId = data.shareid
       }
-      if (doc.data().downloadgs) {
-        const sref = storage.refFromURL(doc.data().downloadgs)
-        this.downloadurl = await sref.getDownloadURL()
+      if (data.downloadgs) {
+        const sref = ref(this.storage, data.downloadgs)
+        this.downloadurl = await getDownloadURL(sref)
       } else {
-        this.downloadurl = doc.data().downloadurl
+        this.downloadurl = data.downloadurl
       }
       this.loading = false
     } catch (e) {
@@ -133,9 +134,9 @@ export default {
       } catch (e) {
         // console.error(e);
       }
-    }
-  }
-}
+    },
+  },
+})
 </script>
 
 <style>

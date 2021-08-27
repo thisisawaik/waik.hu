@@ -1,0 +1,24 @@
+{
+    "grammarly.overrides": [
+        {
+            "files": [
+                "**/web/content/en/infos/faq/dobokokraft.md",
+                "**/web/content/en/infos/faq/waik.md"
+            ],
+            "config": {
+                "audience": "knowledgeable",
+                "dialect": "american",
+                "domain": "technical",
+                "emotions": [
+                    "confident",
+                    "respectful",
+                    "friendly"
+                ],
+                "goals": [
+                    "inform",
+                    "describe"
+                ]
+            }
+        }
+    ]
+}

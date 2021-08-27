@@ -43,7 +43,7 @@ export default {
     return {
       loading: true,
       error: null,
-      state: 'started'
+      state: 'started',
     }
   },
   // eslint-disable-next-line require-await
@@ -53,7 +53,7 @@ export default {
       this.$store.commit('setAuthEmailStatus', this.state)
       this.$router.push('/auth')
     }, 5000)
-  }
+  },
 }
 </script>
 

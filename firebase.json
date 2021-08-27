@@ -16,6 +16,20 @@
         }
       },
       {
+        "source": "/ws",
+        "run": {
+          "serviceId": "waik-main-ws-dev",
+          "region": "europe-north1"
+        }
+      },
+      {
+        "source": "/socket.io/**",
+        "run": {
+          "serviceId": "waik-main-ws-dev",
+          "region": "europe-north1"
+        }
+      },
+      {
         "source": "/api",
         "run": {
           "serviceId": "waik-main-api",

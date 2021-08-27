@@ -18,7 +18,7 @@ export default {
       sclass: '',
       color: 'green',
       timeout: 3000,
-      show: false
+      show: false,
     }
   },
   created () {
@@ -27,8 +27,8 @@ export default {
   methods: {
     close () {
       this.show = false
-    }
-  }
+    },
+  },
 }
 </script>
 

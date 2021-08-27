@@ -107,7 +107,7 @@ export default {
       dcData: null,
       token: null,
       discordLoading: true,
-      dcAvatar: null
+      dcAvatar: null,
     }
   },
   created () {
@@ -116,7 +116,7 @@ export default {
       this.user = user
       if (user) {
         this.googleData = user.providerData.find(
-          e => e.providerId === 'google.com'
+          e => e.providerId === 'google.com',
         )
           ? user.providerData.find(e => e.providerId === 'google.com')
           : null
@@ -155,8 +155,8 @@ export default {
         this.dcData = null
         this.discordLoading = false
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -2,9 +2,10 @@
   <v-card :loading="loading" class="mx-auto my-12" elevation="15" :max-width="isFromPhone ? '90vw' : '374'">
     <template slot="progress">
       <v-progress-linear
-        color="deep-purple"
+        :color="loadcolor"
         height="10"
-        indeterminate
+        :indeterminate="loadindeterminate"
+        :value="loadvalue"
       />
     </template>
     <v-card-title>{{ title }}</v-card-title>
@@ -15,7 +16,7 @@
 
     <v-divider />
     <v-card-text>
-      Versenyre: {{ isForComp }}
+      Versenyre: {{ `${typeof isForComp === "undefined" ? 'unknown' : isForComp}` }}
     </v-card-text>
     <v-divider />
     <v-card-actions>
@@ -52,12 +53,20 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+import { getFirestore, collection, doc, getDoc } from 'firebase/firestore'
+import { getStorage, ref, getDownloadURL } from 'firebase/storage'
+export default Vue.extend({
   // eslint-disable-next-line vue/require-prop-types
   props: ['id'],
   data () {
     return {
+      db: getFirestore(),
+      storage: getStorage(),
       loading: true,
+      loadcolor: 'deep-purple',
+      loadindeterminate: true,
+      loadvalue: 0,
       title: 'Loading...',
       desc: 'Loading...',
       imageurl: null,
@@ -72,33 +81,31 @@ export default {
       likesListener: null,
       shareId: null,
       isForComp: false,
-      user: null
+      user: null,
     }
   },
   async created () {
-    const db = this.$fire.firestore
     // const storage = this.$fire.storage
-    const ref = db.collection('waik/website/fanarts').doc(this.id)
+    const dref = doc(collection(this.db, 'waik/website/fanarts'), this.id)
     try {
-      const doc = await ref.get()
-      this.title = doc.data().title
-      this.desc = doc.data().desc
-      if (doc.data().getFromGS) {
-        const storage = this.$fire.storage
-        const sref = storage.ref(doc.data().gsURL)
-        this.imageurl = await sref.getDownloadURL()
+      const res = await getDoc(dref)
+      this.title = res.data().title
+      this.desc = res.data().desc
+      if (res.data().getFromGS) {
+        const sref = ref(this.storage, res.data().gsURL)
+        this.imageurl = await getDownloadURL(sref)
       } else {
-        this.imageurl = doc.data().downloadurl
+        this.imageurl = res.data().downloadurl
       }
 
-      if (doc.data().author) {
-        const dcRef = db.collection('dcusers').doc(doc.data().author)
-        const dcDoc = await dcRef.get()
+      if (res.data().author) {
+        const dcRef = doc(collection(this.db, 'dcusers'), res.data().author)
+        const dcDoc = await getDoc(dcRef)
         this.authorAvatar = dcDoc.data().pp
         this.authorName = dcDoc.data().tag
       }
 
-      this.isForComp = doc.data().isForComp
+      this.isForComp = res.data().forComp
 
       this.loading = false
     } catch (e) {
@@ -111,17 +118,18 @@ export default {
     async approve () {
       const functions = this.$fire.functions
       await functions.httpsCallable('waikFanartApprove')({
-        postId: this.id
+        postId: this.id,
       }).then(() => {
       }).catch((e) => {
         // eslint-disable-next-line no-console
+        this.loadcolor = 'red'
         console.log(e)
       })
     },
     async deny () {
       const functions = this.$fire.functions
       await functions.httpsCallable('waikFanartDeny')({
-        postId: this.id
+        postId: this.id,
       }).then(() => {
       }).catch((e) => {
         // eslint-disable-next-line no-console
@@ -129,7 +137,7 @@ export default {
         this.isLiked = true
         this.likes = this.likes + 1
       })
-    }
-  }
-}
+    },
+  },
+})
 </script>
