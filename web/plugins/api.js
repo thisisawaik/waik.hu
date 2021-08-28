@@ -4,14 +4,14 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { getAnalytics, setUserId } from 'firebase/analytics'
 const asd = async (context, inject) => {
   const app = initializeApp({
-    apiKey: 'AIzaSyBmRS5Yy-1ktWXNsYjk9mQ8Rs9RhmQy600',
-    authDomain: 'auth.zal1000.com',
-    databaseURL: 'https://waik.europe-west1.firebasedatabase.app',
-    projectId: 'zal1000',
-    storageBucket: 'zal1000.net',
-    messagingSenderId: '512279358183',
-    appId: '1:512279358183:web:1a091779e0474dba541042',
-    measurementId: 'G-W3EFDHYNN1',
+    apiKey: 'AIzaSyApGQEdqVHknPeq7FBR3ZlFSXzOWeOXxvk',
+    authDomain: 'waik-main-adc8f.firebaseapp.com',
+    databaseURL: 'https://waik-main-default-rtdb.europe-west1.firebasedatabase.app',
+    projectId: 'waik-main',
+    storageBucket: 'waik-main.appspot.com',
+    messagingSenderId: '473640548210',
+    appId: '1:473640548210:web:ceb07d28f682005b8b8feb',
+    measurementId: 'G-EMXCZC46E7',
   })
   if (process.client) {
     const appcheck = initializeAppCheck(app, {

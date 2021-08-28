@@ -20,11 +20,21 @@
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	"forwardPorts": [3000, 8080],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "yarn install",
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "node"
+	"remoteUser": "node",
+	"portsAttributes": {
+		"3000": {
+			"label": "Website",
+			"onAutoForward": "openBrowserOnce"
+		},
+		"8080": {
+			"label": "Api",
+			"elevateIfNeeded": true
+		}
+	}
 }

@@ -1,3 +1,13 @@
+function defaultApiUrl () {
+  if (process.env.NODE_ENV === 'production') {
+    return '/api'
+  }
+  if (process.env.CODESPACES) {
+    return 'https://zal1000-zalorg-waik-hu-5jx4v6wvc495j-8080.githubpreview.dev/api'
+  }
+  return 'https://api.github.com'
+}
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -107,7 +117,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:8080/api',
+    baseURL: defaultApiUrl(),
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

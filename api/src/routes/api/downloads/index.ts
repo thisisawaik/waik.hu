@@ -4,7 +4,7 @@ import { firestore } from 'firebase-admin';
 const db = firestore();
 
 export default async function (req: Request, res: Response) {
-    const downloadsRef = db.collection('waik/website/downloads').where('visible', '==', true).orderBy('timestamp');
+    const downloadsRef = db.collection('downloads').where('visible', '==', true).orderBy('timestamp');
     const downloads = await downloadsRef.get();
     const a_of_d: string[] = [];
     res.setHeader('Cache-Contorl', 'public, max-age=86400');

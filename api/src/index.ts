@@ -3,7 +3,11 @@ import * as admin from "firebase-admin";
 // import { spawn } from 'child_process';
 import router from './router'
 
+
+var serviceAccount = require("../key.json");
+
 admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://waik.europe-west1.firebasedatabase.app/',
 });
 
