@@ -214,7 +214,7 @@ export default Vue.extend({
       if (user) {
         this.avatar = user.photoURL
         const token = await user.getIdTokenResult(true)
-        if (token.claims.waikAdmin) {
+        if (token.claims.admin) {
           this.isAdmin = true
           this.navItems.find(e => e.name === 'admin').show = true
         } else {

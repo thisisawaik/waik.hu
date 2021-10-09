@@ -1,0 +1,36 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  username: String!
+  tag: String!
+  pp: String
+  badges: [String!]
+  createdAt: DateTime!
+  fromCache: Boolean!
+  id: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Download {
+  name: String!
+  downloadUrl: String
+  githubUrl: String
+  imageUrl: String
+  description: String
+  author: String
+  timestamp: DateTime!
+  fromCache: Boolean!
+  id: String!
+}
+
+type Query {
+  getDefault: String!
+  getUser(force: Boolean!, id: String!): User!
+  getDownload(force: Boolean!, id: String!): Download!
+}

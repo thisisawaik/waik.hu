@@ -72,20 +72,30 @@ export default Vue.extend({
     }
   },
   async created () {
-    const ref = query(collection(this.db, 'waik/website/content'), where('visible', '==', true), orderBy('timestamp')) // db.collection('waik/website/content').where('visible', '==', true)
-    const docs = await getDocs(ref)
-    const current = []
-    const past = []
-    const neutral = []
-    const all = []
-    for (const doc of docs.docs.reverse()) {
-      all.push(doc.data())
-      if (doc.data().when === 'current') { current.push(doc.data()) } else if (doc.data().when === 'past') { past.push(doc.data()) } else { neutral.push(doc.data()) }
+    try {
+      const ref = query(collection(this.db, '/website_content'), where('visible', '==', true), orderBy('timestamp')) // db.collection('waik/website/content').where('visible', '==', true)
+      const docs = await getDocs(ref)
+      const current = []
+      const past = []
+      const neutral = []
+      const all = []
+      for (const doc of docs.docs.reverse()) {
+        all.push(doc.data())
+        if (doc.data().when === 'current') {
+          current.push(doc.data())
+        } else if (doc.data().when === 'past') {
+          past.push(doc.data())
+        } else {
+          neutral.push(doc.data())
+        }
+      }
+      this.currentContent = current
+      this.pastContent = past
+      this.neutralContent = neutral
+      this.allContent = all
+    } catch (error) {
+      console.error(error)
     }
-    this.currentContent = current
-    this.pastContent = past
-    this.neutralContent = neutral
-    this.allContent = all
     this.loading = false
   },
 })

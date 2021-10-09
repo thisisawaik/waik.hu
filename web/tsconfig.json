@@ -30,7 +30,7 @@
       "vue-router/types",
       "@nuxtjs/color-mode",
       "@nuxtjs/device",
-      "@nuxtjs/i18n"
+      "nuxt-i18n"
     ]
   },
   "exclude": [

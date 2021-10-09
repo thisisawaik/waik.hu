@@ -30,11 +30,11 @@
 	"portsAttributes": {
 		"3000": {
 			"label": "Website",
-			"onAutoForward": "openBrowserOnce"
+			"onAutoForward": "openBrowser",
 		},
 		"8080": {
 			"label": "Api",
-			"elevateIfNeeded": true
+			"elevateIfNeeded": true,
 		}
 	}
 }

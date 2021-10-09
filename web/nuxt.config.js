@@ -2,10 +2,10 @@ function defaultApiUrl () {
   if (process.env.NODE_ENV === 'production') {
     return '/api'
   }
-  if (process.env.CODESPACES) {
-    return 'https://zal1000-zalorg-waik-hu-5jx4v6wvc495j-8080.githubpreview.dev/api'
-  }
-  return 'https://api.github.com'
+  // if (process.env.CODESPACES) {
+  //   return 'https://zal1000-zalorg-waik-hu-5jx4v6wvc495j-8080.githubpreview.dev/api'
+  // }
+  return 'http://localhost:8080/api'
 }
 
 export default {
@@ -50,6 +50,7 @@ export default {
     '@nuxt/typescript-build',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/composition-api/module',
+    'nuxt-delay-hydration',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -62,6 +63,9 @@ export default {
     '@nuxtjs/markdownit',
     'nuxt-i18n',
   ],
+  delayHydration: {
+    mode: 'init',
+  },
   i18n: {
     locales: [
       {
