@@ -1,6 +1,6 @@
 <template>
   <v-app-bar style="margin-top: 60px; height: 70px" fixed app color="#1e1e1e">
-    <div class="center">
+    <div class="center" style="display:flex;">
       <a
         v-for="(pf, index) of profile.twitch"
         :key="`tw${index}`"
