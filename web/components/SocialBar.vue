@@ -1,6 +1,6 @@
 <template>
   <v-app-bar style="margin-top: 60px; height: 70px" fixed app color="#1e1e1e">
-    <div class="center">
+    <div class="center" style="display: flex;">
       <a
         v-for="(pf, index) of profile.twitch"
         :key="`tw${index}`"
@@ -154,6 +154,7 @@ export default {
   img {
     margin-left: 5px;
     margin-right: 5px;
+    height: 40px;
   }
   .avatar {
     border-radius: 50%;
