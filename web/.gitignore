@@ -80,10 +80,6 @@ dist
 # IDE / Editor
 .idea
 
-# Service worker
-sw.*
-static/firebase-auth-sw.js
-static/firebase-messaging-sw.js
 # macOS
 .DS_Store
 

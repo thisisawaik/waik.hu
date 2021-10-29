@@ -7,5 +7,5 @@ export default {
   title: 'Cím',
   description: 'Leírás',
   file: 'Fájl',
-  admin: 'Admin'
+  admin: 'Admin',
 }

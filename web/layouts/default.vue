@@ -1,12 +1,22 @@
+<i18n lang="yaml">
+hu:
+  faq: 'Gyakori kérdések'
+  homepage: 'Főoldal'
+  streams: 'Streamek'
+  downloads: 'Letöltések'
+  fanarts: 'Fanartok'
+  admin: 'Admin'
+</i18n>
+
 <template>
   <v-app dark>
     <v-app-bar
-      v-if="!maintenance && !isFromPhone"
+      v-if="false"
       :clipped-left="clipped"
       style="height: 60px"
       fixed
       app
-      color="primary"
+      class="bg-gray-800"
     >
       <NuxtLink
         class="nav-bar-button"
@@ -22,53 +32,23 @@
       <NuxtLink
         v-for="item in navItems"
         :key="item.to"
-        class="nav-bar-button"
+
+        no-prefetch
         :to="localePath(item.to)"
       >
-        <v-btn v-if="item.show" color="primary" depressed>
+        <a
+          v-if="item.show"
+          :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block px-3 py-2 rounded-md text-base font-medium']"
+          :aria-current="item.current ? 'page' : undefined"
+        >
           {{ $t(item.name) }}
-        </v-btn>
+        </a>
       </NuxtLink>
-      <!--
-      <NuxtLink
-        v-if="show_streams"
-        class="nav-bar-button"
-        :to="localePath('/streams')"
-      >
-        <v-btn color="primary" depressed>
-          {{ $t('streams') }}
-        </v-btn>
-      </NuxtLink>
-      <NuxtLink
-        class="nav-bar-button"
-        :to="localePath('/downloads')"
-      >
-        <v-btn color="primary" depressed>
-          {{ $t('downloads') }}
-        </v-btn>
-      </NuxtLink>
-      <NuxtLink
-        class="nav-bar-button"
-        :to="localePath('/fanarts')"
-      >
-        <v-btn color="primary" depressed>
-          {{ $t('fanarts') }}
-        </v-btn>
-      </NuxtLink>
-      <NuxtLink
-        v-if="isAdmin"
-        class="nav-bar-button"
-        :to="localePath('/admin')"
-      >
-        <v-btn color="primary" depressed>
-          Admin
-        </v-btn>
-      </NuxtLink>
-      -->
       <v-spacer />
       <NuxtLink
         class="nav-bar-avatar"
         :to="localePath('/profiles/norticus')"
+        no-prefetch
       >
         <v-avatar
           size="40"
@@ -79,6 +59,7 @@
       <NuxtLink
         class="nav-bar-avatar"
         :to="localePath('/profiles/walrusz')"
+        no-prefetch
       >
         <v-avatar
           size="40"
@@ -89,6 +70,7 @@
       <NuxtLink
         class="nav-bar-avatar"
         :to="localePath('/profiles/isti')"
+        no-prefetch
       >
         <v-avatar
           size="40"
@@ -99,6 +81,7 @@
       <NuxtLink
         class="nav-bar-avatar"
         :to="localePath('/profiles/geiszla')"
+        no-prefetch
       >
         <v-avatar
           size="40"
@@ -110,6 +93,7 @@
       <NuxtLink
         class="nav-bar-avatar"
         :to="localePath('/auth')"
+        no-prefetch
       >
         <v-avatar
           size="40"
@@ -125,42 +109,15 @@
         </v-avatar>
       </NuxtLink>
     </v-app-bar>
-    <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      bottom
-      temporary
-    >
-      <v-list
-        nav
-        dense
-      >
-        <v-list-item-group
-          v-model="group"
-          active-class="deep-purple--text text--accent-4"
-        >
-          <v-list-item>
-            <v-list-item-title>Foo</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Bar</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Fizz</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Buzz</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-    <v-main>
+    <nav-bar :nav-items="navItems" />
+    <div v-if="showEngWarn" class="eng-warn">
+      <span class="inline"><p>The English version is currently in beta and some features might not be available. We strongly recommend switching to the Hungarian version for now! You can change it in the bottom right corner.</p><a @click="dismissEngWarn">Dismiss</a></span>
+    </div>
+    <v-main class="bg-gray-900">
       <Nuxt />
     </v-main>
-    <v-footer :absolute="!fixed" app>
+    <notifications-component />
+    <v-footer :absolute="!fixed" app color="#1f2937">
       <span>&copy; 2021 | {{ zalname }} |
         <a
           style="color: #fff"
@@ -169,74 +126,90 @@
         >GitHub</a></span>
       <v-spacer />
       <nuxt-link v-if="$i18n.locale !== 'en' " style="color: #fff" :to="switchLocalePath('en')">
-        English
+        English (Beta)
       </nuxt-link>
       <nuxt-link v-if="$i18n.locale !== 'hu'" style="color: #fff" :to="switchLocalePath('hu')">
-        Magyar
+        Magyar (Recommended)
       </nuxt-link>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
+import { getRemoteConfig, fetchAndActivate, getValue } from 'firebase/remote-config'
+import NotificationsComponent from '../components/NotificationsComponent.vue'
+export default Vue.extend({
+  components: { NotificationsComponent },
   data () {
     return {
       avatar: null,
       drawer: false,
       group: null,
       clipped: true,
+      showEngWarn: false,
       navItems: [
         {
           name: 'homepage',
           to: '/',
-          show: true
+          show: true,
+          current: true,
         },
         {
           name: 'streams',
           to: '/streams',
-          show: false
+          show: false,
+          current: false,
         },
         {
           name: 'downloads',
           to: '/downloads',
-          show: true
+          show: true,
+          current: false,
         },
         {
           name: 'fanarts',
           to: '/fanarts',
-          show: true
+          show: true,
+          current: false,
+        },
+        {
+          name: 'faq',
+          to: '/faq',
+          show: true,
+          current: false,
         },
         {
           name: 'admin',
           to: '/admin',
-          show: false
-        }
+          show: false,
+          current: false,
+        },
       ],
       fixed: false,
       isAdmin: false,
       maintenance: false,
       zalname: 'zal1000#0497',
       show_streams: false,
-      isFromPhone: this.$device.isMobileOrTablet
+      isFromPhone: this.$device.isMobileOrTablet,
+      wsStatus: 'connecting',
     }
   },
   watch: {
-    $route () {
-      // console.log('route changed', this.$route.path)
-      if (this.$route.path === '/maintenance') {
-        this.maintenance = true
-      } else {
-        this.maintenance = false
-      }
-    }
+    $route (route) {
+      console.log('route changed', route)
+      // console.log(route.name.split('_')[0])
+      this.checkEngWarn(route)
+      this.checkCurrentPage(route)
+    },
   },
   async created () {
-    if (this.$nuxt.$route.path === '/maintenance') {
-      this.maintenance = true
-    }
-    const auth = this.$fire.auth
-    auth.onAuthStateChanged(async (user) => {
+    const auth = getAuth()
+    const db = getFirestore()
+    this.checkEngWarn(this.$route)
+    onAuthStateChanged(auth, async (user) => {
       // this.user = user
       if (user) {
         this.avatar = user.photoURL
@@ -254,37 +227,121 @@ export default {
         this.navItems.find(e => e.name === 'admin').show = false
       }
     })
-    const db = this.$fire.firestore
-    const zalref = db.collection('dcusers').doc('423925286350880779')
-    const zaldoc = await zalref.get()
+    const zalref = doc(db, 'dcusers/423925286350880779') // db.collection('dcusers').doc('423925286350880779')
+    const zaldoc = await getDoc(zalref)
     this.zalname = zaldoc.data().tag
     if (process.client) {
       this.fetchRemoteConfig()
     }
   },
   methods: {
+    checkCurrentPage (route) {
+      try {
+        this.navItems.forEach((item) => {
+          console.log(item.name)
+          if (route.name.split('_')[0] === item.name) {
+            console.log('fanarts')
+            this.navItems.find(e => e.current === true).current = false
+            this.navItems.find(e => e.name === item.name).current = true
+          }
+        })
+      } catch (error) {
+        console.debug(error)
+      }
+    },
+    dismissEngWarn () {
+      if (process.client) {
+        console.log('dismissing eng warn')
+        localStorage.setItem('engWarnDismissed', true)
+        this.checkEngWarn(this.$route)
+        this.checkCurrentPage(this.$route)
+      }
+    },
+    checkEngWarn (route) {
+      if (process.client) {
+        if (route.path.startsWith('/en')) {
+          const isDismissed = localStorage.getItem('engWarnDismissed') || false
+          if (isDismissed) {
+            this.showEngWarn = false
+          } else {
+            this.showEngWarn = true
+          }
+        } else {
+          this.showEngWarn = false
+        }
+      }
+    },
     async fetchRemoteConfig () {
       try {
-        const remoteConfig = this.$fire.remoteConfig
-        await remoteConfig.fetchAndActivate()
-        const exampleMessage = await remoteConfig.getValue('waik_show_streams')
-        this.navItems.find(e => e.name === 'streams').show = exampleMessage._value.show || false
+        const rc = getRemoteConfig()
+        await fetchAndActivate(rc)
+        const showWaikStreams = getValue(rc, 'waik_show_streams')
+        this.navItems.find((e => e.name === 'streams').show = showWaikStreams.asBoolean() || false)
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e)
       }
-    }
-  }
-}
+    },
+  },
+})
+//                 .
+//                .;;:,.
+//                 ;iiii;:,.                                   .,:;.
+//                 :i;iiiiii:,                            .,:;;iiii.
+//                  ;iiiiiiiii;:.                    .,:;;iiiiii;i:
+//                   :iiiiiiiiiii:......,,,,,.....,:;iiiiiiiiiiii;
+//                    ,iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii:
+//                     .:iii;iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii;,
+//                       .:;;iiiiiiiiiiiiiiiiiiiiiiiiiii;;ii;,
+//                        :iiii;;iiiiiiiiiiiiiii;;iiiiiii;:.
+//                       ,iiii;1f:;iiiiiiiiiiii;if;:iiiiiii.
+//                      .iiiii:iL..iiiiiiiiiiii;:f: iiiiiiii.
+//                      ;iiiiii:.,;iiii;iiiiiiii:..:iiiiiiii:
+//                     .i;;;iiiiiiiiii;,,;iiiiiiiiiiii;;iiiii.
+//                     ::,,,,:iiiiiiiiiiiiiiiiiiiiii:,,,,:;ii:
+//                     ;,,,,,:iiiiiiii;;;;;;;iiiiii;,,,,,,;iii.
+//                     ;i;;;;iiiiiiii;:;;;;;:iiiiiii;::::;iiii:
+//                     ,iiiiiiiiiiiiii;;;;;;:iiiiiiiiiiiiiiiiii.
+//                      .iiiiiiiiiiiiii;;;;;iiiiiiiiiiiiiiiiiii:
+//                       .;iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii;
+//                        ;iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii.
+//                       .;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;,
 </script>
 
-<style>
+<style lang="scss">
 .nav-bar-button {
   margin-right: 15px;
 }
 
 .nav-bar-avatar {
   margin-left: 20px;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 20px;
+  margin-left: 10px;
+}
+
+.eng-warn {
+  p {
+    display: inline;
+  };
+  a {
+    display: inline;
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 10px
+  };
+  min-height: 40px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: var(--red);
+  text-align: center;
 }
 
 :host {

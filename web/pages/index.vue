@@ -1,40 +1,51 @@
-<template>
-  <v-flex class="flexContainer">
-    <v-container fill-height fluid>
-      <div style="margin-top: 30px; padding 10px" />
-      <current-evet-card
-        v-for="content of currentContent"
-        :key="content.title"
-        :title="content.title"
-        :description="content.description"
-        :html="content.html"
-        :markdown="content.markdown"
-        class="eventCart"
-      />
-      <past-event-card
-        v-for="content of pastContent"
-        :key="content.title"
-        :title="content.title"
-        :description="content.description"
-        :html="content.html"
-        :markdown="content.markdown"
-        class="eventCart"
-      />
-    </v-container>
-  </v-flex>
+<template lang="pug">
+  div
+    v-flex(class="flexContainer")
+      v-container(fill-height fluid)
+        div(style="margin-top: 30px; padding 10px")
+        div(v-for="content of allContent" :key="content.title")
+          CurrentEventCard(
+            v-if="content.when === 'current'"
+            :title="content.title"
+            :description="content.description"
+            :html="content.html"
+            :markdown="content.markdown"
+            class="eventCart"
+          )
+          PastEventCard(
+            v-else-if="content.when === 'past'"
+            :title="content.title"
+            :description="content.description"
+            :html="content.html"
+            :markdown="content.markdown"
+            class="eventCart"
+          )
+          NeutralEventCard(
+            v-else
+            :title="content.title"
+            :description="content.description"
+            :html="content.html"
+            :markdown="content.markdown"
+            class="eventCart"
+          )
 </template>
 
 <script>
-import CurrentEvetCard from '../components/CurrentEvetCard.vue'
-import PastEventCard from '../components/PastEventCard.vue'
+import Vue from 'vue'
+import { getFirestore, collection, query, where, orderBy, getDocs } from 'firebase/firestore'
 
-export default {
-  components: { CurrentEvetCard, PastEventCard },
+export default Vue.extend({
   data () {
     return {
       loading: true,
       currentContent: [],
-      pastContent: []
+      pastContent: [],
+      neutralContent: [],
+      allContent: [],
+      snackbar: false,
+      text: 'My timeout is set to 2000.',
+      timeout: 2000,
+      db: getFirestore(),
     }
   },
   head () {
@@ -43,38 +54,41 @@ export default {
       meta: [
         {
           name: 'keywords',
-          content: 'Waik, Walrusz, Norticus, Isti115, Minecraft'
+          content: 'Waik, Walrusz, Norticus, Isti115, Minecraft',
         },
         {
           name: 'og:title',
-          content: `Waik | ${this.$t('homepage')}`
+          content: `Waik | ${this.$t('homepage')}`,
         },
         {
           name: 'og:description',
-          content: 'A hivatalos waik weboldal'
+          content: 'A hivatalos waik weboldal',
         },
         {
           name: 'theme-color',
-          content: '#ffffff'
-        }
-      ]
+          content: '#ffffff',
+        },
+      ],
     }
   },
   async created () {
-    const db = this.$fire.firestore
-    const ref = db.collection('waik/website/content').where('visible', '==', true)
-    const docs = await ref.get()
+    const ref = query(collection(this.db, 'waik/website/content'), where('visible', '==', true), orderBy('timestamp')) // db.collection('waik/website/content').where('visible', '==', true)
+    const docs = await getDocs(ref)
     const current = []
     const past = []
-    for (const doc of docs.docs) {
-      if (doc.data().when === 'current') { current.push(doc.data()) }
-      if (doc.data().when === 'past') { past.push(doc.data()) }
+    const neutral = []
+    const all = []
+    for (const doc of docs.docs.reverse()) {
+      all.push(doc.data())
+      if (doc.data().when === 'current') { current.push(doc.data()) } else if (doc.data().when === 'past') { past.push(doc.data()) } else { neutral.push(doc.data()) }
     }
     this.currentContent = current
     this.pastContent = past
+    this.neutralContent = neutral
+    this.allContent = all
     this.loading = false
-  }
-}
+  },
+})
 </script>
 
 <style lang="scss" scoped>

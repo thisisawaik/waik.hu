@@ -22,27 +22,25 @@
 </template>
 
 <script>
-import FanArtAdminCard from './FanArtAdminCard.vue'
-export default {
-  components: { FanArtAdminCard },
+import Vue from 'vue'
+import { getFirestore, getDocs, collection, query, where, onSnapshot } from 'firebase/firestore'
+export default Vue.extend({
   data () {
     return {
+      db: getFirestore(),
       items: [],
       itemsLatest: [],
       isNewUpdate: false,
-      isFirstFetch: true
+      isFirstFetch: true,
     }
   },
   async created () {
-    const db = this.$fire.firestore
-    const query = db
-      .collection('waik/website/fanarts')
-      .where('status', '==', 'PENDING')
-    const queryres = await query.get()
+    const q = query(collection(this.db, 'waik/website/fanarts'), where('status', '==', 'PENDING'))
+    const queryres = await getDocs(q)
     let a = []
     a = queryres.docs
     this.items = a
-    query.onSnapshot((snap) => {
+    onSnapshot(q, (snap) => {
       if (this.isFirstFetch) {
         this.isFirstFetch = false
       }
@@ -58,9 +56,9 @@ export default {
         this.isNewUpdate = false
         this.items = this.itemsLatest
       }
-    }
-  }
-}
+    },
+  },
+})
 </script>
 
 <style lang="scss" scoped>
