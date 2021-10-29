@@ -55,4 +55,9 @@ export default Vue.extend({
 </script>
 
 <style>
+.center[data-v-3197a386] {
+    margin: auto;
+    padding: 10px;
+    display: flex;
+}
 </style>
